@@ -799,6 +799,7 @@ function switchTab(tab) {
     el.classList.toggle('active', el.dataset.panel === tab);
   });
   setTimeout(animateIn, 60);
+  if (tab === 'landmarks') loadWikiImages(activeCity.landmarks);
 }
 
 function renderApp() {
@@ -902,36 +903,45 @@ function animateIn() {
 
 // Fetch real landmark photos from Wikipedia API
 async function loadWikiImages(landmarks) {
-  const wikiTitles = landmarks.filter(l => l.wiki).map(l => l.wiki);
-  if (!wikiTitles.length) return;
+  const wikiLandmarks = landmarks.filter(l => l.wiki);
+  if (!wikiLandmarks.length) return;
 
-  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${wikiTitles.map(encodeURIComponent).join('|')}&prop=pageimages&format=json&pithumbsize=800&origin=*`;
+  const titles = wikiLandmarks.map(l => l.wiki);
+  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${titles.map(encodeURIComponent).join('|')}&prop=pageimages&format=json&pithumbsize=800&origin=*&redirects=1`;
 
   try {
     const res = await fetch(url);
     const data = await res.json();
-    const pages = data.query.pages;
+    const q = data.query;
 
-    // Build title → image URL map (Wikipedia may normalize titles)
-    const imgMap = {};
-    for (const page of Object.values(pages)) {
-      if (page.thumbnail?.source) {
-        imgMap[page.title] = page.thumbnail.source;
+    // Build a map: input title → final normalized/redirected title
+    const titleMap = {};
+    titles.forEach(t => { titleMap[t] = t; });
+    (q.normalized || []).forEach(n => { titleMap[n.from] = n.to; });
+    // Apply redirects on top of normalized titles
+    (q.redirects || []).forEach(r => {
+      for (const [k, v] of Object.entries(titleMap)) {
+        if (v === r.from) titleMap[k] = r.to;
       }
+    });
+
+    // Build final title → image URL map
+    const imgMap = {};
+    for (const page of Object.values(q.pages)) {
+      if (page.thumbnail?.source) imgMap[page.title] = page.thumbnail.source;
     }
 
     // Apply images to banners
-    landmarks.forEach((l, i) => {
-      if (!l.wiki) return;
-      // Try exact match first, then case-insensitive
-      const imgUrl = imgMap[l.wiki] || Object.entries(imgMap).find(([k]) => k.toLowerCase() === l.wiki.toLowerCase())?.[1];
-      if (imgUrl) {
-        const banner = document.getElementById(`banner-${i}`);
-        if (banner) {
-          banner.style.backgroundImage = `url('${imgUrl}')`;
-          banner.style.backgroundSize = 'cover';
-          banner.style.backgroundPosition = 'center';
-        }
+    wikiLandmarks.forEach(l => {
+      const finalTitle = titleMap[l.wiki];
+      const imgUrl = imgMap[finalTitle];
+      if (!imgUrl) return;
+      const i = landmarks.indexOf(l);
+      const banner = document.getElementById(`banner-${i}`);
+      if (banner) {
+        banner.style.backgroundImage = `url('${imgUrl}')`;
+        banner.style.backgroundSize = 'cover';
+        banner.style.backgroundPosition = 'center';
       }
     });
   } catch (e) {
