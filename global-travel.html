@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>环球史迹 · Global Chronicles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1A6B4A;
+    --green-light: #2a8a5f;
+    --green-dim: #0f3d2a;
+    --gold: #C9963A;
+    --gold-light: #e8b85a;
+    --ink: #0c1810;
+    --paper: #F5EFE0;
+    --paper-dim: #ede5cf;
+    --mist: #8aad96;
+    --white: #faf8f3;
+    --serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+    --mono: 'Courier Prime', 'Courier New', monospace;
+    --body: 'Noto Serif SC', Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    border-bottom: 1px solid rgba(201,150,58,0.3);
+    padding: 0 clamp(20px, 5vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(12,24,16,0.92);
+    backdrop-filter: blur(12px);
+    height: 64px;
+  }
+
+  .masthead-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .masthead-logo span {
+    color: var(--mist);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-left: 10px;
+  }
+
+  .masthead-nav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .masthead-nav::-webkit-scrollbar { display: none; }
+
+  .city-pill {
+    padding: 6px 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(201,150,58,0.25);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--mist);
+  }
+
+  .city-pill:hover { border-color: var(--gold); color: var(--gold); }
+  .city-pill.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ─── HERO SPREAD ─── */
+  .hero {
+    padding: clamp(40px, 8vw, 100px) clamp(20px, 5vw, 80px) clamp(30px, 5vw, 60px);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    min-height: 220px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--mist);
+    margin-top: 16px;
+    line-height: 1.6;
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.3s forwards;
+  }
+
+  .hero-coords {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(138,173,150,0.5);
+    line-height: 1.8;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    min-height: calc(100vh - 280px);
+  }
+
+  @media (max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-coords { text-align: left; }
+  }
+
+  /* ─── TIMELINE COLUMN ─── */
+  .timeline-col {
+    padding: clamp(30px, 4vw, 60px) clamp(20px, 5vw, 80px);
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,150,58,0.2);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.5s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-light);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 8px rgba(201,150,58,0.3);
+  }
+
+  .timeline-year {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .timeline-event {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .timeline-desc {
+    font-size: 0.82rem;
+    color: var(--mist);
+    line-height: 1.65;
+  }
+
+  /* ─── LANDMARKS COLUMN ─── */
+  .landmarks-col {
+    padding: clamp(30px, 4vw, 60px) clamp(16px, 3vw, 40px);
+    background: rgba(255,255,255,0.015);
+  }
+
+  .landmark-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s, transform 0.4s, border-color 0.2s, background 0.2s;
+  }
+
+  .landmark-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .landmark-card:hover {
+    border-color: rgba(201,150,58,0.4);
+    background: rgba(201,150,58,0.04);
+  }
+
+  .landmark-card.expanded {
+    border-color: var(--gold);
+    background: rgba(12,24,16,0.7);
+  }
+
+  .landmark-content {
+    padding: 0 20px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+  }
+
+  .landmark-desc {
+    font-size: 0.82rem;
+    color: #c8ddd0;
+    line-height: 1.75;
+    margin-bottom: 0;
+  }
+
+  .landmark-head {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .landmark-name {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .landmark-era {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .landmark-toggle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,150,58,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 0.8rem;
+    transition: transform 0.3s, background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .landmark-card.expanded .landmark-toggle {
+    transform: rotate(45deg);
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .landmark-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .landmark-body.open {
+    max-height: 600px;
+  }
+
+  .landmark-content {
+    padding: 0 20px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+
+  .landmark-img {
+    display: none; /* hide broken external images */
+  }
+
+  .landmark-banner {
+    width: 100%;
+    height: 140px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .landmark-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(0px);
+  }
+
+  .landmark-banner-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.95);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    line-height: 1.2;
+  }
+
+  .landmark-banner-era {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.6);
+    position: relative;
+    z-index: 1;
+    margin-top: 4px;
+  }
+
+  .landmark-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid rgba(138,173,150,0.3);
+    color: var(--mist);
+    border-radius: 2px;
+  }
+
+  /* ─── PRACTICAL INFO ─── */
+  .practical-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0 0;
+    padding: 14px;
+    background: rgba(12,24,16,0.88);
+    border: 1px solid rgba(201,150,58,0.3);
+    border-radius: 3px;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #C9963A;
+  }
+
+  .info-value {
+    font-size: 0.78rem;
+    color: #e8f5ee;
+    line-height: 1.5;
+  }
+
+  .info-value.free {
+    color: #6ec67a;
+    font-weight: 600;
+  }
+
+  .info-note {
+    grid-column: 1 / -1;
+    font-size: 0.72rem;
+    color: #8aad96;
+    font-style: italic;
+    padding-top: 8px;
+    border-top: 1px solid rgba(201,150,58,0.15);
+    line-height: 1.6;
+  }
+
+  /* ─── OVERVIEW BAR ─── */
+  .overview-bar {
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--gold);
+    background: rgba(201,150,58,0.05);
+  }
+
+  .overview-text {
+    font-size: 0.83rem;
+    color: rgba(250,248,243,0.7);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 24px clamp(20px, 5vw, 80px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: rgba(138,173,150,0.4);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── LOADING STATE ─── */
+  .city-content {
+    display: none;
+  }
+  .city-content.active {
+    display: contents;
+  }
+
+  /* Divider decoration */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.3;
+    font-size: 1rem;
+    margin: 8px 0 28px;
+    letter-spacing: 0.4em;
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-logo">环球史迹<span>Global Chronicles</span></div>
+  <nav class="masthead-nav" id="cityNav"></nav>
+</header>
+
+<div id="app">
+  <!-- dynamically rendered -->
+</div>
+
+<footer>
+  <p>© 2026 环球史迹 · Global Chronicles</p>
+  <p>历史 · 文化 · 遗迹</p>
+</footer>
+
+<script>
+const CITIES = [
+  {
+    id: 'beijing',
+    name: '北京',
+    nameEn: 'Beijing',
+    country: '中国',
+    coords: '39°54\'N  116°23\'E',
+    overview: '北京是中华文明的核心，三千年城市史与八百年帝都传统在此交汇。从商周燕国到明清紫禁城，这座城市见证了无数王朝的兴衰更迭，至今仍是中国的政治与文化中心。',
+    timeline: [
+      { year: '约公元前1044年', event: '燕国建城', desc: '西周分封，召公奭受封燕地，于今北京西南建城，史称"蓟"，是北京城市史的起点。' },
+      { year: '公元938年', event: '辽代南京', desc: '契丹辽朝将燕京升格为南京（又称燕京），作为五京之一，城市规模大幅扩张，奠定了此后北京城市格局的基础。' },
+      { year: '1153年', event: '金朝迁都中都', desc: '金海陵王完颜亮迁都至此，改称"中都大兴府"，大规模营建宫殿，北京首次成为全国性政治中心。' },
+      { year: '1271年', event: '元大都建成', desc: '忽必烈命刘秉忠规划建造元大都，以周礼"匠人营国"为蓝图，棋盘式格局奠定了现代北京城市骨架，成为当时世界上最宏大的城市之一。' },
+      { year: '1406年', event: '永乐迁都·紫禁城破土', desc: '明成祖朱棣决定迁都北京，动员逾百万工匠，历时十四年，于1420年建成紫禁城，共有宫殿九千余间，是世界现存最大的木结构建筑群。' },
+      { year: '1644年', event: '清军入关定鼎', desc: '李自成攻陷北京，崇祯帝煤山自缢，同年清军入关，顺治帝迁都北京，清朝延续并扩建明代宫城格局，增建颐和园、圆明园等皇家园林。' },
+      { year: '1860年', event: '英法联军火烧圆明园', desc: '第二次鸦片战争中，英法联军攻入北京，劫掠并焚毁圆明园，大量珍贵文物流失海外，成为中国近代史上最深重的文化创伤之一。' },
+      { year: '1949年', event: '中华人民共和国成立', desc: '毛泽东在天安门城楼宣告中华人民共和国成立，北京成为新中国首都，此后经历大规模城市改造与现代化建设，旧城肌理与现代都市在此并存。' },
+    ],
+    landmarks: [
+      {
+        name: '故宫（紫禁城）',
+        era: '明·1420年',
+        gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 50%, #2D1B00 100%)',
+        img: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=640&q=80',
+        desc: '紫禁城是明清两朝的皇家宫殿，南北长960米，东西宽753米，共有房屋九千余间，是世界上现存规模最大、保存最完整的木质结构古建筑群。1987年被列入世界文化遗产名录。宫城分前朝与内廷两部分，前朝以太和殿、中和殿、保和殿为核心，是皇帝举行大典的礼仪空间；内廷以乾清宫为中心，是皇帝日常生活起居之所。',
+        hours: '淡季（11月—3月）08:30—17:00；旺季（4月—10月）08:30—17:30，周一闭馆',
+        ticket: '旺季 ¥60，淡季 ¥40',
+        note: '需提前在官网实名制预约购票，每日限流8万人次。建议早到，午前人流最少。',
+        tags: ['世界文化遗产', '明清建筑', '皇家宫殿', '博物馆']
+      },
+      {
+        name: '长城（八达岭段）',
+        era: '秦·公元前214年',
+        gradient: 'linear-gradient(135deg, #3D5A3E 0%, #8aad96 50%, #1a2d22 100%)',
+        img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=640&q=80',
+        desc: '万里长城始建于春秋战国，秦始皇统一后连接各国旧墙并大规模扩建，总长度超过21,000公里，是人类历史上最伟大的建筑工程之一。北京段以八达岭最为著名，保存完好，敌楼密布，明代砖石砌筑，烽火台相望。长城不仅是军事防御体系，也是农耕与游牧文明交汇的地理边界。',
+        hours: '旺季（4月—10月）07:30—18:00；淡季（11月—3月）08:00—17:00，全年开放',
+        ticket: '旺季 ¥65，淡季 ¥40',
+        note: '八达岭距北京市区约75公里，可乘高铁至八达岭站，步行约15分钟。建议避开节假日，慕田峪段人较少且风景更好。',
+        tags: ['世界文化遗产', '秦汉工程', '军事建筑', '明代修缮']
+      },
+      {
+        name: '天坛',
+        era: '明·1420年',
+        gradient: 'linear-gradient(135deg, #1A4A7A 0%, #4A90C4 50%, #0d2940 100%)',
+        img: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=640&q=80',
+        desc: '天坛建于明永乐十八年，是明清两代皇帝祭天祈谷的场所，占地约273万平方米，是北京面积最大的古建筑群。祈年殿以三层蓝色琉璃瓦攒尖顶为标志，圆形象天，不用一根钉子，纯木榫卯结构，被誉为中国古代建筑的杰作。回音壁的声学奇观至今令人叹服。',
+        hours: '公园 06:00—22:00（全年）；景区建筑 08:00—17:30，周一不闭馆',
+        ticket: '联票（含建筑）旺季 ¥35，淡季 ¥30；仅公园 ¥15',
+        note: '清晨6—8点入园可欣赏当地居民在公园内打太极、唱京剧，是体验老北京市井生活的绝佳时机。',
+        tags: ['世界文化遗产', '皇家祭坛', '明清建筑', '声学奇观']
+      },
+      {
+        name: '颐和园',
+        era: '清·1750年',
+        gradient: 'linear-gradient(135deg, #2D6A4F 0%, #74C69D 50%, #1B4332 100%)',
+        img: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=640&q=80',
+        desc: '颐和园原名清漪园，清乾隆十五年始建，1860年被英法联军破坏后，慈禧太后挪用海军军费于1888年重建并更名。占地约290万平方米，其中昆明湖约占四分之三。万寿山与昆明湖相映，长廊、佛香阁、十七孔桥构成中国皇家园林最后的绝唱，1998年列入世界遗产名录。',
+        hours: '旺季 06:30—18:00；淡季 07:00—17:00，全年开放',
+        ticket: '联票（含景区建筑）旺季 ¥50，淡季 ¥30；仅公园 ¥20',
+        note: '冬季昆明湖结冰时可在湖面滑冰，是独特的北京冬日体验。园内面积极大，建议留出半天至一天。',
+        tags: ['世界文化遗产', '皇家园林', '清代建筑', '山水园林']
+      },
+    ]
+  },
+  {
+    id: 'rome',
+    name: '罗马',
+    nameEn: 'Rome',
+    country: '意大利',
+    coords: '41°53\'N  12°29\'E',
+    overview: '罗马横跨三千年，从传说中罗慕路斯建城到罗马共和国、帝国、教皇国直至现代意大利首都。"条条大路通罗马"——这座城市曾是已知世界的政治、宗教与文化中心，其遗迹至今仍与现代都市生活并存共生，是人类文明最壮观的层叠之处。',
+    timeline: [
+      { year: '公元前753年', event: '传说建城', desc: '据罗马神话，孪生兄弟罗慕路斯与雷穆斯在台伯河畔建立罗马城，罗慕路斯成为第一位国王。现代考古证实公元前10世纪前后确有聚落存在。' },
+      { year: '公元前509年', event: '共和国建立', desc: '罗马人驱逐最后一位国王塔克文，建立共和政体，设两位执政官轮流执政，元老院与公民大会共同治理，奠定了西方民主政治的重要基础。' },
+      { year: '公元前44年', event: '凯撒遇刺', desc: '尤利乌斯·凯撒在元老院被布鲁图斯等23名元老刺杀，共和国陷入内战，此后屋大维击败安东尼，建立帝国，成为奥古斯都皇帝。' },
+      { year: '公元80年', event: '罗马斗兽场落成', desc: '弗拉维王朝建造的科洛塞姆竣工，可容纳5万至8万观众，是古代世界最大的圆形剧场，举办角斗士搏斗、野兽猎杀和海战表演。' },
+      { year: '公元313年', event: '米兰敕令·基督教合法化', desc: '君士坦丁大帝颁布米兰敕令，宣布基督教合法，罗马帝国由此转向，教会势力迅速扩张，罗马城逐渐从帝都转型为基督教世界的精神中心。' },
+      { year: '公元476年', event: '西罗马帝国覆灭', desc: '西罗马末代皇帝罗慕路斯·奥古斯都被日耳曼雇佣兵首领奥多亚克废黜，西罗马帝国灭亡，欧洲进入中世纪，东罗马（拜占庭）帝国延续至1453年。' },
+      { year: '1506年', event: '圣彼得大教堂破土重建', desc: '教皇儒略二世命令拆除旧圣彼得教堂，委托布拉曼特设计新教堂，此后米开朗基罗、拉斐尔、贝尼尼等大师相继参与，历时120余年，成为文艺复兴与巴洛克建筑的集大成之作。' },
+      { year: '1871年', event: '意大利统一·罗马成为首都', desc: '普鲁士-法国战争爆发，法国撤回驻守罗马的军队，意大利军队趁机进占罗马，次年宣布罗马为意大利王国首都，结束了教皇国对罗马长达千年的统治。' },
+    ],
+    landmarks: [
+      {
+        name: '科洛塞姆（斗兽场）',
+        era: '公元72—80年',
+        gradient: 'linear-gradient(135deg, #5C3317 0%, #C9963A 50%, #2A1500 100%)',
+        img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=640&q=80',
+        desc: '科洛塞姆是罗马帝国弗拉维王朝修建的椭圆形竞技场，长轴188米、短轴156米，高约50米，由石灰岩、砖块和混凝土建造。其拱券结构与外立面三层叠列的建筑语言深刻影响了西方建筑两千年。竞技场举办角斗士对决、猛兽猎杀甚至模拟海战，是古罗马"面包与马戏"政治的最佳象征。',
+        hours: '09:00—19:00（夏季延至 20:00）；1月1日、12月25日闭馆',
+        ticket: '€18（含古罗马广场+帕拉丁山联票）；24小时内可二次入场',
+        note: '强烈建议网上预约跳过排队，旺季现场等候可达2小时。傍晚时分光线最美，是拍照最佳时机。',
+        tags: ['世界文化遗产', '古罗马', '弗拉维王朝', '建筑奇迹']
+      },
+      {
+        name: '万神殿（Pantheon）',
+        era: '公元125年',
+        gradient: 'linear-gradient(135deg, #4A3728 0%, #D4A96A 50%, #1E150D 100%)',
+        img: 'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=640&q=80',
+        desc: '万神殿由哈德良皇帝重建，圆顶直径43.3米，顶部圆孔直径8.9米，这一尺寸在此后1300年里无人超越。穹顶以火山灰混凝土浇筑而成，内部无一支柱，是古罗马工程技术的最高成就。建筑保存近乎完整，文艺复兴画家拉斐尔长眠于此。',
+        hours: '09:00—19:00（周日 09:00—18:00）；周一 12:00 后开放；宗教节日闭馆',
+        ticket: '€5（2023年起收费，此前免费）',
+        note: '雨天从穹顶圆孔落入的雨水通过地板排水孔流走，是特别的观赏体验。内部禁止摄影三脚架。',
+        tags: ['古罗马', '哈德良', '混凝土穹顶', '最佳保存古迹']
+      },
+      {
+        name: '梵蒂冈圣彼得大教堂',
+        era: '1506—1626年',
+        gradient: 'linear-gradient(135deg, #1A1A4A 0%, #6A7FBF 50%, #0D0D2A 100%)',
+        img: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=640&q=80',
+        desc: '圣彼得大教堂是天主教世界最神圣的教堂，建于圣徒彼得殉道之地。由布拉曼特、米开朗基罗、马代尔诺和贝尼尼历经120年共同完成，米开朗基罗设计的穹顶高达136米，广场前贝尼尼设计的椭圆形廊柱如张开的双臂拥抱信众，是巴洛克建筑的不朽典范。',
+        hours: '教堂 07:00—19:00（冬季 18:00）；穹顶 08:00—18:00；全年开放',
+        ticket: '教堂免费；穹顶步行登顶 €8，电梯 €10',
+        note: '进入需着装保守（禁止短裤、露肩）。周三上午教皇公开接见，广场人满为患，建议错开。登穹顶约330级阶梯，视野壮观。',
+        tags: ['世界文化遗产', '天主教圣地', '文艺复兴', '巴洛克']
+      },
+      {
+        name: '古罗马广场（Forum Romanum）',
+        era: '公元前7世纪起',
+        gradient: 'linear-gradient(135deg, #6B4C11 0%, #C9963A 45%, #3D2800 100%)',
+        img: 'https://images.unsplash.com/photo-1590595906931-81f04571f25c?w=640&q=80',
+        desc: '古罗马广场是共和国与帝国时代的政治、宗教和商业中心，元老院、法庭、神庙、凯旋门密布其间。凯撒神庙、维斯塔神庙、提图斯凯旋门等遗迹至今清晰可辨，废墟之间可以看到三千年罗马历史的层叠印记。',
+        hours: '09:00—日落前1小时；全年开放（恶劣天气除外）',
+        ticket: '€18（科洛塞姆联票，含帕拉丁山）',
+        note: '科洛塞姆联票可直接进入，无需单独排队。建议由帕拉丁山高处俯瞰全貌再下探细节，路线更流畅。',
+        tags: ['古罗马', '共和国遗址', '政治中心', '考古遗迹']
+      },
+    ]
+  },
+  {
+    id: 'istanbul',
+    name: '伊斯坦布尔',
+    nameEn: 'Istanbul',
+    country: '土耳其',
+    coords: '41°00\'N  28°58\'E',
+    overview: '伊斯坦布尔是世界上唯一横跨两大洲的城市，博斯普鲁斯海峡将其一分为二，欧洲与亚洲在此相接。这座城市历经拜占庭帝国的君士坦丁堡、奥斯曼帝国的首都，积淀了东西方文明最深厚的交汇，每一块石头都镌刻着帝国兴亡的记忆。',
+    timeline: [
+      { year: '公元前657年', event: '拜占庭城建立', desc: '希腊移民从麦加拉城邦渡海，在金角湾与博斯普鲁斯海峡交汇的战略要地建立殖民地，以传说中的领袖拜占斯命名为"拜占庭"。' },
+      { year: '公元330年', event: '君士坦丁堡建都', desc: '罗马皇帝君士坦丁大帝将帝国首都东迁至此，大规模扩建并更名为"新罗马"（后称君士坦丁堡），城市迅速成长为地中海世界最繁荣的都市，人口一度达百万之众。' },
+      { year: '537年', event: '圣索菲亚大教堂落成', desc: '查士丁尼一世建造的圣索菲亚大教堂历时五年竣工，穹顶直径31米，悬浮于光芒四射之中，被誉为拜占庭建筑的最高成就。建筑师安提莫斯与伊西多尔运用悬挂穹顶技术解决了工程难题。' },
+      { year: '1204年', event: '第四次十字军劫掠', desc: '东征的十字军军队转而攻打君士坦丁堡，烧杀劫掠三日，大量拜占庭珍宝流失西方，帝国元气大伤，此后虽经恢复，已难复昔日荣光。' },
+      { year: '1453年5月29日', event: '奥斯曼帝国攻陷君士坦丁堡', desc: '年仅21岁的苏丹穆罕默德二世率军攻破城墙，拜占庭末帝君士坦丁十一世战死，东罗马帝国灭亡，历史学家通常以此事件作为中世纪终结的标志。' },
+      { year: '1520—1566年', event: '苏莱曼大帝时代', desc: '奥斯曼帝国在苏莱曼一世治下达到鼎盛，领土横跨三大洲，首席建筑师希南在伊斯坦布尔建造了苏莱曼清真寺等数十座伟大建筑，奠定了奥斯曼建筑风格的巅峰形态。' },
+      { year: '1923年', event: '土耳其共和国建立', desc: '凯末尔·阿塔图尔克领导独立战争后建立土耳其共和国，迁都安卡拉，伊斯坦布尔从首都转型为经济文化中心，开始现代化进程，但仍是国家最大城市。' },
+    ],
+    landmarks: [
+      {
+        name: '圣索菲亚大教堂',
+        era: '拜占庭·537年',
+        gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 45%, #C9963A 100%)',
+        img: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=640&q=80',
+        desc: '圣索菲亚大教堂是拜占庭建筑的顶峰之作，近千年来一直是世界上最大的教堂。1453年后被奥斯曼人改为清真寺，增建了四座宣礼塔，内部马赛克镶嵌画被石灰涂抹覆盖。1934年改为博物馆，2020年再次改回清真寺。内部金色穹顶与拜占庭马赛克艺术令每个到访者叹为观止。',
+        hours: '礼拜时间外对外开放：约 09:00—17:30，周五聚礼（约13:00—15:00）关闭，其余时间免费开放',
+        ticket: '免费（2020年改回清真寺后取消门票）',
+        note: '进入需脱鞋并保管，女性须遮盖头发。礼拜时间外拜占庭马赛克镶嵌画可参观。建议清晨人少时前往。',
+        tags: ['世界遗产', '拜占庭建筑', '穹顶奇迹', '宗教空间']
+      },
+      {
+        name: '苏丹艾哈迈德清真寺（蓝色清真寺）',
+        era: '奥斯曼·1616年',
+        gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 50%, #0D3D6B 100%)',
+        img: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=640&q=80',
+        desc: '蓝色清真寺因内部2万余块伊兹尼克蓝色瓷砖得名，是伊斯坦布尔的标志性地标。建筑师色德夫卡尔·穆罕默德帕夏在圣索菲亚的影响下设计了六座宣礼塔，主穹顶直径23.5米，串联的半穹顶形成壮观的层叠空间，至今仍是活跃的礼拜场所。',
+        hours: '礼拜时间外开放；每日五次礼拜（约 30—90 分钟）关闭；日出—日落',
+        ticket: '免费（仍为活跃清真寺）',
+        note: '需脱鞋、遮盖手臂和腿部（入口有免费布巾），女性须覆头。与圣索菲亚相对，两处可一并参观，步行仅需3分钟。',
+        tags: ['奥斯曼建筑', '伊斯兰艺术', '伊兹尼克瓷砖', '活跃清真寺']
+      },
+      {
+        name: '托普卡帕宫',
+        era: '奥斯曼·1465年',
+        gradient: 'linear-gradient(135deg, #2A1A0A 0%, #8B6914 50%, #4A3010 100%)',
+        img: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=640&q=80',
+        desc: '托普卡帕宫是奥斯曼帝国苏丹的官邸与行政中枢，历时400余年持续扩建，占地约70万平方米。宫殿分为四个庭院，珍宝馆收藏有托普卡帕匕首、86克拉斯普恩之泪钻石等无价之宝，哈莱姆宫（后宫）是奥斯曼宫廷最神秘的空间。',
+        hours: '09:00—18:45（夏季）；09:00—16:45（冬季）；周二闭馆',
+        ticket: '宫殿 €35；哈莱姆宫需另购票 €20',
+        note: '哈莱姆宫必须参加定时导览（约30分钟），名额有限，建议入园后立即前往预约。珍宝馆排队时间较长。',
+        tags: ['奥斯曼帝国', '皇家宫殿', '世界遗产', '珍宝馆']
+      },
+      {
+        name: '大巴扎（卡帕勒恰尔西）',
+        era: '奥斯曼·1461年',
+        gradient: 'linear-gradient(135deg, #4A0A0A 0%, #C94A1A 50%, #2A0A00 100%)',
+        img: 'https://images.unsplash.com/photo-1570939274717-7eda259b50ed?w=640&q=80',
+        desc: '大巴扎是世界上最古老、最大的有顶集市之一，拥有60余条街道、4000余间店铺，历史上是联通东西方贸易的丝绸之路终点。奥斯曼时代按行业划分区域——金匠区、皮革区、地毯区——至今格局基本保留，每日接待访客逾25万人次。',
+        hours: '周一至周六 08:30—19:00；周日闭馆',
+        ticket: '免费入场',
+        note: '砍价是传统文化的一部分，初始报价通常是底价的2—3倍。地毯、陶瓷、香料和土耳其软糖是最值得购买的纪念品。',
+        tags: ['奥斯曼', '丝绸之路', '历史集市', '商业文化']
+      },
+    ]
+  },
+  {
+    id: 'kyoto',
+    name: '京都',
+    nameEn: 'Kyoto',
+    country: '日本',
+    coords: '35°00\'N  135°46\'E',
+    overview: '京都是日本天皇都城长达1100年，从794年平安京建都到1869年明治维新迁都东京，这里积淀了日本文化最精华的层次：神社、寺院、茶道、能乐、传统庭园、西阵织。二战期间美军刻意绕过京都的轰炸，使其成为世界上保存最完好的古代都市之一。',
+    timeline: [
+      { year: '794年', event: '平安京迁都', desc: '桓武天皇命人以中国唐长安城为蓝本，规划建造平安京（今京都），南北9公里、东西8公里的棋盘格局。此后400年间，日本贵族文化在此绽放，《源氏物语》《枕草子》等平安文学传世至今。' },
+      { year: '1185年', event: '源平合战·武家时代开启', desc: '源氏在坛之浦海战中击败平氏，源赖朝建立镰仓幕府，京都天皇朝廷保留象征地位，但实权转入武家，此后七百年日本由幕府统治。' },
+      { year: '1338年', event: '室町幕府建立', desc: '足利尊氏在京都建立室町幕府，京都再度成为政治中心。第三代将军足利义满建造金阁寺，第八代足利义政建造银阁寺，室町时代发展出枯山水庭园、能乐、茶道等独特的日本美学。' },
+      { year: '1467—1477年', event: '应仁之乱', desc: '围绕将军继承问题爆发的应仁之乱波及全国，京都遭受严重破坏，大量古建筑付之一炬，各地守护大名趁乱割据，日本进入战国时代。' },
+      { year: '1603年', event: '德川幕府·江户时代', desc: '德川家康在江户（东京）建立幕府，政治中心东移，京都以天皇御所和皇家文化中心的地位延续，锁国政策下形成高度精炼的传统文化生态。' },
+      { year: '1868年', event: '明治维新·首都东移', desc: '明治天皇宣布迁都东京，结束了京都1074年的都城地位。尽管如此，京都保留了大量皇室资产与传统文化机构，并在近代成为日本工业（尤其是精密机械与电子）的重要中心。' },
+    ],
+    landmarks: [
+      {
+        name: '伏见稻荷大社',
+        era: '奈良时代·711年',
+        gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)',
+        img: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=640&q=80',
+        desc: '伏见稻荷大社是全日本3万余座稻荷神社的总本社，主祀稻荷大神（掌管农业、商业与狐狸）。山道上绵延约4公里、多达10,000座的朱红色鸟居由企业和个人奉纳，形成举世无双的视觉奇观。鸟居密林在晨雾或暮色中呈现出幽玄的东方神秘感。',
+        hours: '24小时开放，全年无休（主殿区 05:00—18:00 有管理人员）',
+        ticket: '免费',
+        note: '凌晨4—6点或深夜是鸟居最空旷神秘的时段，白天尤其周末人流极大。登至山顶（稻荷山）约需2小时往返。',
+        tags: ['神道教圣地', '奈良时代', '鸟居走廊', '稻荷信仰']
+      },
+      {
+        name: '金阁寺（鹿苑寺）',
+        era: '室町·1397年',
+        gradient: 'linear-gradient(135deg, #1A3A1A 0%, #C9963A 45%, #0D2010 100%)',
+        img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=640&q=80',
+        desc: '金阁寺由室町幕府第三代将军足利义满建造为山庄，其死后遗命改为禅寺。三层阁楼中，二三层以金箔贴覆，倒映于镜湖池中，是日本最广为人知的建筑意象。1950年被僧侣纵火焚毁，1955年依原貌重建，三岛由纪夫以此为背景写就名作《金阁寺》。',
+        hours: '09:00—17:00，全年开放（包括新年期间）',
+        ticket: '¥500（约24元人民币）',
+        note: '参观路线为单向环形，约30分钟。雪天或红叶期间的金阁是京都最美的景象之一，此时人也最多。',
+        tags: ['世界遗产', '室町幕府', '金箔建筑', '禅宗庭园']
+      },
+      {
+        name: '二条城',
+        era: '江户·1603年',
+        gradient: 'linear-gradient(135deg, #1A2A3A 0%, #4A7A9B 50%, #0D1A26 100%)',
+        img: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=640&q=80',
+        desc: '二条城由德川家康于1603年建造，作为天皇御所附近的将军驻跸所。城内二之丸御殿以"莺张地板"（防刺客踩踏发声地板）著称，桃山时代绘画装饰精美绝伦。1867年，末代将军德川庆喜在此宣布大政奉还，彻底终结了265年的江户幕府统治。',
+        hours: '08:45—16:00（最晚入场），全年开放；12月26日—1月3日闭馆',
+        ticket: '¥1,300（约62元）',
+        note: '室内禁止拍照（御殿内部）。莺张地板确实会发出声响，可以用力踩踩体验一下。',
+        tags: ['世界遗产', '德川幕府', '桃山建筑', '大政奉还']
+      },
+      {
+        name: '清水寺',
+        era: '平安·778年',
+        gradient: 'linear-gradient(135deg, #3A1A2A 0%, #8B4A6B 50%, #1A0D15 100%)',
+        img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80',
+        desc: '清水寺建于音羽山悬崖之上，本堂前的舞台以139根高12米的木柱支撑，不用一颗钉子纯靠榫卯承重，俯瞰京都市区，壮观非凡。"从清水舞台跳下去"是日本著名成语，意指破釜沉舟。秋季红叶将寺院建筑映衬得如画一般。',
+        hours: '06:00—18:00（夜间特别开放期间延至 21:30）',
+        ticket: '¥500（约24元）',
+        note: '清晨6—7点光线最美且人最少。音羽瀑布三股清泉分别代表长寿、学业、恋爱，游客用长柄瓢舀水饮用，但只能选一股（贪心会无效）。',
+        tags: ['世界遗产', '悬崖建筑', '平安时代', '红叶名所']
+      },
+    ]
+  },
+  {
+    id: 'cairo',
+    name: '开罗',
+    nameEn: 'Cairo',
+    country: '埃及',
+    coords: '30°03\'N  31°14\'E',
+    overview: '开罗是非洲与阿拉伯世界最大的城市，毗邻尼罗河三角洲顶端，与古代孟菲斯和赫利奥波利斯遗址相邻。金字塔在城市边缘矗立，现代开罗的喧嚣与4500年前的宏伟建筑之间仅隔一片沙漠，这种时间的压缩感是世界上任何城市都难以复制的。',
+    timeline: [
+      { year: '约公元前3100年', event: '古埃及统一', desc: '传说中那尔迈法老统一上下埃及，建立第一王朝。孟菲斯成为早期首都，位于今开罗南郊，是古王国时代埃及的政治与宗教中心。' },
+      { year: '约公元前2560年', event: '胡夫大金字塔建成', desc: '法老胡夫（科孚）在吉萨高地建造的大金字塔历时约20年竣工，原高146.5米，使用约230万块石灰岩砌筑，是古代世界七大奇迹中唯一保存至今者。' },
+      { year: '公元前332年', event: '亚历山大大帝征服埃及', desc: '马其顿王亚历山大三世攻占埃及，将自己奉为法老。其后继者托勒密王朝统治埃及近300年，建立亚历山大城，希腊化文明与古埃及文化深度融合。' },
+      { year: '公元641年', event: '阿拉伯征服·伊斯兰化', desc: '阿拉伯将领阿慕尔·伊本·阿斯率军征服埃及，建立福斯塔特城（开罗前身），伊斯兰教迅速传播，埃及语言与宗教逐渐阿拉伯化，科普特基督徒保留了独特的宗教传统。' },
+      { year: '969年', event: '法蒂玛王朝建开罗', desc: '北非什叶派法蒂玛王朝征服埃及，在福斯塔特北侧建立新城，命名为"al-Qāhira"（意为"胜利者"），即今日开罗之名的由来，并建造了著名的爱资哈尔清真寺。' },
+      { year: '1517年', event: '奥斯曼帝国并吞埃及', desc: '奥斯曼苏丹塞利姆一世击败马穆鲁克苏丹国，将埃及并入奥斯曼版图，开罗成为帝国最重要的行省城市，持续繁荣但不再是独立帝国的首都。' },
+      { year: '1798年', event: '拿破仑远征埃及', desc: '拿破仑率法军登陆埃及，在金字塔战役中击败马穆鲁克骑兵。随军的学者和科学家对古埃及文明进行了系统记录，《埃及记述》出版，埃及学作为一门独立学科由此诞生。' },
+    ],
+    landmarks: [
+      {
+        name: '吉萨大金字塔群',
+        era: '古王国·约公元前2560年',
+        gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 45%, #8B6914 100%)',
+        img: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=640&q=80',
+        desc: '吉萨金字塔群由胡夫、卡夫拉、孟卡拉三座大金字塔及附属建筑组成，是古代世界七大奇迹中唯一留存至今的。胡夫金字塔使用约230万块石块，平均重2.5吨，建造精度之高——四个底边误差不超过5厘米——令现代工程师仍叹服。大斯芬克斯以卡夫拉的面貌雕刻，守护着金字塔群。',
+        hours: '08:00—17:00（冬季）；08:00—19:00（夏季）；斯芬克斯区域日落后关闭',
+        ticket: '遗址区 £E360（约80元）；进入胡夫金字塔内部需额外购票 £E300（限额每日300人）',
+        note: '清晨进入金字塔内部需非常早到（开门前排队），内部空间极狭窄，不适合幽闭恐惧症者。骑骆驼合照需明确谈好价格避免纠纷。',
+        tags: ['世界文化遗产', '古代七大奇迹', '古王国', '法老陵墓']
+      },
+      {
+        name: '埃及博物馆',
+        era: '近代·1902年',
+        gradient: 'linear-gradient(135deg, #1A1A3A 0%, #6A4A8B 50%, #0D0D1E 100%)',
+        img: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=640&q=80',
+        desc: '开罗埃及博物馆收藏文物逾17万件，是世界上规模最大的古埃及文物收藏地。镇馆之宝包括图坦卡蒙法老的黄金面具及全套陪葬品（1922年霍华德·卡特发掘）、阿赫纳吞与纳芙蒂蒂夫妇雕像，以及罗塞塔石碑的拓片。新大埃及博物馆正在吉萨金字塔旁建设中，将成为世界最大的考古博物馆。',
+        hours: '09:00—17:00，全年开放（斋月期间可能调整）',
+        ticket: '£E200（约45元）；木乃伊室另收 £E200',
+        note: '图坦卡蒙展品位于2楼正中心区域，是最不应错过的展区。导览耳机可租，或自行雇佣持证英语讲解员（约100—200元）。',
+        tags: ['埃及学', '图坦卡蒙', '法老文物', '近代博物馆']
+      },
+      {
+        name: '爱资哈尔清真寺',
+        era: '法蒂玛·970年',
+        gradient: 'linear-gradient(135deg, #0A2A1A 0%, #1A6B4A 50%, #0D3D26 100%)',
+        img: 'https://images.unsplash.com/photo-1594938298603-c8148c4b4bd7?w=640&q=80',
+        desc: '爱资哈尔清真寺由法蒂玛王朝建造，附属的爱资哈尔大学建于975年，是世界上最古老的持续运作的大学之一，也是伊斯兰世界最权威的宗教学术机构。清真寺历经各王朝不断扩建，拥有五座宣礼塔，是开罗伊斯兰建筑的杰出代表。',
+        hours: '09:00—17:00（礼拜时间关闭约30分钟），周五 12:00—14:00 聚礼期间关闭',
+        ticket: '免费（非穆斯林访客也可入内）',
+        note: '需脱鞋、着装保守，入口处提供长袍借用。周五避开聚礼时段。周边汗·哈利利市集是购买香料、铜器的好去处。',
+        tags: ['法蒂玛王朝', '伊斯兰建筑', '世界最古老大学', '宗教中心']
+      },
+      {
+        name: '萨拉丁城堡',
+        era: '阿尤布·1183年',
+        gradient: 'linear-gradient(135deg, #2A2A1A 0%, #6B6B2A 50%, #1A1A0A 100%)',
+        img: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=640&q=80',
+        desc: '萨拉丁城堡（开罗城堡）由阿尤布王朝奠基人萨拉丁下令修建，位于穆卡塔姆山丘顶端，俯瞰整个开罗城。城堡内的穆罕默德·阿里清真寺以白色雪花石膏装饰，巨大的铅顶穹顶群是仿照伊斯坦布尔蓝色清真寺而建，是埃及最著名的奥斯曼时期建筑。',
+        hours: '08:00—17:00，全年开放（周五聚礼期间部分区域关闭）',
+        ticket: '£E200（约45元，含多个博物馆）',
+        note: '城堡顶部是俯瞰开罗全景和金字塔群（天气晴朗时可见）的最佳位置。傍晚日落时分景色壮观，但需注意关门时间。',
+        tags: ['阿尤布王朝', '军事建筑', '奥斯曼清真寺', '俯瞰全城']
+      },
+    ]
+  }
+];
+
+let activeCity = CITIES[0];
+
+function renderNav() {
+  const nav = document.getElementById('cityNav');
+  nav.innerHTML = CITIES.map(c => `
+    <button class="city-pill ${c.id === activeCity.id ? 'active' : ''}" onclick="switchCity('${c.id}')">
+      ${c.name} · ${c.nameEn}
+    </button>
+  `).join('');
+}
+
+function switchCity(id) {
+  activeCity = CITIES.find(c => c.id === id);
+  renderNav();
+  renderApp();
+  setTimeout(animateIn, 50);
+}
+
+function renderApp() {
+  const app = document.getElementById('app');
+  const c = activeCity;
+  app.innerHTML = `
+    <section class="hero">
+      <div>
+        <div class="hero-eyebrow">— ${c.country} · 历史与遗迹 ·</div>
+        <h1 class="hero-title">${c.name}<br><em>${c.nameEn}</em></h1>
+        <p class="hero-sub">${c.overview}</p>
+      </div>
+      <div class="hero-coords">${c.coords.replace('  ', '<br>')}<br><br>${c.timeline.length} 个历史节点<br>${c.landmarks.length} 处重要景点</div>
+    </section>
+
+    <div class="main-grid">
+      <div class="timeline-col">
+        <div class="section-label">历史时间轴</div>
+        <div class="ornament">· · ·</div>
+        <div class="timeline">
+          ${c.timeline.map((t, i) => `
+            <div class="timeline-item" style="transition-delay: ${i * 0.07}s">
+              <div class="timeline-year">${t.year}</div>
+              <div class="timeline-event">${t.event}</div>
+              <div class="timeline-desc">${t.desc}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="landmarks-col">
+        <div class="section-label">重要景点</div>
+        <div class="ornament">· · ·</div>
+        ${c.landmarks.map((l, i) => `
+          <div class="landmark-card" id="lm-${i}" style="transition-delay: ${i * 0.1}s" onclick="toggleLandmark(${i})">
+            <div class="landmark-head">
+              <div>
+                <div class="landmark-name">${l.name}</div>
+                <div class="landmark-era">${l.era}</div>
+              </div>
+              <div class="landmark-toggle">+</div>
+            </div>
+            <div class="landmark-body" id="lb-${i}">
+              <div class="landmark-content">
+                <div class="landmark-banner" style="background: ${l.gradient}">
+                  <div class="landmark-banner-name">${l.name}</div>
+                  <div class="landmark-banner-era">${l.era}</div>
+                </div>
+                <p class="landmark-desc">${l.desc}</p>
+                <div class="practical-info">
+                  <div class="info-item">
+                    <span class="info-label">⏱ 开放时间</span>
+                    <span class="info-value">${l.hours}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">🎟 门票</span>
+                    <span class="info-value ${l.ticket.includes('免费') ? 'free' : ''}">${l.ticket}</span>
+                  </div>
+                  ${l.note ? `<div class="info-note">💡 ${l.note}</div>` : ''}
+                </div>
+                <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleLandmark(i) {
+  const card = document.getElementById(`lm-${i}`);
+  const body = document.getElementById(`lb-${i}`);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  card.classList.toggle('expanded', !isOpen);
+}
+
+function animateIn() {
+  document.querySelectorAll('.timeline-item, .landmark-card').forEach(el => {
+    el.classList.add('visible');
+  });
+}
+
+// Init
+renderNav();
+renderApp();
+setTimeout(animateIn, 100);
+</script>
+</body>
+</html>
