@@ -8,815 +8,1707 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #1A6B4A;
-    --green-light: #2a8a5f;
-    --green-dim: #0f3d2a;
-    --gold: #C9963A;
-    --gold-light: #e8b85a;
-    --ink: #0c1810;
-    --paper: #F5EFE0;
-    --mist: #8aad96;
-    --white: #faf8f3;
-    --serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
-    --mono: 'Courier Prime', 'Courier New', monospace;
-    --body: 'Noto Serif SC', Georgia, serif;
-    --tab-height: 60px;
-    --header-height: 52px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--ink);
-    color: var(--white);
-    font-family: var(--body);
-    min-height: 100vh;
-    overflow-x: hidden;
-    padding-bottom: var(--tab-height);
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.5;
-  }
-
-  /* ─── TOP HEADER ─── */
-  .masthead {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: var(--header-height);
-    background: rgba(12,24,16,0.96);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(201,150,58,0.2);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 10px;
-  }
-
-  .masthead-logo {
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    color: var(--gold);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .masthead-logo span {
-    color: var(--mist);
-    font-weight: 400;
-    font-style: italic;
-    font-size: 0.72rem;
-    margin-left: 8px;
-  }
-
-  .masthead-city {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: rgba(138,173,150,0.6);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-left: auto;
-    white-space: nowrap;
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    position: relative;
-    min-height: 56vw;
-    max-height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 24px 20px 20px;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    transition: background 0.5s ease;
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(12,24,16,0.15) 0%, rgba(12,24,16,0.85) 100%);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-    opacity: 0;
-    animation: fadeUp 0.5s 0.1s forwards;
-  }
-
-  .hero-title {
-    font-family: var(--serif);
-    font-size: clamp(2.2rem, 10vw, 3.2rem);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    color: var(--white);
-    opacity: 0;
-    animation: fadeUp 0.5s 0.15s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold-light);
-    font-size: 0.65em;
-    display: block;
-    margin-top: 4px;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 16px;
-    margin-top: 12px;
-    opacity: 0;
-    animation: fadeUp 0.5s 0.25s forwards;
-  }
-
-  .hero-stat {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    color: rgba(138,173,150,0.7);
-    letter-spacing: 0.06em;
-  }
-
-  .hero-stat strong {
-    color: var(--gold);
-    font-size: 0.9rem;
-    display: block;
-    font-family: var(--serif);
-    font-weight: 700;
-  }
-
-  /* ─── OVERVIEW ─── */
-  .overview {
-    margin: 0;
-    padding: 16px 20px;
-    background: rgba(201,150,58,0.05);
-    border-bottom: 1px solid rgba(201,150,58,0.15);
-    border-left: 3px solid var(--gold);
-  }
-
-  .overview p {
-    font-size: 0.82rem;
-    color: rgba(250,248,243,0.7);
-    line-height: 1.75;
-    font-style: italic;
-  }
-
-  /* ─── SECTION TABS (Timeline / Landmarks) ─── */
-  .section-tabs {
-    display: flex;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    position: sticky;
-    top: var(--header-height);
-    z-index: 90;
-    background: var(--ink);
-  }
-
-  .section-tab {
-    flex: 1;
-    padding: 14px 8px;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(138,173,150,0.5);
-    cursor: pointer;
-    transition: color 0.2s;
-    border-bottom: 2px solid transparent;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    -webkit-appearance: none;
-  }
-
-  .section-tab.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
-  }
-
-  /* ─── PANELS ─── */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* ─── TIMELINE ─── */
-  .timeline-wrap {
-    padding: 24px 20px 32px;
-  }
-
-  .timeline {
-    position: relative;
-    padding-left: 24px;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 8px;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    opacity: 0.3;
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 32px;
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  .timeline-item.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -21px;
-    top: 7px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--green-light);
-    border: 2px solid var(--gold);
-    box-shadow: 0 0 6px rgba(201,150,58,0.4);
-  }
-
-  .timeline-year {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    margin-bottom: 5px;
-  }
-
-  .timeline-event {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.3;
-    margin-bottom: 6px;
-  }
-
-  .timeline-desc {
-    font-size: 0.8rem;
-    color: var(--mist);
-    line-height: 1.7;
-  }
-
-  /* ─── LANDMARKS ─── */
-  .landmarks-wrap {
-    padding: 20px 16px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .landmark-card {
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, background 0.2s;
-  }
-
-  .landmark-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .landmark-card.expanded {
-    border-color: rgba(201,150,58,0.5);
-    background: rgba(12,24,16,0.7);
-  }
-
-  .landmark-head {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .landmark-head-text { flex: 1; }
-
-  .landmark-name {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.25;
-  }
-
-  .landmark-era {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .landmark-toggle {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,150,58,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-    font-size: 1rem;
-    transition: transform 0.3s, background 0.2s;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .landmark-card.expanded .landmark-toggle {
-    transform: rotate(45deg);
-    background: var(--gold);
-    color: var(--ink);
-  }
-
-  .landmark-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-  }
-
-  .landmark-body.open {
-    max-height: 800px;
-  }
-
-  .landmark-content {
-    padding: 0 16px 20px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .landmark-banner {
-    width: 100%;
-    height: 180px;
-    border-radius: 6px;
-    margin: 16px 0 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 14px 16px;
-    position: relative;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    background-color: #1a2d22;
-  }
-
-  .landmark-banner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
-    border-radius: 6px;
-  }
-
-  .landmark-banner-name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.1rem;
-    font-weight: 900;
-    color: #fff;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-    line-height: 1.2;
-  }
-
-  .landmark-banner-era {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.7);
-    position: relative;
-    z-index: 1;
-    margin-top: 4px;
-  }
-
-  .landmark-desc {
-    font-size: 0.82rem;
-    color: #c8ddd0;
-    line-height: 1.75;
-    margin-bottom: 14px;
-  }
-
-  .practical-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 14px;
-    background: rgba(12,24,16,0.8);
-    border: 1px solid rgba(201,150,58,0.25);
-    border-radius: 4px;
-    margin-bottom: 12px;
-  }
-
-  .info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .info-label {
-    font-family: var(--mono);
-    font-size: 0.56rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #C9963A;
-  }
-
-  .info-value {
-    font-size: 0.76rem;
-    color: #e8f5ee;
-    line-height: 1.5;
-  }
-
-  .info-value.free { color: #6ec67a; font-weight: 600; }
-
-  .info-note {
-    grid-column: 1 / -1;
-    font-size: 0.72rem;
-    color: #8aad96;
-    font-style: italic;
-    padding-top: 8px;
-    border-top: 1px solid rgba(201,150,58,0.12);
-    line-height: 1.6;
-  }
-
-  .landmark-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border: 1px solid rgba(138,173,150,0.25);
-    color: var(--mist);
-    border-radius: 2px;
-  }
-
-  /* ─── BOTTOM CITY TAB BAR ─── */
-  .city-tabbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--tab-height);
-    background: rgba(10,20,14,0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(201,150,58,0.2);
-    display: flex;
-    z-index: 200;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .city-tabbar::-webkit-scrollbar { display: none; }
-
-  .city-tab {
-    flex: 1;
-    min-width: 68px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    cursor: pointer;
-    transition: background 0.2s;
-    background: none;
-    border: none;
-    padding: 0 6px;
-    -webkit-appearance: none;
-  }
-
-  .city-tab:active { background: rgba(201,150,58,0.08); }
-
-  .city-tab-cn {
-    font-family: var(--body);
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: rgba(138,173,150,0.5);
-    transition: color 0.2s;
-    white-space: nowrap;
-  }
-
-  .city-tab-en {
-    font-family: var(--mono);
-    font-size: 0.52rem;
-    letter-spacing: 0.06em;
-    color: rgba(138,173,150,0.3);
-    transition: color 0.2s;
-    white-space: nowrap;
-  }
-
-  .city-tab.active .city-tab-cn { color: var(--gold); }
-  .city-tab.active .city-tab-en { color: rgba(201,150,58,0.5); }
-
-  .city-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 24px;
-    height: 2px;
-    background: var(--gold);
-    border-radius: 1px;
-  }
-
-  .city-tab { position: relative; }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .page-enter {
-    animation: fadeIn 0.35s ease forwards;
-  }
-
-  /* ─── FOOTER ─── */
-  .footer {
-    padding: 20px 20px 12px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    text-align: center;
-  }
-
-  .footer p {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    color: rgba(138,173,150,0.3);
-    letter-spacing: 0.1em;
-    line-height: 1.8;
-  }
-
-  /* ─── SECTION LABEL ─── */
-  .section-label {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(201,150,58,0.2);
-  }
-
-  /* Safe area for notch phones */
-  @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    body { padding-bottom: calc(var(--tab-height) + env(safe-area-inset-bottom)); }
-    .city-tabbar { padding-bottom: env(safe-area-inset-bottom); height: calc(var(--tab-height) + env(safe-area-inset-bottom)); }
-  }
+:root {
+  --green: #1A6B4A;
+  --green-light: #2a8a5f;
+  --green-dim: #0f3d2a;
+  --gold: #C9963A;
+  --gold-light: #e8b85a;
+  --ink: #0c1810;
+  --paper: #F5EFE0;
+  --mist: #8aad96;
+  --white: #faf8f3;
+  --serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+  --mono: 'Courier Prime', 'Courier New', monospace;
+  --body: 'Noto Serif SC', Georgia, serif;
+  --nav-h: 56px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: var(--nav-h);
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ─── BOTTOM NAV ─── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--nav-h);
+  background: rgba(10,20,14,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(201,150,58,0.2);
+  display: flex;
+  z-index: 200;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--mist);
+  opacity: 0.5;
+  transition: opacity 0.2s, color 0.2s;
+  font-family: var(--body);
+}
+
+.nav-item.active { opacity: 1; color: var(--gold); }
+.nav-icon { font-size: 1.3rem; line-height: 1; }
+.nav-label { font-size: 0.65rem; letter-spacing: 0.05em; }
+
+/* ─── HOME HERO ─── */
+.home-hero {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 24px 80px;
+  overflow: hidden;
+}
+
+.home-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px);
+  transform: scale(1.1);
+  transition: filter 600ms ease-out, transform 600ms ease-out;
+  z-index: 0;
+}
+
+.home-hero-bg.loaded { filter: blur(0); transform: scale(1); }
+
+.home-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(12,24,16,0.3) 0%, rgba(12,24,16,0.1) 30%, rgba(12,24,16,0.6) 65%, rgba(12,24,16,0.95) 100%);
+}
+
+.home-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 16px 20px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.home-logo {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.home-logo span { color: var(--mist); font-weight: 400; font-style: italic; font-size: 0.68rem; margin-left: 6px; }
+
+.home-search-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: rgba(201,150,58,0.12);
+  border: 1px solid rgba(201,150,58,0.3);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+.hero-city-name {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 12vw, 4rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.hero-city-en {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(250,248,243,0.45);
+  margin-top: 4px;
+}
+
+.hero-quote {
+  margin-top: 20px;
+  font-size: 0.92rem;
+  color: rgba(250,248,243,0.8);
+  line-height: 1.8;
+  min-height: 3.6em;
+}
+
+.hero-quote .cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--gold);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 13px 28px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 24px;
+  font-family: var(--body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-cta:active { transform: scale(0.96); }
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 0; right: 0;
+  text-align: center;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: rgba(138,173,150,0.45);
+  letter-spacing: 0.15em;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ─── SECTION HEADER ─── */
+.sec-header {
+  padding: 28px 20px 14px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sec-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(201,150,58,0.2);
+}
+
+/* ─── THEME CAROUSEL ─── */
+.theme-scroll {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.theme-scroll::-webkit-scrollbar { display: none; }
+
+.theme-card {
+  flex-shrink: 0;
+  width: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--ink);
+  transition: transform 0.2s;
+}
+.theme-card:active { transform: scale(0.96); }
+
+.theme-card-img {
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.theme-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(12,24,16,0.7) 100%);
+}
+
+.theme-card-info { padding: 10px 12px; }
+.theme-card-name { font-size: 0.82rem; font-weight: 600; }
+.theme-card-count { font-family: var(--mono); font-size: 0.58rem; color: var(--mist); margin-top: 3px; }
+
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: rgba(12,24,16,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(138,173,150,0.2);
+  background: transparent;
+  color: var(--mist);
+  font-family: var(--body);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-chip.active {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+.filter-sep {
+  width: 1px;
+  flex-shrink: 0;
+  background: rgba(138,173,150,0.15);
+  margin: 4px 2px;
+}
+
+/* ─── CITY CARDS ─── */
+.city-cards {
+  padding: 16px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.city-card {
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.city-card.visible { opacity: 1; transform: translateY(0); }
+.city-card:active { transform: scale(0.98) !important; }
+
+.city-card-img {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.city-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(12,24,16,0.85) 100%);
+}
+
+.city-card-body { padding: 14px 16px 16px; }
+.city-card-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+.city-card-name span {
+  font-weight: 400; font-style: italic;
+  font-size: 0.72rem;
+  color: rgba(250,248,243,0.45);
+  margin-left: 8px;
+}
+.city-card-sub {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--mist);
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+.city-card-hook {
+  font-size: 0.8rem;
+  color: rgba(250,248,243,0.65);
+  line-height: 1.7;
+  margin-top: 10px;
+  font-style: italic;
+}
+.city-card-tags {
+  display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
+}
+.city-card-tag {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  padding: 2px 8px;
+  border: 1px solid rgba(201,150,58,0.25);
+  border-radius: 3px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+/* ─── DETAIL PAGE ─── */
+.detail-page { animation: slideUp 350ms ease-out; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-back {
+  position: absolute;
+  top: 12px; left: 12px;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  z-index: 10;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.detail-hero {
+  position: relative;
+  min-height: 56vw;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 20px 20px;
+  overflow: hidden;
+}
+
+.detail-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: background 0.5s ease;
+}
+.detail-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(12,24,16,0.15) 0%, rgba(12,24,16,0.85) 100%);
+}
+
+.detail-hero-content { position: relative; z-index: 1; }
+
+.detail-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  opacity: 0; animation: fadeUp 0.5s 0.1s forwards;
+}
+
+.detail-title {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 10vw, 3.2rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  opacity: 0; animation: fadeUp 0.5s 0.15s forwards;
+}
+.detail-title em {
+  font-style: italic;
+  color: var(--gold-light);
+  font-size: 0.65em;
+  display: block;
+  margin-top: 4px;
+}
+
+.detail-meta {
+  display: flex; gap: 16px; margin-top: 12px;
+  opacity: 0; animation: fadeUp 0.5s 0.25s forwards;
+}
+.detail-stat {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: rgba(138,173,150,0.7);
+  letter-spacing: 0.06em;
+}
+.detail-stat strong {
+  color: var(--gold);
+  font-size: 0.9rem;
+  display: block;
+  font-family: var(--serif);
+  font-weight: 700;
+}
+
+/* ─── OVERVIEW ─── */
+.overview {
+  padding: 16px 20px;
+  background: rgba(201,150,58,0.05);
+  border-bottom: 1px solid rgba(201,150,58,0.15);
+  border-left: 3px solid var(--gold);
+}
+.overview p {
+  font-size: 0.82rem;
+  color: rgba(250,248,243,0.7);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* ─── SECTION TABS ─── */
+.section-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--ink);
+}
+.section-tab {
+  flex: 1;
+  padding: 14px 8px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(138,173,150,0.5);
+  cursor: pointer;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  -webkit-appearance: none;
+  transition: color 0.2s;
+}
+.section-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.2s ease; }
+
+/* ─── TIMELINE ─── */
+.timeline-wrap { padding: 24px 20px 32px; }
+
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  opacity: 0.3;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -21px; top: 7px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green-light);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 6px rgba(201,150,58,0.4);
+}
+
+.timeline-year {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 5px;
+}
+.timeline-event {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.timeline-desc {
+  font-size: 0.8rem;
+  color: var(--mist);
+  line-height: 1.7;
+}
+
+/* ─── LANDMARKS ─── */
+.landmarks-wrap {
+  padding: 20px 16px 32px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.landmark-card {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, background 0.2s;
+}
+.landmark-card.visible { opacity: 1; transform: translateY(0); }
+.landmark-card.expanded { border-color: rgba(201,150,58,0.5); background: rgba(12,24,16,0.7); }
+
+.landmark-head {
+  padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.landmark-head-text { flex: 1; }
+.landmark-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.landmark-era {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.landmark-toggle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,150,58,0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  font-size: 1rem;
+  transition: transform 0.3s, background 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.landmark-card.expanded .landmark-toggle {
+  transform: rotate(45deg);
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.landmark-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.landmark-body.open { max-height: 1200px; }
+
+.landmark-content {
+  padding: 0 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.landmark-banner {
+  width: 100%; height: 180px;
+  border-radius: 6px;
+  margin: 16px 0 14px;
+  position: relative; overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-color: #1a2d22;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: flex-end;
+  padding: 14px 16px;
+}
+.landmark-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
+  border-radius: 6px;
+}
+.landmark-banner-name {
+  font-family: var(--serif);
+  font-size: 1.1rem; font-weight: 900;
+  color: #fff;
+  position: relative; z-index: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+.landmark-banner-era {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7);
+  position: relative; z-index: 1;
+  margin-top: 4px;
+}
+
+.landmark-desc {
+  font-size: 0.82rem;
+  color: #c8ddd0;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.practical-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(12,24,16,0.8);
+  border: 1px solid rgba(201,150,58,0.25);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.info-item { display: flex; flex-direction: column; gap: 4px; }
+.info-label {
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.info-value { font-size: 0.76rem; color: #e8f5ee; line-height: 1.5; }
+.info-value.free { color: #6ec67a; font-weight: 600; }
+.info-note {
+  grid-column: 1 / -1;
+  font-size: 0.72rem;
+  color: var(--mist);
+  font-style: italic;
+  padding-top: 8px;
+  border-top: 1px solid rgba(201,150,58,0.12);
+  line-height: 1.6;
+}
+
+.landmark-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid rgba(138,173,150,0.25);
+  color: var(--mist);
+  border-radius: 2px;
+}
+
+/* ─── WORLD EVENTS ─── */
+.world-events {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  background: rgba(201,150,58,0.06);
+  border: 1px solid rgba(201,150,58,0.15);
+  border-radius: 6px;
+  animation: fadeUp 0.3s ease;
+}
+.world-events-title {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.world-event {
+  padding: 8px 0;
+  border-top: 1px solid rgba(201,150,58,0.1);
+}
+.world-event:first-of-type { border-top: none; }
+.world-event-city {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.world-event-text {
+  font-size: 0.76rem;
+  color: var(--mist);
+  line-height: 1.6;
+}
+
+/* ─── SEARCH PAGE ─── */
+.search-page { min-height: calc(100vh - var(--nav-h)); animation: fadeIn 0.25s ease; }
+
+.search-bar {
+  padding: 16px 20px 12px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  position: sticky;
+  top: 0; z-index: 90;
+  background: rgba(12,24,16,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(138,173,150,0.2);
+  background: rgba(255,255,255,0.05);
+  color: var(--white);
+  font-family: var(--body);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--gold); }
+.search-input::placeholder { color: rgba(138,173,150,0.4); }
+
+.search-content { padding: 0 20px 32px; }
+
+.search-result {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.search-result:active { background: rgba(201,150,58,0.06); }
+
+.search-result-thumb {
+  width: 52px; height: 52px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+.search-result-info { flex: 1; }
+.search-result-name { font-size: 0.92rem; font-weight: 600; }
+.search-result-name span {
+  font-weight: 400; font-style: italic;
+  font-size: 0.72rem;
+  color: rgba(250,248,243,0.45);
+  margin-left: 6px;
+}
+.search-result-sub { font-size: 0.68rem; color: var(--mist); margin-top: 3px; font-family: var(--mono); }
+
+.search-theme-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.search-theme-item {
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.search-theme-item:active { border-color: rgba(201,150,58,0.3); }
+.search-theme-emoji { font-size: 1.3rem; }
+.search-theme-name { font-size: 0.82rem; font-weight: 600; margin-top: 6px; }
+.search-theme-count { font-size: 0.6rem; color: var(--mist); font-family: var(--mono); margin-top: 2px; }
+
+.continent-item {
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.continent-hdr {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+.continent-hdr span { font-family: var(--mono); font-size: 0.62rem; color: var(--mist); }
+.continent-hdr .arrow { transition: transform 0.3s; font-size: 0.7rem; color: var(--mist); }
+.continent-item.open .arrow { transform: rotate(90deg); }
+.continent-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.continent-item.open .continent-body { max-height: 600px; }
+.continent-city {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+.continent-city:active { background: rgba(201,150,58,0.06); }
+.continent-city-flag { font-size: 1.1rem; }
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 20px 20px 12px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.footer p {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: rgba(138,173,150,0.3);
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 0;
+  color: rgba(138,173,150,0.4);
+  font-size: 0.85rem;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── SAFE AREA ─── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
+  .bottom-nav { padding-bottom: env(safe-area-inset-bottom); height: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
+}
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div class="masthead-logo">环球史迹<span>Global Chronicles</span></div>
-  <div class="masthead-city" id="mastCityLabel"></div>
-</header>
-
 <div id="app"></div>
 
-<nav class="city-tabbar" id="cityTabbar"></nav>
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" data-tab="home" onclick="navTo('#/')">
+    <span class="nav-icon">🌍</span>
+    <span class="nav-label">发现</span>
+  </button>
+  <button class="nav-item" data-tab="search" onclick="navTo('#/search')">
+    <span class="nav-icon">🔍</span>
+    <span class="nav-label">搜索</span>
+  </button>
+</nav>
 
 <script>
+/* ═══════════════════════════════════════
+   THEMES & CONTINENTS
+   ═══════════════════════════════════════ */
+const THEMES = [
+  { id: 'imperial', name: '帝都传奇', emoji: '👑', cover: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
+  { id: 'ancient', name: '古代奇迹', emoji: '🏛', cover: 'Great Pyramid of Giza', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 100%)' },
+  { id: 'silk-road', name: '丝绸之路', emoji: '🐪', cover: 'Grand Bazaar, Istanbul', gradient: 'linear-gradient(135deg, #6B4C11 0%, #8B6914 100%)' },
+  { id: 'maritime', name: '海洋文明', emoji: '⚓', cover: 'Colosseum', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
+  { id: 'religion', name: '信仰之城', emoji: '🕌', cover: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
+  { id: 'renaissance', name: '文明复兴', emoji: '🎨', cover: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 100%)' },
+];
+
+const CONTINENTS = [
+  { id: 'asia', name: '亚洲' },
+  { id: 'europe', name: '欧洲' },
+  { id: 'africa', name: '非洲' },
+  { id: 'americas', name: '美洲' },
+];
+
+const CONTINENT_MAP = { asia: '亚洲', europe: '欧洲', africa: '非洲', americas: '美洲' };
+
+/* ═══════════════════════════════════════
+   CITY DATA — 15 cities (5 P0 + 10 P1)
+   ═══════════════════════════════════════ */
 const CITIES = [
   {
-    id: 'beijing',
-    name: '北京',
-    nameEn: 'Beijing',
-    country: '中国',
-    coords: '39°54\'N  116°23\'E',
-    gradient: 'linear-gradient(160deg, #1a3a20 0%, #0c1810 60%, #3d1a00 100%)',
+    id: 'beijing', name: '北京', nameEn: 'Beijing',
+    country: '中国', countryFlag: '🇨🇳', continent: 'asia',
+    themes: ['imperial', 'ancient'],
+    coords: "39°54'N 116°23'E",
+    wiki: 'Beijing',
+    heroGradient: 'linear-gradient(160deg, #1a3a20 0%, #0c1810 60%, #3d1a00 100%)',
+    hook: '从商周燕国到明清帝都，3000年从未停歇',
+    heroQuote: '1420年，紫禁城落成时，欧洲还在黑暗的中世纪里苦熬最后30年',
+    tagline: '🏛 帝国首都 · 3000年',
     overview: '北京是中华文明的核心，三千年城市史与八百年帝都传统在此交汇。从商周燕国到明清紫禁城，这座城市见证了无数王朝的兴衰更迭，至今仍是中国的政治与文化中心。',
     timeline: [
       { year: '约公元前1044年', event: '燕国建城', desc: '西周分封，召公奭受封燕地，于今北京西南建城，史称"蓟"，是北京城市史的起点。' },
-      { year: '公元938年', event: '辽代南京', desc: '契丹辽朝将燕京升格为南京，作为五京之一，城市规模大幅扩张，奠定了此后北京城市格局的基础。' },
-      { year: '1153年', event: '金朝迁都中都', desc: '金海陵王完颜亮迁都至此，大规模营建宫殿，北京首次成为全国性政治中心。' },
-      { year: '1271年', event: '元大都建成', desc: '忽必烈命刘秉忠规划建造元大都，棋盘式格局奠定了现代北京城市骨架，成为当时世界上最宏大的城市之一。' },
-      { year: '1406年', event: '永乐迁都·紫禁城破土', desc: '明成祖朱棣决定迁都北京，动员逾百万工匠，历时十四年，于1420年建成紫禁城，共有宫殿九千余间。' },
+      { year: '公元938年', event: '辽代南京', desc: '契丹辽朝将燕京升格为南京，作为五京之一，城市规模大幅扩张。' },
+      { year: '1153年', event: '金朝迁都中都', desc: '金海陵王完颜亮迁都至此，北京首次成为全国性政治中心。' },
+      { year: '1271年', event: '元大都建成', desc: '忽必烈命刘秉忠规划建造元大都，棋盘式格局奠定了现代北京城市骨架。' },
+      { year: '1406年', event: '永乐迁都·紫禁城破土', desc: '明成祖朱棣动员逾百万工匠，历时十四年建成紫禁城，共有宫殿九千余间。' },
       { year: '1644年', event: '清军入关定鼎', desc: '清朝延续并扩建明代宫城格局，增建颐和园、圆明园等皇家园林。' },
-      { year: '1860年', event: '英法联军火烧圆明园', desc: '第二次鸦片战争中，英法联军劫掠并焚毁圆明园，成为中国近代史上最深重的文化创伤之一。' },
-      { year: '1949年', event: '中华人民共和国成立', desc: '毛泽东在天安门城楼宣告建国，北京成为新中国首都，旧城肌理与现代都市在此并存。' },
+      { year: '1860年', event: '英法联军火烧圆明园', desc: '第二次鸦片战争中圆明园被焚毁，成为中国近代史上最深重的文化创伤之一。' },
+      { year: '1949年', event: '中华人民共和国成立', desc: '毛泽东在天安门城楼宣告建国，北京成为新中国首都。' },
     ],
     landmarks: [
-      { name: '故宫（紫禁城）', era: '明·1420年', wiki: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 50%, #2D1B00 100%)', desc: '紫禁城是明清两朝的皇家宫殿，南北长960米，东西宽753米，共有房屋九千余间，是世界上现存规模最大、保存最完整的木质结构古建筑群。1987年被列入世界文化遗产名录。', hours: '淡季 08:30—17:00；旺季 08:30—17:30，周一闭馆', ticket: '旺季 ¥60，淡季 ¥40', note: '需提前在官网实名制预约购票，每日限流8万人次。', tags: ['世界文化遗产', '明清建筑', '皇家宫殿'] },
-      { name: '长城（八达岭段）', era: '秦·公元前214年', wiki: 'Great Wall of China', gradient: 'linear-gradient(135deg, #3D5A3E 0%, #8aad96 50%, #1a2d22 100%)', desc: '万里长城始建于春秋战国，总长度超过21,000公里，是人类历史上最伟大的建筑工程之一。北京段以八达岭最为著名，保存完好，敌楼密布。', hours: '旺季 07:30—18:00；淡季 08:00—17:00', ticket: '旺季 ¥65，淡季 ¥40', note: '八达岭距北京市区约75公里，可乘高铁至八达岭站。慕田峪段人较少且风景更好。', tags: ['世界文化遗产', '秦汉工程', '明代修缮'] },
-      { name: '天坛', era: '明·1420年', wiki: 'Temple of Heaven', gradient: 'linear-gradient(135deg, #1A4A7A 0%, #4A90C4 50%, #0d2940 100%)', desc: '天坛是明清两代皇帝祭天祈谷的场所，占地约273万平方米。祈年殿以三层蓝色琉璃瓦攒尖顶为标志，纯木榫卯结构，被誉为中国古代建筑的杰作。', hours: '公园 06:00—22:00；景区建筑 08:00—17:30', ticket: '联票旺季 ¥35，淡季 ¥30', note: '清晨6—8点可欣赏居民打太极、唱京剧，是体验老北京市井生活的绝佳时机。', tags: ['世界文化遗产', '皇家祭坛', '声学奇观'] },
-      { name: '颐和园', era: '清·1750年', wiki: 'Summer Palace', gradient: 'linear-gradient(135deg, #2D6A4F 0%, #74C69D 50%, #1B4332 100%)', desc: '颐和园原名清漪园，清乾隆十五年始建，1888年慈禧重建。占地约290万平方米，万寿山与昆明湖相映，长廊、佛香阁、十七孔桥构成中国皇家园林最后的绝唱。', hours: '旺季 06:30—18:00；淡季 07:00—17:00', ticket: '联票旺季 ¥50，淡季 ¥30', note: '冬季昆明湖结冰时可在湖面滑冰，是独特的北京冬日体验。', tags: ['世界文化遗产', '皇家园林', '山水园林'] },
+      { name: '故宫（紫禁城）', era: '明·1420年', yearNum: 1420, wiki: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 50%, #2D1B00 100%)', desc: '紫禁城是明清两朝的皇家宫殿，南北长960米，东西宽753米，共有房屋九千余间，是世界上现存规模最大、保存最完整的木质结构古建筑群。', hours: '淡季 08:30—17:00；旺季 08:30—17:30，周一闭馆', ticket: '旺季 ¥60，淡季 ¥40', note: '需提前在官网实名制预约购票，每日限流8万人次。', tags: ['世界文化遗产', '明清建筑', '皇家宫殿'],
+        worldEvents: [
+          { flag: '🇹🇷', city: '伊斯坦布尔', event: '奥斯曼帝国正积蓄力量，33年后将攻陷君士坦丁堡' },
+          { flag: '🇮🇹', city: '佛罗伦萨', event: '文艺复兴萌芽，布鲁内莱斯基正在建造圣母百花大教堂穹顶' },
+          { flag: '🇫🇷', city: '法国', event: '圣女贞德即将改变百年战争的走向' }
+        ]
+      },
+      { name: '长城（八达岭段）', era: '秦·公元前214年', yearNum: -214, wiki: 'Great Wall of China', gradient: 'linear-gradient(135deg, #3D5A3E 0%, #8aad96 50%, #1a2d22 100%)', desc: '万里长城始建于春秋战国，总长度超过21,000公里，是人类历史上最伟大的建筑工程之一。', hours: '旺季 07:30—18:00；淡季 08:00—17:00', ticket: '旺季 ¥65，淡季 ¥40', note: '慕田峪段人较少且风景更好。', tags: ['世界文化遗产', '秦汉工程', '明代修缮'],
+        worldEvents: [
+          { flag: '🇮🇹', city: '罗马', event: '刚刚击败汉尼拔，罗马共和国正在崛起为地中海霸主' },
+          { flag: '🇬🇷', city: '亚历山大里亚', event: '托勒密王朝建设亚历山大图书馆，汇聚人类知识的巅峰' }
+        ]
+      },
+      { name: '天坛', era: '明·1420年', yearNum: 1420, wiki: 'Temple of Heaven', gradient: 'linear-gradient(135deg, #1A4A7A 0%, #4A90C4 50%, #0d2940 100%)', desc: '天坛是明清两代皇帝祭天祈谷的场所，祈年殿三层蓝色琉璃瓦攒尖顶，纯木榫卯结构，被誉为中国古代建筑的杰作。', hours: '公园 06:00—22:00；景区 08:00—17:30', ticket: '联票旺季 ¥35，淡季 ¥30', note: '清晨可欣赏居民打太极、唱京剧。', tags: ['世界文化遗产', '皇家祭坛', '声学奇观'] },
+      { name: '颐和园', era: '清·1750年', yearNum: 1750, wiki: 'Summer Palace', gradient: 'linear-gradient(135deg, #2D6A4F 0%, #74C69D 50%, #1B4332 100%)', desc: '颐和园占地约290万平方米，万寿山与昆明湖相映，长廊、佛香阁、十七孔桥构成中国皇家园林最后的绝唱。', hours: '旺季 06:30—18:00；淡季 07:00—17:00', ticket: '联票旺季 ¥50，淡季 ¥30', note: '冬季昆明湖结冰时可在湖面滑冰。', tags: ['世界文化遗产', '皇家园林', '山水园林'],
+        worldEvents: [
+          { flag: '🇫🇷', city: '巴黎', event: '启蒙运动如火如荼，伏尔泰和卢梭正在改变欧洲思想' },
+          { flag: '🇺🇸', city: '北美', event: '距美国独立宣言还有26年，殖民地已暗流涌动' }
+        ]
+      },
     ]
   },
   {
-    id: 'rome',
-    name: '罗马',
-    nameEn: 'Rome',
-    country: '意大利',
-    coords: '41°53\'N  12°29\'E',
-    gradient: 'linear-gradient(160deg, #3a1a08 0%, #1a0d05 60%, #0d1a0d 100%)',
-    overview: '罗马横跨三千年，从传说中罗慕路斯建城到罗马共和国、帝国、教皇国直至现代意大利首都。这座城市曾是已知世界的政治、宗教与文化中心，其遗迹至今仍与现代都市生活并存共生。',
+    id: 'rome', name: '罗马', nameEn: 'Rome',
+    country: '意大利', countryFlag: '🇮🇹', continent: 'europe',
+    themes: ['imperial', 'ancient', 'maritime'],
+    coords: "41°53'N 12°29'E",
+    wiki: 'Rome',
+    heroGradient: 'linear-gradient(160deg, #3a1a08 0%, #1a0d05 60%, #0d1a0d 100%)',
+    hook: '从罗慕路斯到教皇国，永恒之城从不落幕',
+    heroQuote: '罗马人用混凝土和拱券征服了建筑学，就像他们用军团征服了世界',
+    tagline: '⚓ 永恒之城 · 2800年',
+    overview: '罗马横跨三千年，从传说中罗慕路斯建城到罗马帝国、教皇国直至现代意大利首都。这座城市曾是已知世界的政治、宗教与文化中心，其遗迹至今仍与现代都市生活并存共生。',
     timeline: [
-      { year: '公元前753年', event: '传说建城', desc: '据罗马神话，孪生兄弟罗慕路斯与雷穆斯在台伯河畔建立罗马城。考古证实公元前10世纪前后确有聚落存在。' },
-      { year: '公元前509年', event: '共和国建立', desc: '罗马人驱逐最后一位国王，建立共和政体，奠定了西方民主政治的重要基础。' },
-      { year: '公元前44年', event: '凯撒遇刺', desc: '尤利乌斯·凯撒在元老院被刺杀，共和国陷入内战，此后屋大维建立帝国，成为奥古斯都皇帝。' },
-      { year: '公元80年', event: '罗马斗兽场落成', desc: '科洛塞姆竣工，可容纳5万至8万观众，是古代世界最大的圆形剧场。' },
-      { year: '公元313年', event: '基督教合法化', desc: '君士坦丁大帝颁布米兰敕令，教会势力迅速扩张，罗马逐渐成为基督教世界的精神中心。' },
-      { year: '公元476年', event: '西罗马帝国覆灭', desc: '末代皇帝被废黜，西罗马帝国灭亡，欧洲进入中世纪。' },
-      { year: '1506年', event: '圣彼得大教堂重建', desc: '教皇儒略二世命令重建教堂，米开朗基罗、拉斐尔、贝尼尼等大师相继参与，历时120余年建成。' },
-      { year: '1871年', event: '罗马成为意大利首都', desc: '意大利军队进占罗马，结束了教皇国对罗马长达千年的统治。' },
+      { year: '公元前753年', event: '传说建城', desc: '孪生兄弟罗慕路斯与雷穆斯在台伯河畔建立罗马城。' },
+      { year: '公元前509年', event: '共和国建立', desc: '罗马人驱逐最后一位国王，建立共和政体。' },
+      { year: '公元前44年', event: '凯撒遇刺', desc: '凯撒在元老院被刺杀，此后屋大维建立帝国。' },
+      { year: '公元80年', event: '斗兽场落成', desc: '科洛塞姆竣工，可容纳5万至8万观众。' },
+      { year: '公元313年', event: '基督教合法化', desc: '君士坦丁颁布米兰敕令，罗马逐渐成为基督教世界的精神中心。' },
+      { year: '公元476年', event: '西罗马帝国覆灭', desc: '末代皇帝被废黜，欧洲进入中世纪。' },
+      { year: '1506年', event: '圣彼得大教堂重建', desc: '米开朗基罗、拉斐尔等大师参与，历时120余年建成。' },
+      { year: '1871年', event: '罗马成为意大利首都', desc: '意大利军队进占罗马，结束教皇国对罗马的统治。' },
     ],
     landmarks: [
-      { name: '科洛塞姆（斗兽场）', era: '公元72—80年', wiki: 'Colosseum', gradient: 'linear-gradient(135deg, #5C3317 0%, #C9963A 50%, #2A1500 100%)', desc: '科洛塞姆是罗马帝国修建的椭圆形竞技场，长轴188米、高约50米。其拱券结构与外立面三层叠列的建筑语言深刻影响了西方建筑两千年。', hours: '09:00—19:00（夏季延至 20:00）', ticket: '€18（含古罗马广场联票）', note: '强烈建议网上预约跳过排队，旺季现场等候可达2小时。', tags: ['世界文化遗产', '古罗马', '建筑奇迹'] },
-      { name: '万神殿（Pantheon）', era: '公元125年', wiki: 'Pantheon, Rome', gradient: 'linear-gradient(135deg, #4A3728 0%, #D4A96A 50%, #1E150D 100%)', desc: '万神殿由哈德良皇帝重建，圆顶直径43.3米，这一尺寸在此后1300年里无人超越。穹顶以火山灰混凝土浇筑，内部无一支柱，是古罗马工程技术的最高成就。', hours: '09:00—19:00（周日 09:00—18:00）', ticket: '€5', note: '雨天从穹顶圆孔落入的雨水通过地板排水孔流走，是特别的观赏体验。', tags: ['古罗马', '最佳保存古迹', '混凝土穹顶'] },
-      { name: '梵蒂冈圣彼得大教堂', era: '1506—1626年', wiki: "St. Peter's Basilica", gradient: 'linear-gradient(135deg, #1A1A4A 0%, #6A7FBF 50%, #0D0D2A 100%)', desc: '圣彼得大教堂是天主教世界最神圣的教堂，米开朗基罗设计的穹顶高达136米，贝尼尼设计的椭圆形廊柱如张开的双臂拥抱信众。', hours: '教堂 07:00—19:00；穹顶 08:00—18:00', ticket: '教堂免费；穹顶步行 €8', note: '进入需着装保守（禁止短裤、露肩）。登穹顶约330级阶梯，视野壮观。', tags: ['世界文化遗产', '文艺复兴', '巴洛克'] },
-      { name: '古罗马广场', era: '公元前7世纪起', wiki: 'Roman Forum', gradient: 'linear-gradient(135deg, #6B4C11 0%, #C9963A 45%, #3D2800 100%)', desc: '古罗马广场是共和国与帝国时代的政治、宗教和商业中心，凯撒神庙、维斯塔神庙、提图斯凯旋门等遗迹至今清晰可辨。', hours: '09:00—日落前1小时', ticket: '€18（科洛塞姆联票）', note: '建议由帕拉丁山高处俯瞰全貌再下探细节，路线更流畅。', tags: ['古罗马', '考古遗迹', '共和国遗址'] },
+      { name: '科洛塞姆（斗兽场）', era: '公元72—80年', yearNum: 80, wiki: 'Colosseum', gradient: 'linear-gradient(135deg, #5C3317 0%, #C9963A 50%, #2A1500 100%)', desc: '科洛塞姆是罗马帝国修建的椭圆形竞技场，长轴188米、高约50米，其拱券结构深刻影响了西方建筑两千年。', hours: '09:00—19:00（夏季延至20:00）', ticket: '€18（含古罗马广场联票）', note: '强烈建议网上预约跳过排队。', tags: ['世界文化遗产', '古罗马', '建筑奇迹'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '中国', event: '东汉时期，班超经营西域，打通丝绸之路东段' },
+          { flag: '🇮🇱', city: '耶路撒冷', event: '第二圣殿刚刚被罗马军队摧毁（公元70年），犹太人开始大流散' }
+        ]
+      },
+      { name: '万神殿（Pantheon）', era: '公元125年', yearNum: 125, wiki: 'Pantheon, Rome', gradient: 'linear-gradient(135deg, #4A3728 0%, #D4A96A 50%, #1E150D 100%)', desc: '万神殿圆顶直径43.3米，此后1300年无人超越。穹顶以火山灰混凝土浇筑，无一支柱。', hours: '09:00—19:00', ticket: '€5', note: '雨天从穹顶圆孔落入的雨水通过地板排水孔流走。', tags: ['古罗马', '最佳保存古迹', '混凝土穹顶'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '中国', event: '东汉蔡伦改进造纸术，人类信息传播迎来革命' },
+          { flag: '🇮🇳', city: '印度', event: '贵霜帝国鼎盛，犍陀罗艺术将佛像传向东方' }
+        ]
+      },
+      { name: '梵蒂冈圣彼得大教堂', era: '1506—1626年', yearNum: 1626, wiki: "St. Peter's Basilica", gradient: 'linear-gradient(135deg, #1A1A4A 0%, #6A7FBF 50%, #0D0D2A 100%)', desc: '圣彼得大教堂是天主教世界最神圣的教堂，米开朗基罗设计的穹顶高达136米。', hours: '教堂 07:00—19:00；穹顶 08:00—18:00', ticket: '教堂免费；穹顶 €8', note: '进入需着装保守。登穹顶约330级阶梯。', tags: ['世界文化遗产', '文艺复兴', '巴洛克'] },
+      { name: '古罗马广场', era: '公元前7世纪起', yearNum: -600, wiki: 'Roman Forum', gradient: 'linear-gradient(135deg, #6B4C11 0%, #C9963A 45%, #3D2800 100%)', desc: '古罗马广场是共和国与帝国时代的政治、宗教和商业中心。', hours: '09:00—日落前1小时', ticket: '€18（科洛塞姆联票）', note: '建议由帕拉丁山高处俯瞰全貌。', tags: ['古罗马', '考古遗迹', '共和国遗址'] },
     ]
   },
   {
-    id: 'istanbul',
-    name: '伊斯坦布尔',
-    nameEn: 'Istanbul',
-    country: '土耳其',
-    coords: '41°00\'N  28°58\'E',
-    gradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
-    overview: '伊斯坦布尔是世界上唯一横跨两大洲的城市，博斯普鲁斯海峡将其一分为二。历经拜占庭帝国与奥斯曼帝国，积淀了东西方文明最深厚的交汇，每一块石头都镌刻着帝国兴亡的记忆。',
+    id: 'istanbul', name: '伊斯坦布尔', nameEn: 'Istanbul',
+    country: '土耳其', countryFlag: '🇹🇷', continent: 'europe',
+    themes: ['silk-road', 'maritime', 'imperial'],
+    coords: "41°00'N 28°58'E",
+    wiki: 'Istanbul',
+    heroGradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
+    hook: '横跨两洲，拜占庭与奥斯曼的帝国交替',
+    heroQuote: '1453年5月29日，当奥斯曼大军攻破城墙的那一刻，中世纪结束了',
+    tagline: '⚓ 两洲之门 · 2700年',
+    overview: '伊斯坦布尔是世界上唯一横跨两大洲的城市。历经拜占庭帝国与奥斯曼帝国，积淀了东西方文明最深厚的交汇，每一块石头都镌刻着帝国兴亡的记忆。',
     timeline: [
-      { year: '公元前657年', event: '拜占庭城建立', desc: '希腊移民在金角湾与博斯普鲁斯海峡交汇的战略要地建立殖民地，以领袖拜占斯命名。' },
-      { year: '公元330年', event: '君士坦丁堡建都', desc: '罗马皇帝君士坦丁大帝将帝国首都东迁，更名"新罗马"，城市成为地中海世界最繁荣的都市。' },
-      { year: '537年', event: '圣索菲亚大教堂落成', desc: '查士丁尼一世建造的圣索菲亚大教堂落成，穹顶直径31米，被誉为拜占庭建筑的最高成就。' },
-      { year: '1204年', event: '第四次十字军劫掠', desc: '十字军转而攻打君士坦丁堡，大量珍宝流失西方，帝国元气大伤。' },
-      { year: '1453年5月29日', event: '奥斯曼帝国攻陷君士坦丁堡', desc: '苏丹穆罕默德二世率军攻破城墙，东罗马帝国灭亡，中世纪终结。' },
-      { year: '1520—1566年', event: '苏莱曼大帝时代', desc: '奥斯曼帝国达到鼎盛，首席建筑师希南在伊斯坦布尔建造了数十座伟大建筑。' },
-      { year: '1923年', event: '土耳其共和国建立', desc: '凯末尔建立共和国，迁都安卡拉，伊斯坦布尔转型为经济文化中心。' },
+      { year: '公元前657年', event: '拜占庭城建立', desc: '希腊移民在金角湾与博斯普鲁斯海峡交汇处建立殖民地。' },
+      { year: '公元330年', event: '君士坦丁堡建都', desc: '君士坦丁大帝将帝国首都东迁，更名"新罗马"。' },
+      { year: '537年', event: '圣索菲亚大教堂落成', desc: '查士丁尼一世建造，穹顶直径31米，拜占庭建筑最高成就。' },
+      { year: '1204年', event: '第四次十字军劫掠', desc: '十字军攻打君士坦丁堡，大量珍宝流失西方。' },
+      { year: '1453年', event: '奥斯曼攻陷君士坦丁堡', desc: '穆罕默德二世率军攻破城墙，东罗马帝国灭亡。' },
+      { year: '1520—1566年', event: '苏莱曼大帝时代', desc: '奥斯曼帝国达到鼎盛，建筑师希南建造了数十座伟大建筑。' },
+      { year: '1923年', event: '土耳其共和国建立', desc: '凯末尔建立共和国，迁都安卡拉。' },
     ],
     landmarks: [
-      { name: '圣索菲亚大教堂', era: '拜占庭·537年', wiki: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 45%, #C9963A 100%)', desc: '圣索菲亚是拜占庭建筑的顶峰之作，近千年来一直是世界上最大的教堂。1453年后改为清真寺，1934年改为博物馆，2020年再次改回清真寺。', hours: '礼拜时间外对外开放：约 09:00—17:30', ticket: '免费', note: '进入需脱鞋并保管，女性须遮盖头发。建议清晨人少时前往。', tags: ['世界遗产', '拜占庭建筑', '穹顶奇迹'] },
-      { name: '蓝色清真寺', era: '奥斯曼·1616年', wiki: 'Sultan Ahmed Mosque', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 50%, #0D3D6B 100%)', desc: '蓝色清真寺因内部2万余块伊兹尼克蓝色瓷砖得名。六座宣礼塔的设计引发争议，主穹顶直径23.5米，至今仍是活跃的礼拜场所。', hours: '每日五次礼拜期间关闭；日出—日落', ticket: '免费', note: '需脱鞋、遮盖手臂和腿部，女性须覆头。与圣索菲亚相对，步行仅需3分钟。', tags: ['奥斯曼建筑', '伊兹尼克瓷砖', '活跃清真寺'] },
-      { name: '托普卡帕宫', era: '奥斯曼·1465年', wiki: 'Topkapı Palace', gradient: 'linear-gradient(135deg, #2A1A0A 0%, #8B6914 50%, #4A3010 100%)', desc: '托普卡帕宫是奥斯曼帝国苏丹的官邸，历时400余年持续扩建，占地约70万平方米。珍宝馆收藏有托普卡帕匕首、86克拉斯普恩之泪钻石等无价之宝。', hours: '09:00—18:45（夏季）；09:00—16:45（冬季）；周二闭馆', ticket: '宫殿 €35；哈莱姆宫另购票 €20', note: '哈莱姆宫必须参加定时导览，名额有限，入园后立即前往预约。', tags: ['奥斯曼帝国', '皇家宫殿', '世界遗产'] },
-      { name: '大巴扎', era: '奥斯曼·1461年', wiki: 'Grand Bazaar, Istanbul', gradient: 'linear-gradient(135deg, #4A0A0A 0%, #C94A1A 50%, #2A0A00 100%)', desc: '大巴扎是世界上最古老、最大的有顶集市之一，拥有60余条街道、4000余间店铺，历史上是丝绸之路终点。每日接待访客逾25万人次。', hours: '周一至周六 08:30—19:00；周日闭馆', ticket: '免费入场', note: '砍价是传统文化的一部分，初始报价通常是底价的2—3倍。', tags: ['丝绸之路', '历史集市', '商业文化'] },
+      { name: '圣索菲亚大教堂', era: '拜占庭·537年', yearNum: 537, wiki: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 45%, #C9963A 100%)', desc: '圣索菲亚是拜占庭建筑的顶峰之作，近千年来一直是世界上最大的教堂。', hours: '礼拜时间外开放 09:00—17:30', ticket: '免费', note: '进入需脱鞋，女性须遮盖头发。', tags: ['世界遗产', '拜占庭建筑', '穹顶奇迹'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '中国', event: '南北朝时期，佛教在中国蓬勃发展，少林寺已建立两年' },
+          { flag: '🇲🇽', city: '墨西哥', event: '特奥蒂瓦坎城正处鼎盛，太阳金字塔已矗立数百年' }
+        ]
+      },
+      { name: '蓝色清真寺', era: '奥斯曼·1616年', yearNum: 1616, wiki: 'Sultan Ahmed Mosque', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 50%, #0D3D6B 100%)', desc: '因内部2万余块伊兹尼克蓝色瓷砖得名，六座宣礼塔至今仍是活跃的礼拜场所。', hours: '日出—日落，礼拜期间关闭', ticket: '免费', note: '与圣索菲亚步行仅需3分钟。', tags: ['奥斯曼建筑', '伊兹尼克瓷砖', '活跃清真寺'] },
+      { name: '托普卡帕宫', era: '奥斯曼·1465年', yearNum: 1465, wiki: 'Topkapı Palace', gradient: 'linear-gradient(135deg, #2A1A0A 0%, #8B6914 50%, #4A3010 100%)', desc: '奥斯曼帝国苏丹的官邸，历时400余年持续扩建，占地约70万平方米。', hours: '09:00—18:45（夏季），周二闭馆', ticket: '€35', note: '哈莱姆宫需定时导览，入园后立即预约。', tags: ['奥斯曼帝国', '皇家宫殿', '世界遗产'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '北京', event: '明朝天顺年间，紫禁城已矗立45年' },
+          { flag: '🇮🇹', city: '佛罗伦萨', event: '洛伦佐·美第奇即将掌权，文艺复兴进入巅峰' }
+        ]
+      },
+      { name: '大巴扎', era: '奥斯曼·1461年', yearNum: 1461, wiki: 'Grand Bazaar, Istanbul', gradient: 'linear-gradient(135deg, #4A0A0A 0%, #C94A1A 50%, #2A0A00 100%)', desc: '世界上最古老、最大的有顶集市之一，60余条街道、4000余间店铺。', hours: '周一至周六 08:30—19:00，周日闭馆', ticket: '免费', note: '砍价是传统文化的一部分。', tags: ['丝绸之路', '历史集市', '商业文化'] },
     ]
   },
   {
-    id: 'kyoto',
-    name: '京都',
-    nameEn: 'Kyoto',
-    country: '日本',
-    coords: '35°00\'N  135°46\'E',
-    gradient: 'linear-gradient(160deg, #2a1a3a 0%, #150d20 60%, #1a2a10 100%)',
-    overview: '京都是日本天皇都城长达1100年，积淀了日本文化最精华的层次：神社、寺院、茶道、能乐、传统庭园。二战期间美军刻意绕过京都的轰炸，使其成为世界上保存最完好的古代都市之一。',
+    id: 'kyoto', name: '京都', nameEn: 'Kyoto',
+    country: '日本', countryFlag: '🇯🇵', continent: 'asia',
+    themes: ['religion', 'renaissance'],
+    coords: "35°00'N 135°46'E",
+    wiki: 'Kyoto',
+    heroGradient: 'linear-gradient(160deg, #2a1a3a 0%, #150d20 60%, #1a2a10 100%)',
+    hook: '千年古都，茶道与禅宗的最后守护者',
+    heroQuote: '二战中美军刻意绕过京都的轰炸，因为一位学者说"毁掉京都就是毁掉日本的灵魂"',
+    tagline: '🎨 千年古都 · 1200年',
+    overview: '京都是日本天皇都城长达1100年，积淀了日本文化最精华的层次：神社、寺院、茶道、能乐、传统庭园。二战期间美军刻意绕过京都的轰炸，使其成为保存最完好的古代都市之一。',
     timeline: [
-      { year: '794年', event: '平安京迁都', desc: '桓武天皇以唐长安城为蓝本规划建造平安京。此后400年日本贵族文化绽放，《源氏物语》《枕草子》传世至今。' },
-      { year: '1185年', event: '武家时代开启', desc: '源氏在坛之浦海战中击败平氏，建立镰仓幕府，实权转入武家，此后七百年日本由幕府统治。' },
-      { year: '1338年', event: '室町幕府建立', desc: '足利尊氏在京都建立幕府，枯山水庭园、能乐、茶道等独特的日本美学在此时代形成。' },
-      { year: '1467—1477年', event: '应仁之乱', desc: '围绕将军继承问题爆发的内战使京都遭受严重破坏，日本进入战国时代。' },
-      { year: '1603年', event: '德川幕府·江户时代', desc: '德川家康在江户建立幕府，锁国政策下形成高度精炼的传统文化生态。' },
-      { year: '1868年', event: '明治维新·首都东移', desc: '明治天皇迁都东京，结束了京都1074年的都城地位。' },
+      { year: '794年', event: '平安京迁都', desc: '桓武天皇以唐长安城为蓝本规划建造平安京，此后400年贵族文化绽放。' },
+      { year: '1185年', event: '武家时代开启', desc: '源氏在坛之浦海战中击败平氏，建立镰仓幕府。' },
+      { year: '1338年', event: '室町幕府建立', desc: '足利尊氏在京都建立幕府，枯山水庭园、能乐、茶道在此时代形成。' },
+      { year: '1467年', event: '应仁之乱', desc: '十年内战使京都遭受严重破坏，日本进入战国时代。' },
+      { year: '1603年', event: '德川幕府·江户时代', desc: '锁国政策下形成高度精炼的传统文化生态。' },
+      { year: '1868年', event: '明治维新·首都东移', desc: '明治天皇迁都东京，结束京都1074年的都城地位。' },
     ],
     landmarks: [
-      { name: '伏见稻荷大社', era: '奈良时代·711年', wiki: 'Fushimi Inari-taisha', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '伏见稻荷是全日本3万余座稻荷神社的总本社。山道上绵延约4公里、多达10,000座的朱红色鸟居由企业和个人奉纳，形成举世无双的视觉奇观。', hours: '24小时开放，全年无休', ticket: '免费', note: '凌晨4—6点或深夜是鸟居最空旷神秘的时段。登至山顶约需2小时往返。', tags: ['神道教圣地', '鸟居走廊', '奈良时代'] },
-      { name: '金阁寺（鹿苑寺）', era: '室町·1397年', wiki: 'Kinkaku-ji', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #C9963A 45%, #0D2010 100%)', desc: '金阁寺由足利义满建造，三层阁楼中二三层以金箔贴覆，倒映于镜湖池中，是日本最广为人知的建筑意象。1950年被纵火焚毁，1955年依原貌重建。', hours: '09:00—17:00，全年开放', ticket: '¥500（约24元）', note: '雪天或红叶期间的金阁是京都最美的景象之一。', tags: ['世界遗产', '室町幕府', '金箔建筑'] },
-      { name: '二条城', era: '江户·1603年', wiki: 'Nijo Castle', gradient: 'linear-gradient(135deg, #1A2A3A 0%, #4A7A9B 50%, #0D1A26 100%)', desc: '二条城由德川家康建造，城内以"莺张地板"著称。1867年，末代将军德川庆喜在此宣布大政奉还，终结了265年的江户幕府统治。', hours: '08:45—16:00（最晚入场）；12月26日—1月3日闭馆', ticket: '¥1,300（约62元）', note: '莺张地板确实会发出声响，可以用力踩踩体验一下。室内禁止拍照。', tags: ['世界遗产', '德川幕府', '大政奉还'] },
-      { name: '清水寺', era: '平安·778年', wiki: 'Kiyomizu-dera', gradient: 'linear-gradient(135deg, #3A1A2A 0%, #8B4A6B 50%, #1A0D15 100%)', desc: '清水寺建于音羽山悬崖之上，本堂前舞台以139根高12米的木柱支撑，不用一颗钉子。"从清水舞台跳下去"是日本著名成语，意指破釜沉舟。', hours: '06:00—18:00（特别开放期间延至 21:30）', ticket: '¥500（约24元）', note: '清晨6—7点光线最美且人最少。音羽瀑布三股清泉只能选一股饮用，贪心会无效。', tags: ['世界遗产', '悬崖建筑', '红叶名所'] },
+      { name: '伏见稻荷大社', era: '奈良·711年', yearNum: 711, wiki: 'Fushimi Inari-taisha', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '全日本3万余座稻荷神社的总本社，山道上绵延约4公里、多达10,000座朱红色鸟居。', hours: '24小时开放', ticket: '免费', note: '凌晨或深夜是鸟居最空旷神秘的时段。', tags: ['神道教圣地', '鸟居走廊', '奈良时代'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '长安', event: '唐朝盛世，长安是世界上最繁华的城市，人口逾百万' },
+          { flag: '🇪🇸', city: '西班牙', event: '同年（711年），阿拉伯军队渡过直布罗陀海峡征服伊比利亚' }
+        ]
+      },
+      { name: '金阁寺（鹿苑寺）', era: '室町·1397年', yearNum: 1397, wiki: 'Kinkaku-ji', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #C9963A 45%, #0D2010 100%)', desc: '足利义满建造，三层阁楼以金箔贴覆，倒映于镜湖池中。1950年被纵火焚毁，1955年重建。', hours: '09:00—17:00', ticket: '¥500', note: '雪天或红叶期间的金阁是京都最美景象。', tags: ['世界遗产', '室町幕府', '金箔建筑'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '南京', event: '明朝刚刚建立（1368年），朱元璋定都南京' },
+          { flag: '🇹🇷', city: '伊斯坦布尔', event: '奥斯曼帝国在巴尔干半岛扩张，尼科波利斯战役刚结束' }
+        ]
+      },
+      { name: '二条城', era: '江户·1603年', yearNum: 1603, wiki: 'Nijo Castle', gradient: 'linear-gradient(135deg, #1A2A3A 0%, #4A7A9B 50%, #0D1A26 100%)', desc: '德川家康建造，以"莺张地板"著称。1867年末代将军在此宣布大政奉还。', hours: '08:45—16:00', ticket: '¥1,300', note: '莺张地板确实会发出声响。', tags: ['世界遗产', '德川幕府', '大政奉还'] },
+      { name: '清水寺', era: '平安·778年', yearNum: 778, wiki: 'Kiyomizu-dera', gradient: 'linear-gradient(135deg, #3A1A2A 0%, #8B4A6B 50%, #1A0D15 100%)', desc: '建于悬崖之上，本堂前舞台以139根木柱支撑，不用一颗钉子。', hours: '06:00—18:00', ticket: '¥500', note: '清晨6—7点光线最美且人最少。', tags: ['世界遗产', '悬崖建筑', '红叶名所'] },
     ]
   },
   {
-    id: 'cairo',
-    name: '开罗',
-    nameEn: 'Cairo',
-    country: '埃及',
-    coords: '30°03\'N  31°14\'E',
-    gradient: 'linear-gradient(160deg, #3a2a08 0%, #1e1408 60%, #0d1a0d 100%)',
+    id: 'cairo', name: '开罗', nameEn: 'Cairo',
+    country: '埃及', countryFlag: '🇪🇬', continent: 'africa',
+    themes: ['ancient'],
+    coords: "30°03'N 31°14'E",
+    wiki: 'Cairo',
+    heroGradient: 'linear-gradient(160deg, #3a2a08 0%, #1e1408 60%, #0d1a0d 100%)',
+    hook: '金字塔在城市边缘矗立，4500年时光一步之遥',
+    heroQuote: '站在吉萨高地上，你与4500年前的法老之间，只隔着一片沙漠',
+    tagline: '🏛 文明摇篮 · 5000年',
     overview: '开罗是非洲与阿拉伯世界最大的城市，金字塔在城市边缘矗立，现代开罗的喧嚣与4500年前的宏伟建筑之间仅隔一片沙漠，这种时间的压缩感是世界上任何城市都难以复制的。',
     timeline: [
-      { year: '约公元前3100年', event: '古埃及统一', desc: '传说中那尔迈法老统一上下埃及，孟菲斯成为早期首都，位于今开罗南郊。' },
-      { year: '约公元前2560年', event: '胡夫大金字塔建成', desc: '法老胡夫在吉萨高地建造大金字塔，原高146.5米，是古代世界七大奇迹中唯一保存至今者。' },
-      { year: '公元前332年', event: '亚历山大大帝征服埃及', desc: '托勒密王朝统治埃及近300年，希腊化文明与古埃及文化深度融合。' },
-      { year: '公元641年', event: '阿拉伯征服·伊斯兰化', desc: '阿拉伯将领征服埃及，建立福斯塔特城（开罗前身），伊斯兰教迅速传播。' },
-      { year: '969年', event: '法蒂玛王朝建开罗', desc: '法蒂玛王朝建立新城"al-Qāhira"（意为"胜利者"），即今日开罗之名的由来。' },
-      { year: '1517年', event: '奥斯曼帝国并吞埃及', desc: '塞利姆一世将埃及并入奥斯曼版图，开罗成为帝国最重要的行省城市。' },
-      { year: '1798年', event: '拿破仑远征埃及', desc: '随军学者对古埃及文明进行系统记录，《埃及记述》出版，埃及学由此诞生为独立学科。' },
+      { year: '约公元前3100年', event: '古埃及统一', desc: '那尔迈法老统一上下埃及，孟菲斯成为早期首都。' },
+      { year: '约公元前2560年', event: '胡夫大金字塔建成', desc: '原高146.5米，是古代世界七大奇迹中唯一保存至今者。' },
+      { year: '公元前332年', event: '亚历山大征服埃及', desc: '托勒密王朝统治近300年，希腊化文明与古埃及文化融合。' },
+      { year: '公元641年', event: '阿拉伯征服', desc: '建立福斯塔特城（开罗前身），伊斯兰教迅速传播。' },
+      { year: '969年', event: '法蒂玛王朝建开罗', desc: '新城"al-Qāhira"即"胜利者"，是今日开罗之名由来。' },
+      { year: '1517年', event: '奥斯曼帝国并吞', desc: '开罗成为奥斯曼帝国最重要的行省城市。' },
+      { year: '1798年', event: '拿破仑远征埃及', desc: '随军学者系统记录古埃及文明，埃及学由此诞生。' },
     ],
     landmarks: [
-      { name: '吉萨大金字塔群', era: '古王国·约公元前2560年', wiki: 'Giza pyramid complex', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 45%, #8B6914 100%)', desc: '吉萨金字塔群是古代世界七大奇迹中唯一留存至今的。胡夫金字塔使用约230万块石块，建造精度之高——四个底边误差不超过5厘米——令现代工程师仍叹服。', hours: '08:00—17:00（冬季）；08:00—19:00（夏季）', ticket: '遗址区 £E360（约80元）；进入胡夫内部另购 £E300（限额每日300人）', note: '进入金字塔内部需极早到开门前排队，内部空间极狭窄。骑骆驼合照需明确谈好价格。', tags: ['世界文化遗产', '古代七大奇迹', '法老陵墓'] },
-      { name: '埃及博物馆', era: '近代·1902年', wiki: 'Egyptian Museum', gradient: 'linear-gradient(135deg, #1A1A3A 0%, #6A4A8B 50%, #0D0D1E 100%)', desc: '开罗埃及博物馆收藏文物逾17万件，镇馆之宝包括图坦卡蒙法老的黄金面具及全套陪葬品（1922年发掘）。新大埃及博物馆正在吉萨金字塔旁建设中。', hours: '09:00—17:00，全年开放', ticket: '£E200（约45元）；木乃伊室另收 £E200', note: '图坦卡蒙展品位于2楼正中心区域，是最不应错过的展区。', tags: ['埃及学', '图坦卡蒙', '法老文物'] },
-      { name: '爱资哈尔清真寺', era: '法蒂玛·970年', wiki: 'Al-Azhar Mosque', gradient: 'linear-gradient(135deg, #0A2A1A 0%, #1A6B4A 50%, #0D3D26 100%)', desc: '爱资哈尔清真寺由法蒂玛王朝建造，附属大学建于975年，是世界上最古老的持续运作的大学之一，也是伊斯兰世界最权威的宗教学术机构。', hours: '09:00—17:00（礼拜时关闭约30分钟）', ticket: '免费', note: '需脱鞋、着装保守，入口处提供长袍借用。周边汗·哈利利市集是购买香料、铜器的好去处。', tags: ['法蒂玛王朝', '世界最古老大学', '伊斯兰建筑'] },
-      { name: '萨拉丁城堡', era: '阿尤布·1183年', wiki: 'Cairo Citadel', gradient: 'linear-gradient(135deg, #2A2A1A 0%, #6B6B2A 50%, #1A1A0A 100%)', desc: '萨拉丁城堡位于穆卡塔姆山丘顶端，俯瞰整个开罗城。城堡内的穆罕默德·阿里清真寺仿照伊斯坦布尔蓝色清真寺而建，是埃及最著名的奥斯曼时期建筑。', hours: '08:00—17:00，全年开放', ticket: '£E200（约45元，含多个博物馆）', note: '城堡顶部是俯瞰开罗全景和金字塔群的最佳位置。傍晚日落景色壮观。', tags: ['阿尤布王朝', '军事建筑', '俯瞰全城'] },
+      { name: '吉萨大金字塔群', era: '古王国·约前2560年', yearNum: -2560, wiki: 'Giza pyramid complex', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 45%, #8B6914 100%)', desc: '古代世界七大奇迹中唯一留存至今。胡夫金字塔使用约230万块石块，四个底边误差不超过5厘米。', hours: '08:00—17:00', ticket: '遗址区 约¥80', note: '进入金字塔内部需极早排队，名额有限。', tags: ['世界文化遗产', '古代七大奇迹', '法老陵墓'],
+        worldEvents: [
+          { flag: '🇮🇶', city: '美索不达米亚', event: '苏美尔城邦文明正处鼎盛，楔形文字已发明数百年' },
+          { flag: '🇬🇧', city: '英格兰', event: '巨石阵正在建造中，新石器时代的不列颠人举起巨石' }
+        ]
+      },
+      { name: '埃及博物馆', era: '近代·1902年', yearNum: 1902, wiki: 'Egyptian Museum', gradient: 'linear-gradient(135deg, #1A1A3A 0%, #6A4A8B 50%, #0D0D1E 100%)', desc: '收藏文物逾17万件，镇馆之宝包括图坦卡蒙法老的黄金面具。', hours: '09:00—17:00', ticket: '约¥45', note: '图坦卡蒙展品位于2楼正中心区域。', tags: ['埃及学', '图坦卡蒙', '法老文物'] },
+      { name: '爱资哈尔清真寺', era: '法蒂玛·970年', yearNum: 970, wiki: 'Al-Azhar Mosque', gradient: 'linear-gradient(135deg, #0A2A1A 0%, #1A6B4A 50%, #0D3D26 100%)', desc: '附属大学建于975年，是世界上最古老的持续运作的大学之一。', hours: '09:00—17:00', ticket: '免费', note: '周边汗·哈利利市集是购买香料、铜器的好去处。', tags: ['法蒂玛王朝', '最古老大学', '伊斯兰建筑'],
+        worldEvents: [
+          { flag: '🇯🇵', city: '京都', event: '平安时代，日本贵族文化绽放，《源氏物语》即将问世' },
+          { flag: '🇨🇳', city: '中国', event: '北宋建立不久，活字印刷和火药技术正在改变世界' }
+        ]
+      },
+      { name: '萨拉丁城堡', era: '阿尤布·1183年', yearNum: 1183, wiki: 'Cairo Citadel', gradient: 'linear-gradient(135deg, #2A2A1A 0%, #6B6B2A 50%, #1A1A0A 100%)', desc: '位于穆卡塔姆山丘顶端，俯瞰整个开罗城。', hours: '08:00—17:00', ticket: '约¥45', note: '城堡顶部是俯瞰开罗全景的最佳位置。', tags: ['阿尤布王朝', '军事建筑', '俯瞰全城'] },
     ]
-  }
+  },
+  // ─── P1 CITIES ───────────────────────
+  {
+    id: 'paris', name: '巴黎', nameEn: 'Paris',
+    country: '法国', countryFlag: '🇫🇷', continent: 'europe',
+    themes: ['imperial', 'renaissance'],
+    coords: "48°51'N 2°21'E",
+    wiki: 'Paris',
+    heroGradient: 'linear-gradient(160deg, #1a1a3a 0%, #0d0d1e 60%, #2a1a0a 100%)',
+    hook: '从卢浮宫到埃菲尔铁塔，光之都永不黯淡',
+    heroQuote: '1889年，当埃菲尔铁塔拔地而起时，全巴黎的艺术家都在抗议这座"金属怪物"',
+    tagline: '👑 光之都 · 2000年',
+    overview: '巴黎是法国的心脏与灵魂。从中世纪的哥特大教堂到拿破仑的凯旋门，从印象派画家的塞纳河到香榭丽舍大道的华灯，这座城市将艺术、革命与浪漫编织成了人类文明最璀璨的篇章。',
+    timeline: [
+      { year: '约公元前3世纪', event: 'Parisii部落定居', desc: '凯尔特人的巴黎西族在塞纳河西岱岛定居，城市名称由此而来。' },
+      { year: '508年', event: '克洛维定都巴黎', desc: '法兰克国王克洛维将巴黎定为首都，奠定了法兰西文化的基础。' },
+      { year: '1163年', event: '巴黎圣母院奠基', desc: '哥特式建筑的巅峰之作开始建造，历时近两百年完成。' },
+      { year: '1682年', event: '路易十四迁往凡尔赛', desc: '太阳王在巴黎郊外建造了人类历史上最奢华的宫殿。' },
+      { year: '1789年', event: '法国大革命', desc: '巴士底狱被攻克，自由、平等、博爱的理念从此改变世界。' },
+      { year: '1889年', event: '埃菲尔铁塔建成', desc: '为世博会建造的临时建筑，却成为了巴黎永恒的象征。' },
+      { year: '1944年', event: '巴黎解放', desc: '盟军解放巴黎，戴高乐将军沿香榭丽舍大道凯旋。' },
+    ],
+    landmarks: [
+      { name: '巴黎圣母院', era: '中世纪·1163年', yearNum: 1163, wiki: 'Notre-Dame de Paris', gradient: 'linear-gradient(135deg, #2A2A3A 0%, #6A6A8B 50%, #1A1A2A 100%)', desc: '哥特式建筑的杰作，飞扶壁和玫瑰花窗是中世纪工程与艺术的巅峰。2019年大火后正在修复中。', hours: '修复中，部分区域开放', ticket: '免费', note: '2024年底重新开放，塔楼需提前预约。', tags: ['哥特建筑', '世界遗产', '法国地标'],
+        worldEvents: [
+          { flag: '🇯🇵', city: '京都', event: '源平合战时期，日本武士文化正在形成' },
+          { flag: '🇪🇬', city: '开罗', event: '萨拉丁正在建造城堡，抵御十字军东征' }
+        ]
+      },
+      { name: '埃菲尔铁塔', era: '近代·1889年', yearNum: 1889, wiki: 'Eiffel Tower', gradient: 'linear-gradient(135deg, #3A3A4A 0%, #8A8A9B 50%, #1A1A2A 100%)', desc: '高324米，建造时使用了7300吨铁和250万颗铆钉。原计划20年后拆除，因无线电天线的价值而得以保留。', hours: '09:30—23:45', ticket: '电梯至顶 €26.80', note: '日落前1小时登塔，可同时欣赏日景和夜景。', tags: ['法国象征', '世博遗产', '铁建筑'] },
+      { name: '卢浮宫', era: '12世纪—1793年', yearNum: 1793, wiki: 'Louvre', gradient: 'linear-gradient(135deg, #2A1A0A 0%, #8B6914 50%, #4A3010 100%)', desc: '世界上参观人数最多的博物馆，收藏超过38万件作品，包括《蒙娜丽莎》和《断臂维纳斯》。', hours: '09:00—18:00，周二闭馆', ticket: '€17', note: '至少需要半天时间，建议提前规划路线。', tags: ['世界最大博物馆', '皇家宫殿', '艺术殿堂'] },
+      { name: '凡尔赛宫', era: '17世纪·1682年', yearNum: 1682, wiki: 'Palace of Versailles', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 50%, #2A1A00 100%)', desc: '太阳王路易十四建造的宫殿，镜厅拥有357面镜子，花园面积达800公顷。', hours: '09:00—18:30，周一闭馆', ticket: '€21', note: '周末花园音乐喷泉表演不容错过。', tags: ['世界遗产', '巴洛克建筑', '皇家园林'] },
+    ]
+  },
+  {
+    id: 'athens', name: '雅典', nameEn: 'Athens',
+    country: '希腊', countryFlag: '🇬🇷', continent: 'europe',
+    themes: ['ancient', 'maritime'],
+    coords: "37°58'N 23°43'E",
+    wiki: 'Athens',
+    heroGradient: 'linear-gradient(160deg, #2a2a1a 0%, #1a1a0d 60%, #0d1a2a 100%)',
+    hook: '民主在这里诞生，哲学在这里启蒙',
+    heroQuote: '2500年前，一群雅典公民发明了一种叫"民主"的东西，至今仍在塑造世界',
+    tagline: '🏛 民主摇篮 · 3400年',
+    overview: '雅典是西方文明的摇篮。在这座城市，苏格拉底追问真理，柏拉图创建学园，帕特农神庙至今仍是人类建筑美学的巅峰之作。',
+    timeline: [
+      { year: '约公元前1400年', event: '迈锡尼时代', desc: '卫城首次出现定居点，成为迈锡尼文明的重要据点。' },
+      { year: '公元前508年', event: '民主制度诞生', desc: '克里斯提尼改革，建立了人类历史上第一个民主政体。' },
+      { year: '公元前447年', event: '帕特农神庙开建', desc: '伯里克利主持建造，菲迪亚斯负责雕塑，成为希腊古典艺术的巅峰。' },
+      { year: '公元前338年', event: '马其顿征服', desc: '腓力二世在喀罗尼亚击败希腊联军，雅典独立时代结束。' },
+      { year: '公元529年', event: '柏拉图学院关闭', desc: '查士丁尼下令关闭异教学校，持续九百年的雅典学术传统中断。' },
+      { year: '1834年', event: '成为希腊首都', desc: '希腊独立后定都雅典，新古典主义建筑开始塑造现代城市面貌。' },
+    ],
+    landmarks: [
+      { name: '帕特农神庙', era: '古典·前447年', yearNum: -447, wiki: 'Parthenon', gradient: 'linear-gradient(135deg, #4A3A2A 0%, #C9A96A 50%, #2A1A0A 100%)', desc: '供奉雅典娜女神的神庙，多立克柱式的完美典范。柱子微微向内倾斜以修正视觉错觉，精确度令现代建筑师惊叹。', hours: '08:00—20:00（夏季）', ticket: '€30（卫城联票）', note: '清晨或傍晚光线最佳，避开正午人潮。', tags: ['世界遗产', '古典建筑', '雅典娜'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '中国', event: '战国时代，孔子去世不久，百家争鸣正在展开' },
+          { flag: '🇪🇬', city: '埃及', event: '波斯帝国统治下，距亚历山大大帝征服还有115年' }
+        ]
+      },
+      { name: '雅典卫城', era: '青铜时代起', yearNum: -500, wiki: 'Acropolis of Athens', gradient: 'linear-gradient(135deg, #3A2A1A 0%, #8B7A5A 50%, #1A0D00 100%)', desc: '卫城是一座天然要塞，海拔156米的石灰岩山丘上汇集了帕特农神庙、伊瑞克提翁神庙等建筑群。', hours: '08:00—20:00', ticket: '€30', note: '建议从南坡入口进入，可依次参观所有遗迹。', tags: ['世界遗产', '古希腊', '神殿群'] },
+      { name: '古代市集（Agora）', era: '古典·前6世纪', yearNum: -500, wiki: 'Ancient Agora of Athens', gradient: 'linear-gradient(135deg, #2A2A1A 0%, #6B5A3A 50%, #1A1A0D 100%)', desc: '苏格拉底在此辩论，柏拉图在此漫步。阿塔罗斯柱廊已完整重建，是了解古希腊日常生活的最佳场所。', hours: '08:00—20:00', ticket: '€10', note: '赫菲斯托斯神庙是希腊保存最完整的古代神庙。', tags: ['古希腊民主', '哲学诞生地', '考古遗址'] },
+    ]
+  },
+  {
+    id: 'florence', name: '佛罗伦萨', nameEn: 'Florence',
+    country: '意大利', countryFlag: '🇮🇹', continent: 'europe',
+    themes: ['renaissance'],
+    coords: "43°46'N 11°15'E",
+    wiki: 'Florence',
+    heroGradient: 'linear-gradient(160deg, #3a1a0a 0%, #1e0d05 60%, #0d1a1a 100%)',
+    hook: '文艺复兴在这里点燃，照亮了整个西方世界',
+    heroQuote: '15世纪的佛罗伦萨只有6万人口，却诞生了达芬奇、米开朗基罗、波提切利',
+    tagline: '🎨 文艺复兴之都 · 2000年',
+    overview: '佛罗伦萨是文艺复兴的心脏。美第奇家族用银行业的财富资助了人类历史上最伟大的艺术爆发。达芬奇在这里画出第一幅杰作，米开朗基罗在这里雕刻了大卫像。',
+    timeline: [
+      { year: '公元前59年', event: '罗马殖民地建立', desc: '凯撒为退役老兵建立殖民地"Florentia"，意为"繁花之城"。' },
+      { year: '1115年', event: '自治公社成立', desc: '佛罗伦萨脱离封建领主控制，成为自治城市共和国。' },
+      { year: '1296年', event: '圣母百花大教堂动工', desc: '这座大教堂将成为城市的象征，穹顶问题困扰了建筑师一个多世纪。' },
+      { year: '1434年', event: '美第奇家族崛起', desc: '科西莫·德·美第奇成为佛罗伦萨实际统治者，开启了文艺复兴的黄金时代。' },
+      { year: '1501年', event: '米开朗基罗雕刻大卫像', desc: '26岁的米开朗基罗用三年时间将一块被废弃的大理石变成了永恒。' },
+      { year: '1865年', event: '短暂成为意大利首都', desc: '意大利统一后佛罗伦萨担任首都六年，直到罗马被收复。' },
+    ],
+    landmarks: [
+      { name: '圣母百花大教堂', era: '文艺复兴·1436年', yearNum: 1436, wiki: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #8B4A2A 0%, #D4841A 50%, #4A2A0A 100%)', desc: '布鲁内莱斯基设计的穹顶直径45米，不使用飞扶壁，至今仍是最大的砖砌穹顶。他甚至为此发明了新的建造机械。', hours: '10:00—17:00', ticket: '教堂免费；穹顶 €30', note: '登穹顶463级台阶，可近距离观赏瓦萨里壁画。', tags: ['世界遗产', '文艺复兴', '建筑创新'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '北京', event: '明朝宣德年间，紫禁城已落成16年，郑和最后一次下西洋' },
+          { flag: '🇹🇷', city: '伊斯坦布尔', event: '奥斯曼帝国持续扩张，距攻陷君士坦丁堡还有17年' }
+        ]
+      },
+      { name: '乌菲兹美术馆', era: '16世纪·1581年', yearNum: 1581, wiki: 'Uffizi', gradient: 'linear-gradient(135deg, #1A2A3A 0%, #4A6A8B 50%, #0D1A2A 100%)', desc: '收藏了波提切利《维纳斯的诞生》、达芬奇《天使报喜》等文艺复兴巅峰之作。', hours: '08:15—18:30，周一闭馆', ticket: '€25', note: '提前网上订票可避免长时间排队。', tags: ['文艺复兴艺术', '美第奇收藏', '世界级博物馆'] },
+      { name: '老桥（Ponte Vecchio）', era: '中世纪·1345年', yearNum: 1345, wiki: 'Ponte Vecchio', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #8B7A5A 50%, #2A1A0A 100%)', desc: '阿诺河上最古老的桥梁，桥上开满金银首饰店。二战中德军撤退时唯一未被炸毁的佛罗伦萨桥梁。', hours: '全天开放', ticket: '免费', note: '日落时分从桥上看阿诺河最为浪漫。', tags: ['中世纪建筑', '金匠传统', '城市地标'] },
+    ]
+  },
+  {
+    id: 'xian', name: '西安', nameEn: "Xi'an",
+    country: '中国', countryFlag: '🇨🇳', continent: 'asia',
+    themes: ['silk-road', 'ancient'],
+    coords: "34°16'N 108°56'E",
+    wiki: "Xi'an",
+    heroGradient: 'linear-gradient(160deg, #2a1a0a 0%, #1a0d05 60%, #0d2a1a 100%)',
+    hook: '十三朝古都，丝绸之路的起点',
+    heroQuote: '当秦始皇的8000名陶俑在地下沉睡时，西方世界还不知道中国的存在',
+    tagline: '🐪 丝路起点 · 3100年',
+    overview: '西安是中国历史上建都时间最长的城市，周、秦、汉、唐等十三个王朝在此定都。作为古丝绸之路的起点，长安曾是世界上最繁华的国际大都市。',
+    timeline: [
+      { year: '约公元前1046年', event: '西周建都镐京', desc: '周武王灭商后在此建都，周礼文化由此发端。' },
+      { year: '公元前221年', event: '秦统一六国', desc: '秦始皇在咸阳建立第一个大一统帝国，统一文字、度量衡。' },
+      { year: '公元前202年', event: '汉朝定都长安', desc: '刘邦建立汉朝，长安城成为东方最大的城市。' },
+      { year: '公元前138年', event: '张骞出使西域', desc: '汉武帝派张骞开辟丝绸之路，长安成为东西文明交汇的枢纽。' },
+      { year: '618年', event: '唐朝定都长安', desc: '唐代长安人口逾百万，是当时世界上最国际化的都市。' },
+      { year: '907年', event: '唐朝灭亡', desc: '此后再无王朝定都于此，但丝路遗产永远留存。' },
+    ],
+    landmarks: [
+      { name: '秦始皇兵马俑', era: '秦·前210年', yearNum: -210, wiki: 'Terracotta Army', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #8B7A5A 50%, #2A1A0A 100%)', desc: '1974年偶然发现的地下军团，约8000个真人大小的陶俑，每个面容各异。被誉为"世界第八大奇迹"。', hours: '08:30—18:00', ticket: '旺季 ¥150，淡季 ¥120', note: '一号坑规模最大，三号坑是指挥部。', tags: ['世界文化遗产', '秦代', '考古奇迹'],
+        worldEvents: [
+          { flag: '🇮🇹', city: '罗马', event: '罗马共和国正与迦太基争夺地中海霸权，第二次布匿战争即将爆发' },
+          { flag: '🇪🇬', city: '埃及', event: '托勒密王朝统治下，亚历山大图书馆是地中海世界的学术中心' }
+        ]
+      },
+      { name: '西安城墙', era: '明·1370年', yearNum: 1370, wiki: 'Fortifications of Xi%27an', gradient: 'linear-gradient(135deg, #3A2A1A 0%, #6B5A3A 50%, #1A0D00 100%)', desc: '中国现存最完整的古代城墙，周长13.74公里，可骑自行车环行一圈。', hours: '08:00—22:00', ticket: '¥54', note: '骑车环城约需1.5小时，南门租车最方便。', tags: ['明代城防', '完整城墙', '骑行体验'] },
+      { name: '大雁塔', era: '唐·652年', yearNum: 652, wiki: 'Giant Wild Goose Pagoda', gradient: 'linear-gradient(135deg, #2A1A0A 0%, #6B4A2A 50%, #1A0D00 100%)', desc: '唐僧玄奘为保存从印度带回的经文而修建，是丝绸之路文化交流的见证。', hours: '08:00—17:30', ticket: '¥40', note: '北广场音乐喷泉是亚洲最大的音乐喷泉。', tags: ['世界遗产', '唐代', '丝绸之路'] },
+      { name: '回民街', era: '唐代起', yearNum: 700, wiki: 'Muslim Quarter, Xi%27an', gradient: 'linear-gradient(135deg, #4A1A0A 0%, #C94A1A 50%, #2A0A00 100%)', desc: '西安穆斯林聚居区，千年来的丝路商旅后裔。这里的美食融合了中原与西域风味。', hours: '全天（小吃摊约10:00—22:00）', ticket: '免费', note: '羊肉泡馍、肉夹馍、凉皮是必尝"三件套"。', tags: ['丝路遗产', '清真美食', '文化融合'] },
+    ]
+  },
+  {
+    id: 'delhi', name: '德里', nameEn: 'Delhi',
+    country: '印度', countryFlag: '🇮🇳', continent: 'asia',
+    themes: ['imperial', 'religion'],
+    coords: "28°36'N 77°13'E",
+    wiki: 'Delhi',
+    heroGradient: 'linear-gradient(160deg, #2a1a0a 0%, #1a0d05 60%, #3a1a1a 100%)',
+    hook: '七座帝都叠加，从苏丹到莫卧儿的史诗',
+    heroQuote: '德里被摧毁和重建了七次，每一次都比上一次更加壮观',
+    tagline: '👑 莫卧儿帝都 · 2500年',
+    overview: '德里是印度的心脏，历史上七座城市层层叠加。从德里苏丹国到莫卧儿帝国，从英属印度到现代共和国，红堡的砂岩城墙和胡马雍陵的穹顶诉说着帝国的传奇。',
+    timeline: [
+      { year: '约公元前1500年', event: '因陀罗普拉斯塔', desc: '传说中摩诃婆罗多史诗中般度族的都城，位于今德里地区。' },
+      { year: '1192年', event: '德里苏丹国建立', desc: '穆罕默德·古尔征服德里，伊斯兰政权开始统治北印度。' },
+      { year: '1526年', event: '莫卧儿帝国建立', desc: '巴布尔在帕尼帕特击败苏丹军队，建立印度历史上最辉煌的帝国。' },
+      { year: '1648年', event: '沙贾汗迁都', desc: '莫卧儿皇帝沙贾汗建造红堡和沙贾汗纳巴德（旧德里）。' },
+      { year: '1857年', event: '印度民族起义', desc: '反英起义失败后，莫卧儿帝国正式终结，英国直接统治印度。' },
+      { year: '1947年', event: '印度独立', desc: '尼赫鲁在红堡升起三色旗，宣告印度独立。' },
+    ],
+    landmarks: [
+      { name: '红堡', era: '莫卧儿·1648年', yearNum: 1648, wiki: 'Red Fort', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C94A2A 50%, #4A0A0A 100%)', desc: '莫卧儿皇帝沙贾汗建造的红砂岩宫殿，城墙高33米。每年独立日总理在此发表讲话。', hours: '09:30—16:30，周一闭馆', ticket: '₹35（外国人 ₹500）', note: '晚间灯光秀值得一看。', tags: ['世界遗产', '莫卧儿建筑', '国家象征'],
+        worldEvents: [
+          { flag: '🇫🇷', city: '巴黎', event: '路易十四即将亲政，凡尔赛宫的构想正在萌芽' },
+          { flag: '🇯🇵', city: '京都', event: '德川幕府初期，日本实行锁国政策已15年' }
+        ]
+      },
+      { name: '顾特卜塔', era: '德里苏丹·1199年', yearNum: 1199, wiki: 'Qutub Minar', gradient: 'linear-gradient(135deg, #4A2A0A 0%, #8B5A2A 50%, #2A1A00 100%)', desc: '高72.5米，是世界上最高的砖砌宣礼塔。五层结构融合了印度教和伊斯兰建筑风格。', hours: '07:00—17:00', ticket: '₹35（外国人 ₹600）', note: '周围的铁柱1600年不锈蚀，至今是冶金学之谜。', tags: ['世界遗产', '德里苏丹国', '宣礼塔'] },
+      { name: '胡马雍陵', era: '莫卧儿·1570年', yearNum: 1570, wiki: "Humayun's Tomb", gradient: 'linear-gradient(135deg, #2A1A1A 0%, #6B4A3A 50%, #1A0D0D 100%)', desc: '莫卧儿建筑的先驱之作，对称的波斯式花园陵墓直接启发了泰姬陵的设计。', hours: '日出—日落', ticket: '₹35（外国人 ₹600）', note: '日落时分光线最美。', tags: ['世界遗产', '莫卧儿建筑', '泰姬陵先驱'] },
+    ]
+  },
+  {
+    id: 'jerusalem', name: '耶路撒冷', nameEn: 'Jerusalem',
+    country: '以色列', countryFlag: '🇮🇱', continent: 'asia',
+    themes: ['religion', 'ancient'],
+    coords: "31°47'N 35°13'E",
+    wiki: 'Jerusalem',
+    heroGradient: 'linear-gradient(160deg, #2a2a0a 0%, #1a1a05 60%, #0d0d2a 100%)',
+    hook: '犹太教、基督教、伊斯兰教的共同圣城',
+    heroQuote: '在这座不到1平方公里的老城里，三大宗教争夺了3000年',
+    tagline: '🕌 三教圣城 · 5000年',
+    overview: '耶路撒冷是人类历史上最神圣也最受争议的城市。犹太人的西墙、基督徒的圣墓教堂、穆斯林的圆顶清真寺，三大宗教的圣地在不到一平方公里的老城中比邻而立。',
+    timeline: [
+      { year: '约公元前3000年', event: '迦南人定居', desc: '青铜时代早期已有定居记录，是世界上最古老的城市之一。' },
+      { year: '约公元前1000年', event: '大卫王建都', desc: '以色列王大卫攻占耶布斯城，定为统一王国首都。' },
+      { year: '公元前586年', event: '巴比伦毁城', desc: '尼布甲尼撒二世摧毁第一圣殿，犹太人被掳至巴比伦。' },
+      { year: '公元前19年', event: '希律王重建圣殿', desc: '大希律王扩建第二圣殿，西墙即是当年圣殿山的挡土墙遗迹。' },
+      { year: '公元70年', event: '罗马军队摧毁圣殿', desc: '提图斯攻陷耶路撒冷，第二圣殿被焚毁，犹太人大流散开始。' },
+      { year: '691年', event: '圆顶清真寺建成', desc: '倭马亚王朝在圣殿山上建造金色穹顶，成为伊斯兰圣地。' },
+      { year: '1099年', event: '十字军攻陷耶路撒冷', desc: '第一次十字军东征攻占圣城，建立耶路撒冷王国。' },
+    ],
+    landmarks: [
+      { name: '西墙（哭墙）', era: '前19年', yearNum: -19, wiki: 'Western Wall', gradient: 'linear-gradient(135deg, #4A3A2A 0%, #8B7A5A 50%, #2A1A0A 100%)', desc: '第二圣殿仅存的遗迹，犹太教最神圣的祈祷场所。信徒将祈祷纸条塞入墙缝已有数百年传统。', hours: '24小时开放', ticket: '免费', note: '安息日（周五日落至周六日落）有特殊祈祷仪式。', tags: ['犹太教圣地', '第二圣殿', '祈祷之地'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '长安', event: '西汉武帝时期，张骞已开通丝绸之路，东西文明首次对话' },
+          { flag: '🇮🇹', city: '罗马', event: '奥古斯都凯撒正在缔造罗马和平，帝国进入黄金时代' }
+        ]
+      },
+      { name: '圆顶清真寺', era: '倭马亚·691年', yearNum: 691, wiki: 'Dome of the Rock', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #C9963A 50%, #0D2A0D 100%)', desc: '伊斯兰世界最标志性的建筑之一，金色穹顶下是先知穆罕默德登霄之处的圣石。', hours: '非穆斯林参观时间有限', ticket: '免费（但限制入场）', note: '非穆斯林仅可在特定时段从穆格拉比门进入。', tags: ['伊斯兰圣地', '圣殿山', '金色穹顶'] },
+      { name: '圣墓教堂', era: '拜占庭·335年', yearNum: 335, wiki: 'Church of the Holy Sepulchre', gradient: 'linear-gradient(135deg, #2A1A2A 0%, #6A4A6A 50%, #1A0D1A 100%)', desc: '基督教最神圣的教堂，相传建在耶稣受难和复活之处。六个基督教派系共同管理这座教堂。', hours: '04:00—19:00（夏季延至21:00）', ticket: '免费', note: '教堂内的"不可移动的梯子"已在同一位置超过300年。', tags: ['基督教圣地', '耶稣圣迹', '宗教共管'] },
+    ]
+  },
+  {
+    id: 'angkor', name: '吴哥窟', nameEn: 'Angkor Wat',
+    country: '柬埔寨', countryFlag: '🇰🇭', continent: 'asia',
+    themes: ['ancient', 'religion'],
+    coords: "13°24'N 103°52'E",
+    wiki: 'Angkor Wat',
+    heroGradient: 'linear-gradient(160deg, #1a2a0a 0%, #0d1a05 60%, #2a1a00 100%)',
+    hook: '丛林中苏醒的高棉帝国',
+    heroQuote: '12世纪的吴哥城拥有百万人口，比当时的伦敦和巴黎加起来还多',
+    tagline: '🏛 高棉奇迹 · 900年',
+    overview: '吴哥窟是高棉帝国的灵魂，也是世界上最大的宗教建筑群。当这座宏伟的石城被丛林吞噬数百年后，19世纪的法国探险家重新发现了它，震惊了整个西方世界。',
+    timeline: [
+      { year: '802年', event: '高棉帝国建立', desc: '阇耶跋摩二世统一高棉，在荔枝山宣布建国。' },
+      { year: '约1150年', event: '吴哥窟建成', desc: '苏耶跋摩二世建造了这座献给毗湿奴的石构神庙，是世界最大宗教建筑。' },
+      { year: '1181年', event: '阇耶跋摩七世即位', desc: '建造了吴哥通王城和巴戎寺，帝国达到领土最大范围。' },
+      { year: '1431年', event: '暹罗军队攻陷吴哥', desc: '高棉帝国南迁金边，吴哥遗址逐渐被热带丛林吞没。' },
+      { year: '1860年', event: '法国探险家重新发现', desc: '亨利·穆奥的记录引起轰动，吴哥窟重新进入世界视野。' },
+    ],
+    landmarks: [
+      { name: '吴哥窟主殿', era: '高棉·约1150年', yearNum: 1150, wiki: 'Angkor Wat', gradient: 'linear-gradient(135deg, #2A3A1A 0%, #6B8A4A 50%, #1A2A0A 100%)', desc: '世界最大的宗教建筑，护城河宽190米，中央塔高65米。日出时五座塔尖的倒影是柬埔寨国旗的灵感来源。', hours: '05:00—17:30', ticket: '1日 $37，3日 $62', note: '日出观赏点在西面倒影池，需凌晨4:30出发。', tags: ['世界遗产', '印度教建筑', '高棉帝国'],
+        worldEvents: [
+          { flag: '🇫🇷', city: '法国', event: '十字军东征时代，哥特式大教堂正在欧洲各地兴起' },
+          { flag: '🇨🇳', city: '中国', event: '南宋时期，中国是当时世界上技术最先进的文明' }
+        ]
+      },
+      { name: '巴戎寺', era: '高棉·1200年', yearNum: 1200, wiki: 'Bayon', gradient: 'linear-gradient(135deg, #3A3A1A 0%, #8B8A5A 50%, #1A1A0A 100%)', desc: '216张巨大的石面微笑俯瞰四方，被称为"高棉的微笑"。浮雕墙面描绘了高棉人的日常生活。', hours: '07:30—17:30', ticket: '吴哥联票', note: '上午光线最适合拍摄微笑面容。', tags: ['高棉的微笑', '佛教建筑', '石雕艺术'] },
+      { name: '塔布隆寺', era: '高棉·1186年', yearNum: 1186, wiki: 'Ta Prohm', gradient: 'linear-gradient(135deg, #1A2A1A 0%, #4A6A3A 50%, #0D1A0D 100%)', desc: '被巨大的绞杀榕树根盘绕的寺庙，保留了法国考古学家发现时的原貌。因《古墓丽影》电影取景而闻名。', hours: '07:30—17:30', ticket: '吴哥联票', note: '最著名的"树抱塔"景观在东门入口。', tags: ['丛林寺庙', '电影取景地', '自然与人文'] },
+    ]
+  },
+  {
+    id: 'marrakesh', name: '马拉喀什', nameEn: 'Marrakesh',
+    country: '摩洛哥', countryFlag: '🇲🇦', continent: 'africa',
+    themes: ['silk-road', 'imperial'],
+    coords: "31°37'N 8°00'W",
+    wiki: 'Marrakesh',
+    heroGradient: 'linear-gradient(160deg, #3a1a0a 0%, #2a0d05 60%, #1a2a0a 100%)',
+    hook: '撒哈拉边缘的红色帝国',
+    heroQuote: '在马拉喀什的德吉玛广场，说书人和耍蛇者延续着一千年前的表演',
+    tagline: '🐪 沙漠明珠 · 1000年',
+    overview: '马拉喀什是摩洛哥的文化之都，因建筑的赭红色而被称为"红城"。作为跨撒哈拉贸易的北端终点，这座城市将非洲、阿拉伯和柏柏尔文化融为一体。',
+    timeline: [
+      { year: '1062年', event: '穆拉比特王朝建城', desc: '柏柏尔人的穆拉比特王朝将马拉喀什定为帝国首都。' },
+      { year: '1147年', event: '穆瓦希德王朝', desc: '新王朝重建城市，库图比亚清真寺在此时期建造。' },
+      { year: '1269年', event: '马林王朝', desc: '首都迁至非斯，但马拉喀什仍是重要的贸易城市。' },
+      { year: '1557年', event: '萨阿德王朝复兴', desc: '马拉喀什重新成为首都，迎来文化和建筑的黄金时代。' },
+      { year: '1912年', event: '法国保护领', desc: '摩洛哥成为法国保护国，新城（Ville Nouvelle）开始建设。' },
+      { year: '1956年', event: '摩洛哥独立', desc: '马拉喀什转型为旅游城市，老城麦地那列入世界遗产。' },
+    ],
+    landmarks: [
+      { name: '德吉玛·艾尔法纳广场', era: '11世纪起', yearNum: 1050, wiki: 'Jemaa el-Fnaa', gradient: 'linear-gradient(135deg, #4A2A0A 0%, #C9763A 50%, #2A1A00 100%)', desc: '北非最繁忙的广场，白天是市集，入夜后变成露天大排档和表演场。联合国教科文组织将其列为"人类口头和非物质文化遗产"。', hours: '全天（夜晚最热闹）', ticket: '免费', note: '傍晚时分找一家屋顶咖啡馆俯瞰广场最佳。', tags: ['非物质文化遗产', '夜市', '柏柏尔文化'],
+        worldEvents: [
+          { flag: '🇨🇳', city: '中国', event: '北宋仁宗时期，中国城市文化繁荣，《清明上河图》时代即将到来' },
+          { flag: '🇬🇧', city: '英格兰', event: '诺曼征服前夕，盎格鲁-撒克逊英格兰即将迎来历史转折' }
+        ]
+      },
+      { name: '库图比亚清真寺', era: '穆瓦希德·1147年', yearNum: 1147, wiki: 'Koutoubia Mosque', gradient: 'linear-gradient(135deg, #3A2A0A 0%, #8B6A3A 50%, #1A0D00 100%)', desc: '马拉喀什最高的建筑（77米），其宣礼塔是塞维利亚吉拉尔达塔和拉巴特哈桑塔的设计原型。', hours: '非穆斯林不可进入', ticket: '仅外观参观', note: '花园是免费散步的好去处，日落时分光线最美。', tags: ['穆瓦希德建筑', '宣礼塔', '城市地标'] },
+      { name: '巴希亚宫', era: '19世纪·1867年', yearNum: 1867, wiki: 'Bahia Palace', gradient: 'linear-gradient(135deg, #1A2A2A 0%, #4A6A6A 50%, #0D1A1A 100%)', desc: '摩洛哥伊斯兰建筑的精华，150个房间装饰着精美的雪松木雕、马赛克瓷砖和大理石地板。', hours: '09:00—17:00', ticket: 'MAD 70（约¥50）', note: '庭院中的橘子树和喷泉营造出一片绿洲。', tags: ['伊斯兰建筑', '马赛克艺术', '摩洛哥宫殿'] },
+    ]
+  },
+  {
+    id: 'mexico-city', name: '墨西哥城', nameEn: 'Mexico City',
+    country: '墨西哥', countryFlag: '🇲🇽', continent: 'americas',
+    themes: ['imperial', 'ancient'],
+    coords: "19°25'N 99°07'W",
+    wiki: 'Mexico City',
+    heroGradient: 'linear-gradient(160deg, #1a2a1a 0%, #0d1a0d 60%, #2a1a0a 100%)',
+    hook: '湖中帝都，从特诺奇提特兰到现代巨城',
+    heroQuote: '1519年，科尔特斯看到特诺奇提特兰时说："我们不知道这是真实的还是梦境"',
+    tagline: '👑 阿兹特克之心 · 700年',
+    overview: '墨西哥城建在一座被摧毁的帝国之上。阿兹特克人曾在湖心建造特诺奇提特兰——当时世界上最大的城市之一。西班牙征服者将其夷为平地，在废墟上建起殖民城市。',
+    timeline: [
+      { year: '1325年', event: '特诺奇提特兰建城', desc: '阿兹特克人按照神谕，在看到鹰叼蛇站在仙人掌上的地方建城——一座湖中之岛。' },
+      { year: '1428年', event: '三方联盟建立', desc: '阿兹特克帝国崛起，特诺奇提特兰成为中美洲最强大的城市。' },
+      { year: '1519年', event: '科尔特斯抵达', desc: '西班牙征服者科尔特斯率军进入特诺奇提特兰，被城市的壮观震惊。' },
+      { year: '1521年', event: '阿兹特克帝国灭亡', desc: '经过75天围城战，特诺奇提特兰陷落，西班牙人在废墟上建造殖民城市。' },
+      { year: '1821年', event: '墨西哥独立', desc: '经过11年独立战争，墨西哥脱离西班牙统治。' },
+      { year: '1978年', event: '大神庙遗址发现', desc: '电力工人偶然发现阿兹特克大神庙遗址，就在国家宫殿旁边。' },
+    ],
+    landmarks: [
+      { name: '大神庙遗址', era: '阿兹特克·1325年', yearNum: 1325, wiki: 'Templo Mayor', gradient: 'linear-gradient(135deg, #4A2A0A 0%, #8B5A2A 50%, #2A1A00 100%)', desc: '阿兹特克帝国最重要的宗教建筑遗址，1978年偶然出土。金字塔式神庙曾高60米，供奉雨神和战神。', hours: '09:00—17:00，周一闭馆', ticket: 'MXN 90（约¥35）', note: '博物馆内的科约尔沙赫基石盘不可错过。', tags: ['考古遗址', '阿兹特克', '前哥伦布时代'],
+        worldEvents: [
+          { flag: '🇮🇹', city: '佛罗伦萨', event: '文艺复兴初期，但丁刚完成《神曲》，乔托正在革新绘画' },
+          { flag: '🇨🇳', city: '中国', event: '元朝末年，红巾军起义即将爆发，朱元璋即将登场' }
+        ]
+      },
+      { name: '国家宫殿', era: '殖民·1563年', yearNum: 1563, wiki: 'National Palace (Mexico)', gradient: 'linear-gradient(135deg, #3A1A1A 0%, #6B3A3A 50%, #1A0D0D 100%)', desc: '建在阿兹特克皇帝蒙特祖玛宫殿的遗址上，内有迭戈·里维拉绘制的巨幅壁画《墨西哥历史》。', hours: '09:00—17:00', ticket: '免费', note: '里维拉壁画在二楼楼梯间，是了解墨西哥历史的最佳视觉叙事。', tags: ['殖民建筑', '壁画艺术', '政治中心'] },
+      { name: '特奥蒂瓦坎', era: '前200年—650年', yearNum: 200, wiki: 'Teotihuacan', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 50%, #2A1A00 100%)', desc: '距墨西哥城50公里的古代大都会遗址，太阳金字塔高65米，是美洲第三大金字塔。鼎盛时期人口达20万。', hours: '09:00—17:00', ticket: 'MXN 90', note: '从月亮金字塔顶部俯瞰"亡灵大道"视野最佳。', tags: ['世界遗产', '前哥伦布文明', '金字塔'] },
+    ]
+  },
+  {
+    id: 'machu-picchu', name: '马丘比丘', nameEn: 'Machu Picchu',
+    country: '秘鲁', countryFlag: '🇵🇪', continent: 'americas',
+    themes: ['ancient'],
+    coords: "13°09'S 72°32'W",
+    wiki: 'Machu Picchu',
+    heroGradient: 'linear-gradient(160deg, #0a2a1a 0%, #051a0d 60%, #1a2a2a 100%)',
+    hook: '云端之上的失落之城',
+    heroQuote: '印加人在海拔2430米的山脊上建造了一座城市，却没有使用车轮和铁器',
+    tagline: '🏛 云中之城 · 600年',
+    overview: '马丘比丘是印加帝国最神秘的遗产。这座建在安第斯山脉云端的石城在西班牙征服后被遗忘近400年，直到1911年被重新发现。精确的石工技术和与群山的完美融合，至今令工程师惊叹。',
+    timeline: [
+      { year: '约1438年', event: '印加帝国崛起', desc: '帕查库提征服周边部落，建立南美洲最大的帝国。' },
+      { year: '约1450年', event: '马丘比丘建造', desc: '帕查库提下令在乌鲁班巴河谷上方的山脊建造皇家庄园。' },
+      { year: '1533年', event: '西班牙征服印加', desc: '皮萨罗俘获末代印加皇帝，帝国覆灭。马丘比丘因位置偏远未被发现。' },
+      { year: '1911年', event: '海勒姆·宾厄姆发现遗址', desc: '耶鲁大学教授在当地农民引导下重新发现了这座"失落之城"。' },
+      { year: '1983年', event: '列入世界遗产', desc: '联合国教科文组织将马丘比丘列为世界文化与自然双重遗产。' },
+    ],
+    landmarks: [
+      { name: '太阳神殿', era: '印加·约1450年', yearNum: 1450, wiki: 'Intihuatana', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #4A8A4A 50%, #0D2A0D 100%)', desc: '半圆形建筑精确对准冬至日出方向，展现了印加人卓越的天文学知识。石墙贴合之紧密，无法插入一张纸。', hours: '06:00—17:00', ticket: '含在马丘比丘门票内', note: '冬至日（6月21日）阳光会精确穿过特定窗口。', tags: ['印加天文', '石砌技术', '太阳崇拜'],
+        worldEvents: [
+          { flag: '🇩🇪', city: '美因茨', event: '古腾堡刚刚发明活字印刷术，即将改变人类文明进程' },
+          { flag: '🇹🇷', city: '伊斯坦布尔', event: '君士坦丁堡刚刚陷落（1453年），奥斯曼帝国开始新纪元' }
+        ]
+      },
+      { name: '拴日石（Intihuatana）', era: '印加·约1450年', yearNum: 1450, wiki: 'Intihuatana stone', gradient: 'linear-gradient(135deg, #2A3A2A 0%, #6B8A5A 50%, #1A2A1A 100%)', desc: '这块精心雕刻的花岗岩被认为是印加人的天文仪器，在春分和秋分时太阳正好悬在石柱正上方，不投下任何影子。', hours: '随马丘比丘开放', ticket: '含门票', note: '曾在拍摄啤酒广告时被损坏，现已围栏保护。', tags: ['天文仪器', '印加圣石', '春秋分标记'] },
+      { name: '华纳比丘', era: '印加时期', yearNum: 1450, wiki: 'Huayna Picchu', gradient: 'linear-gradient(135deg, #0A2A0A 0%, #3A6A3A 50%, #0D1A0D 100%)', desc: '马丘比丘背后的尖峰，攀登需约1小时。山顶可俯瞰整个马丘比丘遗址和乌鲁班巴河谷的壮观景色。', hours: '07:00—08:00 入场（两批次）', ticket: '需额外购票，每日限400人', note: '路径陡峭且窄，恐高者慎行。必须提前数月预约。', tags: ['徒步登山', '全景视角', '限额参观'] },
+    ]
+  },
 ];
 
-let activeCity = CITIES[0];
-let activeTab = 'timeline'; // 'timeline' | 'landmarks'
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+let homeScrollPos = 0;
+let activeFilter = { type: null, value: null };
+let typewriterTimer = null;
+const imgCache = {};
 
-function renderTabbar() {
-  const el = document.getElementById('cityTabbar');
-  el.innerHTML = CITIES.map(c => `
-    <button class="city-tab ${c.id === activeCity.id ? 'active' : ''}" onclick="switchCity('${c.id}')">
-      <span class="city-tab-cn">${c.name}</span>
-      <span class="city-tab-en">${c.nameEn}</span>
-    </button>
-  `).join('');
+/* ═══════════════════════════════════════
+   ROUTER
+   ═══════════════════════════════════════ */
+function navTo(hash) {
+  const cur = location.hash || '#/';
+  if ((cur === '#/' || cur === '#' || cur === '') && hash !== '#/' && hash !== '#') {
+    homeScrollPos = window.scrollY;
+  }
+  history.pushState(null, '', hash);
+  handleRoute();
 }
 
-function switchCity(id) {
-  activeCity = CITIES.find(c => c.id === id);
-  activeTab = 'timeline';
-  renderTabbar();
-  renderApp();
-  document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setTimeout(animateIn, 80);
-  loadWikiImages(activeCity.landmarks);
+window.addEventListener('popstate', handleRoute);
+
+function handleRoute() {
+  if (typewriterTimer) { clearInterval(typewriterTimer); typewriterTimer = null; }
+  const hash = location.hash || '#/';
+  const app = document.getElementById('app');
+
+  if (hash.startsWith('#/city/')) {
+    const id = hash.split('/').pop();
+    renderCityDetail(id);
+  } else if (hash.startsWith('#/search')) {
+    renderSearch();
+    updateNav('search');
+  } else {
+    renderHome();
+    updateNav('home');
+  }
 }
 
-function switchTab(tab) {
-  activeTab = tab;
-  document.querySelectorAll('.section-tab').forEach(el => {
-    el.classList.toggle('active', el.dataset.tab === tab);
+function updateNav(active) {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === active);
   });
-  document.querySelectorAll('.panel').forEach(el => {
-    el.classList.toggle('active', el.dataset.panel === tab);
-  });
-  setTimeout(animateIn, 60);
-  if (tab === 'landmarks') loadWikiImages(activeCity.landmarks);
 }
 
-function renderApp() {
-  const c = activeCity;
-  document.getElementById('mastCityLabel').textContent = c.name + ' · ' + c.nameEn;
+/* ═══════════════════════════════════════
+   TODAY CITY
+   ═══════════════════════════════════════ */
+function dayOfYear() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now - start) / 86400000);
+}
 
-  document.getElementById('app').innerHTML = `
-    <div class="page-enter">
-      <section class="hero">
-        <div class="hero-bg" style="background: ${c.gradient}"></div>
-        <div class="hero-content">
-          <div class="hero-eyebrow">— ${c.country} · 历史与遗迹 ·</div>
-          <h1 class="hero-title">${c.name}<em>${c.nameEn}</em></h1>
-          <div class="hero-meta">
-            <div class="hero-stat"><strong>${c.timeline.length}</strong>历史节点</div>
-            <div class="hero-stat"><strong>${c.landmarks.length}</strong>重要景点</div>
-            <div class="hero-stat"><strong style="font-size:0.7rem;letter-spacing:0.03em;">${c.coords}</strong>坐标</div>
+function getTodayCity() {
+  return CITIES[dayOfYear() % CITIES.length];
+}
+
+/* ═══════════════════════════════════════
+   HOME PAGE
+   ═══════════════════════════════════════ */
+function renderHome() {
+  const today = getTodayCity();
+  const app = document.getElementById('app');
+
+  // Theme counts
+  const themeCounts = {};
+  THEMES.forEach(t => { themeCounts[t.id] = CITIES.filter(c => c.themes.includes(t.id)).length; });
+
+  app.innerHTML = `
+    <!-- HERO -->
+    <section class="home-hero">
+      <div class="home-hero-bg" id="heroBg" style="background: ${today.heroGradient}"></div>
+      <div class="home-header">
+        <div class="home-logo">环球史迹<span>Global Chronicles</span></div>
+        <button class="home-search-btn" onclick="navTo('#/search')">🔍</button>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">${today.tagline}</div>
+        <div class="hero-city-name">${today.name}</div>
+        <div class="hero-city-en">${today.nameEn}</div>
+        <div class="hero-quote" id="heroQuote"></div>
+        <button class="hero-cta" onclick="navTo('#/city/${today.id}')">探索这座城市 →</button>
+      </div>
+      <div class="hero-scroll-hint">──── 上滑发现更多 ────</div>
+    </section>
+
+    <!-- THEMES -->
+    <div class="sec-header">主题探索</div>
+    <div class="theme-scroll">
+      ${THEMES.map(t => `
+        <div class="theme-card" onclick="setFilter('theme','${t.id}')" data-theme-card="${t.id}">
+          <div class="theme-card-img" style="background: ${t.gradient}" data-theme-img="${t.id}"></div>
+          <div class="theme-card-info">
+            <div class="theme-card-name">${t.emoji} ${t.name}</div>
+            <div class="theme-card-count">${themeCounts[t.id]} 座城市</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- FILTER + CITY CARDS -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
+      ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
+      <div class="filter-sep"></div>
+      ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
+    </div>
+
+    <div class="city-cards" id="cityCards">
+      ${renderCityCards()}
+    </div>
+
+    <footer class="footer">
+      <p>© 2026 环球史迹 · Global Chronicles</p>
+      <p>历史 · 文化 · 遗迹</p>
+    </footer>
+  `;
+
+  // Load hero image
+  loadWikiImage(today.wiki, (url) => {
+    const bg = document.getElementById('heroBg');
+    if (bg && url) {
+      bg.style.backgroundImage = `url('${url}')`;
+      setTimeout(() => bg.classList.add('loaded'), 50);
+    }
+  });
+
+  // Typewriter
+  setTimeout(() => {
+    typewriter('heroQuote', '"' + today.heroQuote + '"');
+  }, 400);
+
+  // Load city card images & theme images
+  loadAllCityImages();
+  loadThemeImages();
+
+  // Scroll animations
+  setTimeout(() => setupScrollAnimations(), 100);
+
+  // Restore scroll
+  setTimeout(() => window.scrollTo(0, homeScrollPos), 30);
+}
+
+function renderCityCards() {
+  let filtered = CITIES;
+  if (activeFilter.type === 'theme') {
+    filtered = CITIES.filter(c => c.themes.includes(activeFilter.value));
+  } else if (activeFilter.type === 'continent') {
+    filtered = CITIES.filter(c => c.continent === activeFilter.value);
+  }
+
+  if (!filtered.length) return '<div class="no-results">没有匹配的城市</div>';
+
+  return filtered.map((c, i) => {
+    const themeLabels = c.themes.slice(0, 2).map(tid => {
+      const t = THEMES.find(th => th.id === tid);
+      return t ? `<span class="city-card-tag">${t.emoji} ${t.name}</span>` : '';
+    }).join('');
+
+    return `
+      <div class="city-card" style="transition-delay:${i * 0.08}s" onclick="navTo('#/city/${c.id}')">
+        <div class="city-card-img" data-city-img="${c.id}" style="background: ${c.heroGradient}"></div>
+        <div class="city-card-body">
+          <div class="city-card-name">${c.name}<span>${c.nameEn}</span></div>
+          <div class="city-card-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
+          <div class="city-card-hook">"${c.hook}"</div>
+          <div class="city-card-tags">${themeLabels}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function setFilter(type, value) {
+  if (activeFilter.type === type && activeFilter.value === value) {
+    activeFilter = { type: null, value: null };
+  } else {
+    activeFilter = { type, value };
+  }
+
+  // Re-render filter bar + cards
+  const filterBar = document.getElementById('filterBar');
+  if (filterBar) {
+    filterBar.innerHTML = `
+      <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
+      ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
+      <div class="filter-sep"></div>
+      ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
+    `;
+  }
+
+  const cityCards = document.getElementById('cityCards');
+  if (cityCards) {
+    cityCards.innerHTML = renderCityCards();
+    applyCachedImages();
+    setTimeout(() => setupScrollAnimations(), 50);
+  }
+
+  // Scroll to cards
+  const bar = document.getElementById('filterBar');
+  if (bar && type) bar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ═══════════════════════════════════════
+   CITY DETAIL PAGE
+   ═══════════════════════════════════════ */
+let detailTab = 'timeline';
+
+function renderCityDetail(id) {
+  const c = CITIES.find(ci => ci.id === id);
+  if (!c) { navTo('#/'); return; }
+  detailTab = 'timeline';
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="detail-page">
+      <section class="detail-hero">
+        <button class="detail-back" onclick="history.back()">←</button>
+        <div class="detail-hero-bg" id="detailHeroBg" style="background: ${c.heroGradient}"></div>
+        <div class="detail-hero-content">
+          <div class="detail-eyebrow">— ${c.countryFlag} ${c.country} · 历史与遗迹 —</div>
+          <h1 class="detail-title">${c.name}<em>${c.nameEn}</em></h1>
+          <div class="detail-meta">
+            <div class="detail-stat"><strong>${c.timeline.length}</strong>历史节点</div>
+            <div class="detail-stat"><strong>${c.landmarks.length}</strong>重要景点</div>
+            <div class="detail-stat"><strong style="font-size:0.68rem;letter-spacing:0.03em">${c.coords}</strong>坐标</div>
           </div>
         </div>
       </section>
@@ -824,11 +1716,11 @@ function renderApp() {
       <div class="overview"><p>${c.overview}</p></div>
 
       <div class="section-tabs">
-        <button class="section-tab ${activeTab === 'timeline' ? 'active' : ''}" data-tab="timeline" onclick="switchTab('timeline')">历史时间轴</button>
-        <button class="section-tab ${activeTab === 'landmarks' ? 'active' : ''}" data-tab="landmarks" onclick="switchTab('landmarks')">重要景点</button>
+        <button class="section-tab active" data-tab="timeline" onclick="switchDetailTab('timeline')">历史时间轴</button>
+        <button class="section-tab" data-tab="landmarks" onclick="switchDetailTab('landmarks')">重要景点</button>
       </div>
 
-      <div class="panel ${activeTab === 'timeline' ? 'active' : ''}" data-panel="timeline">
+      <div class="panel active" data-panel="timeline">
         <div class="timeline-wrap">
           <div class="timeline">
             ${c.timeline.map((t, i) => `
@@ -842,7 +1734,7 @@ function renderApp() {
         </div>
       </div>
 
-      <div class="panel ${activeTab === 'landmarks' ? 'active' : ''}" data-panel="landmarks">
+      <div class="panel" data-panel="landmarks">
         <div class="landmarks-wrap">
           ${c.landmarks.map((l, i) => `
             <div class="landmark-card" id="lm-${i}" style="transition-delay:${i * 0.08}s" onclick="toggleLandmark(${i})">
@@ -860,6 +1752,17 @@ function renderApp() {
                     <div class="landmark-banner-era">${l.era}</div>
                   </div>
                   <p class="landmark-desc">${l.desc}</p>
+                  ${l.worldEvents && l.worldEvents.length ? `
+                    <div class="world-events">
+                      <div class="world-events-title">🌍 ${formatYear(l.yearNum)}，世界其他地方</div>
+                      ${l.worldEvents.map(we => `
+                        <div class="world-event">
+                          <div class="world-event-city">${we.flag} ${we.city}</div>
+                          <div class="world-event-text">${we.event}</div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  ` : ''}
                   <div class="practical-info">
                     <div class="info-item">
                       <span class="info-label">⏱ 开放时间</span>
@@ -881,57 +1784,222 @@ function renderApp() {
 
       <footer class="footer">
         <p>© 2026 环球史迹 · Global Chronicles</p>
-        <p>历史 · 文化 · 遗迹</p>
       </footer>
     </div>
   `;
+
+  window.scrollTo(0, 0);
+
+  // Load hero image
+  loadWikiImage(c.wiki, (url) => {
+    const bg = document.getElementById('detailHeroBg');
+    if (bg && url) {
+      bg.style.backgroundImage = `url('${url}')`;
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+    }
+  });
+
+  // Load landmark images
+  loadLandmarkImages(c.landmarks);
+
+  setTimeout(() => setupScrollAnimations(), 100);
+
+  // Update nav
+  updateNav(null);
+}
+
+function switchDetailTab(tab) {
+  detailTab = tab;
+  document.querySelectorAll('.section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+  document.querySelectorAll('.panel').forEach(el => {
+    el.classList.toggle('active', el.dataset.panel === tab);
+  });
+  setTimeout(() => setupScrollAnimations(), 60);
+  if (tab === 'landmarks') {
+    const hash = location.hash;
+    const id = hash.split('/').pop();
+    const c = CITIES.find(ci => ci.id === id);
+    if (c) loadLandmarkImages(c.landmarks);
+  }
 }
 
 function toggleLandmark(i) {
   const card = document.getElementById(`lm-${i}`);
   const body = document.getElementById(`lb-${i}`);
+  if (!card || !body) return;
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open', !isOpen);
   card.classList.toggle('expanded', !isOpen);
 }
 
-function animateIn() {
-  document.querySelectorAll('.timeline-item, .landmark-card').forEach(el => {
-    el.classList.add('visible');
-  });
+function formatYear(y) {
+  if (y < 0) return `公元前${Math.abs(y)}年`;
+  return `${y}年`;
 }
 
-// Fetch real landmark photos from Wikipedia API
-async function loadWikiImages(landmarks) {
+/* ═══════════════════════════════════════
+   SEARCH PAGE
+   ═══════════════════════════════════════ */
+function renderSearch() {
+  const app = document.getElementById('app');
+  const themeCounts = {};
+  THEMES.forEach(t => { themeCounts[t.id] = CITIES.filter(c => c.themes.includes(t.id)).length; });
+
+  app.innerHTML = `
+    <div class="search-page">
+      <div class="search-bar">
+        <input class="search-input" id="searchInput" type="text" placeholder="搜索城市、国家或主题..." oninput="onSearch()" autofocus>
+      </div>
+      <div class="search-content" id="searchContent">
+        <div id="searchResults" style="display:none"></div>
+
+        <div id="searchDefault">
+          <div class="sec-header" style="padding-left:0">按主题探索</div>
+          <div class="search-theme-grid">
+            ${THEMES.map(t => `
+              <div class="search-theme-item" onclick="navTo('#/');setTimeout(()=>setFilter('theme','${t.id}'),100)">
+                <div class="search-theme-emoji">${t.emoji}</div>
+                <div class="search-theme-name">${t.name}</div>
+                <div class="search-theme-count">${themeCounts[t.id]} 座城市</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="sec-header" style="padding-left:0;margin-top:16px">按大洲浏览</div>
+          ${CONTINENTS.map(cont => {
+            const cities = CITIES.filter(c => c.continent === cont.id);
+            return `
+              <div class="continent-item" id="cont-${cont.id}">
+                <div class="continent-hdr" onclick="toggleContinent('${cont.id}')">
+                  <span>${cont.name}</span>
+                  <span>${cities.length} 座城市 <span class="arrow">›</span></span>
+                </div>
+                <div class="continent-body">
+                  ${cities.map(c => `
+                    <div class="continent-city" onclick="navTo('#/city/${c.id}')">
+                      <span class="continent-city-flag">${c.countryFlag}</span>
+                      <span>${c.name} ${c.nameEn}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  window.scrollTo(0, 0);
+}
+
+function onSearch() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('searchResults');
+  const defaultEl = document.getElementById('searchDefault');
+
+  if (!q) {
+    resultsEl.style.display = 'none';
+    defaultEl.style.display = 'block';
+    return;
+  }
+
+  defaultEl.style.display = 'none';
+  resultsEl.style.display = 'block';
+
+  // Match cities
+  const matched = CITIES.filter(c => {
+    const haystack = [c.name, c.nameEn, c.country, ...c.themes.map(tid => {
+      const t = THEMES.find(th => th.id === tid);
+      return t ? t.name : '';
+    })].join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+
+  if (!matched.length) {
+    resultsEl.innerHTML = '<div class="no-results">没有找到匹配结果</div>';
+    return;
+  }
+
+  resultsEl.innerHTML = matched.map(c => `
+    <div class="search-result" onclick="navTo('#/city/${c.id}')">
+      <div class="search-result-thumb" style="background: ${c.heroGradient}" data-city-img="${c.id}"></div>
+      <div class="search-result-info">
+        <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
+        <div class="search-result-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
+      </div>
+    </div>
+  `).join('');
+
+  applyCachedImages();
+}
+
+function toggleContinent(id) {
+  const el = document.getElementById(`cont-${id}`);
+  if (el) el.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════
+   WIKIPEDIA IMAGE LOADING
+   ═══════════════════════════════════════ */
+function loadWikiImage(title, cb) {
+  if (!title) return;
+  if (imgCache[title]) { cb(imgCache[title]); return; }
+
+  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(title)}&prop=pageimages&format=json&pithumbsize=800&origin=*&redirects=1`;
+  fetch(url).then(r => r.json()).then(data => {
+    const pages = data.query?.pages;
+    if (!pages) return;
+    for (const page of Object.values(pages)) {
+      if (page.thumbnail?.source) {
+        imgCache[title] = page.thumbnail.source;
+        cb(page.thumbnail.source);
+        return;
+      }
+    }
+  }).catch(() => {});
+}
+
+function loadAllCityImages() {
+  const titles = CITIES.map(c => c.wiki).filter(t => t && !imgCache[t]);
+  if (!titles.length) { applyCachedImages(); return; }
+
+  batchLoadWiki(titles, () => applyCachedImages());
+}
+
+function loadThemeImages() {
+  const titles = THEMES.map(t => t.cover).filter(t => t && !imgCache[t]);
+  if (!titles.length) { applyThemeImages(); return; }
+
+  batchLoadWiki(titles, () => applyThemeImages());
+}
+
+function loadLandmarkImages(landmarks) {
   const wikiLandmarks = landmarks.filter(l => l.wiki);
   if (!wikiLandmarks.length) return;
 
   const titles = wikiLandmarks.map(l => l.wiki);
   const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${titles.map(encodeURIComponent).join('|')}&prop=pageimages&format=json&pithumbsize=800&origin=*&redirects=1`;
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
+  fetch(url).then(r => r.json()).then(data => {
     const q = data.query;
-
-    // Build a map: input title → final normalized/redirected title
     const titleMap = {};
     titles.forEach(t => { titleMap[t] = t; });
     (q.normalized || []).forEach(n => { titleMap[n.from] = n.to; });
-    // Apply redirects on top of normalized titles
     (q.redirects || []).forEach(r => {
       for (const [k, v] of Object.entries(titleMap)) {
         if (v === r.from) titleMap[k] = r.to;
       }
     });
 
-    // Build final title → image URL map
     const imgMap = {};
     for (const page of Object.values(q.pages)) {
       if (page.thumbnail?.source) imgMap[page.title] = page.thumbnail.source;
     }
 
-    // Apply images to banners
     wikiLandmarks.forEach(l => {
       const finalTitle = titleMap[l.wiki];
       const imgUrl = imgMap[finalTitle];
@@ -940,20 +2008,106 @@ async function loadWikiImages(landmarks) {
       const banner = document.getElementById(`banner-${i}`);
       if (banner) {
         banner.style.backgroundImage = `url('${imgUrl}')`;
-        banner.style.backgroundSize = 'cover';
-        banner.style.backgroundPosition = 'center';
       }
     });
-  } catch (e) {
-    console.warn('Wikipedia image fetch failed:', e);
-  }
+  }).catch(() => {});
 }
 
-// Init
-renderTabbar();
-renderApp();
-setTimeout(animateIn, 120);
-loadWikiImages(activeCity.landmarks);
+function batchLoadWiki(titles, cb) {
+  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${titles.map(encodeURIComponent).join('|')}&prop=pageimages&format=json&pithumbsize=800&origin=*&redirects=1`;
+
+  fetch(url).then(r => r.json()).then(data => {
+    const q = data.query;
+    if (!q) return;
+
+    const titleMap = {};
+    titles.forEach(t => { titleMap[t] = t; });
+    (q.normalized || []).forEach(n => { titleMap[n.from] = n.to; });
+    (q.redirects || []).forEach(r => {
+      for (const [k, v] of Object.entries(titleMap)) {
+        if (v === r.from) titleMap[k] = r.to;
+      }
+    });
+
+    for (const page of Object.values(q.pages)) {
+      if (page.thumbnail?.source) {
+        // Find original title
+        for (const [orig, mapped] of Object.entries(titleMap)) {
+          if (mapped === page.title) {
+            imgCache[orig] = page.thumbnail.source;
+          }
+        }
+      }
+    }
+
+    if (cb) cb();
+  }).catch(() => { if (cb) cb(); });
+}
+
+function applyCachedImages() {
+  CITIES.forEach(c => {
+    if (imgCache[c.wiki]) {
+      document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
+        el.style.backgroundImage = `url('${imgCache[c.wiki]}')`;
+      });
+    }
+  });
+}
+
+function applyThemeImages() {
+  THEMES.forEach(t => {
+    if (imgCache[t.cover]) {
+      document.querySelectorAll(`[data-theme-img="${t.id}"]`).forEach(el => {
+        el.style.backgroundImage = `url('${imgCache[t.cover]}')`;
+      });
+    }
+  });
+}
+
+/* ═══════════════════════════════════════
+   TYPEWRITER
+   ═══════════════════════════════════════ */
+function typewriter(elId, text) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '<span class="cursor"></span>';
+  let i = 0;
+  typewriterTimer = setInterval(() => {
+    if (i < text.length) {
+      el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
+      i++;
+    } else {
+      clearInterval(typewriterTimer);
+      typewriterTimer = null;
+      setTimeout(() => { if (el) el.innerHTML = text; }, 2000);
+    }
+  }, 40);
+}
+
+/* ═══════════════════════════════════════
+   SCROLL ANIMATIONS
+   ═══════════════════════════════════════ */
+function setupScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.city-card, .timeline-item, .landmark-card').forEach(el => {
+    if (!el.classList.contains('visible')) {
+      observer.observe(el);
+    }
+  });
+}
+
+/* ═══════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════ */
+handleRoute();
 </script>
 </body>
 </html>
