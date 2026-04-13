@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git credential:*)"
+      "Bash(git credential:*)",
+      "Bash(sudo chown:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node -e ':*)"
     ]
   }
 }
