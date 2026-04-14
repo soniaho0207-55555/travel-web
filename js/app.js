@@ -1,9 +1,57 @@
 /* ═══════════════════════════════════════
+   ICON LIBRARY (monoline SVG, stroke 1.5)
+   ═══════════════════════════════════════ */
+const ICON_PATHS = {
+  crown: '<path d="M3 17h18l-1.5-9-4.5 4-3-6-3 6-4.5-4z"/><path d="M3 21h18"/>',
+  pillar: '<path d="M6 3h12M6 21h12M8 3v18M16 3v18"/><path d="M5 7h14M5 17h14"/>',
+  camel: '<path d="M3 19c0-2 1-3 2-4 0-2 1-3 2-3s2 1 2 3c0 0 1-2 2-2s1 2 1 2 1-3 3-3 3 2 3 4c1 1 2 2 2 4"/><path d="M8 12V8M14 10V6"/>',
+  anchor: '<circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><path d="M5 16a7 7 0 0 0 14 0"/><line x1="4" y1="16" x2="7" y2="16"/><line x1="17" y1="16" x2="20" y2="16"/>',
+  dome: '<path d="M4 20h16"/><path d="M5 20V13a7 7 0 0 1 14 0v7"/><line x1="12" y1="4" x2="12" y2="7"/><line x1="10.5" y1="6" x2="13.5" y2="6"/>',
+  palette: '<circle cx="7.5" cy="13" r="1"/><circle cx="9.5" cy="7.5" r="1"/><circle cx="14.5" cy="6.5" r="1"/><circle cx="17.5" cy="11" r="1"/><path d="M12 21a9 9 0 1 1 9-9 3 3 0 0 1-3 3h-2a2 2 0 0 0-2 2 2 2 0 0 1-2 2z"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><polygon points="16,8 13.5,13.5 8,16 10.5,10.5" fill="currentColor" stroke="none"/>',
+  search: '<circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,14"/>',
+  ticket: '<path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><line x1="9" y1="7" x2="9" y2="17" stroke-dasharray="1.5 2"/>',
+  lightbulb: '<line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/><path d="M8.5 14a5 5 0 1 1 7 0c-1 1-1 2-1 3H9.5c0-1 0-2-1-3z"/>',
+  info: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="8.01"/><polyline points="11,12 12,12 12,17 13,17"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/>',
+  externalLink: '<path d="M11 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><polyline points="14,3 21,3 21,10"/><line x1="10" y1="14" x2="21" y2="3"/>',
+  chevronDown: '<polyline points="6,9 12,15 18,9"/>',
+  arrowDown: '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="6,13 12,19 18,13"/>',
+};
+
+const THEME_ICONS = {
+  imperial: 'crown',
+  ancient: 'pillar',
+  'silk-road': 'camel',
+  maritime: 'anchor',
+  religion: 'dome',
+  renaissance: 'palette',
+};
+
+function icon(name, size = 16, extraClass = '') {
+  const path = ICON_PATHS[name];
+  if (!path) return '';
+  return `<svg class="icon icon-${name}${extraClass ? ' ' + extraClass : ''}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+}
+
+function themeIcon(themeId, size = 14) {
+  const name = THEME_ICONS[themeId];
+  return name ? icon(name, size) : '';
+}
+
+function stripLeadEmoji(str) {
+  if (!str) return '';
+  return str.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}]+\s*/u, '');
+}
+
+/* ═══════════════════════════════════════
    STATE
    ═══════════════════════════════════════ */
 let homeScrollPos = 0;
 let activeFilter = { type: null, value: null };
 let typewriterTimer = null;
+let heroScrollListener = null;
 const imgCache = {};
 
 /* ═══════════════════════════════════════
@@ -75,19 +123,19 @@ function renderHome() {
   app.innerHTML = `
     <!-- HERO -->
     <section class="home-hero">
-      <div class="home-hero-bg" id="heroBg" style="background-image: ${today.heroGradient}"></div>
+      <div class="home-hero-bg" style="background-image: ${today.heroGradient}"><div class="hero-bg-img" id="heroBg"></div></div>
       <div class="home-header">
         <div class="home-logo">环球史迹<span>Global Chronicles</span></div>
-        <button class="home-search-btn" onclick="navTo('#/search')">🔍</button>
+        <button class="home-search-btn" onclick="navTo('#/search')" aria-label="搜索">${icon('search', 18)}</button>
       </div>
       <div class="hero-content" onclick="navTo('#/city/${today.id}')">
-        <div class="hero-badge">${today.tagline}</div>
+        <div class="hero-badge">${stripLeadEmoji(today.tagline)}</div>
         <div class="hero-city-name">${today.name}</div>
         <div class="hero-city-en">${today.nameEn}</div>
         <div class="hero-quote" id="heroQuote"></div>
         <button class="hero-cta">探索这座城市 →</button>
       </div>
-      <div class="hero-scroll-hint">──── 上滑发现更多 ────</div>
+      <div class="hero-scroll-hint" id="heroScrollHint">${icon('arrowDown', 24)}</div>
     </section>
 
     <!-- THEMES -->
@@ -97,7 +145,7 @@ function renderHome() {
         <div class="theme-card" onclick="setFilter('theme','${t.id}')" data-theme-card="${t.id}">
           <div class="theme-card-img" style="background-image: ${t.gradient}" data-theme-img="${t.id}"></div>
           <div class="theme-card-info">
-            <div class="theme-card-name">${t.emoji} ${t.name}</div>
+            <div class="theme-card-name">${themeIcon(t.id, 14)}${t.name}</div>
             <div class="theme-card-count">${themeCounts[t.id]} 座城市</div>
           </div>
         </div>
@@ -108,7 +156,7 @@ function renderHome() {
     <div class="filter-bar-wrap">
       <div class="filter-bar" id="filterBar">
         <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
-        ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
+        ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${themeIcon(t.id, 12)}${t.name}</button>`).join('')}
         <div class="filter-sep"></div>
         ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
       </div>
@@ -151,6 +199,19 @@ function renderHome() {
 
   // Filter bar fade indicator
   setupFilterFade();
+
+  // Scroll-hint fade on scroll (D-07)
+  setupHeroScrollHint();
+}
+
+function setupHeroScrollHint() {
+  const hint = document.getElementById('heroScrollHint');
+  if (!hint) return;
+  if (heroScrollListener) window.removeEventListener('scroll', heroScrollListener);
+  heroScrollListener = () => {
+    hint.classList.toggle('faded', window.scrollY > 100);
+  };
+  window.addEventListener('scroll', heroScrollListener, { passive: true });
 }
 
 function renderCityCards() {
@@ -166,7 +227,7 @@ function renderCityCards() {
   return filtered.map((c, i) => {
     const themeLabels = c.themes.slice(0, 2).map(tid => {
       const t = THEMES.find(th => th.id === tid);
-      return t ? `<span class="city-card-tag">${t.emoji} ${t.name}</span>` : '';
+      return t ? `<span class="city-card-tag">${themeIcon(t.id, 11)}${t.name}</span>` : '';
     }).join('');
 
     return `
@@ -174,7 +235,7 @@ function renderCityCards() {
         <div class="city-card-img" data-city-img="${c.id}" style="background-image: ${c.heroGradient}"></div>
         <div class="city-card-body">
           <div class="city-card-name">${c.name}<span>${c.nameEn}</span></div>
-          <div class="city-card-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
+          <div class="city-card-sub">${c.country} · ${CONTINENT_MAP[c.continent]}</div>
           <div class="city-card-hook">"${c.hook}"</div>
           <div class="city-card-tags">${themeLabels}</div>
         </div>
@@ -195,7 +256,7 @@ function setFilter(type, value) {
   if (filterBar) {
     filterBar.innerHTML = `
       <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
-      ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
+      ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${themeIcon(t.id, 12)}${t.name}</button>`).join('')}
       <div class="filter-sep"></div>
       ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
     `;
@@ -232,7 +293,7 @@ function renderCityDetail(id) {
         <button class="detail-back" onclick="history.back()">←</button>
         <div class="detail-hero-bg" id="detailHeroBg" style="background-image: ${c.heroGradient}"></div>
         <div class="detail-hero-content">
-          <div class="detail-eyebrow">— ${c.countryFlag} ${c.country} · 历史与遗迹 —</div>
+          <div class="detail-eyebrow">—— ${c.country} · 历史与遗迹 ——</div>
           <h1 class="detail-title">${c.name}<em>${c.nameEn}</em></h1>
           <div class="detail-meta">
             <div class="detail-stat"><strong>${c.timeline.length}</strong>历史节点</div>
@@ -242,7 +303,16 @@ function renderCityDetail(id) {
         </div>
       </section>
 
-      <div class="overview"><p>${c.overview}</p></div>
+      <div class="overview">
+        <p>${c.overview}</p>
+        ${c.overviewFull ? `
+          <div class="overview-full" id="overviewFull">${c.overviewFull}</div>
+          <button class="overview-toggle" id="overviewToggle" onclick="toggleOverview()">
+            <span class="overview-toggle-text">继续阅读</span>
+            ${icon('chevronDown', 12)}
+          </button>
+        ` : ''}
+      </div>
 
       <div class="section-tabs">
         <button class="section-tab active" data-tab="timeline" onclick="switchDetailTab('timeline')">历史时间轴</button>
@@ -283,10 +353,10 @@ function renderCityDetail(id) {
                   <p class="landmark-desc">${l.desc}</p>
                   ${l.worldEvents && l.worldEvents.length ? `
                     <div class="world-events">
-                      <div class="world-events-title">🌍 ${formatYear(l.yearNum)}，世界其他地方</div>
+                      <div class="world-events-title">${icon('globe', 14)} ${formatYear(l.yearNum)}，世界其他地方</div>
                       ${l.worldEvents.map(we => `
                         <div class="world-event">
-                          <div class="world-event-city">${we.flag} ${we.city}</div>
+                          <div class="world-event-city">${we.city}</div>
                           <div class="world-event-text">${we.event}</div>
                         </div>
                       `).join('')}
@@ -294,14 +364,16 @@ function renderCityDetail(id) {
                   ` : ''}
                   <div class="practical-info">
                     <div class="info-item">
-                      <span class="info-label">⏱ 开放时间</span>
+                      <span class="info-label">${icon('clock', 12)}开放时间</span>
                       <span class="info-value">${l.hours}</span>
                     </div>
                     <div class="info-item">
-                      <span class="info-label">🎟 门票</span>
-                      <span class="info-value ${l.ticket.includes('免费') ? 'free' : ''}">${l.ticket}</span>
+                      <span class="info-label">${icon('ticket', 12)}门票</span>
+                      <span class="info-value ${l.ticket.includes('免费') ? 'free' : ''}">${l.ticket}${l.ticketUrl ? ` <a class="ticket-link" href="${l.ticketUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">官网购票 ${icon('externalLink', 10)}</a>` : ''}</span>
                     </div>
-                    ${l.note ? `<div class="info-note">💡 ${l.note}</div>` : ''}
+                    ${l.advanceBooking ? `<div class="info-row">${icon('clock', 14)}<span>${l.advanceBooking}</span></div>` : ''}
+                    ${l.bestTime ? `<div class="info-row">${icon('lightbulb', 14)}<span>${l.bestTime}</span></div>` : ''}
+                    ${l.note ? `<div class="info-note">${icon('info', 14)}<span>${l.note}</span></div>` : ''}
                   </div>
                   <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
                 </div>
@@ -342,7 +414,7 @@ function renderNotFound(id) {
   app.innerHTML = `
     <div class="not-found-page">
       <button class="detail-back" onclick="history.back()">←</button>
-      <div class="not-found-icon">🏛</div>
+      <div class="not-found-icon">${icon('compass', 48)}</div>
       <h2 class="not-found-title">未找到该城市</h2>
       <p class="not-found-desc">「${id}」不在当前收录范围内</p>
       <div class="not-found-recommend">
@@ -352,7 +424,7 @@ function renderNotFound(id) {
             <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
             <div class="search-result-info">
               <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
-              <div class="search-result-sub">${c.countryFlag} ${c.country}</div>
+              <div class="search-result-sub">${c.country}</div>
             </div>
           </div>
         `).join('')}
@@ -389,6 +461,16 @@ function toggleLandmark(i) {
   card.classList.toggle('expanded', !isOpen);
 }
 
+function toggleOverview() {
+  const full = document.getElementById('overviewFull');
+  const btn = document.getElementById('overviewToggle');
+  if (!full || !btn) return;
+  const isOpen = full.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  const txt = btn.querySelector('.overview-toggle-text');
+  if (txt) txt.textContent = isOpen ? '收起' : '继续阅读';
+}
+
 function formatYear(y) {
   if (y < 0) return `公元前${Math.abs(y)}年`;
   return `${y}年`;
@@ -405,7 +487,10 @@ function renderSearch() {
   app.innerHTML = `
     <div class="search-page">
       <div class="search-bar">
-        <input class="search-input" id="searchInput" type="text" placeholder="搜索城市、国家或主题..." oninput="onSearch()" autofocus>
+        <div class="search-input-wrap">
+          ${icon('search', 18, 'search-input-icon')}
+          <input class="search-input" id="searchInput" type="text" placeholder="搜索城市、国家或主题..." oninput="onSearch()" autofocus>
+        </div>
       </div>
       <div class="search-content" id="searchContent">
         <div id="searchResults" style="display:none"></div>
@@ -417,7 +502,7 @@ function renderSearch() {
               <div class="search-theme-item" onclick="navTo('#/');setTimeout(()=>setFilter('theme','${t.id}'),100)" data-search-theme="${t.id}">
                 <div class="search-theme-bg" style="background-image: ${t.gradient}" data-theme-cover="${t.id}"></div>
                 <div class="search-theme-overlay">
-                  <div class="search-theme-emoji">${t.emoji}</div>
+                  <div class="search-theme-emoji">${themeIcon(t.id, 22)}</div>
                   <div class="search-theme-name">${t.name}</div>
                   <div class="search-theme-count">${themeCounts[t.id]} 座城市</div>
                 </div>
@@ -437,7 +522,6 @@ function renderSearch() {
                 <div class="continent-body">
                   ${cities.map(c => `
                     <div class="continent-city" onclick="navTo('#/city/${c.id}')">
-                      <span class="continent-city-flag">${c.countryFlag}</span>
                       <span>${c.name} ${c.nameEn}</span>
                     </div>
                   `).join('')}
@@ -499,7 +583,7 @@ function onSearch() {
     const hotThemes = THEMES.slice(0, 3);
     resultsEl.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-icon">${icon('search', 40)}</div>
         <div class="empty-state-text">未找到相关内容</div>
         <div class="empty-state-section">
           <div class="empty-state-label">热门城市</div>
@@ -508,7 +592,7 @@ function onSearch() {
               <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
               <div class="search-result-info">
                 <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
-                <div class="search-result-sub">${c.countryFlag} ${c.country}</div>
+                <div class="search-result-sub">${c.country}</div>
               </div>
             </div>
           `).join('')}
@@ -516,7 +600,7 @@ function onSearch() {
         <div class="empty-state-section">
           <div class="empty-state-label">热门主题</div>
           <div class="empty-state-themes">
-            ${hotThemes.map(t => `<button class="filter-chip" onclick="document.getElementById('searchInput').value='${t.name}';onSearch()">${t.emoji} ${t.name}</button>`).join('')}
+            ${hotThemes.map(t => `<button class="filter-chip" onclick="document.getElementById('searchInput').value='${t.name}';onSearch()">${themeIcon(t.id, 12)}${t.name}</button>`).join('')}
           </div>
         </div>
       </div>
@@ -530,7 +614,7 @@ function onSearch() {
       <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
       <div class="search-result-info">
         <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
-        <div class="search-result-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
+        <div class="search-result-sub">${c.country} · ${CONTINENT_MAP[c.continent]}</div>
       </div>
     </div>
   `).join('');

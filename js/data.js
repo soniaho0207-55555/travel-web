@@ -2,7 +2,7 @@ const THEMES = [
   { id: 'imperial', name: '帝都传奇', emoji: '👑', cover: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
   { id: 'ancient', name: '古代奇迹', emoji: '🏛', cover: 'Great Pyramid of Giza', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 100%)' },
   { id: 'silk-road', name: '丝绸之路', emoji: '🐪', cover: 'Grand Bazaar, Istanbul', gradient: 'linear-gradient(135deg, #6B4C11 0%, #8B6914 100%)' },
-  { id: 'maritime', name: '海洋文明', emoji: '⚓', cover: 'Colosseum', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
+  { id: 'maritime', name: '海洋文明', emoji: '⚓', cover: 'Carthage', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
   { id: 'religion', name: '信仰之城', emoji: '🕌', cover: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
   { id: 'renaissance', name: '文明复兴', emoji: '🎨', cover: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 100%)' },
 ];
