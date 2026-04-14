@@ -4,7 +4,11 @@
       "Bash(git credential:*)",
       "Bash(sudo chown:*)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:soniaho0207-55555.github.io)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(git branch:*)"
     ]
   }
 }
