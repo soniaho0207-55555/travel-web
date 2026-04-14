@@ -505,7 +505,7 @@ const CITIES = [
       { year: '1983年', event: '列入世界遗产', desc: '联合国教科文组织将马丘比丘列为世界文化与自然双重遗产。' },
     ],
     landmarks: [
-      { name: '太阳神殿', era: '印加·约1450年', yearNum: 1450, wiki: 'Coricancha', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #4A8A4A 50%, #0D2A0D 100%)', desc: '半圆形建筑精确对准冬至日出方向，展现了印加人卓越的天文学知识。石墙贴合之紧密，无法插入一张纸。', hours: '06:00—17:00', ticket: '含在马丘比丘门票内', note: '冬至日（6月21日）阳光会精确穿过特定窗口。', tags: ['印加天文', '石砌技术', '太阳崇拜'],
+      { name: '太阳神殿', era: '印加·约1450年', yearNum: 1450, wiki: 'Ollantaytambo', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #4A8A4A 50%, #0D2A0D 100%)', desc: '半圆形建筑精确对准冬至日出方向，展现了印加人卓越的天文学知识。石墙贴合之紧密，无法插入一张纸。', hours: '06:00—17:00', ticket: '含在马丘比丘门票内', note: '冬至日（6月21日）阳光会精确穿过特定窗口。', tags: ['印加天文', '石砌技术', '太阳崇拜'],
         worldEvents: [
           { flag: '🇩🇪', city: '美因茨', event: '古腾堡刚刚发明活字印刷术，即将改变人类文明进程' },
           { flag: '🇹🇷', city: '伊斯坦布尔', event: '君士坦丁堡刚刚陷落（1453年），奥斯曼帝国开始新纪元' }

@@ -25,15 +25,20 @@ function handleRoute() {
   const hash = location.hash || '#/';
   const app = document.getElementById('app');
 
+  const nav = document.querySelector('.bottom-nav');
+
   if (hash.startsWith('#/city/')) {
     const id = hash.split('/').pop();
     renderCityDetail(id);
+    if (nav) nav.style.display = 'none';
   } else if (hash.startsWith('#/search')) {
     renderSearch();
     updateNav('search');
+    if (nav) nav.style.display = '';
   } else {
     renderHome();
     updateNav('home');
+    if (nav) nav.style.display = '';
   }
 }
 
@@ -70,17 +75,17 @@ function renderHome() {
   app.innerHTML = `
     <!-- HERO -->
     <section class="home-hero">
-      <div class="home-hero-bg" id="heroBg" style="background: ${today.heroGradient}"></div>
+      <div class="home-hero-bg" id="heroBg" style="background-image: ${today.heroGradient}"></div>
       <div class="home-header">
         <div class="home-logo">环球史迹<span>Global Chronicles</span></div>
         <button class="home-search-btn" onclick="navTo('#/search')">🔍</button>
       </div>
-      <div class="hero-content">
+      <div class="hero-content" onclick="navTo('#/city/${today.id}')">
         <div class="hero-badge">${today.tagline}</div>
         <div class="hero-city-name">${today.name}</div>
         <div class="hero-city-en">${today.nameEn}</div>
         <div class="hero-quote" id="heroQuote"></div>
-        <button class="hero-cta" onclick="navTo('#/city/${today.id}')">探索这座城市 →</button>
+        <button class="hero-cta">探索这座城市 →</button>
       </div>
       <div class="hero-scroll-hint">──── 上滑发现更多 ────</div>
     </section>
@@ -90,7 +95,7 @@ function renderHome() {
     <div class="theme-scroll">
       ${THEMES.map(t => `
         <div class="theme-card" onclick="setFilter('theme','${t.id}')" data-theme-card="${t.id}">
-          <div class="theme-card-img" style="background: ${t.gradient}" data-theme-img="${t.id}"></div>
+          <div class="theme-card-img" style="background-image: ${t.gradient}" data-theme-img="${t.id}"></div>
           <div class="theme-card-info">
             <div class="theme-card-name">${t.emoji} ${t.name}</div>
             <div class="theme-card-count">${themeCounts[t.id]} 座城市</div>
@@ -100,11 +105,14 @@ function renderHome() {
     </div>
 
     <!-- FILTER + CITY CARDS -->
-    <div class="filter-bar" id="filterBar">
-      <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
-      ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
-      <div class="filter-sep"></div>
-      ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
+    <div class="filter-bar-wrap">
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-chip ${!activeFilter.type ? 'active' : ''}" onclick="setFilter(null,null)">全部</button>
+        ${THEMES.map(t => `<button class="filter-chip ${activeFilter.type==='theme'&&activeFilter.value===t.id?'active':''}" onclick="setFilter('theme','${t.id}')">${t.emoji}${t.name}</button>`).join('')}
+        <div class="filter-sep"></div>
+        ${CONTINENTS.map(c => `<button class="filter-chip ${activeFilter.type==='continent'&&activeFilter.value===c.id?'active':''}" onclick="setFilter('continent','${c.id}')">${c.name}</button>`).join('')}
+      </div>
+      <div class="filter-bar-fade" id="filterFade"></div>
     </div>
 
     <div class="city-cards" id="cityCards">
@@ -140,6 +148,9 @@ function renderHome() {
 
   // Restore scroll
   setTimeout(() => window.scrollTo(0, homeScrollPos), 30);
+
+  // Filter bar fade indicator
+  setupFilterFade();
 }
 
 function renderCityCards() {
@@ -160,7 +171,7 @@ function renderCityCards() {
 
     return `
       <div class="city-card" style="transition-delay:${i * 0.08}s" onclick="navTo('#/city/${c.id}')">
-        <div class="city-card-img" data-city-img="${c.id}" style="background: ${c.heroGradient}"></div>
+        <div class="city-card-img" data-city-img="${c.id}" style="background-image: ${c.heroGradient}"></div>
         <div class="city-card-body">
           <div class="city-card-name">${c.name}<span>${c.nameEn}</span></div>
           <div class="city-card-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
@@ -200,6 +211,8 @@ function setFilter(type, value) {
   // Scroll to cards
   const bar = document.getElementById('filterBar');
   if (bar && type) bar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  setupFilterFade();
 }
 
 /* ═══════════════════════════════════════
@@ -209,7 +222,7 @@ let detailTab = 'timeline';
 
 function renderCityDetail(id) {
   const c = CITIES.find(ci => ci.id === id);
-  if (!c) { navTo('#/'); return; }
+  if (!c) { renderNotFound(id); return; }
   detailTab = 'timeline';
 
   const app = document.getElementById('app');
@@ -217,7 +230,7 @@ function renderCityDetail(id) {
     <div class="detail-page">
       <section class="detail-hero">
         <button class="detail-back" onclick="history.back()">←</button>
-        <div class="detail-hero-bg" id="detailHeroBg" style="background: ${c.heroGradient}"></div>
+        <div class="detail-hero-bg" id="detailHeroBg" style="background-image: ${c.heroGradient}"></div>
         <div class="detail-hero-content">
           <div class="detail-eyebrow">— ${c.countryFlag} ${c.country} · 历史与遗迹 —</div>
           <h1 class="detail-title">${c.name}<em>${c.nameEn}</em></h1>
@@ -263,7 +276,7 @@ function renderCityDetail(id) {
               </div>
               <div class="landmark-body" id="lb-${i}">
                 <div class="landmark-content">
-                  <div class="landmark-banner" id="banner-${i}" style="background: ${l.gradient}">
+                  <div class="landmark-banner" id="banner-${i}" style="background-image: ${l.gradient}">
                     <div class="landmark-banner-name">${l.name}</div>
                     <div class="landmark-banner-era">${l.era}</div>
                   </div>
@@ -311,8 +324,6 @@ function renderCityDetail(id) {
     const bg = document.getElementById('detailHeroBg');
     if (bg && url) {
       bg.style.backgroundImage = `url('${url}')`;
-      bg.style.backgroundSize = 'cover';
-      bg.style.backgroundPosition = 'center';
     }
   });
 
@@ -323,6 +334,33 @@ function renderCityDetail(id) {
 
   // Update nav
   updateNav(null);
+}
+
+function renderNotFound(id) {
+  const recommended = CITIES.slice(0, 3);
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="not-found-page">
+      <button class="detail-back" onclick="history.back()">←</button>
+      <div class="not-found-icon">🏛</div>
+      <h2 class="not-found-title">未找到该城市</h2>
+      <p class="not-found-desc">「${id}」不在当前收录范围内</p>
+      <div class="not-found-recommend">
+        <div class="not-found-label">探索这些城市</div>
+        ${recommended.map(c => `
+          <div class="search-result" onclick="navTo('#/city/${c.id}')">
+            <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
+            <div class="search-result-info">
+              <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
+              <div class="search-result-sub">${c.countryFlag} ${c.country}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  window.scrollTo(0, 0);
+  applyCachedImages();
 }
 
 function switchDetailTab(tab) {
@@ -376,10 +414,13 @@ function renderSearch() {
           <div class="sec-header" style="padding-left:0">按主题探索</div>
           <div class="search-theme-grid">
             ${THEMES.map(t => `
-              <div class="search-theme-item" onclick="navTo('#/');setTimeout(()=>setFilter('theme','${t.id}'),100)">
-                <div class="search-theme-emoji">${t.emoji}</div>
-                <div class="search-theme-name">${t.name}</div>
-                <div class="search-theme-count">${themeCounts[t.id]} 座城市</div>
+              <div class="search-theme-item" onclick="navTo('#/');setTimeout(()=>setFilter('theme','${t.id}'),100)" data-search-theme="${t.id}">
+                <div class="search-theme-bg" style="background-image: ${t.gradient}" data-theme-cover="${t.id}"></div>
+                <div class="search-theme-overlay">
+                  <div class="search-theme-emoji">${t.emoji}</div>
+                  <div class="search-theme-name">${t.name}</div>
+                  <div class="search-theme-count">${themeCounts[t.id]} 座城市</div>
+                </div>
               </div>
             `).join('')}
           </div>
@@ -410,6 +451,24 @@ function renderSearch() {
   `;
 
   window.scrollTo(0, 0);
+
+  // Load theme cover images for search page
+  loadSearchThemeCovers();
+}
+
+function loadSearchThemeCovers() {
+  const titles = THEMES.map(t => t.cover).filter(t => t && !imgCache[t]);
+  const apply = () => {
+    THEMES.forEach(t => {
+      if (imgCache[t.cover]) {
+        document.querySelectorAll(`[data-theme-cover="${t.id}"]`).forEach(el => {
+          el.style.backgroundImage = `url('${imgCache[t.cover]}')`;
+        });
+      }
+    });
+  };
+  if (!titles.length) { apply(); return; }
+  batchLoadWiki(titles, apply);
 }
 
 function onSearch() {
@@ -436,13 +495,39 @@ function onSearch() {
   });
 
   if (!matched.length) {
-    resultsEl.innerHTML = '<div class="no-results">没有找到匹配结果</div>';
+    const hotCities = CITIES.slice(0, 3);
+    const hotThemes = THEMES.slice(0, 3);
+    resultsEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-text">未找到相关内容</div>
+        <div class="empty-state-section">
+          <div class="empty-state-label">热门城市</div>
+          ${hotCities.map(c => `
+            <div class="search-result" onclick="navTo('#/city/${c.id}')">
+              <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
+              <div class="search-result-info">
+                <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
+                <div class="search-result-sub">${c.countryFlag} ${c.country}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="empty-state-section">
+          <div class="empty-state-label">热门主题</div>
+          <div class="empty-state-themes">
+            ${hotThemes.map(t => `<button class="filter-chip" onclick="document.getElementById('searchInput').value='${t.name}';onSearch()">${t.emoji} ${t.name}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    applyCachedImages();
     return;
   }
 
   resultsEl.innerHTML = matched.map(c => `
     <div class="search-result" onclick="navTo('#/city/${c.id}')">
-      <div class="search-result-thumb" style="background: ${c.heroGradient}" data-city-img="${c.id}"></div>
+      <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
       <div class="search-result-info">
         <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
         <div class="search-result-sub">${c.countryFlag} ${c.country} · ${CONTINENT_MAP[c.continent]}</div>
@@ -598,6 +683,22 @@ function typewriter(elId, text) {
       setTimeout(() => { if (el) el.innerHTML = text; }, 2000);
     }
   }, 40);
+}
+
+/* ═══════════════════════════════════════
+   FILTER BAR FADE
+   ═══════════════════════════════════════ */
+function setupFilterFade() {
+  const bar = document.getElementById('filterBar');
+  const fade = document.getElementById('filterFade');
+  if (!bar || !fade) return;
+
+  const checkScroll = () => {
+    const atEnd = bar.scrollLeft + bar.clientWidth >= bar.scrollWidth - 4;
+    fade.classList.toggle('hidden', atEnd);
+  };
+  bar.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
 }
 
 /* ═══════════════════════════════════════

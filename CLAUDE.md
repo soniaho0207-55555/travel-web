@@ -1,0 +1,78 @@
+# Travel-Web Project Rules
+
+## Project Structure
+```
+index-h5.html        # HTML shell (DO NOT bloat, keep minimal)
+css/styles.css       # All styles
+js/data.js           # City/theme/continent data (THEMES, CONTINENTS, CITIES)
+js/app.js            # Router, rendering, utilities
+PRD-travel-h5-v2.md  # Product requirements (PM owns)
+workflow/backlog.md   # Shared task board (PMO owns)
+```
+
+## Role-Based File Permissions
+
+CRITICAL: Each role MUST only modify their allowed files. Violating this will cause merge conflicts and break other roles' work.
+
+| Role | Allowed to MODIFY | Read-only |
+|------|-------------------|-----------|
+| PM (Review PRD) | `PRD-travel-h5-v2.md` | everything else |
+| Dev (Build page) | `js/app.js`, `css/styles.css`, `js/data.js`, `index-h5.html` | `PRD-travel-h5-v2.md` |
+| QA (Testing) | NOTHING (read + test only) | everything |
+| UX (User feedback) | `用户反馈-*.md` (create new files only) | nothing to modify |
+| PMO (this conversation) | `workflow/backlog.md`, `CLAUDE.md` | everything |
+
+## Branch Rules
+
+- `main` = stable release branch, deployed to GitHub Pages
+- `dev` = development branch, Dev works here
+- Feature branches = `feature/*`, `fix/*` for isolated work
+- NEVER force push to main
+- NEVER commit directly to main (except PMO merging approved changes)
+
+## Workflow
+
+All roles follow this cycle:
+
+```
+Step 1: PMO 分配
+   PMO 在 backlog.md 写任务，标记 [ASSIGNED:Dev] 或 [ASSIGNED:PM]
+
+Step 2: PM 评审需求
+   PM 审核 PRD，确认需求合理 → 在 backlog.md ## PRD Changes 记录变更
+   如果需求有歧义或缺失，PM 先更新 PRD，再通知 Dev 可以开工
+
+Step 3: Dev 开发
+   Dev 读 backlog.md 和 PRD → 在 dev 分支写代码 → 改完标记 [DONE:Dev]
+
+Step 4: QA 验证
+   QA 在 dev 分支测试 → 通过标记 [PASS] / 不通过标记 [FAIL:原因]
+
+Step 5: PMO 合并
+   QA 通过后 → PMO 把 dev 合并到 main → push → 线上更新
+
+Step 6: UX 体验
+   线上更新后 → UX 在线上体验 → 写 用户反馈-日期.md
+
+Step 7: PMO 归档
+   PMO 把 UX 反馈转成新的 backlog 条目 → 回到 Step 1
+```
+
+### When does PM get involved?
+- New feature: PM MUST review PRD before Dev starts coding
+- Bug fix (P0/P1): Dev can start immediately, PM reviews PRD after
+- Content changes (new cities/landmarks): PM writes content in PRD, Dev implements
+
+## Communication Protocol
+
+Roles communicate ONLY through files:
+- `workflow/backlog.md` — task assignments and status (source of truth)
+- Bug reports: QA writes in backlog.md under ## QA Findings
+- UX feedback: UX creates `用户反馈-{date}.md` files
+- PRD changes: PM updates PRD and notes in backlog.md under ## PRD Changes
+
+DO NOT assume what other roles are doing. READ backlog.md before starting work.
+
+## Dev Server
+- Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
+- Serves all static files (html, css, js) with correct MIME types
