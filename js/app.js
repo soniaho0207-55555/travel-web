@@ -96,8 +96,14 @@ function handleRoute() {
   const nav = document.querySelector('.bottom-nav');
 
   if (hash.startsWith('#/city/')) {
-    const id = hash.split('/').pop();
-    renderCityDetail(id);
+    // #/city/:id  OR  #/city/:id/landmark/:index
+    const parts = hash.replace(/^#\//, '').split('/'); // ['city', id, 'landmark', idx?]
+    const id = parts[1];
+    if (parts[2] === 'landmark' && parts[3] !== undefined) {
+      renderLandmarkDetail(id, parseInt(parts[3], 10));
+    } else {
+      renderCityDetail(id);
+    }
     if (nav) nav.style.display = 'none';
   } else if (hash.startsWith('#/search')) {
     renderSearch();
@@ -204,7 +210,7 @@ function renderHome() {
 
   // Typewriter
   setTimeout(() => {
-    typewriter('heroQuote', '"' + today.heroQuote + '"');
+    typewriter('heroQuote', '\u201C' + today.heroQuote + '\u201D');
   }, 400);
 
   // Load city card images & theme images
@@ -256,7 +262,7 @@ function renderCityCards() {
         <div class="city-card-body">
           <div class="city-card-name">${c.name}<span>${c.nameEn}</span></div>
           <div class="city-card-sub">${c.country} · ${CONTINENT_MAP[c.continent]}</div>
-          <div class="city-card-hook">"${c.hook}"</div>
+          <div class="city-card-hook">\u201C${c.hook}\u201D</div>
           <div class="city-card-tags">${themeLabels}</div>
         </div>
       </div>
@@ -357,43 +363,12 @@ function renderCityDetail(id) {
       <div class="panel" data-panel="landmarks">
         <div class="landmarks-wrap">
           ${c.landmarks.map((l, i) => `
-            <div class="landmark-card" id="lm-${i}" style="transition-delay:${i * 0.08}s" onclick="toggleLandmark(${i})">
-              <div class="landmark-head">
-                <div class="landmark-head-text">
-                  <div class="landmark-name">${l.name}</div>
-                  <div class="landmark-era">${l.era}</div>
-                </div>
-                <div class="landmark-toggle">+</div>
-              </div>
-              <div class="landmark-body" id="lb-${i}">
-                <div class="landmark-content">
-                  <div class="landmark-banner" id="banner-${i}" style="background-image: ${l.gradient}">
-                    <div class="landmark-banner-name">${l.name}</div>
-                    <div class="landmark-banner-era">${l.era}</div>
-                  </div>
-                  <p class="landmark-desc">${l.desc}</p>
-                  ${l.worldEvents && l.worldEvents.length ? `
-                    <div class="world-events">
-                      <div class="world-events-title">${icon('globe', 14)} ${formatYear(l.yearNum)}，世界其他地方</div>
-                      ${l.worldEvents.map(we => `
-                        <div class="world-event">
-                          <div class="world-event-city">${we.city}</div>
-                          <div class="world-event-text">${we.event}</div>
-                        </div>
-                      `).join('')}
-                    </div>
-                  ` : ''}
-                  <div class="practical-info">
-                    <div class="info-item">
-                      <span class="info-label">${icon('clock', 12)}开放时间</span>
-                      <span class="info-value">${l.hours}</span>
-                    </div>
-                    ${renderTicket(l.ticket)}
-                    ${l.note ? `<div class="info-note">${icon('info', 14)}<span>${l.note}</span></div>` : ''}
-                  </div>
-                  ${renderTips(l.tips)}
-                  <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                </div>
+            <div class="landmark-card landmark-card-simple" style="transition-delay:${i * 0.08}s" onclick="navTo('#/city/${c.id}/landmark/${i}')">
+              <div class="landmark-cover" id="banner-${i}" style="background-image: ${l.gradient}"></div>
+              <div class="landmark-card-body">
+                <div class="landmark-name">${l.name}</div>
+                <div class="landmark-era">${l.era}</div>
+                <div class="landmark-hook">${getLandmarkHook(l)}</div>
               </div>
             </div>
           `).join('')}
@@ -463,19 +438,266 @@ function switchDetailTab(tab) {
   setTimeout(() => setupScrollAnimations(), 60);
   if (tab === 'landmarks') {
     const hash = location.hash;
-    const id = hash.split('/').pop();
+    const parts = hash.replace(/^#\//, '').split('/');
+    const id = parts[1];
     const c = CITIES.find(ci => ci.id === id);
     if (c) loadLandmarkImages(c.landmarks);
   }
 }
 
-function toggleLandmark(i) {
-  const card = document.getElementById(`lm-${i}`);
-  const body = document.getElementById(`lb-${i}`);
-  if (!card || !body) return;
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  card.classList.toggle('expanded', !isOpen);
+/* ═══════════════════════════════════════
+   LANDMARK DETAIL PAGE (v2.4 F-07/F-09/F-10)
+   ═══════════════════════════════════════ */
+let lmDetailTab = 'intro';
+
+function renderLandmarkDetail(cityId, index) {
+  const c = CITIES.find(ci => ci.id === cityId);
+  if (!c) { renderNotFound(cityId); return; }
+  const l = c.landmarks[index];
+  if (!l) { renderLandmarkNotFound(cityId); return; }
+
+  lmDetailTab = 'intro';
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <div class="landmark-detail-page">
+      <button class="detail-back" onclick="navTo('#/city/${cityId}')">←</button>
+      <div class="lm-hero" id="lmHero" style="background-image: ${l.gradient}"></div>
+      <div class="lm-header">
+        <h1 class="lm-name">${l.name}</h1>
+        <div class="lm-era">${l.era}</div>
+      </div>
+
+      <div class="lm-tabs">
+        <button class="lm-tab active" data-lmtab="intro" onclick="switchLmTab('intro')">介绍</button>
+        <button class="lm-tab" data-lmtab="ticket" onclick="switchLmTab('ticket')">门票</button>
+        <button class="lm-tab" data-lmtab="tips" onclick="switchLmTab('tips')">Tips</button>
+      </div>
+
+      <div class="lm-panel active" data-lmpanel="intro">
+        ${renderLmIntro(l)}
+      </div>
+      <div class="lm-panel" data-lmpanel="ticket">
+        ${renderLmTicket(l)}
+      </div>
+      <div class="lm-panel" data-lmpanel="tips">
+        ${renderLmTips(l.tips)}
+      </div>
+
+      <footer class="footer">
+        <p>© 2026 环球史迹 · Global Chronicles</p>
+      </footer>
+    </div>
+  `;
+
+  window.scrollTo(0, 0);
+
+  // Load hero image using landmark's wiki
+  if (l.wiki) {
+    loadWikiImage(l.wiki, (url) => {
+      const bg = document.getElementById('lmHero');
+      if (bg && url) {
+        bg.style.backgroundImage = `url('${url}')`;
+        bg.classList.add('loaded');
+      }
+    });
+  }
+
+  updateNav(null);
+}
+
+function renderLandmarkNotFound(cityId) {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="not-found-page">
+      <button class="detail-back" onclick="navTo('#/city/${cityId}')">←</button>
+      <div class="not-found-icon">${icon('compass', 48)}</div>
+      <h2 class="not-found-title">未找到该景点</h2>
+      <p class="not-found-desc">这个景点编号不在当前城市范围内</p>
+      <div class="not-found-recommend">
+        <button class="hero-cta" onclick="navTo('#/city/${cityId}')">返回城市详情</button>
+      </div>
+    </div>
+  `;
+  window.scrollTo(0, 0);
+}
+
+function switchLmTab(tab) {
+  lmDetailTab = tab;
+  document.querySelectorAll('.lm-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.lmtab === tab);
+  });
+  document.querySelectorAll('.lm-panel').forEach(el => {
+    el.classList.toggle('active', el.dataset.lmpanel === tab);
+  });
+}
+
+function renderLmIntro(l) {
+  const worldEventsBlock = (l.worldEvents && l.worldEvents.length) ? `
+    <div class="world-events">
+      <div class="world-events-title">${icon('globe', 14)} ${formatYear(l.yearNum)}，世界其他地方</div>
+      ${l.worldEvents.map(we => `
+        <div class="world-event">
+          <div class="world-event-city">${we.city}</div>
+          <div class="world-event-text">${we.event}</div>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
+  const tagsBlock = (l.tags && l.tags.length) ? `
+    <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+  ` : '';
+
+  const noteBlock = l.note ? `
+    <div class="lm-note">${icon('info', 14)}<span>${l.note}</span></div>
+  ` : '';
+
+  const whyBlock = l.whyVisit ? `
+    <div class="lm-why">${l.whyVisit}</div>
+  ` : '';
+
+  return `
+    <div class="lm-section">
+      ${whyBlock}
+      <p class="landmark-desc">${l.desc}</p>
+      ${noteBlock}
+      ${worldEventsBlock}
+      ${tagsBlock}
+    </div>
+  `;
+}
+
+function renderLmTicket(l) {
+  const hoursBlock = l.hours ? `
+    <div class="lm-hours">
+      <span class="ticket-section-title">${icon('clock', 12)} 开放时间</span>
+      <div class="lm-hours-value">${l.hours}</div>
+    </div>
+  ` : '';
+
+  const ticket = l.ticket;
+  if (!ticket && !l.hours) {
+    return `<div class="lm-section lm-empty">该景点暂无票务信息</div>`;
+  }
+
+  const ticketHtml = renderTicket(ticket);
+
+  return `
+    <div class="lm-section lm-ticket-section">
+      ${hoursBlock}
+      <div class="practical-info lm-practical-info">
+        ${ticketHtml || ''}
+      </div>
+    </div>
+  `;
+}
+
+/* F-10: Tips 分组渲染 */
+const TIPS_GROUP_ORDER = ['timing', 'photo', 'route', 'walking', 'ticket', 'dress', 'season', 'cold', 'secret'];
+const TIPS_GROUP_LABEL = {
+  timing: '时段内行',
+  photo: '最佳机位',
+  route: '动线串联',
+  walking: '动线串联',
+  ticket: '票务技巧',
+  dress: '着装规矩',
+  season: '季节差异',
+  cold: '季节差异',
+  secret: '隐藏彩蛋',
+};
+// 合并别名到主键：walking→route, cold→season
+const TIPS_GROUP_CANONICAL = {
+  walking: 'route',
+  cold: 'season',
+};
+function canonicalCategory(cat) { return TIPS_GROUP_CANONICAL[cat] || cat; }
+
+function renderLmTips(tips) {
+  if (!Array.isArray(tips) || tips.length === 0) {
+    return `<div class="lm-section lm-empty">该景点 Tips 补齐中</div>`;
+  }
+
+  // 按 canonical category 分组（保留 PM 写作顺序）
+  const groups = {};           // key → [{text, category}...]
+  const groupSeqOrder = [];    // 保留首现顺序做兜底
+
+  tips.forEach(t => {
+    const cat = canonicalCategory(t.category || 'secret');
+    if (!groups[cat]) {
+      groups[cat] = [];
+      groupSeqOrder.push(cat);
+    }
+    groups[cat].push(t);
+  });
+
+  const groupKeys = Object.keys(groups);
+
+  // 若只有 1-2 组 → 退化为简单列表（不渲染分组 header）
+  if (groupKeys.length <= 2) {
+    const flat = groupKeys.reduce((acc, k) => acc.concat(groups[k]), []);
+    return `
+      <div class="lm-section">
+        <ul class="landmark-tips">
+          ${flat.map(tip => {
+            const iconName = TIP_CATEGORY_ICON[tip.category] || 'info';
+            return `<li class="landmark-tip">${icon(iconName, 16)}<span>${tip.text}</span></li>`;
+          }).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  // 按 PRD 语义重要性排序：先按 TIPS_GROUP_ORDER，未列的落到末尾按首现顺序
+  const sorted = groupKeys.slice().sort((a, b) => {
+    const ia = TIPS_GROUP_ORDER.indexOf(a);
+    const ib = TIPS_GROUP_ORDER.indexOf(b);
+    if (ia === -1 && ib === -1) return groupSeqOrder.indexOf(a) - groupSeqOrder.indexOf(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+
+  return `
+    <div class="lm-section lm-tips-grouped">
+      ${sorted.map(key => {
+        const items = groups[key];
+        const label = TIPS_GROUP_LABEL[key] || key;
+        const iconKey = items[0] && TIP_CATEGORY_ICON[items[0].category] ? TIP_CATEGORY_ICON[items[0].category] : 'info';
+        // 每组最多 3 条；超过折叠到 "更多"
+        const visible = items.slice(0, 3);
+        const extra = items.slice(3);
+        return `
+          <section class="tips-group">
+            <header class="tips-group-header">
+              ${icon(iconKey, 14)}
+              <span class="tips-group-label">${label}</span>
+            </header>
+            <ul class="landmark-tips tips-group-list">
+              ${visible.map(tip => `<li class="landmark-tip"><span>${tip.text}</span></li>`).join('')}
+              ${extra.length ? `
+                <li class="tips-group-more" onclick="this.parentElement.classList.add('expanded'); this.remove();">
+                  <span>更多 ${extra.length} 条 ↓</span>
+                </li>
+                ${extra.map(tip => `<li class="landmark-tip tips-group-extra"><span>${tip.text}</span></li>`).join('')}
+              ` : ''}
+            </ul>
+          </section>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+/* v2.4 F-08: landmark card hook fallback — 优先 hookShort，否则 desc 截首句 */
+function getLandmarkHook(l) {
+  if (l.hookShort) return l.hookShort;
+  if (!l.desc) return '';
+  // 取第一句（句号/感叹号/问号结尾），超过 40 字截断
+  const m = l.desc.match(/^[^。！？!?]+[。！？!?]?/);
+  let first = m ? m[0] : l.desc;
+  if (first.length > 40) first = first.slice(0, 38) + '…';
+  return first;
 }
 
 function toggleOverview() {
@@ -878,22 +1100,38 @@ function setupFilterFade() {
 }
 
 /* ═══════════════════════════════════════
-   SCROLL ANIMATIONS
+   SCROLL ANIMATIONS (v2.4 F-12: fix first-node reveal flash)
    ═══════════════════════════════════════ */
 function setupScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+  const targets = document.querySelectorAll('.city-card, .timeline-item, .landmark-card');
+  if (!targets.length) return;
 
-  document.querySelectorAll('.city-card, .timeline-item, .landmark-card').forEach(el => {
-    if (!el.classList.contains('visible')) {
-      observer.observe(el);
-    }
+  // Double rAF: guarantee browser committed the initial hidden state (opacity:0 + transition-delay)
+  // before any .visible class toggles. Without this, first timeline node can paint blank because
+  // IntersectionObserver fires before the transition is attached.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+
+      targets.forEach(el => {
+        if (el.classList.contains('visible')) return;
+        // Items already in viewport on setup: force reveal (don't rely on observer's lazy fire)
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+        if (inView) {
+          el.classList.add('visible');
+        } else {
+          observer.observe(el);
+        }
+      });
+    });
   });
 }
 
