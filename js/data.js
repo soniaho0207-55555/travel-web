@@ -25,7 +25,7 @@ const CITIES = [
     country: '中国', countryFlag: '🇨🇳', continent: 'asia',
     themes: ['imperial', 'ancient'],
     coords: "39°54'N 116°23'E",
-    wiki: 'Beijing',
+    wiki: 'Forbidden City',
     heroGradient: 'linear-gradient(160deg, #1a3a20 0%, #0c1810 60%, #3d1a00 100%)',
     hook: '从商周燕国到明清帝都，3000年从未停歇',
     heroQuote: '1420年，紫禁城落成时，欧洲还在黑暗的中世纪里苦熬最后30年',
@@ -42,7 +42,7 @@ const CITIES = [
       { year: '1949年', event: '中华人民共和国成立', desc: '毛泽东在天安门城楼宣告建国，北京成为新中国首都。' },
     ],
     landmarks: [
-      { name: '故宫（紫禁城）', era: '明·1420年', yearNum: 1420, wiki: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 50%, #2D1B00 100%)', desc: '紫禁城是明清两朝的皇家宫殿，南北长960米，东西宽753米，共有房屋九千余间，是世界上现存规模最大、保存最完整的木质结构古建筑群。', hours: '淡季 08:30—17:00；旺季 08:30—17:30，周一闭馆', ticket: {
+      { name: '故宫（紫禁城）', era: '明·1420年', yearNum: 1420, wiki: 'Hall of Supreme Harmony', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 50%, #2D1B00 100%)', desc: '紫禁城是明清两朝的皇家宫殿，南北长960米，东西宽753米，共有房屋九千余间，是世界上现存规模最大、保存最完整的木质结构古建筑群。', hours: '淡季 08:30—17:00；旺季 08:30—17:30，周一闭馆', ticket: {
   price: '旺季 ¥60（4-10 月）/ 淡季 ¥40（11 月-次年 3 月）；珍宝馆 +¥10，钟表馆 +¥10',
   channels: [
     { name: '官方故宫博物院', url: 'https://gugong.228.com.cn/', note: '唯一官方渠道，需实名制预约' }
@@ -551,7 +551,7 @@ const CITIES = [
     country: '日本', countryFlag: '🇯🇵', continent: 'asia',
     themes: ['religion', 'renaissance'],
     coords: "35°00'N 135°46'E",
-    wiki: 'Kyoto Tower',
+    wiki: 'Arashiyama',
     heroGradient: 'linear-gradient(160deg, #2a1a3a 0%, #150d20 60%, #1a2a10 100%)',
     hook: '千年古都，茶道与禅宗的最后守护者',
     heroQuote: '二战中美军刻意绕过京都的轰炸，因为一位学者说"毁掉京都就是毁掉日本的灵魂"',
@@ -2285,7 +2285,7 @@ const CITIES = [
     country: '墨西哥', countryFlag: '🇲🇽', continent: 'americas',
     themes: ['imperial', 'ancient'],
     coords: "19°25'N 99°07'W",
-    wiki: 'Mexico City',
+    wiki: 'Metropolitan Cathedral, Mexico City',
     heroGradient: 'linear-gradient(160deg, #1a2a1a 0%, #0d1a0d 60%, #2a1a0a 100%)',
     hook: '湖中帝都，从特诺奇提特兰到现代巨城',
     heroQuote: '1519年，科尔特斯看到特诺奇提特兰时说："我们不知道这是真实的还是梦境"',
