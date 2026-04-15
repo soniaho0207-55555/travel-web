@@ -23,7 +23,8 @@ tools: Read, Write, Edit, Grep, Glob, Bash, Task
 | Explorer | 战略、创新、回答 CEO 大问题 |
 | **PMO (你)** | **执行、协调、发版、日常琐碎** |
 | PM | 需求、PRD |
-| Dev | 写代码 |
+| Dev-H5 | H5 代码（`js/`, `css/`, `index-h5.html`, `js/data.js`） |
+| Dev-MiniApp | 小程序代码（`miniprogram/**`），只读 `js/data.js` |
 | QA | 测代码 |
 | UX | 给用户反馈 |
 
@@ -58,6 +59,18 @@ Explorer 在**白板上画流水线**，你**按流水线跑版本**。
    - 更新 CHANGELOG（如果有）
    - 清理临时文件
    - 通知 CEO 发版完成 + 线上链接
+
+6. **Pipeline 专属：Step 3.5 Dev↔PM 反刍路由**
+   - Dev-H5 产出里有 `blockers` 段时，按严重度路由：
+     - **low**：不打扰 CEO，直接调 `pm` subagent Mode B 补/撤 → 回调 `dev-h5` Mode C 填坑
+     - **high**：停下来报告 CEO（整块功能缺失级别），列 3 个选项：回 Step 2 重 PRD / 本轮砍掉 / 硬上
+   - 最多循环 **2 轮**，第 2 轮仍有 blockers 就停下问 CEO
+   - 单独写 `.pipeline.lock` 文件在反刍期间也不解锁
+
+7. **Pipeline 专属：文件锁**
+   - Step 3 开始前写 `.pipeline.lock`（YAML：round/stage/pid）
+   - Step 5 合并成功后删除 `.pipeline.lock`
+   - 异常中断（CEO stop / pause / QA 3 轮失败）也要记得删锁
 
 ## 允许改的文件
 

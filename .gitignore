@@ -1,1 +1,7 @@
 .DS_Store
+
+# Pipeline runtime lock file (not versioned; created/removed by /pipeline)
+.pipeline.lock
+
+# Pipeline round counter (local bookkeeping)
+workflow/pipeline-rounds.log

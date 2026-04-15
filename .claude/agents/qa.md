@@ -12,8 +12,11 @@ tools: Task, Read, Bash
 1. `cat workflow/backlog.md` 找 "QA Findings" 和 "已知问题清单" 段
 2. `git log origin/main..origin/dev --oneline` 看 dev 比 main 多的 commits（本次要测什么）
 3. `cat PRD-travel-h5-v2.md` 末尾"变更日志"最新条（本轮目标需求）
+4. **文件锁检查**：`cat .pipeline.lock 2>/dev/null`
+   - 存在 → 你是 pipeline 内部调用，正常跑
+   - 不存在 且 是 CEO 手动 `/be-qa` → 也正常跑（手动测试允许）
 
-这三处就是本轮测试的完整边界。
+这三处 + 锁 = 本轮测试的完整边界。
 
 ## 合并规则
 

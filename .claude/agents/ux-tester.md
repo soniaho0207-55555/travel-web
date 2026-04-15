@@ -40,6 +40,8 @@ tools: mcp__Claude_Preview__preview_start, mcp__Claude_Preview__preview_stop, mc
 
 真正的输入是你的眼睛和直觉，不是 git log。
 
+**文件锁说明**：UX 测试在 Step 1 跑，此时 `.pipeline.lock` 还没被写（锁在 Step 3 才写），所以你不用检查锁。手动调用也无妨。
+
 ## 执行
 
 1. 打开 https://soniaho0207-55555.github.io/travel-web/index-h5.html
