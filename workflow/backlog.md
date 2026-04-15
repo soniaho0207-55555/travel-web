@@ -26,7 +26,7 @@
 
 | # | Task | Assigned | Status | Notes |
 |---|------|----------|--------|-------|
-| E-01 | 景点门票 4 件套：`ticket` 从 string 改 object（price / channels[] / bookingWindow / timingTip）+ 粘合 47 景点 PM 内容进 `js/data.js` | [DONE:Dev-H5] | feature/v2.3-content-depth | PRD 附录 E · E-01 + 4.2.3·a；52/52 景点完成；renderTicket 已适配 bookingWindow 字符串 + null-url channel；**QA 可在 `feature/v2.3-content-depth` 分支开始验收** |
+| E-01 | 景点门票 4 件套：`ticket` 从 string 改 object（price / channels[] / bookingWindow / timingTip）+ 粘合 47 景点 PM 内容进 `js/data.js` | [DONE:Dev-H5] | feature/v2.3-content-depth | PRD 附录 E · E-01 + 4.2.3·a；52/52 景点完成；renderTicket 已适配 bookingWindow 字符串 + null-url channel；**QA 第 2 轮重测**：landmark-body max-height 1200→3000px（transition 0.4→0.6s）修复 Android FAIL，故宫 1655px / Colosseum 1272px 展开后 tips 尾部 + tags 视觉确认完整可见 |
 | E-02 | 景点 Tips 数组：新增 `tips[]` 含 7 种 category + 7 个新 SVG 图标 + PRD 写入"禁止常识 tip" + 粘合 49 景点 tips[] | [DONE:Dev-H5] | feature/v2.3-content-depth | PRD 附录 E · E-02 + 9.5.1；**53/53 景点有 tips**（PM 补丁 `15-machu-picchu.md §0` 已合入 6 条主遗址 tips）；TIP_CATEGORY_ICON 加 walking/cold 别名映射 route/season |
 | E-03 | worldContext 48 条补入 15 城 `timeline[].worldContext`（v2.1 遗留） | [DONE:Dev-H5] | feature/v2.3-content-depth | **PM 补丁全部落位**：cairo 1250年/马穆鲁克作为整条 timeline entry 新增（位于 969 与 1517 之间），worldContext 附带；`.timeline-world-context` 已按 PRD 9.5.2 渲染（#C9B896 · 13px · 1.6） |
 

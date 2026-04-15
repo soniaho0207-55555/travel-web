@@ -771,7 +771,10 @@ body::before {
   overflow: hidden;
   transition: max-height 0.4s ease;
 }
-.landmark-body.open { max-height: 1200px; }
+.landmark-body.open {
+  max-height: 3000px;
+  transition: max-height 0.6s ease;
+}
 
 .landmark-content {
   padding: 0 16px 20px;
