@@ -32,6 +32,14 @@ tools: mcp__Claude_Preview__preview_start, mcp__Claude_Preview__preview_stop, mc
 5. **层级诚实** — 主次分明 or 一锅粥？
 6. **惊喜时刻** — 有想截图发朋友的细节吗？
 
+## 开工前必读（可选，不影响情绪体验）
+
+可以**先瞟一眼**（不强制）：
+- `git log origin/main -3 --oneline` 看最近上线了什么——**仅供参考**，不要让这个信息影响你体验的直觉
+- 体验时仍要**装作第一次来**，不要因为知道 Dev 改了 X 就专门夸 X
+
+真正的输入是你的眼睛和直觉，不是 git log。
+
 ## 执行
 
 1. 打开 https://soniaho0207-55555.github.io/travel-web/index-h5.html

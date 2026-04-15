@@ -1,8 +1,9 @@
 # 环球史迹 H5 v2.0 产品需求文档（PRD）
 
-**文档版本**：v2.2  
+**文档版本**：v2.3（内容深度升级 · Phase 1）  
 **日期**：2026-04-15  
-**状态**：视觉气质升级 · 响应 UX 反馈 2026-04-14-2349  
+**状态**：v2.2 视觉气质升级已落地（8.5/10），本版聚焦**内容深度**（目标 9+）  
+**来源**：用户反馈-2026-04-15-1551-内容深度补充.md（C-1 ~ C-4）  
 
 ---
 
@@ -288,54 +289,131 @@ Tab 吸顶（sticky），吸顶后距顶部 0px。
 
 ---
 
-##### 4.2.3·a 【v2.2 升级】景点信息模块重构
+##### 4.2.3·a 【v2.3 重构】景点信息模块（门票 4 件套 + Tips 数组）
 
-**背景**：现有 hours / ticket / note 三字段单薄，没有给出"真正能用上"的购票信息。UX 反馈指出这是决定产品定位是"博物馆 demo"还是"旅行工具"的分水岭。
+> **v2.3 覆盖 v2.2 字段**：v2.2 定义的扁平字段 `ticketUrl` / `advanceBooking` / `bestTime` 本版**全部作废**，未上线前直接换成下述结构化对象。v2.2 字段名**不进 js/data.js**，Dev 请按 v2.3 字段实现。
 
-**新版信息卡结构**：
+**背景**：UX 反馈指出扁平的"票价一行 + 建议提前一句"仍然是"被科普"而非"帮决策"。真正能把用户从"流失到马蜂窝"拉回来的是——**多渠道购票 + 淡旺季预约窗口 + 内行时段 tip + 分类 Tips 数组**。这是 App 从"画册"升格到"工具"的唯一关键。
+
+**数据模型**（`js/data.js` 的 `landmarks[]`）：
+
+```javascript
+{
+  name: '斗兽场',
+  hours: '08:30–19:00',                              // 保留
+  ticket: {                                          // 【v2.3 重构】从 string 变 object
+    price: '€18（联票含古罗马广场+帕拉蒂尼山，48h 内有效）',
+    channels: [                                      // 购票渠道 array
+      { name: '官方 colosseo.it', url: 'https://www.coopculture.it/...', note: '最便宜，系统偶尔崩' },
+      { name: 'Klook',            url: 'https://...',                     note: '中文，可取消' },
+      { name: 'Tiqets',           url: 'https://...',                     note: '快速预约' }
+    ],
+    bookingWindow: {                                 // 淡旺季预约窗口
+      peak:     '旺季 7-8 月：2-4 周',
+      shoulder: '春秋肩季：3-7 天',
+      offpeak:  '淡季 12-2 月：1-3 天'
+    },
+    timingTip: '开门前 8:30 到，或落日前 16:30 后；避开 11-14 团客高峰'
+  },
+  tips: [                                            // 【v2.3 新增】分类 Tips 数组（替代单字段 note）
+    { category: 'ticket',  text: '联票 48h 内分两天玩古罗马广场 + 帕拉蒂尼山' },
+    { category: 'timing',  text: '开门前 8:30 到最顺，或落日前 1 小时最美' },
+    { category: 'photo',   text: '康斯坦丁凯旋门方向拍西立面，夕阳打光' },
+    { category: 'route',   text: '出斗兽场 → 真理之口（地铁 B 一站）→ 特莱维喷泉' },
+    { category: 'dress',   text: '无着装要求，但地下层 Hypogeum 需预约 + €9' },
+    { category: 'season',  text: '12-2 月无排队、票价不变，下午 4 点天黑' },
+    { category: 'secret',  text: '地下层 Hypogeum 能走角斗士通道，90% 游客不知道' }
+  ],
+  note: '每日限流 3000 人，高峰期可能当场售罄'       // 保留（承载不归入 tips 的硬性提示）
+}
+```
+
+**门票 4 件套 · UI 结构**：
 
 ```
-┌─────────────────────────────────────┐
-│ [icon] 开放时间                       │  ← SVG clock 图标
-│ 淡季 08:30—17:00 · 旺季 08:30—17:30  │
-│ 周一闭馆                             │
-│─────────────────────────────────────│
-│ [icon] 门票                          │  ← SVG ticket 图标
-│ 旺季 ¥60 · 淡季 ¥40                  │
-│ ↗ 官方购票 (gugong.228.com.cn)      │  ← 外链图标 + 链接（可选字段）
-│ 建议提前 3–7 天预约                   │  ← 提前天数（可选字段）
-│─────────────────────────────────────│
-│ [icon] 当地 tip                      │  ← SVG lightbulb 图标
-│ 工作日上午 9 点开门前入场，避开团客     │  ← bestTime 字段
-│─────────────────────────────────────│
-│ [icon] 提示                          │  ← SVG info 图标
-│ 每日限流 8 万人次                     │  ← note 字段
-└─────────────────────────────────────┘
+┌─ 门票 ────────────────────────────────────
+│ 🎫 €18  联票含古罗马广场+帕拉蒂尼山，48h 有效
+├─ 购票渠道 ────────────────────────────────
+│  ↗ 官方 colosseo.it   最便宜 · 系统偶尔崩
+│  ↗ Klook              中文 · 可取消
+│  ↗ Tiqets             快速预约
+├─ 预约提前 ────────────────────────────────
+│  旺季 7-8 月     2-4 周
+│  春秋肩季        3-7 天
+│  淡季 12-2 月    1-3 天
+├─ 时段建议 ────────────────────────────────
+│  最佳：开门前 8:30 · 或落日前 16:30 后
+│  避开：11-14 团客高峰
+└──────────────────────────────────────────
 ```
 
-**字段映射**：
+**Tips 数组 · UI 规格**：
 
-| 模块 | 数据字段 | 是否必填 | 说明 |
-|------|---------|---------|------|
-| 开放时间 | `hours` | 必填 | 现有字段 |
-| 门票价格 | `ticket` | 必填 | 现有字段 |
-| 官方购票链接 | `ticketUrl` | **v2.2 可选新增** | 外链，无则不显示购票按钮 |
-| 建议提前天数 | `advanceBooking` | **v2.2 可选新增** | 短句，如"建议提前 3–7 天" |
-| 当地 tip | `bestTime` | **v2.2 可选新增** | 短句，如"工作日上午人最少" |
-| 注意提示 | `note` | 必填 | 现有字段 |
+- 米色半透明 list（参考杂志 "Editor's Note"）
+- 每条一行 · ≤30 字 · 分类 SVG 图标在最左（16×16 哑金）
+- 数量：**每景点 4-6 条**（≥4 为合格）
+- 字体遵循 v2.2 规格：16px / Regular / 1.75 行距 / `#F5EFE0` 不透明
+
+**Tips 分类 · 7 类 + 新 SVG 图标**（【v2.3 新增 · 图标规范扩充 9.5.1】）：
+
+| category 值 | 含义 | SVG 图标 | 示例 |
+|-------------|------|---------|------|
+| `ticket`  | 票务技巧 | ticket-dashed  | "联票 48h 分两天玩省票钱" |
+| `timing`  | 时段内行 | clock-thin     | "开门前 8:30 到或落日前最美" |
+| `photo`   | 最佳机位 | camera-line    | "康斯坦丁凯旋门方向拍西立面" |
+| `route`   | 动线串联 | footprint-line | "出斗兽场→真理之口→特莱维" |
+| `dress`   | 着装/规矩 | shirt-line     | "进梵蒂冈需遮肩遮膝" |
+| `season`  | 季节差异 | snowflake-line | "12-2 月无排队，4 点天黑" |
+| `secret`  | 隐藏彩蛋 | key-line       | "地下层 Hypogeum 走角斗士通道" |
+
+**Tips 内容标准**（写入 PRD，Dev/PM/Content 三方共同约束）：
+
+> 每条 tip 必须命中以下**至少一项具体锚点**。一项都不命中 = 该条由 PM 重写，**不计入 ≥4 条的合格数量**（而非 FAIL 整个 PR）。
+
+| 锚点类型 | 举例 |
+|----------|------|
+| **数字** | "联票 48h 有效"、"珍宝馆加 ¥10"、"下午 4 点天黑" |
+| **具体时间** | "开门前 8:30 到"、"落日前 1 小时最美" |
+| **具体方向/位置** | "康斯坦丁凯旋门方向拍西立面"、"神武门外向上拍景山" |
+| **具体名字** | "地下层 Hypogeum"、"珍妃井旁澡堂遗址" |
+| **只有去过的人才知道的细节** | "中轴线走完再去东六宫，人比西六宫少 40%" |
+
+**反面例子**（都不命中 → 不合格）：
+- "建议网上预约"（无数字、无具体时间）
+- "请穿舒适鞋"（无任何锚点）
+- "注意防晒"、"带好证件"（纯常识）
+- "避开人多时段"（无具体时间）
+
+**好例子**（任一锚点即合格）：
+- "11-14 点团客最密，避开"（具体时间 ✓）
+- "地下层 Hypogeum 走角斗士通道，90% 游客不知道"（具体名字 + 去过才知道 ✓）
 
 **空状态处理**：
-- 可选字段为空时，对应行不显示，不留空白
-- 无 `ticketUrl` 时，门票价格单独一行，无链接
 
-**交互**：
-- 购票链接：点击在新窗口打开（`target="_blank" rel="noopener"`）
-- 外链图标在文字右侧，提示用户跳转
+- `ticket.channels` 空数组 → 不渲染"购票渠道"块
+- `ticket.bookingWindow` 字段缺失或三字段全空 → 不渲染"预约提前"块
+- `ticket.timingTip` 空 → 不渲染"时段建议"块
+- `tips` 空数组 → 不渲染 Tips 模块（不显示"暂无"占位）
+- `ticket.price` 必填（沿用 v2.0 要求）
 
-**内容编辑规范**（PM 负责撰写）：
-- 所有景点在本期补齐 `ticketUrl`（官方优先，无官方则留空，不用 Klook/马蜂窝第三方链接）
-- `advanceBooking` 仅在确实需要预约时写，不强行填
-- `bestTime` 要具体（"工作日上午"比"避开人多时段"好），体现"当地人视角"
+**数据来源（PM / Content 研究指引）**：
+
+用户指定 research 源，PM 在补内容时按此优先级：
+
+1. **马蜂窝**（中文攻略评论区） — 预约窗口、季节差异、时段建议
+2. **Tripadvisor**（英文评论 + Plan your visit） — 官方渠道、常见坑
+3. **Reddit r/travel** — 内行彩蛋、反常识 tip
+4. **小红书博主实战帖** — 最佳机位、动线串联
+
+**参考对标**：Klook 详情页 / Tripadvisor 票务卡 / Airbnb Experiences / Cereal 杂志 Insider Notes。
+
+**验收标准**：
+
+- [ ] `ticket` 从 string 字段变为 object，`js/data.js` 全量迁移完成
+- [ ] 门票 4 件套的 4 个子块独立可空，任一字段为空不报错、不留空白
+- [ ] 每景点 Tips ≥ 4 条，含至少 3 种不同 category
+- [ ] 7 个新 SVG 图标入库并可正确按 category 渲染
+- [ ] QA 抽检 5 个景点，每条 tip 对照上表锚点清单逐条核查；未命中的标红并退 PM 重写，**重写前不计入 ≥4 条合格数**
 
 ---
 
@@ -538,13 +616,35 @@ worldEvents: [
       gradient: 'linear-gradient(...)',
       desc: '...',
       hours: '淡季 08:30—17:00；旺季 08:30—17:30，周一闭馆',
-      ticket: '旺季 ¥60，淡季 ¥40',
-      ticketUrl: 'https://gugong.228.com.cn',   // 【v2.2 新增·可选】官方购票链接
-      advanceBooking: '需实名制预约，建议提前 3–7 天', // 【v2.2 新增·可选】建议提前天数
-      bestTime: '工作日上午 9 点开门前入场，避开团客高峰', // 【v2.2 新增·可选】热门时段/当地 tip
+
+      // 【v2.3 重构】ticket 从 string 变 object — v2.2 的 ticketUrl/advanceBooking/bestTime 扁平字段已作废
+      ticket: {
+        price: '旺季 ¥60 · 淡季 ¥40',
+        channels: [
+          { name: '官方故宫博物院', url: 'https://gugong.228.com.cn', note: '唯一官方，需实名' },
+          { name: '美团',           url: 'https://...',                note: '支持退改' }
+        ],
+        bookingWindow: {
+          peak:     '旺季 7-8 月 / 十一：提前 7 天开售即抢',
+          shoulder: '春秋肩季：提前 3-5 天',
+          offpeak:  '淡季 12-2 月：1-2 天即可'
+        },
+        timingTip: '工作日上午 9 点开门前入场，避开团客；不看钟表馆可免加购票'
+      },
+
+      // 【v2.3 新增】tips 数组替代原单字段 note（note 保留为硬性提示）
+      tips: [
+        { category: 'ticket',  text: '故宫全票含绝大部分宫殿，钟表馆/珍宝馆需单独购 ¥10' },
+        { category: 'timing',  text: '周二-五 9 点开门前入场，1 小时内可拍到无人太和殿' },
+        { category: 'photo',   text: '午门反方向的神武门外向上拍，能框住景山' },
+        { category: 'route',   text: '中轴线看完后走东六宫，比西六宫人少 40%' },
+        { category: 'season',  text: '12 月雪后太和殿是封神机位，但门票秒光' },
+        { category: 'secret',  text: '珍宝馆的珍妃井旁有皇家澡堂遗址，90% 游客错过' }
+      ],
+
       note: '每日限流 8 万人次，周一闭馆（法定节假日除外）',
       tags: ['世界文化遗产', '明清建筑', '皇家宫殿'],
-      worldEvents: [          // 【新增】同年世界事件
+      worldEvents: [          // 【Phase 2 将废弃 → 迁移为 timeline[].sameTime[]】v2.3 暂保留渲染
         {
           flag: '🇹🇷',
           city: '伊斯坦布尔',
@@ -560,6 +660,8 @@ worldEvents: [
   ]
 }
 ```
+
+> **v2.3 字段覆盖声明**：v2.2 曾定义扁平的 `ticketUrl` / `advanceBooking` / `bestTime` 字段（附录 D · D-03），**本版全部废弃**，未上线前直接用上面的 `ticket` 对象替代。`overviewFull`（v2.2）保留不动，Phase 2 将改名为 `overviewLong`。`worldEvents`（景点卡）Phase 2 将迁移到时间轴 `sameTime[]`。
 
 ---
 
@@ -728,7 +830,21 @@ banner.onerror = () => {
 
 > **国旗处理**：因 Windows 系统将国旗 emoji 显示为两字母缩写（如 "IT"/"CN"），跨平台不一致。v2.2 **完全去除界面中的国旗 emoji**。城市详情页 eyebrow 改为 "—— 意大利 · 历史与遗迹 ——"（无旗）；同年世界模块的 flag 字段改为可选，由 Dev 决定是否渲染。
 
-**交付物要求**：Dev 需引入或自建一套 SVG 图标集（建议参考 [Lucide](https://lucide.dev) / [Phosphor](https://phosphoricons.com) 的 monoline 风格），统一放在 `css/icons.svg` 或内联于组件。
+**【v2.3 扩充】Tips 分类图标（7 个新增）** — 用于 4.2.3·a 景点 Tips 数组 `tips[].category` 渲染：
+
+| category 值 | SVG 图标名 | 视觉（stroke 1.5px / 哑金 `#C9963A` / 16×16） | 用途 |
+|-------------|------------|------------------------------------------|------|
+| `ticket`  | `ticket-dashed`  | 票根，虚线撕口 | 票务技巧 |
+| `timing`  | `clock-thin`     | 细线时钟 | 时段内行 |
+| `photo`   | `camera-line`    | 线框相机 | 最佳机位 |
+| `route`   | `footprint-line` | 两个线框脚印 | 动线串联 |
+| `dress`   | `shirt-line`     | 线框衬衫 | 着装/规矩 |
+| `season`  | `snowflake-line` | 细线雪花 | 季节差异 |
+| `secret`  | `key-line`       | 线框钥匙 | 隐藏彩蛋 |
+
+> 这 7 个是 4.2.3·a Tips 数组按 category 字段渲染的专用图标，**不可与景点元数据的 clock/ticket/lightbulb/info 复用同一组**——规格一致（monoline / 1.5 stroke / 哑金），但视觉上 Tips 用更纤细的 `-thin`/`-line` 变体以区分层级。
+
+**交付物要求**：Dev 需引入或自建一套 SVG 图标集（建议参考 [Lucide](https://lucide.dev) / [Phosphor](https://phosphoricons.com) 的 monoline 风格），统一放在 `css/icons.svg` 或内联于组件。v2.3 需额外引入上述 7 个 tips 分类图标。
 
 ---
 
@@ -1458,4 +1574,155 @@ D-01/02/03 是一组——任何一项不落地，整体气质都无法达到 8.
 
 ---
 
-*文档结束 — v2.2（2026-04-15）*
+*v2.2 附录结束*
+
+---
+
+## 附录 E：v2.3 变更清单（Phase 1 · DEV 需求集中档）
+
+> **录入日期**：2026-04-15  
+> **来源**：用户反馈-2026-04-15-1551-内容深度补充.md（C-1 ~ C-4）  
+> **定位判断**：v2.2 把 App 美学底盘拉到 Monocle Travel Guide 一档（8.5/10），v2.3 要做的是 **内容深度**——从"画册"升格到"值得留在手机里的旅行伙伴"。底盘够了，**下一刀是内容**。  
+> **分期原则**（用户明确要求）：**不要四件事同时做会乱**。v2.3 只做 P0 的 C-3/C-4（景点卡内容密度，一周见效），Phase 2（v2.4）再做叙事结构重构。
+
+### 覆盖 v2.2 的字段变更
+
+| v2.2 字段 | v2.3 决定 | 原因 |
+|-----------|-----------|------|
+| `landmarks[].ticketUrl` | **废弃** → 合并到 `ticket.channels[].url` | 用户要多渠道结构化 |
+| `landmarks[].advanceBooking` | **废弃** → 升级为 `ticket.bookingWindow{peak, shoulder, offpeak}` | 用户要淡旺季区分 |
+| `landmarks[].bestTime` | **废弃** → 升级为 `ticket.timingTip` | 语义更精确 |
+| `landmarks[].ticket` | **从 string 变为 object** | 承载 price + channels + bookingWindow + timingTip |
+| `landmarks[].note` | **保留但弱化** | 仅承载硬性提示（闭馆日、限流）；软性 tip 迁移到新 `tips[]` 数组 |
+| `cities[].overviewFull` | **不动** | Phase 2 再改名 `overviewLong` |
+| `landmarks[].worldEvents[]` | **不动** | Phase 2 废弃并迁移到 `timeline[].sameTime[]` |
+| `timeline[].worldContext` | **不动** | Phase 2 升级为 `timeline[].sameTime[]` 数组结构 |
+
+**重要**：v2.2 的 `ticketUrl` / `advanceBooking` / `bestTime` 从未上线（D-03 尚在 Dev TODO），**直接跳过**这三个扁平字段，不要写进 `js/data.js`。
+
+---
+
+### E-01 🔴 P0 | 景点门票信息 4 件套（数据模型重构）
+
+**对应 UX 反馈**：C-3（门票购买 & 预约 tips 完全缺失）
+
+**现象**：当前 `ticket` 只是 "€18 · 09:00-19:00 · 建议网上预约" 三行——没官方 URL、没渠道对比、没淡旺季窗口、没时段建议——用户看完会退出 App 跳转马蜂窝，转化链条断掉。
+
+**需求**：`js/data.js` 中所有 `landmarks[].ticket` 从 string 改为 object，结构见 PRD 4.2.3·a。
+
+```javascript
+ticket: {
+  price: string,                              // 必填
+  channels: [{ name, url, note }],            // 可选数组（空则不渲染渠道块）
+  bookingWindow: {                            // 可选对象
+    peak: string,        // 旺季
+    shoulder: string,    // 肩季
+    offpeak: string      // 淡季
+  },
+  timingTip: string                           // 可选
+}
+```
+
+**UI 分 4 子块**：票价 / 购票渠道 / 预约提前 / 时段建议 — 每块独立可空，空则不渲染、不留占位。
+
+**数据研究源**（PM / Content 按优先级）：马蜂窝 → Tripadvisor → Reddit r/travel → 小红书。
+
+**验收标准**：
+- [ ] 15 座城市的 50+ 景点 `ticket` 字段全量迁移为 object 结构
+- [ ] 4 个子块空状态独立处理，任一空不报错
+- [ ] 购票渠道 `url` 在新 tab 打开（`target="_blank" rel="noopener"`）
+- [ ] 渠道行显示外链图标（右上箭头 SVG）
+- [ ] 首批 5 个景点（斗兽场 / 故宫 / 圣索菲亚 / 金字塔 / 马丘比丘）必须补齐全部 4 子块样本
+
+---
+
+### E-02 🔴 P0 | 景点 Tips 数组重构（分类 + 7 SVG 图标 + 锚点清单）
+
+**对应 UX 反馈**：C-4（每个景点 Tips 只有一条 · 全是常识）
+
+**现象**：当前每景点单字段 `note`，且内容是"建议网上预约"这种常识——"一条常识 tip = 不如没有"。不做主观否定，采用 PRD 4.2.3·a 的**锚点清单**做客观正向判定。
+
+**需求**：新增 `landmarks[].tips` 数组字段，见 PRD 4.2.3·a。
+
+```javascript
+tips: [
+  { category: 'ticket'|'timing'|'photo'|'route'|'dress'|'season'|'secret', text: string },
+  // ≥4 条，含至少 3 种不同 category
+]
+```
+
+**7 个新 SVG 图标**（入库，见 9.5.1 扩充）：
+
+`ticket-dashed` / `clock-thin` / `camera-line` / `footprint-line` / `shirt-line` / `snowflake-line` / `key-line`
+
+**UI 样式**：米色半透明 list（杂志 Editor's Note 感），每条一行 ≤30 字，左侧分类 SVG 16×16 哑金。
+
+**Tips 内容标准**（详见 PRD 4.2.3·a 锚点清单）：
+- 每条 tip 必须命中至少一项具体锚点：**数字 / 具体时间 / 具体方向 / 具体名字 / 只有去过才知道的细节**
+- 未命中的 tip 由 PM 重写，**不计入 ≥4 条的合格数量**（而非 FAIL 整个 PR）
+- Dev/PM 提交前对照锚点清单自检，降低来回打回概率
+
+**PM 承诺交付**：首批 3 个景点（斗兽场 / 故宫 / 圣索菲亚）各 6 条 tips 做样本（共 18 条），其余景点 Dev 先留 `tips: []`，PM 按城市分批补齐。
+
+**验收标准**：
+- [ ] `tips` 字段类型定义正确，空数组不报错不渲染
+- [ ] 7 个分类 SVG 图标入库并按 `category` 自动映射
+- [ ] 首批 3 个景点各 ≥4 条 tips，含 ≥3 种不同 category
+- [ ] QA 抽检 5 条 tips 对照 PRD 4.2.3·a 锚点清单，未命中的标红退回 PM（不计入 ≥4 条合格数）
+
+---
+
+### E-03 ⏸ Phase 2 · 推迟 | 历史概述"继续阅读"展开 + `overviewLong`
+
+**对应 UX 反馈**：C-1
+
+**与 v2.2 的关系**：v2.2 附录 D · D-04 已定义 `overviewFull` 字段和展开组件，Dev 如果已经实现，Phase 2 仅做**字段改名** `overviewFull → overviewLong`；如果 D-04 还没开工，建议**直接按 v2.4 字段名 `overviewLong` 实现**（一次到位）。
+
+**PM 建议**：D-04 暂停，等 Phase 2 合并一起做，避免中间态的字段名漂移。
+
+**判定**：v2.3 不做，列入 Phase 2 (v2.4) 需求池。
+
+---
+
+### E-04 ⏸ Phase 2 · 推迟 | "世界其他地方"从景点卡迁移到时间轴
+
+**对应 UX 反馈**：C-2
+
+**动作概要**（Phase 2 时再细化）：
+1. 景点卡撤掉 `worldEvents` 渲染
+2. 时间轴节点新增 `sameTime[]` 数组字段（替代现有的单句 `worldContext`）
+3. 时间轴节点旁展示 2-3 条同时期其他文明
+4. UI 可选：默认折叠，点击 "同时期世界 →" 展开
+
+**PM 判断**：这是叙事结构重构，改动面比 E-01/E-02 大得多，且内容重写量 = 每城时间轴 2-3 节点 × `sameTime[]`（每节点 2-3 条）。需要独立迭代。
+
+**判定**：v2.3 不做，列入 Phase 2 (v2.4) 需求池。`worldContext` 字段在 v2.3 保留不动（v2.1 遗留）。
+
+---
+
+### 建议修复顺序（v2.3）
+
+```
+本期只做：E-01 + E-02（数据模型 + 内容重写，一组同发）
+推迟到 Phase 2：E-03 + E-04（叙事结构重构，下个迭代）
+```
+
+**为什么 E-01/02 必须一起**：两者都动 `landmarks[].*`，分两次发布会造成中间态不一致。且用户感知上，"票务完整 + Tips 有内行味"是**内容密度感**的合体，分开发挥不出效果。
+
+### PM 承诺交付的数据
+
+| 数据 | 数量 | 首批日期 | 说明 |
+|------|------|----------|------|
+| `ticket.channels` / `bookingWindow` / `timingTip` | 15 城 × 3-5 景点 | 首批 5 景点（斗兽场/故宫/圣索菲亚/金字塔/马丘比丘） | 按马蜂窝/TripAdvisor/Reddit/小红书 research |
+| `tips[]` 分类 tips | 50+ 景点 × ≥4 条 | 首批 3 景点 × 6 条（18 条样本） | 每条命中锚点清单至少一项（详见 4.2.3·a） |
+| 7 个 Tips 分类 SVG 图标 | 7 个 | 由 Dev 选型 | Lucide/Phosphor monoline |
+
+### Phase 2 预告（不在 v2.3 范围）
+
+- E-03：`overviewFull` → `overviewLong` 改名 + 15 城 × 300-500 字散文（PM 内容大工程）
+- E-04：景点 `worldEvents[]` 迁移至 `timeline[].sameTime[]`（结构重构 + 内容重写）
+- 预期启动时机：E-01/E-02 上线并 UX 验收通过 "内容密度涨了" 之后
+
+---
+
+*文档结束 — v2.3（2026-04-15）*
