@@ -1,5 +1,5 @@
 ---
-description: Run one full cycle of the auto-pipeline — UX → [gate①] → PM → [gate②] → Dev-H5 → [Step 3.5 反刍] → [gate③] → QA → PMO push. Loops until CEO says stop.
+description: Run one full cycle of the auto-pipeline — UX → [gate①] → PM → UX-review → [gate②] → Dev-H5 → [Step 3.5 反刍] → [gate③] → QA → PMO push. Loops until CEO says stop.
 ---
 
 你现在是 **PMO orchestrator**，负责串起整条自动化流水线。按以下步骤严格执行，不要跳步。
@@ -17,9 +17,11 @@ description: Run one full cycle of the auto-pipeline — UX → [gate①] → PM
 
 | # | 在哪 | CEO 可回复 |
 |---|---|---|
-| ① | Step 1 后 | `approve` / `加一条:XX` / `drop 第N条` / `stop` |
-| ② | Step 2 后 | `approve` / 直接提修改（PMO 改 PRD） / `stop` |
-| ③ | Step 3 后（宽松，只首次） | `approve` / `让 Dev-H5 改:XX` / `stop` |
+| ① | Step 1 后（UX 反馈）| `approve` / `加一条:XX` / `drop 第N条` / `stop` |
+| ② | Step 2.5（PRD + UX 评语）| `approve` / 直接提修改（PMO 改 PRD） / `stop` |
+| ③ | Step 3.9 后（Dev-H5 产出，宽松，只首次）| `approve` / `让 Dev-H5 改:XX` / `stop` |
+
+**Step 2 内部**：PM → **UX 评审（Step 2.3，无闸门，自动）** → PM 返工 1 次（若需）→ 闸门 ②
 
 额外 CEO 决策点：
 - Step 3.5 high blockers：`回Step2` / `砍掉` / `硬上`
@@ -72,12 +74,64 @@ description: Run one full cycle of the auto-pipeline — UX → [gate①] → PM
    CEO 补充：<从反馈文件里 "## CEO 补充" 节读出，无则写"无">
    请更新 PRD-travel-h5-v2.md 并产出摘要。
    ```
-3. PM 跑完，**把 PRD 的 git diff** 展示给 CEO（只显示变更部分，不要全文）
-4. 末尾加："⚠️ **闸门 ②**：回复 `approve` 放行到 Dev-H5；或提修改；或 `stop`"
-5. **停在这里，等 CEO 回复**
+3. PM 跑完 → 进 **Step 2.3 UX 评审**（不再直接跳闸门 ②）
 
-### Step 2.5: 处理 CEO approve（PRD）
+### Step 2.3: UX 评审 PM 摘要（无闸门，自动）
 
+PM 产出后、闸门 ② 展示给 CEO 之前，让 UX 再过一遍 PM 的解读——**UX 是唯一能判断"PM 解读对不对"的人**。
+
+1. 说："👀 启动 UX 评审 PM 摘要..."
+2. Task 调 `ux-tester` subagent，模式 B：
+   ```
+   模式：B (REVIEW PRD)
+   输入：
+     - 你上一轮写的反馈 md: 用户反馈-YYYY-MM-DD-HHmm.md
+     - PM 刚写的摘要: <贴上 PM Mode A 摘要>
+     - PRD 变更日志最新一条: <贴上新增条目>
+   
+   任务：用你的 taste-driven 视角判断——
+     1. PM 解读对了吗？有没有走偏？
+     2. 按 PM 这套做完，你会满意吗？
+     3. 有没有把你真正在意的细节当噪音过滤掉？
+   
+   产出（≤100 字）：
+     - 结论：approve / 反对
+     - 如果反对，一句话说清"哪里不对、你想的是什么"
+     - 不要重写 PRD，只给评语
+   ```
+3. 收到 UX 评语：
+   - `approve` → 进闸门 ②
+   - `反对` → 进 Step 2.3b（PM 返工一次）
+
+### Step 2.3b: PM 基于 UX 评语返工（最多 1 轮）
+
+1. 说："🔄 UX 觉得 PM 解读有偏差，PM 返工一次..."
+2. Task 调 `pm` subagent，模式 A'：
+   ```
+   模式：A' (REVISE based on UX review)
+   输入：
+     - 你上一轮写的 PRD 条目: <贴上>
+     - UX 评语: <贴上反对理由>
+   
+   任务：理解 UX 的关切，修订 PRD 条目。
+     - 不是"加更多条"，是"改方向"
+     - PRD 变更日志加一条 "修订: 基于 UX 评审"
+     - 摘要说明你改了什么、为什么
+   ```
+3. 返工后**不再叫 UX**（避免死循环），直接进闸门 ②
+4. 展示给 CEO 时，把 UX 原评语 + PM 返工前后摘要都带上
+
+### Step 2.5: 闸门 ②（CEO approve PRD）
+
+展示给 CEO 的信息：
+- PRD 的 git diff（只显示变更部分）
+- PM 摘要
+- **UX 评语**（approve / 反对理由）
+- 如经过 2.3b 返工：展示返工前后对比
+
+末尾加："⚠️ **闸门 ②**：回复 `approve` 放行到 Dev-H5；或提修改；或 `stop`"
+
+CEO 回复处理：
 - `approve` → 进 Step 3
 - 有修改 → 直接 Edit 工具改 PRD，再 diff 展示，再问
 

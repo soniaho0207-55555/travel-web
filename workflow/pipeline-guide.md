@@ -33,8 +33,12 @@ Step 1  UX 测试（taste-driven 28yo 用户体验）
 ⚠️ 闸门 ① 反馈 approve
    ↓
 Step 2  PM 改 PRD（读 5 personas + 反馈 → 更新 PRD）
+   │
+   └─ Step 2.3  UX 评审 PM 摘要（自动，无闸门）
+         ├─ approve → 进闸门 ②
+         └─ 反对 → Step 2.3b PM 返工 1 次 → 进闸门 ②
    ↓
-⚠️ 闸门 ② PRD diff approve
+⚠️ 闸门 ② PRD diff approve（带 UX 评语展示）
    ↓
 Step 3  Dev-H5 实现
    │  3a 需求完备性检查（2 分钟）
@@ -72,12 +76,19 @@ Step 5  merge + push
 | `drop 第 3 条` | 删掉反馈的第 3 条，再问一次 |
 | `stop` / `暂停` | 删锁，结束本轮 |
 
-### 闸门 ② PRD diff
+### 闸门 ② PRD diff（展示 PRD diff + PM 摘要 + **UX 评语**）
 | 你说 | PMO 做什么 |
 |---|---|
 | `approve` | 放行到 Dev-H5 |
 | `改 PRD：把 X 改成 Y` | PMO 直接用 Edit 改 PRD，再 diff，再问 |
 | `stop` | 删锁，结束 |
+
+**Step 2.3 UX 评审说明**：
+- PM 写完 PRD 后，PMO 会**自动**让 UX 用模式 B 评审一次（taste-driven 视角）
+- UX `approve` → 直接到闸门 ②
+- UX `反对` → PM 进模式 A' 返工 **1 轮**（不叫 UX 第二次，防死循环）→ 进闸门 ②
+- 闸门 ② 展示时会带上 UX 评语（approve 原文 / 反对理由 + PM 返工前后对比）
+- 这一步是**自动**的，你不用回话——只影响闸门 ② 你看到的内容丰不丰富
 
 ### 闸门 ③ Dev-H5 产出（宽松，只首次）
 | 你说 | PMO 做什么 |
