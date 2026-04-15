@@ -703,6 +703,13 @@ body::before {
   line-height: 1.75;
   font-weight: 400;
 }
+.timeline-world-context {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #C9B896;
+  opacity: 0.9;
+}
 
 /* ─── LANDMARKS ─── */
 .landmarks-wrap {
@@ -910,6 +917,14 @@ body::before {
 .ticket-channel-name { color: var(--paper); font-weight: 600; }
 .ticket-channel-note { color: #C9B896; font-size: 13px; margin-left: auto; text-align: right; }
 .ticket-channel:active { opacity: 0.7; }
+.ticket-channel-plain { cursor: default; }
+.ticket-channel-plain:active { opacity: 1; }
+
+.ticket-booking-single {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--paper);
+}
 
 .ticket-booking-row {
   display: grid;

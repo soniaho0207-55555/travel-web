@@ -33,8 +33,10 @@ const TIP_CATEGORY_ICON = {
   timing: 'clock-thin',
   photo: 'camera-line',
   route: 'footprint-line',
+  walking: 'footprint-line',   // PM alias of route
   dress: 'shirt-line',
   season: 'snowflake-line',
+  cold: 'snowflake-line',       // PM alias of season
   secret: 'key-line',
 };
 
@@ -345,6 +347,7 @@ function renderCityDetail(id) {
                 <div class="timeline-year">${t.year}</div>
                 <div class="timeline-event">${t.event}</div>
                 <div class="timeline-desc">${t.desc}</div>
+                ${t.worldContext ? `<div class="timeline-world-context">${t.worldContext}</div>` : ''}
               </div>
             `).join('')}
           </div>
@@ -505,24 +508,40 @@ function renderTicket(t) {
   const channelsBlock = hasChannels ? `
     <div class="ticket-section ticket-channels">
       <div class="ticket-section-title">购票渠道</div>
-      ${channels.map(ch => `
-        <a class="ticket-channel" href="${ch.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-          ${icon('externalLink', 12)}
-          <span class="ticket-channel-name">${ch.name}</span>
-          ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
-        </a>
-      `).join('')}
+      ${channels.map(ch => ch.url
+        ? `<a class="ticket-channel" href="${ch.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+             ${icon('externalLink', 12)}
+             <span class="ticket-channel-name">${ch.name}</span>
+             ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
+           </a>`
+        : `<div class="ticket-channel ticket-channel-plain">
+             <span class="ticket-channel-name">${ch.name}</span>
+             ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
+           </div>`
+      ).join('')}
     </div>` : '';
 
-  const bw = bookingWindow || {};
-  const hasBW = bw.peak || bw.shoulder || bw.offpeak;
-  const bwBlock = hasBW ? `
+  // bookingWindow: object (A/B tier: peak/shoulder/offpeak) OR string (C tier: single sentence)
+  let bwBlock = '';
+  if (typeof bookingWindow === 'string' && bookingWindow.trim()) {
+    bwBlock = `
+    <div class="ticket-section ticket-booking">
+      <div class="ticket-section-title">预约提前</div>
+      <div class="ticket-booking-single">${bookingWindow}</div>
+    </div>`;
+  } else if (bookingWindow && typeof bookingWindow === 'object') {
+    const bw = bookingWindow;
+    const hasBW = bw.peak || bw.shoulder || bw.offpeak;
+    if (hasBW) {
+      bwBlock = `
     <div class="ticket-section ticket-booking">
       <div class="ticket-section-title">预约提前</div>
       ${bw.peak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">旺季</span><span class="ticket-booking-span">${bw.peak}</span></div>` : ''}
       ${bw.shoulder ? `<div class="ticket-booking-row"><span class="ticket-booking-season">肩季</span><span class="ticket-booking-span">${bw.shoulder}</span></div>` : ''}
       ${bw.offpeak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">淡季</span><span class="ticket-booking-span">${bw.offpeak}</span></div>` : ''}
-    </div>` : '';
+    </div>`;
+    }
+  }
 
   const tipBlock = timingTip ? `
     <div class="ticket-section ticket-timing">
