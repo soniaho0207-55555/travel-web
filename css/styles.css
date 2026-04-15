@@ -686,7 +686,7 @@ body::before {
   margin-bottom: 6px;
 }
 .timeline-desc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--paper);
   line-height: 1.75;
   font-weight: 400;
@@ -819,7 +819,7 @@ body::before {
   text-transform: uppercase;
   color: var(--gold);
 }
-.info-value { font-size: 14px; color: var(--paper); line-height: 1.6; font-weight: 400; }
+.info-value { font-size: 16px; color: var(--paper); line-height: 1.75; font-weight: 400; }
 .info-value.free { color: #6ec67a; font-weight: 600; }
 .info-note {
   grid-column: 1 / -1;
