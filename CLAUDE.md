@@ -17,10 +17,16 @@ CRITICAL: Each role MUST only modify their allowed files. Violating this will ca
 | Role | Allowed to MODIFY | Read-only |
 |------|-------------------|-----------|
 | PM (Review PRD) | `PRD-travel-h5-v2.md` | everything else |
-| Dev (Build page) | `js/app.js`, `css/styles.css`, `js/data.js`, `index-h5.html` | `PRD-travel-h5-v2.md` |
+| Dev-H5 (Build H5 page) | `index-h5.html`, `css/styles.css`, `js/app.js`, `js/data.js` | `PRD-travel-h5-v2.md`, `miniprogram/**` |
+| Dev-MiniApp (Build WeChat mini program) | `miniprogram/**` | `PRD-travel-h5-v2.md`, H5 code (can read `js/data.js` as data source) |
 | QA (Testing) | NOTHING (read + test only) | everything |
 | UX (User feedback) | `用户反馈-*.md` (create new files only) | nothing to modify |
 | PMO (this conversation) | `workflow/backlog.md`, `CLAUDE.md` | everything |
+
+### Dev 分工红线
+- Dev-H5 和 Dev-MiniApp **共享同一份数据** (`js/data.js`)，由 Dev-H5 维护；Dev-MiniApp 只读
+- 如果小程序需要新字段：先让 PM 写进 PRD → 通知 Dev-H5 改 `js/data.js` → Dev-MiniApp 消费
+- 禁止 fork 数据，禁止互改对方的代码文件
 
 ## Branch Rules
 
@@ -36,14 +42,14 @@ All roles follow this cycle:
 
 ```
 Step 1: PMO 分配
-   PMO 在 backlog.md 写任务，标记 [ASSIGNED:Dev] 或 [ASSIGNED:PM]
+   PMO 在 backlog.md 写任务，标记 [ASSIGNED:Dev-H5] / [ASSIGNED:Dev-MiniApp] / [ASSIGNED:PM]
 
 Step 2: PM 评审需求
    PM 审核 PRD，确认需求合理 → 在 backlog.md ## PRD Changes 记录变更
    如果需求有歧义或缺失，PM 先更新 PRD，再通知 Dev 可以开工
 
-Step 3: Dev 开发
-   Dev 读 backlog.md 和 PRD → 在 dev 分支写代码 → 改完标记 [DONE:Dev]
+Step 3: Dev 开发（H5 和 MiniApp 可并行）
+   Dev-H5 / Dev-MiniApp 读 backlog.md 和 PRD → 在 dev 分支写代码 → 改完标记 [DONE:Dev-H5] / [DONE:Dev-MiniApp]
 
 Step 4: QA 验证
    QA 在 dev 分支测试 → 通过标记 [PASS] / 不通过标记 [FAIL:原因]
