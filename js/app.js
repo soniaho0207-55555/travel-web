@@ -878,22 +878,38 @@ function setupFilterFade() {
 }
 
 /* ═══════════════════════════════════════
-   SCROLL ANIMATIONS
+   SCROLL ANIMATIONS (v2.4 F-12: fix first-node reveal flash)
    ═══════════════════════════════════════ */
 function setupScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+  const targets = document.querySelectorAll('.city-card, .timeline-item, .landmark-card');
+  if (!targets.length) return;
 
-  document.querySelectorAll('.city-card, .timeline-item, .landmark-card').forEach(el => {
-    if (!el.classList.contains('visible')) {
-      observer.observe(el);
-    }
+  // Double rAF: guarantee browser committed the initial hidden state (opacity:0 + transition-delay)
+  // before any .visible class toggles. Without this, first timeline node can paint blank because
+  // IntersectionObserver fires before the transition is attached.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+
+      targets.forEach(el => {
+        if (el.classList.contains('visible')) return;
+        // Items already in viewport on setup: force reveal (don't rely on observer's lazy fire)
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+        if (inView) {
+          el.classList.add('visible');
+        } else {
+          observer.observe(el);
+        }
+      });
+    });
   });
 }
 

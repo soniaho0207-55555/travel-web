@@ -582,7 +582,8 @@ body::before {
 .overview p {
   font-size: 16px;
   color: var(--paper);
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
   font-style: italic;
   font-weight: 400;
 }
@@ -590,7 +591,8 @@ body::before {
   margin-top: 12px;
   font-size: 16px;
   color: var(--paper);
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
   font-style: italic;
   font-weight: 400;
   max-height: 0;
@@ -700,15 +702,35 @@ body::before {
 .timeline-desc {
   font-size: 16px;
   color: var(--paper);
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
   font-weight: 400;
 }
+/* v2.4 F-06: MEANWHILE card — worldContext 独立卡片 */
 .timeline-world-context {
-  margin-top: 6px;
-  font-size: 13px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(201, 150, 58, 0.06);
+  border-left: 2px solid var(--gold);
+  border-radius: 4px;
+  font-size: 14px;
   line-height: 1.6;
-  color: #C9B896;
-  opacity: 0.9;
+  letter-spacing: 0.03em;
+  color: var(--paper);
+  opacity: 0.85;
+  position: relative;
+}
+.timeline-world-context::before {
+  content: 'MEANWHILE · 此时世界';
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-style: normal;
+  opacity: 1;
 }
 
 /* ─── LANDMARKS ─── */
@@ -818,7 +840,8 @@ body::before {
 .landmark-desc {
   font-size: 16px;
   color: var(--paper);
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
   font-weight: 400;
   margin-bottom: 14px;
 }
@@ -973,7 +996,8 @@ body::before {
   align-items: flex-start;
   gap: 10px;
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
   color: var(--paper);
   font-weight: 400;
 }
