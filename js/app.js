@@ -204,7 +204,7 @@ function renderHome() {
 
   // Typewriter
   setTimeout(() => {
-    typewriter('heroQuote', '"' + today.heroQuote + '"');
+    typewriter('heroQuote', '\u201C' + today.heroQuote + '\u201D');
   }, 400);
 
   // Load city card images & theme images
@@ -256,7 +256,7 @@ function renderCityCards() {
         <div class="city-card-body">
           <div class="city-card-name">${c.name}<span>${c.nameEn}</span></div>
           <div class="city-card-sub">${c.country} · ${CONTINENT_MAP[c.continent]}</div>
-          <div class="city-card-hook">"${c.hook}"</div>
+          <div class="city-card-hook">\u201C${c.hook}\u201D</div>
           <div class="city-card-tags">${themeLabels}</div>
         </div>
       </div>
