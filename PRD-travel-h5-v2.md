@@ -1,9 +1,15 @@
 # 环球史迹 H5 v2.0 产品需求文档（PRD）
 
-**文档版本**：v2.3（内容深度升级 · Phase 1）  
-**日期**：2026-04-15  
-**状态**：v2.2 视觉气质升级已落地（8.5/10），本版聚焦**内容深度**（目标 9+）  
-**来源**：用户反馈-2026-04-15-1551-内容深度补充.md（C-1 ~ C-4）  
+**文档版本**：v2.4（气质 + 信息架构升级 · Phase 2）  
+**日期**：2026-04-16  
+**状态**：v2.3 内容深度已落地（5.8/10 — 内容在、气质跟不上），本版聚焦**气质对齐 + 信息架构重构**（目标 7+）  
+**来源**：用户反馈-2026-04-15-2321.md（17 条 + CEO 补充 2 条）
+
+**本版 4 条主线**：
+1. **Hero 气质整改**（UX #1/3/4/5）— Hero 配图必须与文案气质对齐，建立 4 条选图铁律 + 3 城换图
+2. **北京样板页**（CEO-1）— 北京作为首推门面，作为 v2.4 核心交付物打样到"可以单独放出去"
+3. **景点信息架构重构**（CEO-2）— 景点卡从"展开就全给"改为"点击进二级详情页 · 三 Tab"
+4. **中文排版基线**（UX #2/14/16）— 全站弯引号 + 字距/行高升级 + MEANWHILE 版式  
 
 ---
 
@@ -1725,4 +1731,445 @@ tips: [
 
 ---
 
-*文档结束 — v2.3（2026-04-15）*
+---
+
+## 附录 F：v2.4 变更清单（气质 + 信息架构升级）
+
+**来源**：用户反馈-2026-04-15-2321.md（17 条 + CEO 补充 2 条）  
+**评分**：v2.3 实际体验 5.8/10（内容 7 分，气质 5 分）  
+**目标**：v2.4 落地后整体 ≥ 7.0/10
+
+### 本期合入顺序
+
+```
+F-01 ~ F-10 + F-12（北京样板 + IA 重构 + 中文排版 + 时间轴 reveal 修复）
+推迟到后续：F-11 / F-13 / F-14 / F-15 / F-16
+```
+
+**合入顺序说明**：F-12（时间轴首节点消失）从 P1 升到 P0，因为它发生在北京详情页开场 3 秒内，直接拖累"北京样板"的第一印象，必须同轮修掉。
+
+---
+
+### F-01 · P0 | 北京 Hero 配图更换
+
+**对应 UX 反馈**：#1（"帝国首都 3000 年" 文案配 CCTV 大裤衩 + 国贸三期 + 飞机）
+
+**问题**：文案讲 1420 年紫禁城落成，Hero 图是 2000 年后玻璃幕墙天际线，图文情绪完全相反。
+
+**需求**：北京 Hero 切换为**紫禁城题材**的 Wikipedia 公版图。
+
+**候选顺序**（Dev 按顺序试，命中第一张可用）：
+1. Forbidden City（紫禁城全景俯瞰）
+2. Hall of Supreme Harmony（太和殿正面）
+3. Temple of Heaven（天坛祈年殿）
+
+**Dev 实际落地**：`Forbidden City`（候选 1 命中）
+
+**验收标准**：
+- [ ] Hero 图主体为明清皇家建筑（紫禁城/太和殿/天坛），不含现代玻璃幕墙
+- [ ] 图片来源 wiki public domain，license 可追溯
+- [ ] 375×812 下显示无明显拉伸或糊
+
+---
+
+### F-02 · P0 | 京都 Hero 配图更换
+
+**对应 UX 反馈**：#3（京都塔 · 1964 年观光塔 vs 禅宗茶道文案）
+
+**需求**：京都 Hero 切换为**禅宗/传统庭园**题材。
+
+**候选顺序**：
+1. Kiyomizu-dera（清水寺）
+2. Fushimi Inari（伏见稻荷千本鸟居）
+3. Kinkaku-ji（金阁寺）
+4. Arashiyama（岚山竹林/渡月桥）
+
+**Dev 实际落地**：`Arashiyama`（候选 4 命中 — 候选 1/2/3 都已被景点详情占用，避免 Hero 与详情图撞图）
+
+**验收标准**：
+- [ ] Hero 图气质匹配"千年古都 · 神社 · 禅宗 · 茶道"叙事
+- [ ] 不与本城市任何景点的 Hero 图重复
+
+---
+
+### F-03 · P0 | 墨西哥城 Hero 配图更换
+
+**对应 UX 反馈**：#4（玻璃幕墙写字楼 vs 特诺奇提特兰叙事）
+
+**需求**：切换为**殖民/前哥伦布**题材。
+
+**候选顺序**：
+1. Metropolitan Cathedral Mexico City（大教堂正面，位于 Zócalo 广场）
+2. Teotihuacán（特奥蒂瓦坎金字塔）
+3. Zócalo 广场全景
+
+**Dev 实际落地**：`Metropolitan Cathedral`（候选 1 命中）
+
+**验收标准**：
+- [ ] Hero 图为殖民建筑或前哥伦布遗址，不含现代城市天际线
+- [ ] 历史中心气质与"湖中帝都 / 西班牙征服" 叙事对齐
+
+---
+
+### F-04 · P0 | 全站 ASCII 直引号 → 中文弯引号
+
+**对应 UX 反馈**：#2（Word 2003 默认字符感，15+ 次泛滥）
+
+**需求**：所有中文语境里的 `"..."`（U+0022 ASCII 直引号）替换为 `"..."`（U+201C / U+201D 中文弯引号）。
+
+**覆盖范围**：
+- `js/data.js`：城市/景点/主题所有文本字段（hook、overview、desc、tips、quotes 等）
+- `js/app.js`：typewriter、城市卡 hook 模板、其他拼装字符串
+- `index-h5.html`：如有固定文案
+- `css/styles.css`：content 属性里的引号
+- `PRD-travel-h5-v2.md`：文档自身保持 source of truth
+
+**不改**：代码里 JS 字符串字面量的定界符（`'...'` 和 `"..."` 仍用 ASCII，不是这条的目标）
+
+**Dev 实际落地**：`data.js` 75 处 + `app.js` 2 处
+
+**验收标准**：
+- [ ] `grep -n '"[^"]*[\p{Han}]' data.js` 零命中（中文字符周围不应有 ASCII 直引号）
+- [ ] 首页 Hero 金句、所有 city-card-hook、所有 tips 的引号均为 `"..."`
+
+---
+
+### F-05 · P0 | 中文正文字距 + 行距升级
+
+**对应 UX 反馈**：#14（overview / tips 读起来偏闷，没"呼吸"）
+
+**需求**：所有 ≥2 行的中文正文升级排版基线。
+
+**数值**：
+- `letter-spacing: 0.03em`
+- `line-height: 1.8`（原 1.75）
+
+**覆盖 class**：
+- `.city-overview`
+- `.timeline-desc`
+- `.landmark-desc`
+- `.landmark-tip`（含详情页三 Tab 内的正文）
+
+**不改**：
+- 标题类（已按 9.5 规范各自字距）
+- 英文/数字独占行（letter-spacing 对西文作用有限，但 0.03em 不会破坏）
+
+**参考**：MUJI 品牌说明书中文版、Cereal 中文版、Monocle city guides。
+
+**验收标准**：
+- [ ] DevTools 抽查以上 class 的 computed style：letter-spacing = 0.48px（16px × 0.03em），line-height ≈ 28.8px
+- [ ] UX 主观判断："段落之间呼吸感出现"
+
+---
+
+### F-06 · P0 | 时间轴 MEANWHILE 独立卡片版式
+
+**对应 UX 反馈**：#16（"此时世界：XXX" 只是普通灰色段落，没有版式支持）
+
+**现状**：时间轴每个节点后有 `worldContext` 字段（一段横切世界叙事），目前与上方描述同色同字号，埋没在段落里。
+
+**需求**：把 `worldContext` 提成独立的卡片块，视觉上与节点描述分离。
+
+**规格**：
+- 左金边 `border-left: 2px solid rgba(201,150,58,1)`
+- 底色 `background: rgba(201,150,58,0.06)`
+- 圆角 `border-radius: 4px`
+- 内边距 `padding: 10px 12px`
+- 顶部 `::before` 伪元素 label：`"MEANWHILE · 此时世界"`
+  - `font-size: 10px`
+  - `letter-spacing: 0.15em`
+  - `text-transform: uppercase`
+  - `color: rgba(201,150,58,0.7)`（哑金）
+  - 衬线英文 + 中文混排
+- 正文 `font-size: 14px` / `line-height: 1.6` / `opacity: 0.85`
+
+**参考**：Monocle sidebar 的 "Meanwhile in..." 栏目版式。
+
+**验收标准**：
+- [ ] 每个时间轴节点的 worldContext 独立成块，非段落流
+- [ ] MEANWHILE label 在卡片左上角可见
+- [ ] 移动端 375×812 下 label 不换行
+
+---
+
+### F-07 · P0 | 新增景点二级路由 `#/city/:id/landmark/:index`
+
+**对应 UX 反馈**：CEO-2（景点卡应进二级详情页）
+
+**现状**：景点卡点击在城市详情页内原地展开。
+
+**需求**：新增二级路由，景点详情独立成页。
+
+**路由规格**：
+- URL 格式：`#/city/beijing/landmark/0`
+- hashchange handler 解析 `parts[2] === 'landmark'` 分流到 `renderLandmarkDetail(cityId, index)`
+- 无效 index → `renderLandmarkNotFound`（标题 "未找到该景点" + "回到城市"按钮）
+
+**返回逻辑**：
+- 返回按钮导航到 `#/city/:id`（不是 `history.back()` — 支持从分享链接直达详情页场景）
+
+**分享友好**：详情页 URL 可直接分享，打开即进详情页（不经首页）
+
+**验收标准**：
+- [ ] 从城市详情点击景点 → URL 变为 `#/city/:id/landmark/:index`
+- [ ] 返回按钮回到城市详情（滚动位置尽量复原）
+- [ ] 直接输入二级 URL 可打开详情页
+- [ ] 无效 index 展示 NotFound 页，不白屏
+
+---
+
+### F-08 · P0 | 城市详情页景点卡改造（去展开态）
+
+**对应 UX 反馈**：CEO-2 + #9（马丘比丘展开太长）+ #10（点击任意位置关闭）
+
+**现状**：景点卡 `.landmark-card` 点击原地展开，内部任意区域 click 都会收起（onclick 挂最外层）。
+
+**需求**：景点卡重做为**简单整卡跳转样式**，不再有展开/收起。
+
+**新卡片结构** `.landmark-card-simple`：
+- 顶部：封面图（wiki banner）
+- 名称 + 年代
+- 一句 hook（来源优先级）：
+  1. `landmarks[i].hookShort`（PM 下轮补）
+  2. fallback: `desc` 首句截 40 字 + ellipsis（通过 `getLandmarkHook()` 工具函数）
+
+**整卡点击** → 进入 `#/city/:id/landmark/:index`
+
+**删除逻辑**：
+- `toggleLandmark()` 函数删除
+- UX #10 的误触关闭 bug 不治自愈
+
+**banner 兼容**：保留 `#banner-${i}` 作为 cover 图容器，`loadLandmarkImages()` 仍能挂 wiki 图
+
+**验收标准**：
+- [ ] 景点卡不再有展开态
+- [ ] 整卡任一位置点击都能跳详情
+- [ ] 封面图与详情页 Hero 同图（用户感知连续）
+
+---
+
+### F-09 · P0 | 景点详情页三 Tab 内容迁移
+
+**对应 UX 反馈**：CEO-2 + #7（门票四要素保留）+ #8（tips 要分组）
+
+**布局**：
+```
+┌─────────────────────────────┐
+│ ← 返回按钮                   │
+│ ┌─────────────────────────┐ │
+│ │ Hero 大图（56vw, max 280px）│
+│ └─────────────────────────┘ │
+│ 景点名 · 年代                │
+├─────────────────────────────┤
+│ [介绍] [门票] [Tips]  ← sticky tabs
+├─────────────────────────────┤
+│ <active panel 内容>          │
+└─────────────────────────────┘
+```
+
+**Tab 规格**：
+- 3 个 tab，sticky 吸顶，切换纯前端不重新 render 整页
+- 默认激活 Tab：`介绍`
+
+**介绍 Tab**（`renderLmIntro`）：
+- 可选 `whyVisit`（PM 下轮补，有则显示于顶部作为"为什么值得看"）
+- `desc` 正文
+- 可选 `note`
+- 可选 `worldEvents` 块
+- `tags` 标签组
+
+**门票 Tab**（`renderLmTicket`）：
+- `hours` 独立块（开放时间）
+- 沿用 v2.3 的 `renderTicket()` 四子块：`price` / `channels` / `bookingWindow` / `timingTip`
+- `.lm-practical-info` 覆盖 grid 为单列布局（详情页空间充足，不需要双列挤）
+- 空票务 → 展示 "Tips 补齐中" 提示（米色 60% opacity，居中）
+
+**Tips Tab**（`renderLmTips`）：见 F-10
+
+**验收标准**：
+- [ ] 三 Tab 齐全，切换无白屏
+- [ ] Tab sticky 在滚动时固定
+- [ ] 门票 Tab 沿用 v2.3 已验收的四子块样式（UX #7 夸过的唯一模块）
+
+---
+
+### F-10 · P0 | Tips 按 category 分组（编辑手感）
+
+**对应 UX 反馈**：#8（6 条平铺浪费了黄金 tips）
+
+**核心原则**：Tips 不是"备忘录列表"，是 **Michelin "When to go / Insider tip" 分章感**。形式要托得起内容。
+
+**a. 分组顺序（语义优先级）**：
+
+```
+timing > photo > route > ticket > dress > season > secret > <其他>
+```
+
+未列类别按首现顺序降序到末尾。
+
+**b. 别名合并**（PM 数据里的混用）：
+- `walking` → `route`
+- `cold` → `season`
+
+其他 category 按 v2.3 定义：`timing` / `photo` / `route` / `ticket` / `dress` / `season` / `secret`。
+
+**c. 组间视觉分隔**（UX 第二轮评审关键 caveat）：
+- **留白 24px**（组与组之间）
+- **不加金线 / 不加分隔条**
+- 理由：UX 第二轮评语："金线一俗就掉价 — 要分组，不要 label bar"。Dev 实现时倾向"白净的分组"即可，若视觉上 24px 留白无法区分组边界再考虑极淡的视觉元素（由 Dev 视觉判断）
+
+**d. 每组内部折叠**：
+- 每组最多 3 条默认展示
+- 超过 3 条 → 底部 "更多 N 条 ↓" 折叠按钮
+- 组内保留 PM 写作顺序（不重排）
+
+**退化**（避免小数据下的尴尬）：
+- 单组景点 → 退化为简单 `ul`，不渲染分组 header（否则 header 下只有 1 条很怪）
+- 1-2 组景点 → 组内条目直接铺平，不做折叠
+
+**验收标准**：
+- [ ] 故宫/斗兽场/圣索菲亚（各 6 条 tips）分组后呈现为 2-3 个章节
+- [ ] 单组景点不显示 header
+- [ ] 组间 24px 留白可视
+- [ ] 展开/收起动画流畅
+
+---
+
+### F-11 · P1 · 推迟 | 景点卡 `hookShort` + `whyVisit` 字段
+
+**对应 UX 反馈**：F-08/F-09 的内容侧依赖
+
+**需求**：
+- `landmarks[].hookShort`：景点卡 40 字内一句 hook，不使用 desc 首句 fallback
+- `landmarks[].whyVisit`：详情页介绍 Tab 顶部"为什么值得看"，100-200 字
+
+**PM 承诺**：下轮内容更新批量补入。
+
+**判定**：v2.4 不做（Dev 层 fallback 已足够展示；PM 数据工程量独立）。Dev 代码已预留字段读取。
+
+---
+
+### F-12 · P0 | 时间轴首节点 reveal flash 修复（从 P1 升级）
+
+**对应 UX 反馈**：#13（墨西哥城详情首节点空白，下拉才显示）
+
+**现状**：`setupScrollAnimations` 使用 `IntersectionObserver` + `transition-delay: 0.08s * i`，首屏下方节点已"错过" reveal 触发窗口。
+
+**升级理由**：这个问题发生在北京详情页开场 3 秒，直接破坏 F-01~F-10 整套北京样板的第一印象。不修则 UX 复审必 FAIL。
+
+**修复策略**：
+1. `setupScrollAnimations` 整体包入 double `requestAnimationFrame`
+   - 第一帧：浏览器提交初始 `opacity: 0`
+   - 第二帧：挂载 Observer，避开初始态竞态
+2. Observer 启动前手动扫一遍 in-viewport 节点 → 直接赋 `.visible`
+   - 不再依赖 Observer 的懒触发（尤其首屏下方但仍在 viewport 的节点）
+
+**验收标准**：
+- [ ] 墨西哥城详情 3000px+ 视口打开，第一个时间轴 entry 立即可见
+- [ ] 北京详情页首次加载，时间轴无"节点闪现延迟"
+- [ ] iPhone 13 (375×812) 和桌面大屏表现一致
+
+---
+
+### F-13 · P1 · 推迟 | 搜索页 "海洋文明" 主题卡拼图修复
+
+**对应 UX 反馈**：#6（两张图粗暴拼起来，中间有水平接缝）
+
+**需求**：替换 `THEMES` 中"海洋文明"的封面图为单张完整 wiki 图。
+
+**候选**：
+1. Lighthouse of Alexandria 复原图
+2. Phoenician trireme
+3. Lisbon Belém Tower（海上帝国题材）
+4. Venice 圣马可广场海侧
+
+**判定**：v2.4 不做（内容侧判断，等 PM 下一轮统一处理所有主题卡）。
+
+---
+
+### F-14 · P2 · 推迟 | `overviewLong` 字段 + "继续阅读" 展开
+
+**对应 UX 反馈**：#12（PRD 承诺的 overviewFull 壳子上了但数据没补）
+
+**历史债**：v2.2 D-04 定义 `overviewFull`，v2.3 E-03 规划改名 `overviewLong`。
+
+**判定**：v2.4 仍不做（PM 内容大工程，14 城 × 300-500 字散文）。改由 Phase 3 统一交付。
+
+---
+
+### F-15 · P2 · 推迟 | 搜索空状态 fade 过渡
+
+**对应 UX 反馈**：#15（输入字符瞬间主题/大洲块硬切消失）
+
+**需求**：搜索输入激活时，主题卡和大洲列表加 200ms fade-out 过渡；清空搜索框时 fade-in 回来。
+
+**判定**：v2.4 不做（细节抛光，不影响主流程）。
+
+---
+
+### F-16 · P2 · 推迟 | 底部 Tab bar 瘦身或升级
+
+**对应 UX 反馈**：#17（2 个 tab 占 80px 但只干一件顶部能干的事）
+
+**选项**：
+- A. 砍掉 tab bar，搜索入口保留在首页右上
+- B. 扩到 3-4 个（收藏 / 路线 / 我的？— 但 v2.0 不引入用户系统）
+
+**判定**：v2.4 不做。本版暂维持 2-tab 现状，列为"本期不做"。待用户系统规划清楚后再议。
+
+---
+
+### 数据结构变更（v2.4）
+
+```diff
+landmarks: [{
+  id, name, era, tags, banner, desc,
+  worldEvents, tips, ticket, hours, note,
++ hookShort?,    // F-11, v2.4 预留字段，可空
++ whyVisit?,     // F-11, v2.4 预留字段，可空
+}]
+```
+
+**字段兼容性**：
+- `hookShort` / `whyVisit` 为可选字段，空则 Dev 走 fallback
+- PRD v2.3 数据无需迁移
+
+---
+
+### PM 承诺（v2.4 之后补）
+
+| 数据 | 数量 | 说明 |
+|------|------|------|
+| `hookShort` | 全部景点 | 40 字内 hook，不走 desc 截断 fallback |
+| `whyVisit` | 首批 3 城（北京/京都/墨西哥城）优先 | 100-200 字"为什么值得看" |
+| Tips 按新 category 清洗 | 全部景点 | 校验 PM 旧数据里 `walking`/`cold` 的混用 |
+
+---
+
+## 变更日志
+
+### v2.4（2026-04-16）· 气质 + 信息架构升级
+
+**评分**：v2.3 体验 5.8/10 → v2.4 目标 ≥ 7.0/10
+
+**已落地（F-01 ~ F-10 + F-12）**：
+- 北京样板 7 项（Hero 换图 / 京都墨西哥 Hero / 全站弯引号 / 字距行高 / MEANWHILE 卡片 / 时间轴 reveal 修复）
+- 信息架构重构：景点二级路由 + 三 Tab 详情页
+- Tips category 分组 + 组内折叠（编辑手感 a/b/c/d）
+
+**延期**：F-11（hookShort/whyVisit 数据）/ F-13（主题卡配图）/ F-14（overviewLong）/ F-15（搜索 fade）/ F-16（tab bar）— 均已在附录 F 标 P1/P2 推迟
+
+**QA**：iPhone PASS（含铁律 1/2 真机视觉确认 + MEANWHILE + reveal + Tips 分组）  
+**UX 评审**：两轮 approve（第二轮对 F-10 编辑手感 + F-12 升 P0 的落地确认 + 金线 caveat）
+
+### v2.3（2026-04-15）· 内容深度升级 · Phase 1
+
+见附录 E。E-01/E-02 已落地，E-03/E-04 推迟到 v2.4+ 处理。
+
+### v2.2（2026-04-14）· 视觉气质升级
+
+见附录 D。
+
+---
+
+*文档结束 — v2.4（2026-04-16）*
