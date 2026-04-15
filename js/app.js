@@ -18,6 +18,24 @@ const ICON_PATHS = {
   externalLink: '<path d="M11 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><polyline points="14,3 21,3 21,10"/><line x1="10" y1="14" x2="21" y2="3"/>',
   chevronDown: '<polyline points="6,9 12,15 18,9"/>',
   arrowDown: '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="6,13 12,19 18,13"/>',
+  // v2.3 Tips category icons (thin / line variants — distinct from meta icons)
+  'ticket-dashed': '<path d="M4 8a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 20 8v2a2 2 0 0 0 0 4v2a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16v-2a2 2 0 0 0 0-4z" stroke-dasharray="2 1.5"/><line x1="10" y1="7" x2="10" y2="17" stroke-dasharray="1.5 2"/>',
+  'clock-thin': '<circle cx="12" cy="12" r="8.5" stroke-width="1.2"/><polyline points="12,7.5 12,12 15,13.5" stroke-width="1.2"/>',
+  'camera-line': '<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>',
+  'footprint-line': '<ellipse cx="8" cy="9" rx="2.5" ry="3.5"/><circle cx="6" cy="14" r="0.8"/><circle cx="9.5" cy="14.5" r="0.8"/><ellipse cx="16" cy="13" rx="2.5" ry="3.5"/><circle cx="14" cy="18" r="0.8"/><circle cx="17.5" cy="18.5" r="0.8"/>',
+  'shirt-line': '<path d="M8 4l-4 2 1.5 4H8v10h8V10h2.5L20 6l-4-2-2 2a2 2 0 0 1-4 0z"/>',
+  'snowflake-line': '<line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="5.5" y1="5.5" x2="18.5" y2="18.5"/><line x1="18.5" y1="5.5" x2="5.5" y2="18.5"/><polyline points="10,5 12,3 14,5"/><polyline points="10,19 12,21 14,19"/><polyline points="5,10 3,12 5,14"/><polyline points="19,10 21,12 19,14"/>',
+  'key-line': '<circle cx="8" cy="12" r="3.5"/><line x1="11.5" y1="12" x2="21" y2="12"/><line x1="17" y1="12" x2="17" y2="15"/><line x1="20" y1="12" x2="20" y2="14.5"/>',
+};
+
+const TIP_CATEGORY_ICON = {
+  ticket: 'ticket-dashed',
+  timing: 'clock-thin',
+  photo: 'camera-line',
+  route: 'footprint-line',
+  dress: 'shirt-line',
+  season: 'snowflake-line',
+  secret: 'key-line',
 };
 
 const THEME_ICONS = {
@@ -367,14 +385,10 @@ function renderCityDetail(id) {
                       <span class="info-label">${icon('clock', 12)}开放时间</span>
                       <span class="info-value">${l.hours}</span>
                     </div>
-                    <div class="info-item">
-                      <span class="info-label">${icon('ticket', 12)}门票</span>
-                      <span class="info-value ${l.ticket.includes('免费') ? 'free' : ''}">${l.ticket}${l.ticketUrl ? ` <a class="ticket-link" href="${l.ticketUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">官网购票 ${icon('externalLink', 10)}</a>` : ''}</span>
-                    </div>
-                    ${l.advanceBooking ? `<div class="info-row">${icon('clock', 14)}<span>${l.advanceBooking}</span></div>` : ''}
-                    ${l.bestTime ? `<div class="info-row">${icon('lightbulb', 14)}<span>${l.bestTime}</span></div>` : ''}
+                    ${renderTicket(l.ticket)}
                     ${l.note ? `<div class="info-note">${icon('info', 14)}<span>${l.note}</span></div>` : ''}
                   </div>
+                  ${renderTips(l.tips)}
                   <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
                 </div>
               </div>
@@ -469,6 +483,65 @@ function toggleOverview() {
   btn.classList.toggle('open', isOpen);
   const txt = btn.querySelector('.overview-toggle-text');
   if (txt) txt.textContent = isOpen ? '收起' : '继续阅读';
+}
+
+function renderTicket(t) {
+  if (!t) return '';
+  // Back-compat: legacy string ticket (shouldn't exist after v2.3 migration, but safe)
+  if (typeof t === 'string') {
+    return `<div class="info-item">
+      <span class="info-label">${icon('ticket', 12)}门票</span>
+      <span class="info-value ${t.includes('免费') ? 'free' : ''}">${t}</span>
+    </div>`;
+  }
+  const { price, channels, bookingWindow, timingTip } = t;
+  const priceBlock = price ? `
+    <div class="info-item">
+      <span class="info-label">${icon('ticket', 12)}门票</span>
+      <span class="info-value ${price.includes('免费') ? 'free' : ''}">${price}</span>
+    </div>` : '';
+
+  const hasChannels = Array.isArray(channels) && channels.length > 0;
+  const channelsBlock = hasChannels ? `
+    <div class="ticket-section ticket-channels">
+      <div class="ticket-section-title">购票渠道</div>
+      ${channels.map(ch => `
+        <a class="ticket-channel" href="${ch.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          ${icon('externalLink', 12)}
+          <span class="ticket-channel-name">${ch.name}</span>
+          ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
+        </a>
+      `).join('')}
+    </div>` : '';
+
+  const bw = bookingWindow || {};
+  const hasBW = bw.peak || bw.shoulder || bw.offpeak;
+  const bwBlock = hasBW ? `
+    <div class="ticket-section ticket-booking">
+      <div class="ticket-section-title">预约提前</div>
+      ${bw.peak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">旺季</span><span class="ticket-booking-span">${bw.peak}</span></div>` : ''}
+      ${bw.shoulder ? `<div class="ticket-booking-row"><span class="ticket-booking-season">肩季</span><span class="ticket-booking-span">${bw.shoulder}</span></div>` : ''}
+      ${bw.offpeak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">淡季</span><span class="ticket-booking-span">${bw.offpeak}</span></div>` : ''}
+    </div>` : '';
+
+  const tipBlock = timingTip ? `
+    <div class="ticket-section ticket-timing">
+      <div class="ticket-section-title">时段建议</div>
+      <div class="ticket-timing-text">${icon('lightbulb', 14)}<span>${timingTip}</span></div>
+    </div>` : '';
+
+  return priceBlock + channelsBlock + bwBlock + tipBlock;
+}
+
+function renderTips(tips) {
+  if (!Array.isArray(tips) || tips.length === 0) return '';
+  return `
+    <ul class="landmark-tips">
+      ${tips.map(tip => {
+        const iconName = TIP_CATEGORY_ICON[tip.category] || 'info';
+        return `<li class="landmark-tip">${icon(iconName, 16)}<span>${tip.text}</span></li>`;
+      }).join('')}
+    </ul>`;
 }
 
 function formatYear(y) {

@@ -174,8 +174,9 @@ body::before {
   font-family: var(--serif);
   font-size: clamp(2.8rem, 12vw, 4rem);
   font-weight: 900;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.02em;
+  word-break: keep-all;
 }
 
 .hero-city-en {
@@ -184,7 +185,9 @@ body::before {
   font-weight: 400;
   font-style: italic;
   color: rgba(250,248,243,0.45);
-  margin-top: 4px;
+  margin-top: 8px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 
 .hero-quote {
@@ -214,16 +217,21 @@ body::before {
   padding: 13px 28px;
   background: var(--gold);
   color: var(--ink);
-  border: none;
+  border: 1px solid rgba(12,24,16,0.25);
   border-radius: 24px;
   font-family: var(--body);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,245,220,0.35);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
-.hero-cta:active { transform: scale(0.96); }
+.hero-cta:active {
+  transform: translateY(1px) scale(0.98);
+  background: #B3842E;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(12,24,16,0.35);
+}
 
 .hero-scroll-hint {
   position: absolute;
@@ -530,8 +538,9 @@ body::before {
   font-family: var(--serif);
   font-size: clamp(2.2rem, 10vw, 3.2rem);
   font-weight: 900;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.02em;
+  word-break: keep-all;
   opacity: 0; animation: fadeUp 0.5s 0.15s forwards;
 }
 .detail-title em {
@@ -539,7 +548,10 @@ body::before {
   color: var(--gold-light);
   font-size: 0.65em;
   display: block;
-  margin-top: 4px;
+  margin-top: 8px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-weight: 400;
 }
 
 .detail-meta {
@@ -865,6 +877,94 @@ body::before {
 }
 .ticket-link:active { background: rgba(201,150,58,0.1); }
 .info-label .icon { vertical-align: middle; margin-right: 4px; }
+
+/* ─── v2.3 TICKET 4-SECTION MODULE ─── */
+.ticket-section {
+  grid-column: 1 / -1;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201,150,58,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ticket-section-title {
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.ticket-channel {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  color: var(--paper);
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1.5;
+  border-bottom: 1px dashed rgba(201,150,58,0.18);
+}
+.ticket-channel:last-child { border-bottom: none; }
+.ticket-channel .icon { color: var(--gold); flex-shrink: 0; transform: translateY(2px); }
+.ticket-channel-name { color: var(--paper); font-weight: 600; }
+.ticket-channel-note { color: #C9B896; font-size: 13px; margin-left: auto; text-align: right; }
+.ticket-channel:active { opacity: 0.7; }
+
+.ticket-booking-row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.ticket-booking-season {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.ticket-booking-span { color: var(--paper); }
+
+.ticket-timing-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--paper);
+  font-style: italic;
+}
+.ticket-timing-text .icon { color: var(--gold); flex-shrink: 0; margin-top: 3px; }
+
+/* ─── v2.3 TIPS LIST (magazine Editor's Note) ─── */
+.landmark-tips {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  background: rgba(245,239,224,0.04);
+  border-left: 2px solid rgba(201,150,58,0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.landmark-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--paper);
+  font-weight: 400;
+}
+.landmark-tip .icon {
+  flex-shrink: 0;
+  color: var(--gold);
+  margin-top: 3px;
+}
+.landmark-tip span { flex: 1; }
 
 .landmark-tags {
   display: flex; flex-wrap: wrap; gap: 6px;
