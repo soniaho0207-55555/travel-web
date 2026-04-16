@@ -1,0 +1,98 @@
+city,landmark,channel_name,url,status_code,final_url,final_status,note
+北京,故宫（紫禁城）,官方故宫博物院,https://gugong.228.com.cn/,timeout,,timeout,唯一官方渠道，需实名制预约
+北京,长城（八达岭段）,官方 badaling.cn,https://www.badaling.cn/,302,https://www.badaling.cn/website/pc/index.html,redirect-ok,实名购票 + 七日预约窗口，法定节假日当天窗口 08:00 会瞬间抢光
+北京,长城（八达岭段）,美团 / 飞猪（含直通车）,https://www.meituan.com/,200,https://www.meituan.com/,ok,一日往返直通车 ¥120 左右（含门票），比自己打车+挤地铁省 3 小时
+北京,天坛,官方天坛公园 tiantanpark.com,https://www.tiantanpark.com/,timeout,,timeout,联票含祈年殿 + 圜丘 + 回音壁三大主体建筑，散票只能进外园
+北京,颐和园,官方 summerpalace-china.com,https://www.summerpalace-china.com/,timeout,,timeout,全园 290 万平米，联票覆盖佛香阁 / 德和园 / 文昌院几大重点
+罗马,科洛塞姆（斗兽场）,官方 CoopCulture,https://ecm.coopculture.it/,error,,error,最便宜；系统偶尔崩，提前 15 天开售
+罗马,科洛塞姆（斗兽场）,Klook,https://www.klook.com/activity/1242-colosseum-tour-rome/,403,,4xx,中文界面，可退改，含中文导览
+罗马,科洛塞姆（斗兽场）,Tiqets,https://www.tiqets.com/en/rome-attractions-c66352/tickets-for-colosseum/,404,,4xx,快速预约，移动票
+罗马,万神殿（Pantheon）,官方 museiitaliani.it,https://www.museiitaliani.it/,200,https://www.museiitaliani.it/,ok,最官方，时段粒度 15 分钟
+罗马,万神殿（Pantheon）,GetYourGuide（跳过排队 + 导览）,https://www.getyourguide.com/,403,,4xx,加约 €10 服务费，含 45 分钟语音导览，旺季推荐
+罗马,梵蒂冈圣彼得大教堂,官方 ticketsbasilica.va,https://www.ticketsbasilica.va/,error,,error,唯一官方预约入口；免费预约跳过大门安检长队，旺季能省 2 小时
+罗马,梵蒂冈圣彼得大教堂,Vatican Museums 联票,https://m.museivaticani.va/,302,https://m.museivaticani.va/content/museivaticani-mobile/en.html,redirect-ok,博物馆 €20 + 西斯廷礼拜堂 + 圣彼得穹顶的经典路线，6 小时一站式
+罗马,古罗马广场,官方 colosseo.it,https://www.colosseo.it/,error,,error,与斗兽场共用同一张票，买斗兽场自动包含广场入口
+伊斯坦布尔,圣索菲亚大教堂,官方 muze.gov.tr,https://muze.gov.tr/,200,https://muze.gov.tr/,ok,土耳其文化部统一售票平台，英文界面
+伊斯坦布尔,圣索菲亚大教堂,GetYourGuide,https://www.getyourguide.com/hagia-sophia-l2728/,403,,4xx,英文可选，含语音导览
+伊斯坦布尔,圣索菲亚大教堂,Tiqets,https://www.tiqets.com/en/istanbul-attractions-c66346/tickets-for-hagia-sophia/,404,,4xx,快速预约，可跳现场排队
+伊斯坦布尔,蓝色清真寺,官方说明 sultanahmetcamii.org,https://www.sultanahmetcamii.org/,error,,error,不售票，但礼拜时段（每日 5 次 + 周五主麻）关闭游客入口，须按官网时刻表
+伊斯坦布尔,蓝色清真寺,GetYourGuide 联游（含圣索菲亚）,https://www.getyourguide.com/,403,,4xx,€30 左右半日游含导游与两座大建筑对比讲解
+伊斯坦布尔,托普卡帕宫,官方 muze.gov.tr,https://muze.gov.tr/,200,https://muze.gov.tr/,ok,土耳其文化旅游部统一售票；提前 15 天开放预约
+伊斯坦布尔,托普卡帕宫,Museum Pass Istanbul,https://muze.gen.tr/,200,https://muze.gen.tr/,ok,€105 五日通票含托普卡帕 + 圣索菲亚 + 考古博物馆，逛三处以上就回本
+伊斯坦布尔,大巴扎,官方 kapalicarsi.com.tr,https://www.kapalicarsi.com.tr/,301,https://kapalicarsi.com.tr/,redirect-ok,无需购票；官网提供 21 个入口地图，Nuruosmaniye 门是最老入口
+京都,伏见稻荷大社,官方 inari.jp,https://inari.jp/,200,https://inari.jp/,ok,神社本体免费，无购票流程；官网是时刻表 + 御朱印说明的唯一正式来源
+京都,伏见稻荷大社,JR 奈良线 · 稻荷站,https://www.jreast.co.jp/,403,,4xx,JR 京都站出发 5 分钟到稻荷站，出站即是表参道，交通上无需其他工具
+京都,金阁寺（鹿苑寺）,官方 shokoku-ji.jp,https://www.shokoku-ji.jp/,200,https://www.shokoku-ji.jp/,ok,不网上售票，只能现场买；官网提供季节限流公告
+京都,金阁寺（鹿苑寺）,巴士一日券 + 金阁寺,https://www2.city.kyoto.lg.jp/,301,http://www.city.kyoto.lg.jp/,redirect-ok,京都巴士一日券 ¥700 可无限次乘市巴士，去金阁寺 + 龙安寺 + 仁和寺串游一天最划算
+京都,二条城,官方 nijo-jocastle.city.kyoto.lg.jp,https://nijo-jocastle.city.kyoto.lg.jp/,200,https://nijo-jocastle.city.kyoto.lg.jp/,ok,京都市直营，网上订票 + 定时段入场
+京都,清水寺,官方 kiyomizudera.or.jp,https://www.kiyomizudera.or.jp/,200,https://www.kiyomizudera.or.jp/,ok,售票只有现场；官网提供夜间拝観三季的具体日期与时段
+京都,清水寺,京都巴士 206 / 100 号,https://www2.city.kyoto.lg.jp/,301,http://www.city.kyoto.lg.jp/,redirect-ok,206 号从京都站北侧出发 15 分钟到五条坂站，步行 10 分钟上坡到清水寺
+开罗,吉萨大金字塔群,现场售票,,,,null-url,主入口 Sphinx Gate 售票处，仅接受现金或埃及本地卡
+开罗,吉萨大金字塔群,GetYourGuide,https://www.getyourguide.com/giza-l2727/,403,,4xx,含接送 + 英文导游的套餐
+开罗,埃及博物馆,官方 visit-gem.com,https://visit-gem.com/,200,https://visit-gem.com/,ok,网上预约定时段 + 跳过排队；现场窗口排队 60 分钟起
+开罗,埃及博物馆,Klook / Viator 中文代购,https://www.klook.com/,403,,4xx,加 ¥30-50 服务费但有中文语音导览；图坦卡蒙专展必须搭配购买
+开罗,爱资哈尔清真寺,Al-Azhar 大学官方介绍页,https://www.azhar.edu.eg/,timeout,,timeout,清真寺无独立售票系统；大学官网提供礼拜时间与着装要求
+开罗,萨拉丁城堡,官方门票 sca.gov.eg,https://sca.gov.eg/,error,,error,现场窗口为主；近年官网增加在线预售但依旧要打印凭证
+巴黎,巴黎圣母院,官方 notredamedeparis.fr,https://www.notredamedeparis.fr/,200,https://www.notredamedeparis.fr/,ok,2024 年 12 月 7 日重开后采用预约入场（免费但必须订时段），避免无序排队
+巴黎,巴黎圣母院,塔楼专用 rendezvousalatour.fr,https://www.rendezvousalatour.fr/,error,,error,塔楼是独立售票，与主殿完全分开；旺季一周内售罄
+巴黎,埃菲尔铁塔,官方 toureiffel.paris,https://www.toureiffel.paris/,301,https://www.toureiffel.paris/fr,redirect-ok,预售开放 60 天窗口；官网凌晨 00:00（巴黎时间）刷新次日余票
+巴黎,埃菲尔铁塔,Get Your Guide 跳队导览,https://www.getyourguide.com/,403,,4xx,加约 €15 服务费，旺季常是唯一能买到当天票的途径
+巴黎,埃菲尔铁塔,阶梯入口 SW Pillar,,,,null-url,阶梯票不能网上买，只能现场 West/South 柱下窗口排队，旺季排 30-60 分钟
+巴黎,卢浮宫,官方 ticketlouvre.fr,https://www.ticketlouvre.fr/,301,https://ticket.louvre.fr/,4xx,必须网上预订 + 选 30 分钟时段；自 2022 起现场不再售票
+巴黎,卢浮宫,Paris Museum Pass,https://www.parismuseumpass.fr/,403,,4xx,€70 两日票 / €85 四日票含卢浮宫 + 凡尔赛 + 奥赛，看 3 个以上博物馆就回本
+巴黎,凡尔赛宫,官方 en.chateauversailles.fr,https://en.chateauversailles.fr/,200,https://en.chateauversailles.fr/,ok,必须网上订时段；Passport 通票是半日以上最省选择
+巴黎,凡尔赛宫,RER C · Versailles Château,https://www.ratp.fr/,403,,4xx,Paris 市区出发 35 分钟直达；地铁票不通用，需 Île-de-France 5 区 €10 来回票
+雅典,帕特农神庙,官方 hhticket.gr（与卫城同）,https://hhticket.gr/,200,https://hhticket.gr/,ok,帕特农不单独售票——购卫城票即可进入；周围 20 米黄线禁止入内
+雅典,帕特农神庙,卫城博物馆 €15（看原件雕塑）,https://www.theacropolismuseum.gr/,200,https://www.theacropolismuseum.gr/,ok,帕特农真品雕像已迁至博物馆，神庙现场大部分是复制品，想看菲迪亚斯原作必去博物馆
+雅典,雅典卫城,官方 hhticket.gr,https://hhticket.gr/,200,https://hhticket.gr/,ok,必须网上订时段；€30 Combined Ticket 去 2 个以上景点就回本
+雅典,雅典卫城,Get Your Guide 带导游,https://www.getyourguide.com/,403,,4xx,€45-55 含导游 + 跳队，旺季是唯一能订到当天下午时段的方式
+雅典,雅典卫城,每月首周日 / 希腊国庆等免费日,,,,null-url,3/6 国家纪念日、5/18 国际博物馆日、10/28 国庆、每月首个周日（11-3 月）免费但必须预约时段
+雅典,古代市集（Agora）,官方 hhticket.gr,https://hhticket.gr/,200,https://hhticket.gr/,ok,与卫城同一系统；Combined 去 2 处以上更划算
+佛罗伦萨,圣母百花大教堂,官方 duomo.firenze.it,https://duomo.firenze.it/,301,https://duomo.firenze.it/it/home,4xx,Brunelleschi Pass 是唯一能登穹顶的票，登顶每 15 分钟一批 20 人
+佛罗伦萨,圣母百花大教堂,Florence Firenze Card,https://www.firenzecard.it/,200,https://www.firenzecard.it/,ok,€85 72 小时含全城 60 余博物馆（包括乌菲兹 + 学院），一次入场制；3 天以上行程回本
+佛罗伦萨,圣母百花大教堂,现场窗口,,,,null-url,大教堂对面 Piazza San Giovanni 窗口排队 1-2 小时，旺季穹顶当天永远没余票
+佛罗伦萨,乌菲兹美术馆,官方 uffizi.it,https://www.uffizi.it/,200,https://www.uffizi.it/,ok,必须网上订时段；现场窗口已于 2023 年取消
+佛罗伦萨,乌菲兹美术馆,Florence Firenze Card,https://www.firenzecard.it/,200,https://www.firenzecard.it/,ok,€85 72 小时含乌菲兹 + 学院 + 大教堂博物馆；比单独买省一半
+佛罗伦萨,老桥（Ponte Vecchio）,Firenze 官方旅游,https://www.feelflorence.it/,302,http://www.feelflorence.it/it,redirect-ok,桥本身无售票系统；旅游网站提供瓦萨里通道（Corridoio Vasariano）预约，€45 含乌菲兹三楼走廊到老桥上方
+西安,秦始皇兵马俑,官方 bmy.com.cn,https://www.bmy.com.cn/,301,http://www.bmy.com.cn/index.html,4xx,实名制预约，日限 6.5 万人；旺季必须提前 3-5 天订
+西安,秦始皇兵马俑,携程 / 飞猪（含导游 + 直通车）,https://www.ctrip.com/,200,https://www.ctrip.com/,ok,¥200-300 含西安市区往返 + 导游讲解 + 门票，比自己打车去省 3 小时
+西安,秦始皇兵马俑,西安火车站 306 路专线,,,,null-url,东广场 ¥7 直达，1 小时到景区；是最便宜的自助方案
+西安,西安城墙,官方“西安城墙景区”小程序,https://www.xacitywall.com/,error,,error,支持微信支付预约；现场二维码扫码入闸
+西安,西安城墙,美团 / 大众点评,https://www.meituan.com/,200,https://www.meituan.com/,ok,¥50 左右含入园 + 2 小时自行车套餐，最方便
+西安,大雁塔,大慈恩寺官方 daciensi.com,http://www.daciensi.com/,timeout,,timeout,现场购票为主；官网提供开放时间更新
+西安,回民街,官方“西安钟鼓楼”小程序,https://www.xazgl.com/,timeout,,timeout,钟鼓楼联票网上预约；回民街本身无售票
+德里,红堡,官方 ASI · asi.payumoney.com,https://asi.payumoney.com/,307,https://eticket.webfront.in/asi,redirect-ok,实名购票 + 时段入场；现场扫码入闸
+德里,红堡,现场窗口,,,,null-url,Lahori Gate 入口现场有印度人 / 外国人分队窗口；旺季现场排队 30-60 分钟
+德里,红堡,Delhi Tourism 一日游,https://www.delhitourism.gov.in/,200,https://www.delhitourism.gov.in/,ok,¥300 含红堡 + 贾玛清真寺 + 月光集市 + 中餐，最省时间
+德里,顾特卜塔,官方 ASI · asi.payumoney.com,https://asi.payumoney.com/,307,https://eticket.webfront.in/asi,redirect-ok,与红堡同一系统；现场扫码入闸
+德里,顾特卜塔,Delhi Metro · Qutub Minar 站,https://www.delhimetrorail.com/,301,https://delhimetrorail.com/,redirect-ok,黄线 Qutub Minar 站 2 公里，₹30 Tuk-Tuk 3 分钟到景区，是最方便的公共交通组合
+德里,胡马雍陵,官方 ASI · asi.payumoney.com,https://asi.payumoney.com/,307,https://eticket.webfront.in/asi,redirect-ok,与红堡 / 顾特卜塔同系统
+耶路撒冷,西墙（哭墙）,官方 Western Wall Heritage Foundation,https://english.thekotel.org/,301,https://thekotel.org/en/,redirect-ok,圣殿山隧道（Western Wall Tunnels）需网上预约 $30，走到西墙地下段 + 希律王时期原石墙
+耶路撒冷,西墙（哭墙）,安息日规则,,,,null-url,周五日落至周六日落（约 19:00-19:00）禁止拍照 / 手机 / 开车；不是关闭而是“数字禁区”
+耶路撒冷,圆顶清真寺,以色列警察圣殿山通道,https://www.gov.il/,403,,4xx,非穆斯林仅可从 Mughrabi Gate（摩格拉比门）进入，需经以色列安检 + 约旦 Waqf 宗教检查
+耶路撒冷,圆顶清真寺,时段规则,,,,null-url,非穆斯林开放时段：周日-周四 07:30-10:30 + 13:30-14:30（夏季）；周五 / 周六 + 穆斯林节日全面关闭非穆入口
+耶路撒冷,圣墓教堂,官方（Custodia Terræ Sanctæ 方济各会管理）,https://www.custodia.org/,302,https://www.custodia.org/it/,redirect-ok,教堂由六个基督教派系共管——希腊正教 / 罗马天主教 / 亚美尼亚使徒 / 科普特 / 埃塞俄比亚 / 叙利亚；“不可移动的梯子”300 年来没人敢动
+耶路撒冷,圣墓教堂,Christian Information Centre,https://christianinfo.org/,200,https://christianinfo.org/,ok,Jaffa Gate 附近提供每日弥撒时刻表 + 导览
+吴哥窟,吴哥窟主殿,官方 angkorenterprise.gov.kh,https://angkorenterprise.gov.kh/,308,https://www.angkorenterprise.gov.kh/,redirect-ok,唯一官方售票；现场 Siem Reap 售票中心拍照 + 实时出票
+吴哥窟,吴哥窟主殿,网上预订,https://www.angkorenterprise.gov.kh/,307,https://www.angkorenterprise.gov.kh/en,redirect-ok,出发前网上购票避免清晨排队 1 小时
+吴哥窟,吴哥窟主殿,12 岁以下儿童免费,,,,null-url,需现场出示护照证明年龄
+吴哥窟,巴戎寺,Angkor Pass 通用,https://angkorenterprise.gov.kh/,308,https://www.angkorenterprise.gov.kh/,redirect-ok,与吴哥寺 3.5 公里车程，位于吴哥通王城（Angkor Thom）正中心
+吴哥窟,巴戎寺,Tuk-Tuk 小圈一日游,,,,null-url,从暹粒市区租 Tuk-Tuk 吴哥联票5-20 一天，含巴戎寺 + 塔布隆 + 胜利门；英文司机加 $5
+吴哥窟,塔布隆寺,Angkor Pass 通用,https://angkorenterprise.gov.kh/,308,https://www.angkorenterprise.gov.kh/,redirect-ok,东门是著名“树抱塔”入口；西门较新但游客少
+马拉喀什,德吉玛·艾尔法纳广场,UNESCO 非遗介绍页,https://ich.unesco.org/,302,https://ich.unesco.org/https%3A//ich.unesco.org/en/home,redirect-ok,广场 2001 年列为“人类口头和非物质文化遗产”；说书人 / 耍蛇人 / 炭烤摊延续 1000 年
+马拉喀什,德吉玛·艾尔法纳广场,官方 visitmorocco.com,https://www.visitmorocco.com/,301,https://www.visitmorocco.com/en,redirect-ok,摩洛哥旅游局官方 + 提供斋月期间特殊规则
+马拉喀什,库图比亚清真寺,花园区域全天开放,,,,null-url,宣礼塔高 77 米 + 花园玫瑰与橘子树 + 落日金光打塔身
+马拉喀什,库图比亚清真寺,visitmorocco.com 官方介绍,https://www.visitmorocco.com/,301,https://www.visitmorocco.com/en,redirect-ok,提供历史背景 + 塔身砂岩不同颜色条纹的建造时期信息
+马拉喀什,巴希亚宫,现场窗口,https://www.visitmorocco.com/,301,https://www.visitmorocco.com/en,redirect-ok,无网上预售系统；现场排队 10-20 分钟；人少时随到随买
+墨西哥城,大神庙遗址,官方 INAH · templomayor.inah.gob.mx,https://www.templomayor.inah.gob.mx/,200,https://www.templomayor.inah.gob.mx/,ok,现场售票 + 博物馆入场；周日墨西哥公民免费
+墨西哥城,大神庙遗址,Zócalo 宪法广场步行,,,,null-url,与宪法广场 / 国家宫殿同一街区；地铁 Zócalo 站出即到，不需打车
+墨西哥城,国家宫殿,官方 gob.mx/palacionacional,https://www.gob.mx/,200,https://www.gob.mx/,ok,从 Zócalo 广场东侧正门安检入场；不收票但严格检查护照
+墨西哥城,特奥蒂瓦坎,官方 INAH（国家人类学历史研究所）,https://www.inah.gob.mx/,200,https://www.inah.gob.mx/,ok,现场售票；无网上预售；扫码入闸
+墨西哥城,特奥蒂瓦坎,Mexico City Metro + Autobuses del Norte,https://www.metro.cdmx.gob.mx/,timeout,,timeout,黄线 Autobuses del Norte 站出门换 Teotihuacán 专线大巴 MXN 56 + 1 小时车程，最便宜路线
+墨西哥城,特奥蒂瓦坎,GetYourGuide 一日游,https://www.getyourguide.com/,403,,4xx,$55-80 含酒店接送 + 中英文导游 + 龙舌兰酒庄，省却自行交通的折腾
+马丘比丘,马丘比丘遗址,官方秘鲁文化部,https://www.machupicchu.gob.pe/,error,,error,唯一官方售票，英西双语，信用卡可付
+马丘比丘,马丘比丘遗址,Ticket Machu Picchu,https://www.ticketmachupicchu.com/,200,https://www.ticketmachupicchu.com/,ok,官方授权代理，服务费 ~$5，界面更友好
+马丘比丘,太阳神殿,主遗址 Circuito 2,https://www.tuboleto.cultura.pe/,error,,error,必须选 Circuito 2 路线才经过 Torreón 塔；Circuito 1/3 不经过
+马丘比丘,拴日石（Intihuatana）,主遗址主门票,https://www.tuboleto.cultura.pe/,error,,error,本体已被围栏隔离，游客不可触摸；只能外围 2 米观察
+马丘比丘,华纳比丘,官方 tuboleto.cultura.pe,https://www.tuboleto.cultura.pe/,error,,error,唯一官方售票；需选 Circuito 3 + Huayna Picchu 路线；每日限 400 人分 2 批次入场
+马丘比丘,华纳比丘,GetYourGuide / Viator 代理,https://www.getyourguide.com/,403,,4xx,旺季（5-9 月）官方售罄时可买代理票，但溢价 $20-50

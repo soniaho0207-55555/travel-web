@@ -1,0 +1,11 @@
+{
+  "name": "travel-web",
+  "version": "2.6.0",
+  "private": true,
+  "description": "环球史迹 · H5 静态站",
+  "scripts": {
+    "audit:links": "node scripts/audit-links.js",
+    "audit:wiki-images": "node scripts/audit-wiki-images.js",
+    "audit:all": "node scripts/audit-links.js && node scripts/audit-wiki-images.js"
+  }
+}
