@@ -2599,12 +2599,658 @@ timeline: [{
 |---|-------|------|
 | — | 桌面端响应式适配 | 架构级改动，不在 v2.5 范围；UX 本轮未提，但历史反馈已知。等移动端 taste 稳到 9/10 后单独开 PRD 章节 |
 | — | Tag chips 功能化（过滤页） | 本轮 G-11 直接移除；功能化需新路由 + 聚合页，待用户量起来再议 |
-| — | G-09 首批 9 景点 whyVisit | Mode B 撤出 v2.5，推 v2.6 专项执行（合并 F-11 hookShort 全量） |
-| — | whyVisit 其余 43 景点 | 推 v2.7+；按城市分批补齐 |
+| — | ~~G-09 首批 9 景点 whyVisit~~ | **v2.6 附录 H · H-01 激活，全量 53 景点一次交付**（CEO 推翻"首批"分批方案） |
+| — | ~~whyVisit 其余 43 景点~~ | v2.6 已全量，无"其余"概念 |
+
+---
+
+## 附录 H：v2.6 变更清单（内容兑付 + 链路闭合 + 图文信任）
+
+> **背景**：v2.5 UX 复审评分 6.5/10（目标 8.5 未达）。UX 验证 v2.5 四项高优修了三项半，但 **G-09 撤到 v2.6 被 CEO 推翻**——"要么一次做到位，要么不做"是本轮的定调。
+> **本期使命**：把 v2.5 没兑付的内容债（whyVisit）一次性清完 + 解决两个信任级硬伤（图文错配 / 购票死链）+ 收口返回链路 IA。
+> **预计评分**：v2.5 6.5 → v2.6 目标 ≥ 8.0/10（守住本轮做完的部分，不虚标 9）。
+
+### 本期合入顺序（15 条 — 5 P0 + 5 P1 + 5 P2）
+
+**P0 红线 — 信任层 / 内容债**（必须本轮做到位）：
+1. **H-01** · 激活 F-11 whyVisit 字段 — **全量 53 景点**（撤销 v2.5 "首批 9 景点"承诺）
+2. **H-02** · 伊斯坦布尔列表卡图文错配修复（词条换掉 / 直链兜底）
+3. **H-03** · 信仰之城主题卡封面加载失败修复（词条换掉 / 直链兜底）
+4. **H-04** · 购票渠道链接全站可达性审计 + 死链清理
+
+**P1 皱眉级 — 链路 / 识别度**：
+5. **H-05** · 返回链路 IA 重构：城市详情 / 景点详情恢复 bottom-nav + 顶部"更多城市"入口
+6. **H-06** · 帝都传奇主题卡配图升级（模糊日落 → 明确地标）
+7. **H-07** · Hero CTA 金色描边自适应背景明暗
+8. **H-08** · F-11 `hookShort` 全量补齐（53 景点 × 40 字 hook）
+9. **H-09** · Wiki 词条配图健康度监控机制（防御性）
+
+**P2 小瑕疵**：
+10. **H-10** · Hero 到正文的内边距过渡（Apple-style 渐变收边）
+11. **H-11** · 桌面端响应式适配（从 v2.5+ 积压 debt 起 Hard Constraint 章节，但**本轮仅写规格，不实施**）
+12. **H-12** · `scripts/audit-links.js` 交付为长期工具
+13. **H-13** · 景点门票"需在官网首页搜索"兜底 UI 文案（无深链场景）
+14. **H-14** · v2.5 PM 承诺兑付复核（worldContext 48 条清洗 + 主题卡 6 张白名单 sanity check）
+
+---
+
+### H-01 · P0 | 激活 F-11 `whyVisit` 字段（全量 53 景点）
+
+**对应诉求**：CEO-1 · 景点介绍太短 + UX 反馈 v2.5 未修复
+
+**背景澄清**：
+- v2.5 附录 G · G-09 原计划"首批 9 景点"，PM Mode B 撤到 v2.6，**CEO 明确推翻撤回决策**
+- CEO 原话："要么一次做到位，要么不做"—— 本轮不接受分批，一次性覆盖**全部有详情页的景点**
+- v2.4 附录 F · F-11 从"推迟"状态正式激活
+
+**数据规模**：
+- 共 **53 个 landmarks**（15 城，含马丘比丘主遗址独立 entry）
+- 每个景点 `whyVisit`：100–200 字 Monocle/Cereal 编辑散文
+- PM 本轮交付总字数：约 6,000–10,000 字
+
+**写作规范**（PM 自用，强制）：
+- **锚点细节**：每条必须含 1 个"非看不可"的具象锚点——石头 / 光线 / 角度 / 时辰 / 声音 / 气味任选，禁止泛泛"历史悠久"
+- **跨文明参照**：每条必须含 1 个跨文明对照句（例："1616 年蓝色清真寺落成这年，莎士比亚去世"）
+- **不与 `desc`/`tips` 内容重复**：desc 讲"是什么"，tips 讲"怎么去"，whyVisit 讲"为什么值得"
+- **禁止常识句**：不写"世界文化遗产"、"历史悠久"、"著名的" 这类填充
+- **腔调参照**：`~/.claude/projects/-Users-wenjiehu-Documents-AI-claude-code-VS/memory/travel_editorial_anchors.md` 的 Monocle / Cereal sentence patterns
+
+**交付形式**：
+- PM 新建目录 `PM-v2.6-whyVisit/`，按城市分 15 个 md 文件（cairo.md / beijing.md / ...）
+- 每个文件内按景点 name 匹配（与 v2.3 `PM-v2.3-Phase1/` 目录约定一致）
+- Dev-H5 按目录粘合进 `js/data.js` 的 `landmarks[].whyVisit`
+
+**Dev 渲染要求**（已在 F-09 / F-11 定义，此处重申）：
+- 介绍 Tab 渲染顺序：`hookShort` → `whyVisit` → `横向对照卡 (worldEvents)` → `desc` → `note` → `tags (撤)`
+- `.lm-why` class 保留 v2.5 的 fallback 逻辑（未填则静默跳过）——但本轮预期 53/53 全部有值
+- 段落排版：首行不缩进、段间空 0.8em、`font-size: 16px`、`line-height: 1.8`、米色 92% opacity
+
+**PM 交付节奏**：
+- PM 承诺 **一个 sprint 交付全量 53 条**（不分批）
+- 交付前 PM 自检清单：锚点 ✓ / 跨文明参照 ✓ / 不重复 ✓ / 无常识句 ✓，4 条全满才算交付合格
+
+**验收标准**：
+- [ ] 53/53 景点的"介绍"Tab 在对照卡**之前**显示 `whyVisit` 编辑散文段
+- [ ] 随机抽查 10 条，每条都含明确锚点 + 跨文明参照，无常识填充
+- [ ] 对照卡不再是介绍 Tab 唯一亮点
+- [ ] 全站景点详情页不再出现"内容单薄"的感受
+
+**工作量**：
+- PM：**大**（53 条 × ~150 字 × 精修 15 分钟/条 ≈ **13h 纯写作时间**，建议 PM 分 2-3 个工作日集中产出）
+- Dev-H5：小（数据粘合，~20 分钟/城 × 15 = 5h）
+
+**交付承诺（写在日历里的）**：PM 本 sprint 交全量 53 条；若 PM 因写作质量不达标主动申请减半，**不走任何"撤到下轮"的后门**，整件事在本轮闭环或等下轮重做——避免又一次"上轮撤到下轮又撤"的状态机循环。
+
+---
+
+### H-02 · P0 | 伊斯坦布尔列表卡图文错配修复
+
+**对应诉求**：UX 反馈 #3（伊斯坦布尔列表卡封面显示中式角楼红灯笼灰砖墙，疑似 Wikipedia CDN `Sultan Ahmed Mosque` 词条缩略图算法返错图）
+
+**现状**：`js/data.js` 中 `CITIES[istanbul].wiki = 'Sultan Ahmed Mosque'`（line 377），wiki API `pageimages` 返回的 thumbnail 并非蓝色清真寺主图，而是词条内一张无关的插图。
+
+**根因**：Wikipedia `pageimages` API 返回的 `thumbnail.source` 不保证是词条首图，有时是词条内任意随机图。蓝色清真寺词条可能含某张中式元素对比图（例如"世界清真寺"对比栏目里的一张小图被选中）。
+
+**修复策略（三选一，优先级从高到低）**：
+
+**方案 A（推荐）· 换更稳定的词条**：
+- `Hagia Sophia`（圣索菲亚）— 最标志性的伊斯坦布尔地标，wiki 首图穩定
+- `Bosphorus Bridge at night`（博斯普鲁斯大桥夜景）— 跨洲意象强
+- `Istanbul`（城市词条本身）— 兜底
+
+**方案 B · 硬编码直链**：
+- 直接填 wiki commons 的图片 URL（绕过 API）
+- 数据结构：`wikiImage: 'https://upload.wikimedia.org/...jpg'`（新增字段，与 `wiki` 并存，`wikiImage` 优先）
+- 适用于已知稳定图
+
+**方案 C · 后端兜底列表**：
+- PM 维护 `js/image-fallbacks.js`（Dev 创建），每个 wiki 词条对应一张**已验证**的 commons 直链作为 fallback
+- API 返图失败或返图异常时 fallback
+
+**本轮决策（UX 反馈细读后修订 · 2026-04-16 10:55 PMO）**：
+
+⚠️ **UX 保留 3 修订**：原方案 A（改 `wiki: 'Hagia Sophia'`）会让详情页 Hero 同时变成圣索菲亚 → 和 UX 明示"详情页倒是蓝色清真寺没问题"矛盾，且列表卡与详情页会撞图。
+
+**改走方案 B（直链分离字段）**：
+- 保留 `wiki: 'Sultan Ahmed Mosque'`（详情页 Hero 继续拉蓝色清真寺，UX 已验证无问题）
+- 启用**已在数据结构声明的** `wikiImage` 字段（CITIES 层级，可选）：存 Commons 直链
+- **Dev 需在 `loadWikiImage()` 调用前增加一层判定**：列表卡渲染时，`if (city.wikiImage) 直接用直链，else fallback loadWikiImage(city.wiki)`；详情页 Hero 原样走 wiki API
+- 伊斯坦布尔 `wikiImage` 取 Bosphorus 夜景（与详情页蓝色清真寺错位，不撞图）
+  - 候选 1（**推荐**）：`https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Bosphorus_Bridge_at_night_in_Istanbul.jpg/1280px-Bosphorus_Bridge_at_night_in_Istanbul.jpg`（跨洲意象最强）
+  - 候选 2：`https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Hagia_Sophia_Mars_2013.jpg/1280px-Hagia_Sophia_Mars_2013.jpg`（地标识别度最高，但与详情页 Hero 主题重叠）
+  - 如候选 1 Commons 直链 404，回落候选 2；再失败回落 wiki API（保底）
+
+**与详情页的关系**：
+- 列表卡（Bosphorus 夜景 · 城市意象） / 详情页 Hero（Blue Mosque · 蓝色清真寺地标） — 不同地标，UX 观感是"两张都对，且互不重叠"
+
+**同时建立**：H-09 全站 wiki 配图健康度监控（防御网，不仅修单点）
+
+**验收标准**：
+- [ ] 首页"丝绸之路"筛选下，伊斯坦布尔城市卡封面是博斯普鲁斯夜景（或圣索菲亚），**绝不出现中式元素**
+- [ ] 列表卡（博斯普鲁斯）与详情页 Hero（蓝色清真寺）是**不同地标**的两张图，无撞图
+- [ ] 搜索页命中伊斯坦布尔时列表卡同样走 `listImage` 逻辑
+- [ ] `listImage` 字段对其他 51 个城市为 `undefined`（不影响现有行为），只伊斯坦布尔本轮启用
+
+**工作量**：Dev-H5 小（1 个字段 + 1 处渲染分支 + 1 条直链数据 + QA 真机复查）
+
+---
+
+### H-03 · P0 | "信仰之城"主题卡封面加载失败修复
+
+**对应诉求**：UX 反馈 R-3（信仰之城主题卡只剩紫色渐变，图根本没出来）+ v2.5 G-03c 验收 FAIL
+
+**现状**：`THEMES[religion].cover = 'Interior of Hagia Sophia'`（data.js line 6），wiki API 不返回图（该词条可能无 `pageimages.thumbnail` 或词条名不精确）。
+
+**根因**：`Interior of Hagia Sophia` 不是独立 wiki 词条（是 `Hagia Sophia` 词条的子节），`pageimages` API 无法命中。
+
+**修复策略**：
+
+**方案 A（推荐）· 换精确词条**：
+- `Hagia Sophia`（与 H-02 可能同图，但主题卡和城市卡尺寸位置不同，视觉不会撞）
+- `Dome of the Rock`（耶路撒冷金顶，三教共城意象更强）
+- `Blue Mosque interior`（蓝色清真寺内饰）
+
+**方案 B · 直链兜底**：
+- PM 提供 wiki commons 直链（如 `https://upload.wikimedia.org/wikipedia/commons/thumb/XXX.jpg`）
+- Dev 在 `THEMES` 数据结构增加可选 `coverUrl` 字段，存在时优先，否则 fallback 到 wiki API
+
+**本轮决策**：
+- **立即改**：`Interior of Hagia Sophia` → `Dome of the Rock`（方案 A，三教共城意象更符合"信仰之城"）
+- 如 `Dome of the Rock` 仍失败，回落 `Hagia Sophia`
+- 与 H-02 的伊斯坦布尔图不冲突（城市卡 + 主题卡两个位置，用户看不到并排撞图）
+
+**验收标准**：
+- [ ] 搜索页"按主题探索"区 6 张卡全部有图，无任何一张裸露紫色渐变
+- [ ] 信仰之城封面明确是宗教建筑，不是无关意象
+- [ ] 6 张卡宫格视觉完整，无"拼图缺角"感
+
+**工作量**：Dev-H5 极小（1 行数据改动 + 真机复查）
+
+---
+
+### H-04 · P0 | 购票渠道链接全站可达性审计
+
+**对应诉求**：CEO-2 · 购票链接大量 404，不是景点专属
+
+**现状**：`js/data.js` 统计 **53 景点 × 平均 1.6 渠道 ≈ 85 条 URL**（部分 null），用户点进去很多 404 或跳到机构首页。
+
+**分三步执行**：
+
+**步骤 1 · Dev 产出审计工具（H-12 配套）**
+- Dev-H5 编写 `scripts/audit-links.js`（Node 脚本）
+- 读取 `js/data.js` 所有 `landmarks[].ticket.channels[].url`
+- 对每条 URL 发 HEAD / GET 请求（3s 超时 + 3 次重试）
+- 输出 CSV：`city, landmark, channel_name, url, status_code, redirect_url, final_status`
+- 标记 `status_code` 为 4xx / 5xx / timeout / redirect-to-homepage 的为问题条
+
+**步骤 2 · PM 拿清单补正确深链**
+- Dev 跑完后把 CSV 交 PM（约 1–2 天完成）
+- PM 逐条处理（预计约 25–40 条死链）：
+  - **能找到景点专属深链** → 补上
+  - **只有机构首页** → 二选一：
+    - 删除该条 channel（保留其他渠道）
+    - 保留 channel 但 `url` 留 null + `note` 明确写"需在首页搜索景点名"（见 H-13）
+  - **整体渠道无有效链接** → channel 数组为空，UI 显示"暂无在线购票渠道，请在景点现场购票"
+
+**步骤 3 · Dev 合入修正数据**
+- PM 把更新交给 Dev-H5（patch 文件或直接新 `js/data.js` 片段）
+- Dev 合入 + 再跑一次 audit 确认 0 条 4xx/5xx
+
+**验收标准**：
+- [ ] `audit-links.js` 脚本可执行，输出标准 CSV
+- [ ] 审计后 0 条 4xx/5xx 死链（timeout 允许保留但必须有 `note` 兜底）
+- [ ] 所有保留的 channel 都**明确指向景点可购票的页面**（深链 > 搜索页 > 首页 + tips 搜索关键词）
+- [ ] 无法提供深链的 channel 要么删掉、要么有 H-13 兜底 UI
+
+**工作量**：
+- Dev-H5：中（脚本 2h + 二次合入 1h = ~3h）
+- PM：中-大（25–40 条死链 × 10 分钟/条 ≈ 4–7h）
+
+**PM 交付承诺**：收到 Dev CSV 后 **2 个工作日内** 交还修正清单。
+
+---
+
+### H-05 · P1 | 返回链路 IA 重构
+
+**对应诉求**：CEO-3 · 城市内返回链路不合理
+
+**根因诊断**：
+1. `js/app.js` line 108 `if (nav) nav.style.display = 'none'` — 城市详情 / 景点详情两类页面把 bottom-nav 隐藏了
+2. 返回键只做 `history.back()`，多次跳转后历史栈乱
+3. 没有"一键回根"的锚点
+
+**选型评估**：
+
+| 方案 | 气质 | 实施成本 | 采纳 |
+|------|------|----------|------|
+| 面包屑（主页 > 主题 > 城市 > 景点） | 和"极简杂志"冲突，挤版式 | 中 | ✗ 不采纳 |
+| 城市详情 Hero 加"← 更多城市" | 轻量，气质吻合 | 小 | ✓ 部分采纳 |
+| 详情页恢复 bottom-nav（最小侵入） | 气质无损，用户随时可跳"发现/搜索" | 极小 | ✓ 采纳 |
+| 扩充 bottom-nav 为 3 tab（发现/主题/搜索） | 大改，超出本轮 | 大 | ✗ 不采纳，记 backlog |
+
+**本轮采纳方案（B + C 组合）**：
+
+**H-05a · 详情页恢复 bottom-nav（核心方案）**
+- 修改 `js/app.js` 的 `handleRoute()`：城市详情 / 景点详情**不再**隐藏 bottom-nav
+- 用户在任何页面都能一键跳"发现"或"搜索"
+- Hero 区的返回箭头（`←`）保留，承担"上一层"语义
+- bottom-nav 承担"回根"语义
+
+**H-05b · 城市详情 Hero 加轻量"更多城市"入口**
+- 城市详情 Hero 底部（正文开始前），加一行极小字号（12px / 哑金 / letter-spacing 0.1em）：
+  ```
+  ← 更多城市
+  ```
+- 点击直接 `navTo('#/')` 回发现页（而不是 history.back 到上一个可能已忘记的页面）
+- 景点详情页**不加**此入口（景点页的 Hero CTA "返回城市详情" 已足够 + bottom-nav 兜底）
+
+**H-05c · 底部 nav 高度微调（可选）**
+- 如果恢复 nav 后详情页底部被遮挡，Dev 检查 `padding-bottom` 是否足够（建议 64px 安全区）
+
+**不在本轮做**：
+- 面包屑式导航（架构级，记 `[Future:PM]` 等用户量起来再评估）
+- bottom-nav 扩充为 3-tab（记 `[Future:Dev]` 等主题页需求明确再做）
+
+**验收标准**：
+- [ ] 从发现页进入城市 → 进入景点 → bottom-nav 一直可见
+- [ ] 在景点详情页点 bottom-nav "发现" 一键回首页
+- [ ] 城市详情 Hero 区有"← 更多城市"小入口，点击回首页
+- [ ] 景点详情页 Hero CTA "返回城市详情" 保留
+- [ ] 全链路无"浏览器后退键依赖"
+
+**工作量**：Dev-H5 小（去掉 2 行 display:none + 加一个小组件 + CSS 微调，~1h）
+
+---
+
+### H-06 · P1 | 帝都传奇主题卡配图升级
+
+**对应诉求**：UX 反馈新发现 #1（帝都传奇封面远景日落城市轮廓辨识度太低，像手机默认壁纸）
+
+**现状**：`THEMES[imperial].cover = 'Forbidden City'`（data.js line 2），但 wiki API 返回的缩略图可能是故宫远景航拍（低辨识度）。
+
+**候选词条顺序**（Dev 按序试，命中第一张高辨识度的）：
+1. `Gate of Supreme Harmony`（太和门 — 最经典故宫特写）
+2. `Meridian Gate`（午门 — 标志性城门）
+3. `Forbidden City at dusk`（故宫黄昏，若有此精确词条）
+4. `Palace of Heavenly Purity`（乾清宫）
+
+**判图标准**：图内必须**看得见红墙 / 金顶 / 汉白玉栏杆**中至少 2 元素，中景或近景，不允许远景航拍天际线。
+
+**可选方案 B · 直链兜底**：
+- 如上述 4 个词条 API 都返图不佳，PM 提供一张 wiki commons 直链放 `coverUrl` 字段（见 H-02 方案 B 统一机制）
+
+**验收标准**：
+- [ ] 搜索页帝都传奇主题卡封面明确是皇家建筑特写，不是城市轮廓
+- [ ] 与"古代奇迹"（金字塔）、"文明复兴"（穹顶）辨识度齐平
+
+**工作量**：Dev-H5 极小（1 行数据 + 试图）
+
+---
+
+### H-07 · P1 | Hero CTA 金色描边自适应背景
+
+**对应诉求**：UX 反馈新发现 #2（金色描边在灰白色调照片上"飘"，缺锚定感）
+
+**现状**：v2.5 G-06 把 CTA 从实心药丸改为 1px 金色描边 + 透明底，在深色 Hero 上好看，但特雷维喷泉这类浅灰白 Hero 上对比不够。
+
+**需求**：CTA 描边色根据 Hero 图的明暗对比度自适应。
+
+**规格**：
+
+**方案 A（推荐）· CSS 双层描边**：
+- 保留 1px 金色描边（主色）
+- 增加 1px 深褐色阴影偏移（`box-shadow: 0 0 0 1.5px rgba(40, 30, 20, 0.3)`）给出半透明底描
+- 浅色背景上：深褐阴影显影提供锚定
+- 深色背景上：深褐阴影几乎不可见，金色仍主导
+
+**方案 B · JS 动态计算**：
+- Hero 图加载后采样平均亮度（canvas），亮度 > 140 时 CTA 切换为深色描边，否则金色
+- 成本高，本轮不做，记 `[Future:Dev]`
+
+**本轮采纳**：方案 A（纯 CSS，无 JS 成本）
+
+**验收标准**：
+- [ ] 特雷维喷泉 / 京都（浅色） Hero 上，CTA 有明显锚定感
+- [ ] 北京 / 开罗 / 墨西哥城（深色） Hero 上，CTA 视觉与 v2.5 一致
+- [ ] 15 城 Hero 全量真机复查，无一处 CTA"飘"
+
+**工作量**：Dev-H5 极小（CSS 1 行改动 + 真机复查）
+
+---
+
+### H-08 · P1 | F-11 `hookShort` 全量补齐
+
+**对应诉求**：F-11 承诺 hookShort 本轮兑付（与 H-01 绑定）
+
+**现状**：`landmarks[].hookShort` 字段 Dev 已预留（F-11），v2.4 起景点卡使用 `desc` 首句 fallback。
+
+**需求**：PM 为 53 景点每个写一句 40 字内的 hook，用在景点列表卡（城市详情页）。
+
+**写作规范**：
+- 40 字内（硬限，UI 空间固定）
+- 一句话"让人想点进去"的 hook（不是 desc 的压缩，是独立创作）
+- 风格参照：Monocle 副标、Cereal 图说
+- 示例：
+  - 故宫 → "被九千九百九十九间房和一道金水河圈起的帝国"
+  - 圣索菲亚 → "做过一千年教堂，做过五百年清真寺，现在还在做第三件事"
+  - 马丘比丘 → "印加人留给云端的一座石头谜语"
+
+**禁止**：
+- 不写"XX是中国/土耳其/XX的著名景点"这种词典口吻
+- 不重复 desc / whyVisit 已用过的句子
+
+**交付形式**：
+- 合并进 H-01 的 `PM-v2.6-whyVisit/` 目录，每个景点同时提供 `whyVisit` + `hookShort`
+- Dev 粘合时两字段一起处理
+
+**验收标准**：
+- [ ] 53/53 景点都有 `hookShort`，均 ≤ 40 字
+- [ ] 城市详情页景点列表卡不再使用 desc 首句 fallback
+- [ ] 抽查 10 条，每条都是"勾子"而非"介绍"
+
+**工作量**：
+- PM：中（53 条 × ~5 分钟精修 ≈ 4.5h，与 H-01 合并写作更省）
+- Dev-H5：极小（字段已预留）
+
+---
+
+### H-09 · P1 | Wiki 词条配图健康度监控（防御性）
+
+**对应诉求**：H-02 + H-03 + v2.5 G-03 反复出现的"词条有但图不对"问题
+
+**背景**：图片显示依赖 wiki `pageimages` API，API 不保证返主图，历史上已踩 3 次同类坑（G-03 海洋文明 / G-03c 信仰之城 / H-02 伊斯坦布尔）。需要防御性机制。
+
+**需求**：
+
+**A · 数据层 · 新增 `coverUrl` 和 `wikiImage` 直链字段（统一命名）**
+- 数据结构升级：
+  ```
+  THEMES[].coverUrl?      // 可选 wiki commons 直链
+  CITIES[].wikiImage?     // 可选 wiki commons 直链（仅用于列表卡兜底）
+  landmarks[].wikiImage?  // 可选（景点 Hero 兜底）
+  ```
+- Dev 渲染优先级：`*Url / wikiImage` > `wiki` API 返图 > gradient fallback
+
+**B · 脚本层 · Dev 提供 `scripts/audit-wiki-images.js`**
+- 读取所有用到的 wiki 词条
+- 对每个词条调用 `pageimages` API
+- 输出 CSV：`entity, wiki_title, api_thumb_url, manual_coverUrl, api_status`
+- PM 对照 CSV 复核哪些词条返图不可用，手动填 `coverUrl` / `wikiImage`
+
+**C · 运营节奏**
+- 每次发版前跑一次 audit-wiki-images（配合 H-04 audit-links 一起进 CI/Release checklist）
+- 发现词条返图变了，及时补 `coverUrl`
+
+**本轮交付**：
+- Dev 实现 A（数据字段）+ B（脚本）
+- PM 对本轮 H-02/H-03/H-06 补的词条提供 `coverUrl` 兜底（如 API 试 3 次仍不稳）
+
+**验收标准**：
+- [ ] 数据结构支持 `coverUrl` / `wikiImage` 字段
+- [ ] `audit-wiki-images.js` 可执行，输出标准 CSV
+- [ ] H-02 / H-03 / H-06 三处修图都有兜底直链
+
+**工作量**：Dev-H5 小（数据结构 + 脚本 2h）；PM 小（3 张图的 commons 直链查找 ~30 分钟）
+
+---
+
+### H-10 · P2 | Hero 到正文的内边距过渡
+
+**对应诉求**：UX 反馈新发现 #6（Hero 全出血，正文左右缩进，过渡突兀）
+
+**现状**：`.hero` 是 100vw 全宽，`.overview` 有 `padding: 0 20px`，切换硬。
+
+**需求**：用 CSS 过渡让正文区进入时有"渐进收边"感。
+
+**规格**：
+- 在 Hero 底部和正文开始之间加 `.hero-to-body-transition` 过渡块：
+  - 高度 40px
+  - 背景：从全宽 Hero 渐变为"米色 + 左右 20px padding 柔和阴影"
+  - 或：Hero 底部加 `linear-gradient(to bottom, transparent, bg-color)` 40px 渐变
+- Apple-style：色彩/阴影渐变，不做硬切
+
+**参考**：Apple 产品页 Hero 与文案区的过渡
+
+**验收标准**：
+- [ ] 15 城详情 Hero 到正文过渡不突兀
+- [ ] 不影响现有版式内容
+
+**工作量**：Dev-H5 极小（CSS 渐变层 ~15 分钟）
+
+---
+
+### H-11 · P2 · **仅写规格不实施** | 桌面端响应式适配（debt 登记）
+
+**对应诉求**：历史遗留（v2.4/v2.5 均记 Future 未处理）
+
+**本轮决策**：**仅登记规格，不实施**。实施预估 3+ sprint，超本轮范围。
+
+**规格登记**（未来 sprint 启动时直接拷贝）：
+- 断点：768px（平板）/ 1024px（桌面）
+- 断点下表现：
+  - Hero 高度从 100vh 改为 60vh
+  - 城市列表从 1 列改 2 列（768px）/ 3 列（1024px）
+  - 景点详情三 Tab 改左侧 sticky 目录 + 右侧内容
+  - bottom-nav 改为顶部导航条
+- 现有移动端版式作为 `< 768px` 规格保留
+
+**预计工作量**：Dev-H5 大（CSS 重构 3+ sprint）
+
+**启动条件**：移动端 taste 稳到 ≥ 9/10 + UX 明确反馈桌面体验差
+
+---
+
+### H-12 · P2 | `scripts/audit-links.js` 产品化为长期工具
+
+**对应诉求**：H-04 的脚本不只用一次，未来每轮发版要跑
+
+**需求**：
+- 脚本独立成仓库工具（`scripts/` 目录）
+- 加 `package.json` 的 npm script：`npm run audit:links`
+- 加 README 说明
+- 输出 CSV 格式固定（方便 PM 处理）
+
+**验收**：发版前在 release checklist 加一条"跑 audit-links 无 4xx/5xx"
+
+**工作量**：Dev-H5 小（脚本文档化 ~30 分钟）
+
+---
+
+### H-13 · P2 | 景点门票"需在官网首页搜索"兜底 UI
+
+**对应诉求**：CEO-2 · 如果景点没有专属深链（只有机构首页），要么去掉、要么明确标注"需在首页搜索景点名"
+
+**需求**：
+- `ticket.channels[].url` 为 null 时，UI 显示：
+  ```
+  官方 [机构名]（需在首页搜索"{景点名}"）
+  ```
+- 不渲染为可点击链接，渲染为米色 70% opacity 文字
+- 如果 `note` 里已有类似说明则不重复
+
+**数据结构**：
+- 新增 channel 可选 `searchHint: '在首页搜索蓝色清真寺'`
+- `url` null 且有 `searchHint` 时按此渲染
+
+**验收标准**：
+- [ ] 无深链的渠道明确告知用户"需在哪儿搜什么"
+- [ ] 不再有"点进去跳首页、一脸懵"的体验
+
+**工作量**：Dev-H5 极小（~30 分钟）；PM 写兜底文案跟 H-04 合并
+
+---
+
+### H-14 · P2 | v2.5 PM 承诺兑付复核
+
+**对应诉求**：v2.5 附录 G 末尾 PM 承诺表未全部复核
+
+**需清点**：
+- worldContext 48 条"此时世界："清洗 — UX 反馈 R-1 已 PASS，visual 复核 OK ✓
+- 主题卡 6 张白名单 sanity check — 本轮 H-03 / H-06 顺带做 ✓
+- Templo Mayor banner（`Coyolxauhqui Stone`）— UX 反馈 #5 PASS ✓
+- 开罗 Hero（`Great Pyramid of Giza`）— UX 反馈 R-4 PASS ✓
+
+**结论**：PM v2.5 承诺清单已全部 PASS，本条仅做档案备案。
+
+---
+
+### H-15 · P0 | 太阳神殿 wiki 词条 404 修复（CEO 直派审核）
+
+**对应诉求**：CEO 直接指出"太阳神殿的图片也有问题，请审核"（2026-04-16 10:55 Gate ② 批复）
+
+**PMO 审核结果（2026-04-16 11:00 via WebFetch 双重验证）**：
+
+| 项 | 结论 |
+|---|---|
+| 数据位置 | `js/data.js` line 2481，马丘比丘 landmarks 之一 |
+| 当前词条 | `wiki: 'Torreon (Machu Picchu)'` |
+| Wikipedia 英文版状态 | **404 不存在** |
+| 原因 | 太阳神殿没有独立条目，内嵌在 `Machu_Picchu` 主条目 `Temple of the Sun or Torreón` 段落 |
+| 运行时表现 | `pageimages` API 返 null → Hero 图永远加载失败，渐变兜底 |
+| 用户感知 | ✅ 反馈属实 |
+
+**同类风险扫描**（全站带括号 wiki 词条）：
+- `National Palace (Mexico)` — 词条存在，首图正常 ✓
+- `Torreon (Machu Picchu)` — **404 必修** ✗
+
+**修复方案**（走 H-09 "景点 wikiImage 直链" 同一架构）：
+- 保留 `wiki: 'Torreon (Machu Picchu)'`（不删，给 H-12 审计工具观察"修复后"的健康度对比）
+- **新增** `wikiImage` 字段（landmarks 层级，已在数据结构 v2.6 声明）
+- 太阳神殿 `wikiImage` 直链：`https://upload.wikimedia.org/wikipedia/commons/1/1a/Machu_Picchu_Torre%C3%B3n.jpg`（Commons 原生，半圆弧形太阳神殿主体清晰）
+- Dev `loadWikiImage()` 优先级：`landmark.wikiImage` > `loadWikiImage(landmark.wiki)` > 渐变兜底
+
+**关联 H-09 防御网**：本次手动只扫出 2 条带括号词条，扫不出拼写错/重定向/限流。H-09 的自动扫描脚本必须把所有 53 景点 + 52 城市 + 6 主题都跑一遍，才能根治同类问题。
+
+**验收标准**：
+- [ ] 马丘比丘 > 太阳神殿景点卡 / 详情页 Hero 显示 Commons 直链图（半圆弧形建筑清晰可辨）
+- [ ] `js/data.js` line 2481 对应 landmark 新增 `wikiImage` 字段
+- [ ] H-09 扫描脚本对 `Torreon (Machu Picchu)` 报 `wiki_404 → wikiImage_fallback=OK` 状态，证明防御网生效
+- [ ] QA 真机复查：马丘比丘详情页 Hero 区不再是纯渐变
+
+**工作量**：Dev-H5 极小（1 条数据 + `loadWikiImage` 已在 H-09 改过 1 处分支，这里复用）
+
+---
+
+### 数据结构变更（v2.6）
+
+```diff
+THEMES: [{
+  id, name, emoji, cover, gradient,
++ coverUrl?,    // H-09 · wiki commons 直链兜底（可选）
+}]
+
+CITIES: [{
+  id, name, ... wiki, ...,
++ wikiImage?,   // H-09 · 列表卡配图直链兜底（可选）
+}]
+
+landmarks: [{
+  id, name, era, tags, banner, desc,
+  worldEvents, tips, ticket, hours, note,
+- hookShort?,   // v2.5 预留，v2.6 首批 9 景点填充
++ hookShort,    // H-08 激活：53 景点全量必填（40 字内 hook）
+- whyVisit?,    // v2.5 首批 9 景点承诺 → Mode B 撤
++ whyVisit,     // H-01 激活：53 景点全量必填（100-200 字 Monocle 散文）
++ wikiImage?,   // H-09 · 景点 Hero 直链兜底（可选）
+}]
+
+ticket.channels: [{
+  name, url, note,
++ searchHint?,  // H-13 · url 为 null 时的搜索提示兜底
+}]
+```
+
+**字段兼容性**：
+- `whyVisit` / `hookShort` 从"可选 fallback"升为"必填"——数据不全会在 PM 交付验收时阻断（非运行时报错，Dev 的 fallback 代码保留）
+- `coverUrl` / `wikiImage` / `searchHint` 全部可选，不影响现有渲染
+
+---
+
+### PM 交付承诺（v2.6）
+
+| 数据 | 数量 | 批次 | 提交节奏 | 交付物路径 |
+|------|------|------|----------|-----------|
+| H-01 `whyVisit` 全量 | 53 条 | **v2.6 本轮（不分批）** | Sprint 内 2-3 个工作日集中 | `PM-v2.6-whyVisit/` 15 个 .md |
+| H-08 `hookShort` 全量 | 53 条 | **v2.6 本轮** | 与 H-01 合并交付 | 同上目录 |
+| H-04 购票链接修正 | 预估 25-40 条死链 | 收到 Dev CSV 后 2 个工作日 | 逐条改 + 整体 patch | `PM-v2.6-ticket-fix.md` |
+| H-02/H-03/H-06 词条 / 直链 | 3 组 | 本 sprint 启动前 | 单独 md | `PM-v2.6-wiki-images.md` |
+| H-13 无深链兜底文案 | 估计 10-15 条 | 跟 H-04 合并 | 同 H-04 | `PM-v2.6-ticket-fix.md` |
+
+**PM 原则（基于上一轮 Mode B 撤 G-09 被 CEO 推翻的教训）**：
+- 本轮 H-01 / H-08 **不接受 Mode B 撤到下轮**
+- 如果写作中发现内容质量不达标，方案是 PM 延长 sprint（+1-2 天），不是减量
+- v2.7+ 不重开"whyVisit 其余 XX 景点"类状态机 — 本轮必须 53/53 闭环
+
+---
+
+### 推迟到 v2.7+ 的条目
+
+| # | Title | 原因 |
+|---|-------|------|
+| — | 桌面端响应式适配（实施） | H-11 仅登记规格，实施需 3+ sprint，等移动端 taste ≥ 9 再启动 |
+| — | CTA JS 动态亮度采样（H-07 方案 B） | 本轮用 CSS 方案 A 够用，JS 方案记 Future |
+| — | bottom-nav 扩充为 3-tab（发现/主题/搜索） | H-05 已用恢复 bottom-nav 方案解决，主题独立页待用户量起来再议 |
+| — | 面包屑导航 | 气质与"极简杂志"冲突，H-05 选了更轻方案 |
+| — | whyVisit / hookShort 其余批次 | 本轮 H-01 已全量，不再有"其余"概念 |
 
 ---
 
 ## 变更日志
+
+### v2.6（2026-04-16）· 内容兑付 + 链路闭合 + 图文信任
+
+**评分**：v2.5 体验 6.5/10 → v2.6 目标 ≥ 8.0/10
+
+**本期合入**（15 条 — 5 P0 + 5 P1 + 5 P2）：
+
+**P0 红线（信任层 / 内容债）**：
+- 【新增】H-01 激活 F-11 `whyVisit` — **全量 53 景点**（CEO 推翻上轮"首批 9"撤回，本轮一次做到位）
+- 【新增】H-02 伊斯坦布尔列表卡图文错配修复（方案 B：启用 `wikiImage` 直链 = Bosphorus 夜景，详情页 Hero 不动仍为蓝色清真寺）
+- 【新增】H-03 信仰之城主题卡封面失败修复（`Interior of Hagia Sophia` → `Dome of the Rock`）
+- 【新增】H-04 购票渠道链接全站可达性审计（~85 条 URL，估 25-40 条死链）
+- 【新增】**H-15 太阳神殿 wiki 404 修复**（CEO 直派 · Commons 直链绕开词条 API · 关联 H-09 防御网）
+
+**P1 皱眉级**：
+- 【新增】H-05 返回链路 IA 重构（详情页恢复 bottom-nav + 城市 Hero "← 更多城市"入口）
+- 【新增】H-06 帝都传奇主题卡配图升级（模糊日落 → 太和门/午门特写）
+- 【新增】H-07 Hero CTA 描边自适应（双层描边方案，浅/深色 Hero 都锚定）
+- 【新增】H-08 `hookShort` 全量 53 景点（40 字内，城市详情景点卡 hook 去 fallback）
+- 【新增】H-09 wiki 词条配图健康度机制（`coverUrl`/`wikiImage` 直链兜底 + audit 脚本）
+
+**P2 小瑕疵**：
+- 【新增】H-10 Hero 到正文过渡柔化（CSS 渐变层）
+- 【新增】H-11 桌面响应式适配 — **仅登记规格不实施**（debt 提前归档）
+- 【新增】H-12 `scripts/audit-links.js` 产品化为长期工具
+- 【新增】H-13 无深链兜底 UI（`searchHint` 字段 + "在首页搜索" 文案）
+- 【新增】H-14 v2.5 PM 承诺兑付复核（仅档案备案，全部 PASS）
+
+**CEO 原话定调**："要么一次做到位，要么不做" — 本轮 H-01 / H-08 明确不接受分批，PM 在 PRD 签字承诺 53/53 闭环。
+
+**推迟**：桌面响应式实施 / CTA JS 动态 / bottom-nav 3-tab / 面包屑 / whyVisit 其余批次（已无"其余"）— 均已记 v2.7+
+
+**工作量预估**：
+- PM（数据交付）：**大**（H-01 whyVisit 13h + H-08 hookShort 4.5h + H-04 死链清理 4-7h + 词条直链 ~30 分钟 + 兜底文案 ≈ **22-25h 纯写作**，建议 PM 3 个工作日集中产出）
+- Dev-H5（代码 + 脚本）：中（H-02/H-03/H-06 换词条 30min + H-04 audit 脚本 2h + H-05 bottom-nav + Hero 入口 1h + H-07 CSS 10min + H-09 数据字段 + 脚本 2h + H-10 CSS 15min + H-13 ~30min + 数据粘合 5h ≈ **11h 开发** + 2h Dev + PM 联调）
+- QA：中（53 景点全量 whyVisit 抽查 + 链接 audit 0 条 4xx + 15 城主题卡图 6/6 + 返回链路 15 城走通 ≈ 4-5h）
+
+**合入顺序（建议）**：
+1. **Day 1-3**：PM 写 H-01 + H-08（写作集中冲刺）
+2. **Day 2（并行）**：Dev-H5 做 H-02 / H-03 / H-06（换词条，1 小时内完成）+ 启动 H-04 audit 脚本
+3. **Day 3**：Dev 交 audit CSV 给 PM
+4. **Day 4-5**：PM 处理 H-04 死链 + H-13 兜底文案；Dev 并行做 H-05 / H-07 / H-09 / H-10
+5. **Day 6**：Dev 粘合 H-01 / H-08 数据 + H-04 修正
+6. **Day 7**：QA 全量验收
+
+**来源**：用户反馈-2026-04-16-1027.md（评分 6.5/10，UX 硬伤：伊斯坦布尔图文错配 + 信仰封面失败）+ CEO 补充 3 条（CEO-1 whyVisit 全量 / CEO-2 链接审计 / CEO-3 返回链路）
+
+**Gate ② 修订（PMO 2026-04-16 11:00）**：
+- CEO 批复"以上 Approve，但我记得太阳神殿的图片也有问题，请审核" → PMO WebFetch 审核确认 `Torreon (Machu Picchu)` 词条 Wikipedia 英文版 404 → 新增 **H-15** 用 Commons 直链修复；全站带括号词条扫描发现 `National Palace (Mexico)` 正常、`Torreon (Machu Picchu)` 必修，2/2 扫描覆盖
+- UX 反馈 3 保留处理：
+  - 保留 1（whyVisit 53 vs 40+13 分批）→ **驳回**，CEO-1 明确"要么一次做到位要么不做"
+  - 保留 2（← 更多城市 灰金细字 Aesop 风）→ **接受**，H-05 已注明此文案风格
+  - 保留 3（伊斯坦布尔列表卡与详情页 Hero 撞图）→ **采纳**，H-02 升级为方案 B 用 `wikiImage` 直链分离列表卡与详情页配图
+
+---
 
 ### v2.5（2026-04-16）· 主编盯图盯字盯细节
 
@@ -2678,4 +3324,4 @@ timeline: [{
 
 ---
 
-*文档结束 — v2.4（2026-04-16）*
+*文档结束 — v2.6（2026-04-16）*
