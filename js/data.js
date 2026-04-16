@@ -1,9 +1,11 @@
 const THEMES = [
-  { id: 'imperial', name: '帝都传奇', emoji: '👑', cover: 'Forbidden City', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
+  // H-06：帝都传奇改用"太和门"特写词条（v2.5 远景日落辨识度太低）
+  { id: 'imperial', name: '帝都传奇', emoji: '👑', cover: 'Gate of Supreme Harmony', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
   { id: 'ancient', name: '古代奇迹', emoji: '🏛', cover: 'Great Pyramid of Giza', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 100%)' },
   { id: 'silk-road', name: '丝绸之路', emoji: '🐪', cover: 'Mogao Caves', gradient: 'linear-gradient(135deg, #6B4C11 0%, #8B6914 100%)' },
   { id: 'maritime', name: '海洋文明', emoji: '⚓', cover: 'Lighthouse of Alexandria', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
-  { id: 'religion', name: '信仰之城', emoji: '🕌', cover: 'Interior of Hagia Sophia', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
+  // H-03：信仰之城换用"岩石圆顶"（Interior of Hagia Sophia 不是独立条目，wiki API 返空）
+  { id: 'religion', name: '信仰之城', emoji: '🕌', cover: 'Dome of the Rock', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
   { id: 'renaissance', name: '文明复兴', emoji: '🎨', cover: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 100%)' },
 ];
 
@@ -375,6 +377,9 @@ const CITIES = [
     themes: ['silk-road', 'maritime', 'imperial'],
     coords: "41°00'N 28°58'E",
     wiki: 'Sultan Ahmed Mosque',
+    // H-02 方案 B：列表卡用博斯普鲁斯大桥直链（跨洲意象），详情页 Hero 仍走 wiki API 取蓝色清真寺
+    // QA round 1 修复：原 "Bosphorus_Bridge_at_night_in_Istanbul.jpg" Commons 不存在返 404，换 Bosphorus Bridge 词条官方 thumbnail（HEAD 200）
+    wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Bosphorus_Bridge_%28235499411%29.jpeg/960px-Bosphorus_Bridge_%28235499411%29.jpeg',
     heroGradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
     hook: '横跨两洲，拜占庭与奥斯曼的帝国交替',
     heroQuote: '1453年5月29日，当奥斯曼大军攻破城墙的那一刻，中世纪结束了',
@@ -2478,7 +2483,8 @@ const CITIES = [
           { category: 'ticket',  text: '进入遗址必须由持证向导陪同（2019 年起规定），散客拼团 S/50（约 ¥100）2 小时讲解，入口 Ticket Check 外有持牌导游候场' }
         ]
       },
-      { name: '太阳神殿', era: '印加·约1450年', yearNum: 1450, wiki: 'Torreon (Machu Picchu)', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #4A8A4A 50%, #0D2A0D 100%)', desc: '半圆形建筑精确对准冬至日出方向，展现了印加人卓越的天文学知识。石墙贴合之紧密，无法插入一张纸。', hours: '06:00—17:00', ticket: {
+      // H-15：Torreon (Machu Picchu) wiki 词条 404（英文版不存在），走 wikiImage 直链兜底
+      { name: '太阳神殿', era: '印加·约1450年', yearNum: 1450, wiki: 'Torreon (Machu Picchu)', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Machu_Picchu_Torre%C3%B3n.jpg', gradient: 'linear-gradient(135deg, #1A3A1A 0%, #4A8A4A 50%, #0D2A0D 100%)', desc: '半圆形建筑精确对准冬至日出方向，展现了印加人卓越的天文学知识。石墙贴合之紧密，无法插入一张纸。', hours: '06:00—17:00', ticket: {
   price: '含在马丘比丘主门票内（Circuito 2 路线可近距离观看）',
   channels: [
     {

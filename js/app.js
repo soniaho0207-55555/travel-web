@@ -105,7 +105,9 @@ function handleRoute() {
     } else {
       renderCityDetail(id);
     }
-    if (nav) nav.style.display = 'none';
+    // H-05a：详情页恢复 bottom-nav（原先隐藏），用户一键可跳发现/搜索
+    if (nav) nav.style.display = '';
+    updateNav(null); // 详情页无激活 tab（但 nav 可见）
   } else if (hash.startsWith('#/search')) {
     renderSearch();
     updateNav('search');
@@ -201,13 +203,20 @@ function renderHome() {
   `;
 
   // Load hero image
-  loadWikiImage(today.wiki, (url) => {
-    const bg = document.getElementById('heroBg');
-    if (bg && url) {
-      bg.style.backgroundImage = `url('${url}')`;
-      setTimeout(() => bg.classList.add('loaded'), 50);
-    }
-  });
+  // H-02：首页 Hero 也是 today city；若 today 有 wikiImage 直链优先，否则 wiki API
+  const heroEl = document.getElementById('heroBg');
+  if (today.wikiImage && heroEl) {
+    heroEl.style.backgroundImage = `url('${today.wikiImage}')`;
+    setTimeout(() => heroEl.classList.add('loaded'), 50);
+  } else {
+    loadWikiImage(today.wiki, (url) => {
+      const bg = document.getElementById('heroBg');
+      if (bg && url) {
+        bg.style.backgroundImage = `url('${url}')`;
+        setTimeout(() => bg.classList.add('loaded'), 50);
+      }
+    });
+  }
 
   // Typewriter
   setTimeout(() => {
@@ -329,6 +338,9 @@ function renderCityDetail(id) {
           </div>
         </div>
       </section>
+
+      <!-- H-05b: 城市详情 Hero 与正文之间，加轻量"更多城市"入口，直接回发现页 -->
+      <div class="more-cities-link" onclick="navTo('#/')">← 更多城市</div>
 
       <div class="overview">
         <p>${c.overview}</p>
@@ -493,13 +505,17 @@ function renderLandmarkDetail(cityId, index) {
 
   window.scrollTo(0, 0);
 
-  // Load hero image using landmark's wiki
-  if (l.wiki) {
+  // H-15/H-09: Hero 图加载优先级：l.wikiImage 直链 > wiki API > gradient 兜底
+  const bg = document.getElementById('lmHero');
+  if (l.wikiImage && bg) {
+    bg.style.backgroundImage = `url('${l.wikiImage}')`;
+    bg.classList.add('loaded');
+  } else if (l.wiki) {
     loadWikiImage(l.wiki, (url) => {
-      const bg = document.getElementById('lmHero');
-      if (bg && url) {
-        bg.style.backgroundImage = `url('${url}')`;
-        bg.classList.add('loaded');
+      const bgEl = document.getElementById('lmHero');
+      if (bgEl && url) {
+        bgEl.style.backgroundImage = `url('${url}')`;
+        bgEl.classList.add('loaded');
       }
     });
   }
@@ -723,20 +739,30 @@ function renderTicket(t) {
     </div>` : '';
 
   const hasChannels = Array.isArray(channels) && channels.length > 0;
+  // H-13: 无深链（url 为 null）时若有 searchHint 渲染为"官方XX（需在首页搜索"景点名"）"米色 70% opacity，不可点击
   const channelsBlock = hasChannels ? `
     <div class="ticket-section ticket-channels">
       <div class="ticket-section-title">购票渠道</div>
-      ${channels.map(ch => ch.url
-        ? `<a class="ticket-channel" href="${ch.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+      ${channels.map(ch => {
+        if (ch.url) {
+          return `<a class="ticket-channel" href="${ch.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
              ${icon('externalLink', 12)}
              <span class="ticket-channel-name">${ch.name}</span>
              ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
-           </a>`
-        : `<div class="ticket-channel ticket-channel-plain">
+           </a>`;
+        }
+        // 无深链分支
+        if (ch.searchHint) {
+          return `<div class="ticket-channel ticket-channel-hint">
+             <span class="ticket-channel-name">${ch.name}</span>
+             <span class="ticket-channel-search-hint">${ch.searchHint}</span>
+           </div>`;
+        }
+        return `<div class="ticket-channel ticket-channel-plain">
              <span class="ticket-channel-name">${ch.name}</span>
              ${ch.note ? `<span class="ticket-channel-note">${ch.note}</span>` : ''}
-           </div>`
-      ).join('')}
+           </div>`;
+      }).join('')}
     </div>` : '';
 
   // bookingWindow: object (A/B tier: peak/shoulder/offpeak) OR string (C tier: single sentence)
@@ -851,9 +877,12 @@ function renderSearch() {
 }
 
 function loadSearchThemeCovers() {
-  const titles = THEMES.map(t => t.cover).filter(t => t && !imgCache[t]);
+  // H-03/H-09: 直链优先
+  applyThemeDirectImages();
+  const titles = THEMES.filter(t => !t.coverUrl).map(t => t.cover).filter(t => t && !imgCache[t]);
   const apply = () => {
     THEMES.forEach(t => {
+      if (t.coverUrl) return; // 已应用
       if (imgCache[t.cover]) {
         document.querySelectorAll(`[data-theme-cover="${t.id}"]`).forEach(el => {
           el.style.backgroundImage = `url('${imgCache[t.cover]}')`;
@@ -992,21 +1021,31 @@ function loadWikiImage(title, cb) {
 }
 
 function loadAllCityImages() {
-  const titles = CITIES.map(c => c.wiki).filter(t => t && !imgCache[t]);
+  // H-02/H-09: 先把城市 wikiImage 直链图应用（同步，立即），再把剩余的走 wiki API
+  applyCityDirectImages();
+  const titles = CITIES.filter(c => !c.wikiImage).map(c => c.wiki).filter(t => t && !imgCache[t]);
   if (!titles.length) { applyCachedImages(); return; }
-
   batchLoadWiki(titles, () => applyCachedImages());
 }
 
 function loadThemeImages() {
-  const titles = THEMES.map(t => t.cover).filter(t => t && !imgCache[t]);
+  // H-03/H-09: 先应用 coverUrl 直链
+  applyThemeDirectImages();
+  const titles = THEMES.filter(t => !t.coverUrl).map(t => t.cover).filter(t => t && !imgCache[t]);
   if (!titles.length) { applyThemeImages(); return; }
-
   batchLoadWiki(titles, () => applyThemeImages());
 }
 
 function loadLandmarkImages(landmarks) {
-  const wikiLandmarks = landmarks.filter(l => l.wiki);
+  // H-15/H-09: 先把有 wikiImage 直链的 landmark banner 直接设置，API 只查剩余的
+  landmarks.forEach((l, i) => {
+    if (l.wikiImage) {
+      const banner = document.getElementById(`banner-${i}`);
+      if (banner) banner.style.backgroundImage = `url('${l.wikiImage}')`;
+    }
+  });
+
+  const wikiLandmarks = landmarks.filter(l => l.wiki && !l.wikiImage);
   if (!wikiLandmarks.length) return;
 
   const titles = wikiLandmarks.map(l => l.wiki);
@@ -1039,6 +1078,26 @@ function loadLandmarkImages(landmarks) {
       }
     });
   }).catch(() => {});
+}
+
+/* H-02/H-09: 应用 CITIES.wikiImage 直链到列表卡（不走 API） */
+function applyCityDirectImages() {
+  CITIES.forEach(c => {
+    if (!c.wikiImage) return;
+    document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
+      el.style.backgroundImage = `url('${c.wikiImage}')`;
+    });
+  });
+}
+
+/* H-03/H-09: 应用 THEMES.coverUrl 直链到主题卡（不走 API） */
+function applyThemeDirectImages() {
+  THEMES.forEach(t => {
+    if (!t.coverUrl) return;
+    document.querySelectorAll(`[data-theme-img="${t.id}"],[data-theme-cover="${t.id}"]`).forEach(el => {
+      el.style.backgroundImage = `url('${t.coverUrl}')`;
+    });
+  });
 }
 
 function batchLoadWiki(titles, cb) {
@@ -1074,6 +1133,13 @@ function batchLoadWiki(titles, cb) {
 
 function applyCachedImages() {
   CITIES.forEach(c => {
+    // H-02: 直链优先，不用 wiki API 盖回去
+    if (c.wikiImage) {
+      document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
+        el.style.backgroundImage = `url('${c.wikiImage}')`;
+      });
+      return;
+    }
     if (imgCache[c.wiki]) {
       document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
         el.style.backgroundImage = `url('${imgCache[c.wiki]}')`;
@@ -1084,6 +1150,13 @@ function applyCachedImages() {
 
 function applyThemeImages() {
   THEMES.forEach(t => {
+    // H-03: coverUrl 直链优先
+    if (t.coverUrl) {
+      document.querySelectorAll(`[data-theme-img="${t.id}"]`).forEach(el => {
+        el.style.backgroundImage = `url('${t.coverUrl}')`;
+      });
+      return;
+    }
     if (imgCache[t.cover]) {
       document.querySelectorAll(`[data-theme-img="${t.id}"]`).forEach(el => {
         el.style.backgroundImage = `url('${imgCache[t.cover]}')`;
