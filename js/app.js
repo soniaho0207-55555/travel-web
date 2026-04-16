@@ -18,6 +18,7 @@ const ICON_PATHS = {
   externalLink: '<path d="M11 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><polyline points="14,3 21,3 21,10"/><line x1="10" y1="14" x2="21" y2="3"/>',
   chevronDown: '<polyline points="6,9 12,15 18,9"/>',
   arrowDown: '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="6,13 12,19 18,13"/>',
+  arrowRight: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/>',
   // v2.3 Tips category icons (thin / line variants — distinct from meta icons)
   'ticket-dashed': '<path d="M4 8a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 20 8v2a2 2 0 0 0 0 4v2a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16v-2a2 2 0 0 0 0-4z" stroke-dasharray="2 1.5"/><line x1="10" y1="7" x2="10" y2="17" stroke-dasharray="1.5 2"/>',
   'clock-thin': '<circle cx="12" cy="12" r="8.5" stroke-width="1.2"/><polyline points="12,7.5 12,12 15,13.5" stroke-width="1.2"/>',
@@ -159,7 +160,7 @@ function renderHome() {
         <div class="hero-city-name">${today.name}</div>
         <div class="hero-city-en">${today.nameEn}</div>
         <div class="hero-quote" id="heroQuote"></div>
-        <button class="hero-cta">探索这座城市 →</button>
+        <button class="hero-cta">探索这座城市 ${icon('arrowRight', 14)}</button>
       </div>
       <div class="hero-scroll-hint" id="heroScrollHint">${icon('arrowDown', 24)}</div>
     </section>
@@ -545,10 +546,6 @@ function renderLmIntro(l) {
     </div>
   ` : '';
 
-  const tagsBlock = (l.tags && l.tags.length) ? `
-    <div class="landmark-tags">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-  ` : '';
-
   const noteBlock = l.note ? `
     <div class="lm-note">${icon('info', 14)}<span>${l.note}</span></div>
   ` : '';
@@ -563,7 +560,6 @@ function renderLmIntro(l) {
       <p class="landmark-desc">${l.desc}</p>
       ${noteBlock}
       ${worldEventsBlock}
-      ${tagsBlock}
     </div>
   `;
 }
@@ -923,7 +919,7 @@ function onSearch() {
     return;
   }
 
-  resultsEl.innerHTML = matched.map(c => `
+  const resultsHtml = matched.map(c => `
     <div class="search-result" onclick="navTo('#/city/${c.id}')">
       <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
       <div class="search-result-info">
@@ -932,6 +928,39 @@ function onSearch() {
       </div>
     </div>
   `).join('');
+
+  // G-12: 结果 ≤ 2 时补"从 X 联想" — 同主题邻居城市
+  let extendHtml = '';
+  if (matched.length <= 2 && matched.length > 0) {
+    const matchedIds = new Set(matched.map(c => c.id));
+    const themeSet = new Set();
+    matched.forEach(c => (c.themes || []).forEach(t => themeSet.add(t)));
+    const neighbors = CITIES.filter(c =>
+      !matchedIds.has(c.id) &&
+      (c.themes || []).some(t => themeSet.has(t))
+    ).slice(0, 3);
+
+    if (neighbors.length) {
+      extendHtml = `
+        <div class="search-extend">
+          <div class="search-extend-title">从 ${document.getElementById('searchInput').value.trim()} 联想</div>
+          <div class="search-extend-list">
+            ${neighbors.map(c => `
+              <div class="search-result" onclick="navTo('#/city/${c.id}')">
+                <div class="search-result-thumb" style="background-image: ${c.heroGradient}" data-city-img="${c.id}"></div>
+                <div class="search-result-info">
+                  <div class="search-result-name">${c.name}<span>${c.nameEn}</span></div>
+                  <div class="search-result-sub">${c.country} · ${CONTINENT_MAP[c.continent]}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  resultsEl.innerHTML = resultsHtml + extendHtml;
 
   applyCachedImages();
 }
