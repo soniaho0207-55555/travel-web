@@ -1,75 +1,79 @@
-entity_type,entity_id,entity_name,wiki_title,api_thumb_url,has_direct_url,direct_url,api_status
-theme,imperial,帝都传奇,Gate of Supreme Harmony,https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Gate_of_Supreme_Harmony_20160826-4.jpg/960px-Gate_of_Supreme_Harmony_20160826-4.jpg,no,,ok
-theme,ancient,古代奇迹,Great Pyramid of Giza,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg/960px-Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg,no,,ok
-theme,silk-road,丝绸之路,Mogao Caves,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Mogao_Caves_%2854376969262%29.jpg/960px-Mogao_Caves_%2854376969262%29.jpg,no,,ok
-theme,maritime,海洋文明,Lighthouse of Alexandria,https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lighthouse_-_Thiersch.png/960px-Lighthouse_-_Thiersch.png,no,,ok
-theme,religion,信仰之城,Dome of the Rock,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg/960px-Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg,no,,ok
-theme,renaissance,文明复兴,Florence Cathedral,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg/960px-Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg,no,,ok
-city,beijing,北京,Forbidden City,https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/960px-The_Forbidden_City_-_View_from_Coal_Hill.jpg,no,,ok
-landmark,beijing/故宫（紫禁城）,故宫（紫禁城）,Hall of Supreme Harmony,https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hall_of_Supreme_Harmony_%2820241127120000%29.jpg/960px-Hall_of_Supreme_Harmony_%2820241127120000%29.jpg,no,,ok
-landmark,beijing/长城（八达岭段）,长城（八达岭段）,Great Wall of China,https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/960px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg,no,,ok
-landmark,beijing/天坛,天坛,Temple of Heaven,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Temple_of_Heaven_20160323_01.jpg/960px-Temple_of_Heaven_20160323_01.jpg,no,,ok
-landmark,beijing/颐和园,颐和园,Summer Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Longevity_Hill_of_the_Summer_Palace.jpg/960px-Longevity_Hill_of_the_Summer_Palace.jpg,no,,ok
-city,rome,罗马,Rome,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg/960px-Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg,no,,ok
-landmark,rome/科洛塞姆（斗兽场）,科洛塞姆（斗兽场）,Colosseum,https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/960px-Colosseo_2020.jpg,no,,ok
-landmark,rome/万神殿（Pantheon）,万神殿（Pantheon）,"Pantheon, Rome",https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pantheon_%28Rome%29_-_Right_side_and_front.jpg/960px-Pantheon_%28Rome%29_-_Right_side_and_front.jpg,no,,ok
-landmark,rome/梵蒂冈圣彼得大教堂,梵蒂冈圣彼得大教堂,St. Peter's Basilica,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg/960px-Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg,no,,ok
-landmark,rome/古罗马广场,古罗马广场,Roman Forum,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Foro_Romano_Musei_Capitolini_Roma.jpg/960px-Foro_Romano_Musei_Capitolini_Roma.jpg,no,,ok
-city,istanbul,伊斯坦布尔,Sultan Ahmed Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Istanbul_%2834223582516%29_%28cropped%29.jpg/960px-Istanbul_%2834223582516%29_%28cropped%29.jpg,yes,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Bosphorus_Bridge_at_night_in_Istanbul.jpg/1280px-Bosphorus_Bridge_at_night_in_Istanbul.jpg,ok
-landmark,istanbul/圣索菲亚大教堂,圣索菲亚大教堂,Hagia Sophia,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hagia_Sophia_%28228968325%29.jpeg/960px-Hagia_Sophia_%28228968325%29.jpeg,no,,ok
-landmark,istanbul/蓝色清真寺,蓝色清真寺,Sultan Ahmed Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Istanbul_%2834223582516%29_%28cropped%29.jpg/960px-Istanbul_%2834223582516%29_%28cropped%29.jpg,no,,ok
-landmark,istanbul/托普卡帕宫,托普卡帕宫,Topkapı Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Topkap%C4%B1_-_01.jpg/960px-Topkap%C4%B1_-_01.jpg,no,,ok
-landmark,istanbul/大巴扎,大巴扎,"Grand Bazaar, Istanbul",https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Istanbul_asv2021-11_img41_Grand_Bazaar.jpg/960px-Istanbul_asv2021-11_img41_Grand_Bazaar.jpg,no,,ok
-city,kyoto,京都,Arashiyama,https://upload.wikimedia.org/wikipedia/commons/d/de/Arashiyama_013.jpg,no,,ok
-landmark,kyoto/伏见稻荷大社,伏见稻荷大社,Fushimi Inari-taisha,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/960px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg,no,,ok
-landmark,kyoto/金阁寺（鹿苑寺）,金阁寺（鹿苑寺）,Kinkaku-ji,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/960px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg,no,,ok
-landmark,kyoto/二条城,二条城,Nijo Castle,https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/NinomaruPalace.jpg/960px-NinomaruPalace.jpg,no,,ok
-landmark,kyoto/清水寺,清水寺,Kiyomizu-dera,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Kiyomizu.jpg/960px-Kiyomizu.jpg,no,,ok
-city,cairo,开罗,Great Pyramid of Giza,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg/960px-Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg,no,,ok
-landmark,cairo/吉萨大金字塔群,吉萨大金字塔群,Giza pyramid complex,https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pyramids_of_the_Giza_Necropolis.jpg/960px-Pyramids_of_the_Giza_Necropolis.jpg,no,,ok
-landmark,cairo/埃及博物馆,埃及博物馆,Egyptian Museum,https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/1897_bis_1902_wurde_das_%C3%84gyptische_Museum_in_Kairo_gebaut._04.jpg/960px-1897_bis_1902_wurde_das_%C3%84gyptische_Museum_in_Kairo_gebaut._04.jpg,no,,ok
-landmark,cairo/爱资哈尔清真寺,爱资哈尔清真寺,Al-Azhar Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Mosqu%C3%A9e_Al-Azhar.jpg/960px-Mosqu%C3%A9e_Al-Azhar.jpg,no,,ok
-landmark,cairo/萨拉丁城堡,萨拉丁城堡,Cairo Citadel,https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Flickr_-_HuTect_ShOts_-_Citadel_of_Salah_El.Din_and_Masjid_Muhammad_Ali_%D9%82%D9%84%D8%B9%D8%A9_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_%D9%88%D9%85%D8%B3%D8%AC%D8%AF_%D9%85%D8%AD%D9%85%D8%AF_%D8%B9%D9%84%D9%8A_-_Cairo_-_Egypt_-_17_04_2010_%284%29.jpg/960px-thumbnail.jpg,no,,ok
-city,paris,巴黎,Paris,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/960px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg,no,,ok
-landmark,paris/巴黎圣母院,巴黎圣母院,Notre-Dame de Paris,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Notre-Dame_de_Paris%2C_4_October_2017.jpg/960px-Notre-Dame_de_Paris%2C_4_October_2017.jpg,no,,ok
-landmark,paris/埃菲尔铁塔,埃菲尔铁塔,Eiffel Tower,https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/960px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg,no,,ok
-landmark,paris/卢浮宫,卢浮宫,Louvre,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/960px-Louvre_Museum_Wikimedia_Commons.jpg,no,,ok
-landmark,paris/凡尔赛宫,凡尔赛宫,Palace of Versailles,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Versailles-Chateau-Jardins02.jpg/960px-Versailles-Chateau-Jardins02.jpg,no,,ok
-city,athens,雅典,Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Monastiraki_Square_and_Acropolis_in_Athens_%2844149181684%29.jpg/960px-Monastiraki_Square_and_Acropolis_in_Athens_%2844149181684%29.jpg,no,,ok
-landmark,athens/帕特农神庙,帕特农神庙,Parthenon,https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/The_Parthenon_in_Athens.jpg/960px-The_Parthenon_in_Athens.jpg,no,,ok
-landmark,athens/雅典卫城,雅典卫城,Acropolis of Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg/960px-1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg,no,,ok
-landmark,athens/古代市集（Agora）,古代市集（Agora）,Ancient Agora of Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/%C3%81gora_de_Atenas_03.jpg/960px-%C3%81gora_de_Atenas_03.jpg,no,,ok
-city,florence,佛罗伦萨,Florence,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/FirenzeDec092023_01.jpg/960px-FirenzeDec092023_01.jpg,no,,ok
-landmark,florence/圣母百花大教堂,圣母百花大教堂,Florence Cathedral,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg/960px-Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg,no,,ok
-landmark,florence/乌菲兹美术馆,乌菲兹美术馆,Uffizi,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Florence%2C_Italy_-_panoramio_%28125%29.jpg/960px-Florence%2C_Italy_-_panoramio_%28125%29.jpg,no,,ok
-landmark,florence/老桥（Ponte Vecchio）,老桥（Ponte Vecchio）,Ponte Vecchio,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Ponte_Vecchio_from_Ponte_alle_Grazie.jpg/960px-Ponte_Vecchio_from_Ponte_alle_Grazie.jpg,no,,ok
-city,xian,西安,Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg/960px-City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg,no,,ok
-landmark,xian/秦始皇兵马俑,秦始皇兵马俑,Terracotta Army,https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/51714-Terracota-Army.jpg/960px-51714-Terracota-Army.jpg,no,,ok
-landmark,xian/西安城墙,西安城墙,Fortifications of Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg/960px-City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg,no,,ok
-landmark,xian/大雁塔,大雁塔,Giant Wild Goose Pagoda,https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Giant_Wild_Goose_Pagoda.jpg/960px-Giant_Wild_Goose_Pagoda.jpg,no,,ok
-landmark,xian/回民街,回民街,Drum Tower of Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/The_Drum_Tower_of_Xi%27an.JPG/960px-The_Drum_Tower_of_Xi%27an.JPG,no,,ok
-city,delhi,德里,Delhi,https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jama_Masjid_2011.jpg/960px-Jama_Masjid_2011.jpg,no,,ok
-landmark,delhi/红堡,红堡,Red Fort,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Delhi_fort.jpg/960px-Delhi_fort.jpg,no,,ok
-landmark,delhi/顾特卜塔,顾特卜塔,Qutub Minar,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Qutb_Minar_2022.jpg/960px-Qutb_Minar_2022.jpg,no,,ok
-landmark,delhi/胡马雍陵,胡马雍陵,Humayun's Tomb,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Tomb_of_Humayun%2C_Delhi.jpg/960px-Tomb_of_Humayun%2C_Delhi.jpg,no,,ok
-city,jerusalem,耶路撒冷,Jerusalem,https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/%D7%94%D7%9E%D7%A6%D7%95%D7%93%D7%94_%D7%91%D7%9C%D7%99%D7%9C%D7%94.jpg/960px-%D7%94%D7%9E%D7%A6%D7%95%D7%93%D7%94_%D7%91%D7%9C%D7%99%D7%9C%D7%94.jpg,no,,ok
-landmark,jerusalem/西墙（哭墙）,西墙（哭墙）,Western Wall,https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Westernwall2.jpg/960px-Westernwall2.jpg,no,,ok
-landmark,jerusalem/圆顶清真寺,圆顶清真寺,Dome of the Rock,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg/960px-Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg,no,,ok
-landmark,jerusalem/圣墓教堂,圣墓教堂,Church of the Holy Sepulchre,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Church_of_the_Holy_Sepulchre_by_Gerd_Eichmann_%28cropped%29.jpg/960px-Church_of_the_Holy_Sepulchre_by_Gerd_Eichmann_%28cropped%29.jpg,no,,ok
-city,angkor,吴哥窟,Angkor Wat,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Buddhist_monks_in_front_of_the_Angkor_Wat.jpg/960px-Buddhist_monks_in_front_of_the_Angkor_Wat.jpg,no,,ok
-landmark,angkor/吴哥窟主殿,吴哥窟主殿,Angkor Wat,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Buddhist_monks_in_front_of_the_Angkor_Wat.jpg/960px-Buddhist_monks_in_front_of_the_Angkor_Wat.jpg,no,,ok
-landmark,angkor/巴戎寺,巴戎寺,Bayon,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG/960px-Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG,no,,ok
-landmark,angkor/塔布隆寺,塔布隆寺,Ta Prohm,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Ta_Prohm_%28III%29.jpg/960px-Ta_Prohm_%28III%29.jpg,no,,ok
-city,marrakesh,马拉喀什,Marrakesh,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Pavillon_Menarag%C3%A4rten.jpg/960px-Pavillon_Menarag%C3%A4rten.jpg,no,,ok
-landmark,marrakesh/德吉玛·艾尔法纳广场,德吉玛·艾尔法纳广场,Jemaa el-Fnaa,https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Djemaa_el_Fna.jpg/960px-Djemaa_el_Fna.jpg,no,,ok
-landmark,marrakesh/库图比亚清真寺,库图比亚清真寺,Koutoubia Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Marokko0112_%28retouched%29.jpg/960px-Marokko0112_%28retouched%29.jpg,no,,ok
-landmark,marrakesh/巴希亚宫,巴希亚宫,Bahia Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Bahia_Palace_large_court.jpg/960px-Bahia_Palace_large_court.jpg,no,,ok
-city,mexico-city,墨西哥城,"Metropolitan Cathedral, Mexico City",https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Mexico_City_%282018%29_-_160.jpg/960px-Mexico_City_%282018%29_-_160.jpg,no,,ok
-landmark,mexico-city/大神庙遗址,大神庙遗址,Coyolxauhqui Stone,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mexico-3980_-_Coyolxauhqui_Stone_%282508259597%29.jpg/960px-Mexico-3980_-_Coyolxauhqui_Stone_%282508259597%29.jpg,no,,ok
-landmark,mexico-city/国家宫殿,国家宫殿,National Palace (Mexico),https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Wikimania_2015_15.07.2015_17-00-11.JPG/960px-Wikimania_2015_15.07.2015_17-00-11.JPG,no,,ok
-landmark,mexico-city/特奥蒂瓦坎,特奥蒂瓦坎,Teotihuacan,https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Teotihuac%C3%A1n-5973.JPG/960px-Teotihuac%C3%A1n-5973.JPG,no,,ok
-city,machu-picchu,马丘比丘,Machu Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu%2C_2023_%28012%29.jpg/960px-Machu_Picchu%2C_2023_%28012%29.jpg,no,,ok
-landmark,machu-picchu/马丘比丘遗址,马丘比丘遗址,Machu Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu%2C_2023_%28012%29.jpg/960px-Machu_Picchu%2C_2023_%28012%29.jpg,no,,ok
-landmark,machu-picchu/太阳神殿,太阳神殿,Torreon (Machu Picchu),,yes,https://upload.wikimedia.org/wikipedia/commons/1/1a/Machu_Picchu_Torre%C3%B3n.jpg,wiki-404
-landmark,machu-picchu/拴日石（Intihuatana）,拴日石（Intihuatana）,Intihuatana,https://upload.wikimedia.org/wikipedia/commons/e/ef/Intihuatana%2C_Machu_Picchu.jpg,no,,ok
-landmark,machu-picchu/华纳比丘,华纳比丘,Huayna Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Peru_Machu_Picchu_Sunrise.jpg/960px-Peru_Machu_Picchu_Sunrise.jpg,no,,ok
+
+> travel-web@2.6.0 audit:wiki-images
+> node scripts/audit-wiki-images.js
+
+entity_type,entity_id,entity_name,wiki_title,api_thumb_url,has_direct_url,direct_url,api_status,direct_status
+theme,imperial,帝都传奇,Gate of Supreme Harmony,https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Gate_of_Supreme_Harmony_20160826-4.jpg/960px-Gate_of_Supreme_Harmony_20160826-4.jpg,no,,ok,
+theme,ancient,古代奇迹,Great Pyramid of Giza,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg/960px-Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg,no,,ok,
+theme,silk-road,丝绸之路,Mogao Caves,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Mogao_Caves_%2854376969262%29.jpg/960px-Mogao_Caves_%2854376969262%29.jpg,no,,ok,
+theme,maritime,海洋文明,Lighthouse of Alexandria,https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lighthouse_-_Thiersch.png/960px-Lighthouse_-_Thiersch.png,no,,ok,
+theme,religion,信仰之城,Dome of the Rock,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg/960px-Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg,no,,ok,
+theme,renaissance,文明复兴,Florence Cathedral,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg/960px-Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg,no,,ok,
+city,beijing,北京,Forbidden City,https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/960px-The_Forbidden_City_-_View_from_Coal_Hill.jpg,no,,ok,
+landmark,beijing/故宫（紫禁城）,故宫（紫禁城）,Hall of Supreme Harmony,https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hall_of_Supreme_Harmony_%2820241127120000%29.jpg/960px-Hall_of_Supreme_Harmony_%2820241127120000%29.jpg,no,,ok,
+landmark,beijing/长城（八达岭段）,长城（八达岭段）,Great Wall of China,https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/The_Great_Wall_of_China_at_Jinshanling-edit.jpg/960px-The_Great_Wall_of_China_at_Jinshanling-edit.jpg,no,,ok,
+landmark,beijing/天坛,天坛,Temple of Heaven,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Temple_of_Heaven_20160323_01.jpg/960px-Temple_of_Heaven_20160323_01.jpg,no,,ok,
+landmark,beijing/颐和园,颐和园,Summer Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Longevity_Hill_of_the_Summer_Palace.jpg/960px-Longevity_Hill_of_the_Summer_Palace.jpg,no,,ok,
+city,rome,罗马,Rome,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg/960px-Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg,no,,ok,
+landmark,rome/科洛塞姆（斗兽场）,科洛塞姆（斗兽场）,Colosseum,https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/960px-Colosseo_2020.jpg,no,,ok,
+landmark,rome/万神殿（Pantheon）,万神殿（Pantheon）,"Pantheon, Rome",https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pantheon_%28Rome%29_-_Right_side_and_front.jpg/960px-Pantheon_%28Rome%29_-_Right_side_and_front.jpg,no,,ok,
+landmark,rome/梵蒂冈圣彼得大教堂,梵蒂冈圣彼得大教堂,St. Peter's Basilica,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg/960px-Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg,no,,ok,
+landmark,rome/古罗马广场,古罗马广场,Roman Forum,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Foro_Romano_Musei_Capitolini_Roma.jpg/960px-Foro_Romano_Musei_Capitolini_Roma.jpg,no,,ok,
+city,istanbul,伊斯坦布尔,Sultan Ahmed Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Istanbul_%2834223582516%29_%28cropped%29.jpg/960px-Istanbul_%2834223582516%29_%28cropped%29.jpg,yes,https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Bosphorus_Bridge_%28235499411%29.jpeg/960px-Bosphorus_Bridge_%28235499411%29.jpeg,ok,200
+landmark,istanbul/圣索菲亚大教堂,圣索菲亚大教堂,Hagia Sophia,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hagia_Sophia_%28228968325%29.jpeg/960px-Hagia_Sophia_%28228968325%29.jpeg,no,,ok,
+landmark,istanbul/蓝色清真寺,蓝色清真寺,Sultan Ahmed Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Istanbul_%2834223582516%29_%28cropped%29.jpg/960px-Istanbul_%2834223582516%29_%28cropped%29.jpg,no,,ok,
+landmark,istanbul/托普卡帕宫,托普卡帕宫,Topkapı Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Topkap%C4%B1_-_01.jpg/960px-Topkap%C4%B1_-_01.jpg,no,,ok,
+landmark,istanbul/大巴扎,大巴扎,"Grand Bazaar, Istanbul",https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Istanbul_asv2021-11_img41_Grand_Bazaar.jpg/960px-Istanbul_asv2021-11_img41_Grand_Bazaar.jpg,no,,ok,
+city,kyoto,京都,Arashiyama,https://upload.wikimedia.org/wikipedia/commons/d/de/Arashiyama_013.jpg,no,,ok,
+landmark,kyoto/伏见稻荷大社,伏见稻荷大社,Fushimi Inari-taisha,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/960px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg,no,,ok,
+landmark,kyoto/金阁寺（鹿苑寺）,金阁寺（鹿苑寺）,Kinkaku-ji,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/960px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg,no,,ok,
+landmark,kyoto/二条城,二条城,Nijo Castle,https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/NinomaruPalace.jpg/960px-NinomaruPalace.jpg,no,,ok,
+landmark,kyoto/清水寺,清水寺,Kiyomizu-dera,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Kiyomizu.jpg/960px-Kiyomizu.jpg,no,,ok,
+city,cairo,开罗,Great Pyramid of Giza,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg/960px-Great_Pyramid_of_Giza_-_Pyramid_of_Khufu.jpg,no,,ok,
+landmark,cairo/吉萨大金字塔群,吉萨大金字塔群,Giza pyramid complex,https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pyramids_of_the_Giza_Necropolis.jpg/960px-Pyramids_of_the_Giza_Necropolis.jpg,no,,ok,
+landmark,cairo/埃及博物馆,埃及博物馆,Egyptian Museum,https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/1897_bis_1902_wurde_das_%C3%84gyptische_Museum_in_Kairo_gebaut._04.jpg/960px-1897_bis_1902_wurde_das_%C3%84gyptische_Museum_in_Kairo_gebaut._04.jpg,no,,ok,
+landmark,cairo/爱资哈尔清真寺,爱资哈尔清真寺,Al-Azhar Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Mosqu%C3%A9e_Al-Azhar.jpg/960px-Mosqu%C3%A9e_Al-Azhar.jpg,no,,ok,
+landmark,cairo/萨拉丁城堡,萨拉丁城堡,Cairo Citadel,https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Flickr_-_HuTect_ShOts_-_Citadel_of_Salah_El.Din_and_Masjid_Muhammad_Ali_%D9%82%D9%84%D8%B9%D8%A9_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_%D9%88%D9%85%D8%B3%D8%AC%D8%AF_%D9%85%D8%AD%D9%85%D8%AF_%D8%B9%D9%84%D9%8A_-_Cairo_-_Egypt_-_17_04_2010_%284%29.jpg/960px-thumbnail.jpg,no,,ok,
+city,paris,巴黎,Paris,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/960px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg,no,,ok,
+landmark,paris/巴黎圣母院,巴黎圣母院,Notre-Dame de Paris,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Notre-Dame_de_Paris%2C_4_October_2017.jpg/960px-Notre-Dame_de_Paris%2C_4_October_2017.jpg,no,,ok,
+landmark,paris/埃菲尔铁塔,埃菲尔铁塔,Eiffel Tower,https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/960px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg,no,,ok,
+landmark,paris/卢浮宫,卢浮宫,Louvre,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/960px-Louvre_Museum_Wikimedia_Commons.jpg,no,,ok,
+landmark,paris/凡尔赛宫,凡尔赛宫,Palace of Versailles,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Versailles-Chateau-Jardins02.jpg/960px-Versailles-Chateau-Jardins02.jpg,no,,ok,
+city,athens,雅典,Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Monastiraki_Square_and_Acropolis_in_Athens_%2844149181684%29.jpg/960px-Monastiraki_Square_and_Acropolis_in_Athens_%2844149181684%29.jpg,no,,ok,
+landmark,athens/帕特农神庙,帕特农神庙,Parthenon,https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/The_Parthenon_in_Athens.jpg/960px-The_Parthenon_in_Athens.jpg,no,,ok,
+landmark,athens/雅典卫城,雅典卫城,Acropolis of Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg/960px-1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg,no,,ok,
+landmark,athens/古代市集（Agora）,古代市集（Agora）,Ancient Agora of Athens,https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/%C3%81gora_de_Atenas_03.jpg/960px-%C3%81gora_de_Atenas_03.jpg,no,,ok,
+city,florence,佛罗伦萨,Florence,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/FirenzeDec092023_01.jpg/960px-FirenzeDec092023_01.jpg,no,,ok,
+landmark,florence/圣母百花大教堂,圣母百花大教堂,Florence Cathedral,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg/960px-Cattedrale_di_Santa_Maria_del_Fiore_%E2%80%93_Il_Duomo_di_Firenze.jpg,no,,ok,
+landmark,florence/乌菲兹美术馆,乌菲兹美术馆,Uffizi,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Florence%2C_Italy_-_panoramio_%28125%29.jpg/960px-Florence%2C_Italy_-_panoramio_%28125%29.jpg,no,,ok,
+landmark,florence/老桥（Ponte Vecchio）,老桥（Ponte Vecchio）,Ponte Vecchio,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Ponte_Vecchio_from_Ponte_alle_Grazie.jpg/960px-Ponte_Vecchio_from_Ponte_alle_Grazie.jpg,no,,ok,
+city,xian,西安,Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg/960px-City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg,no,,ok,
+landmark,xian/秦始皇兵马俑,秦始皇兵马俑,Terracotta Army,https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/51714-Terracota-Army.jpg/960px-51714-Terracota-Army.jpg,no,,ok,
+landmark,xian/西安城墙,西安城墙,Fortifications of Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg/960px-City_wall_of_Xi%27an_51550-Xian_%2827959363326%29.jpg,no,,ok,
+landmark,xian/大雁塔,大雁塔,Giant Wild Goose Pagoda,https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Giant_Wild_Goose_Pagoda.jpg/960px-Giant_Wild_Goose_Pagoda.jpg,no,,ok,
+landmark,xian/回民街,回民街,Drum Tower of Xi'an,https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/The_Drum_Tower_of_Xi%27an.JPG/960px-The_Drum_Tower_of_Xi%27an.JPG,no,,ok,
+city,delhi,德里,Delhi,https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jama_Masjid_2011.jpg/960px-Jama_Masjid_2011.jpg,no,,ok,
+landmark,delhi/红堡,红堡,Red Fort,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Delhi_fort.jpg/960px-Delhi_fort.jpg,no,,ok,
+landmark,delhi/顾特卜塔,顾特卜塔,Qutub Minar,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Qutb_Minar_2022.jpg/960px-Qutb_Minar_2022.jpg,no,,ok,
+landmark,delhi/胡马雍陵,胡马雍陵,Humayun's Tomb,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Tomb_of_Humayun%2C_Delhi.jpg/960px-Tomb_of_Humayun%2C_Delhi.jpg,no,,ok,
+city,jerusalem,耶路撒冷,Jerusalem,https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/%D7%94%D7%9E%D7%A6%D7%95%D7%93%D7%94_%D7%91%D7%9C%D7%99%D7%9C%D7%94.jpg/960px-%D7%94%D7%9E%D7%A6%D7%95%D7%93%D7%94_%D7%91%D7%9C%D7%99%D7%9C%D7%94.jpg,no,,ok,
+landmark,jerusalem/西墙（哭墙）,西墙（哭墙）,Western Wall,https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Westernwall2.jpg/960px-Westernwall2.jpg,no,,ok,
+landmark,jerusalem/圆顶清真寺,圆顶清真寺,Dome of the Rock,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg/960px-Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg,no,,ok,
+landmark,jerusalem/圣墓教堂,圣墓教堂,Church of the Holy Sepulchre,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Church_of_the_Holy_Sepulchre_by_Gerd_Eichmann_%28cropped%29.jpg/960px-Church_of_the_Holy_Sepulchre_by_Gerd_Eichmann_%28cropped%29.jpg,no,,ok,
+city,angkor,吴哥窟,Angkor Wat,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Buddhist_monks_in_front_of_the_Angkor_Wat.jpg/960px-Buddhist_monks_in_front_of_the_Angkor_Wat.jpg,no,,ok,
+landmark,angkor/吴哥窟主殿,吴哥窟主殿,Angkor Wat,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Buddhist_monks_in_front_of_the_Angkor_Wat.jpg/960px-Buddhist_monks_in_front_of_the_Angkor_Wat.jpg,no,,ok,
+landmark,angkor/巴戎寺,巴戎寺,Bayon,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG/960px-Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG,no,,ok,
+landmark,angkor/塔布隆寺,塔布隆寺,Ta Prohm,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Ta_Prohm_%28III%29.jpg/960px-Ta_Prohm_%28III%29.jpg,no,,ok,
+city,marrakesh,马拉喀什,Marrakesh,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Pavillon_Menarag%C3%A4rten.jpg/960px-Pavillon_Menarag%C3%A4rten.jpg,no,,ok,
+landmark,marrakesh/德吉玛·艾尔法纳广场,德吉玛·艾尔法纳广场,Jemaa el-Fnaa,https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Djemaa_el_Fna.jpg/960px-Djemaa_el_Fna.jpg,no,,ok,
+landmark,marrakesh/库图比亚清真寺,库图比亚清真寺,Koutoubia Mosque,https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Marokko0112_%28retouched%29.jpg/960px-Marokko0112_%28retouched%29.jpg,no,,ok,
+landmark,marrakesh/巴希亚宫,巴希亚宫,Bahia Palace,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Bahia_Palace_large_court.jpg/960px-Bahia_Palace_large_court.jpg,no,,ok,
+city,mexico-city,墨西哥城,"Metropolitan Cathedral, Mexico City",https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Mexico_City_%282018%29_-_160.jpg/960px-Mexico_City_%282018%29_-_160.jpg,no,,ok,
+landmark,mexico-city/大神庙遗址,大神庙遗址,Coyolxauhqui Stone,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mexico-3980_-_Coyolxauhqui_Stone_%282508259597%29.jpg/960px-Mexico-3980_-_Coyolxauhqui_Stone_%282508259597%29.jpg,no,,ok,
+landmark,mexico-city/国家宫殿,国家宫殿,National Palace (Mexico),https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Wikimania_2015_15.07.2015_17-00-11.JPG/960px-Wikimania_2015_15.07.2015_17-00-11.JPG,no,,ok,
+landmark,mexico-city/特奥蒂瓦坎,特奥蒂瓦坎,Teotihuacan,https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Teotihuac%C3%A1n-5973.JPG/960px-Teotihuac%C3%A1n-5973.JPG,no,,ok,
+city,machu-picchu,马丘比丘,Machu Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu%2C_2023_%28012%29.jpg/960px-Machu_Picchu%2C_2023_%28012%29.jpg,no,,ok,
+landmark,machu-picchu/马丘比丘遗址,马丘比丘遗址,Machu Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Picchu%2C_2023_%28012%29.jpg/960px-Machu_Picchu%2C_2023_%28012%29.jpg,no,,ok,
+landmark,machu-picchu/太阳神殿,太阳神殿,Torreon (Machu Picchu),,yes,https://upload.wikimedia.org/wikipedia/commons/1/1a/Machu_Picchu_Torre%C3%B3n.jpg,wiki-404,200
+landmark,machu-picchu/拴日石（Intihuatana）,拴日石（Intihuatana）,Intihuatana,https://upload.wikimedia.org/wikipedia/commons/e/ef/Intihuatana%2C_Machu_Picchu.jpg,no,,ok,
+landmark,machu-picchu/华纳比丘,华纳比丘,Huayna Picchu,https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Peru_Machu_Picchu_Sunrise.jpg/960px-Peru_Machu_Picchu_Sunrise.jpg,no,,ok,
