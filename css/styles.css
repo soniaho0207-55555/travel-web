@@ -232,7 +232,8 @@ body::before {
   font-weight: 500;
   letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: none;
+  /* H-07: 深褐阴影半透明底描，浅色背景上给 CTA 锚定；深色背景上几乎不可见，金色仍主导 */
+  box-shadow: 0 0 0 1.5px rgba(40, 30, 20, 0.3);
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -243,7 +244,7 @@ body::before {
 .hero-cta:active {
   background: rgba(201,150,58,0.15);
   transform: none;
-  box-shadow: none;
+  box-shadow: 0 0 0 1.5px rgba(40, 30, 20, 0.4);
 }
 
 .hero-scroll-hint {
@@ -590,6 +591,31 @@ body::before {
   display: block;
   font-family: var(--serif);
   font-weight: 700;
+}
+
+/* H-05b: 城市详情 Hero 正文前的"更多城市"轻量入口 */
+.more-cities-link {
+  padding: 12px 20px 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(201,150,58,0.7);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.more-cities-link:hover {
+  color: rgba(201,150,58,1);
+}
+
+/* H-10: Hero 到正文的过渡渐变（让全宽 Hero 到缩进正文不突兀） */
+.detail-hero::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 40px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, rgba(12,24,16,0.35) 100%);
+  z-index: 2;
 }
 
 /* ─── OVERVIEW ─── */
@@ -981,6 +1007,27 @@ body::before {
 .ticket-channel:active { opacity: 0.7; }
 .ticket-channel-plain { cursor: default; }
 .ticket-channel-plain:active { opacity: 1; }
+
+/* H-13: 无深链兜底——告知用户在哪儿搜什么，米色 70% opacity 文字不可点击 */
+.ticket-channel-hint {
+  cursor: default;
+  opacity: 0.7;
+}
+.ticket-channel-hint:active { opacity: 0.7; }
+.ticket-channel-hint .ticket-channel-name {
+  font-weight: 500;
+}
+.ticket-channel-search-hint {
+  color: rgba(245,239,224,0.7);
+  font-size: 13px;
+  font-style: italic;
+  margin-left: auto;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  flex-shrink: 0;
+  max-width: 55%;
+}
 
 .ticket-booking-single {
   font-size: 15px;
@@ -1429,7 +1476,8 @@ body::before {
 .lm-hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(12,24,16,0.1) 0%, rgba(12,24,16,0.55) 100%);
+  /* H-10: 底部加深 0.85，让过渡到缩进正文不突兀（原 0.55 偏浅） */
+  background: linear-gradient(to bottom, rgba(12,24,16,0.1) 0%, rgba(12,24,16,0.55) 70%, rgba(12,24,16,0.85) 100%);
 }
 .lm-header {
   padding: 20px 20px 14px;
