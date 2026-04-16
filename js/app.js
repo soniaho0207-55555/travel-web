@@ -326,7 +326,7 @@ function renderCityDetail(id) {
   app.innerHTML = `
     <div class="detail-page">
       <section class="detail-hero">
-        <button class="detail-back" onclick="history.back()">←</button>
+        <button class="detail-back" onclick="navTo('#/')">←</button>
         <div class="detail-hero-bg" id="detailHeroBg" style="background-image: ${c.heroGradient}"></div>
         <div class="detail-hero-content">
           <div class="detail-eyebrow">—— ${c.country} · 历史与遗迹 ——</div>
@@ -418,7 +418,7 @@ function renderNotFound(id) {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="not-found-page">
-      <button class="detail-back" onclick="history.back()">←</button>
+      <button class="detail-back" onclick="navTo('#/')">←</button>
       <div class="not-found-icon">${icon('compass', 48)}</div>
       <h2 class="not-found-title">未找到该城市</h2>
       <p class="not-found-desc">「${id}」不在当前收录范围内</p>

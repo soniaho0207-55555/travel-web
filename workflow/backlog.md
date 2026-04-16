@@ -73,6 +73,18 @@
 
 ---
 
+## v2.6.2 跟单（v2.6.1 QA 验收遗留项，不阻塞合 main）
+
+> 来源：v2.6.1-05 最终验收（[workflow/v2.6.1-05-final-acceptance.md](v2.6.1-05-final-acceptance.md)）
+> 12 条反爬深链 preview 复验，10 条 PASS，2 条真 404。因均有兄弟渠道托底（不阻塞用户完成购票），降级为 v2.6.2 跟单。
+
+| # | 景点 | 平台 | 死链 | 建议处理 | 状态 |
+|---|------|------|------|---------|------|
+| v2.6.2-01 | 兵马俑 | 携程 | `trip.com/ticket/dest/t4-100005.html` 真 404 | 换 albatrip 官方外链 / 或 Trip.com 新深链（QA 已验 albatrip 托底 OK） | TODO |
+| v2.6.2-02 | 红堡 | Delhi Tourism | `delhitourism.gov.in/red_fort.jsp` 真 404 | 改 searchHint / 或换 Incredible India 新深链（ASI eTicket 已托底 OK） | TODO |
+
+---
+
 ## v2.7 候选池（CEO 2026-04-16 追加反馈，v2.6.1 之后 PM 起 PRD）
 
 > 这些是 CEO 在 v2.6 上线后 + v2.6.1 hotfix 派单**之后**追加的反馈，不进 hotfix（hotfix 是补 v2.6 欠账），**走正常 /pipeline 流程**。
