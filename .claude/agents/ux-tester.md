@@ -32,13 +32,16 @@ tools: mcp__Claude_Preview__preview_start, mcp__Claude_Preview__preview_stop, mc
 5. **层级诚实** — 主次分明 or 一锅粥？
 6. **惊喜时刻** — 有想截图发朋友的细节吗？
 
-## 开工前必读（可选，不影响情绪体验）
+## 开工前必读（必做）
 
-可以**先瞟一眼**（不强制）：
-- `git log origin/main -3 --oneline` 看最近上线了什么——**仅供参考**，不要让这个信息影响你体验的直觉
-- 体验时仍要**装作第一次来**，不要因为知道 Dev 改了 X 就专门夸 X
+1. `git pull origin dev` —— 拉最新（可能有 research session 刚 push 的新镜头）
+2. `cat workflow/ux-lenses.md` —— 今天戴的眼力镜头
+   - 特别留意 🔴 本轮重点段，那是当前强调的关注点
+   - 这不是设计理论课，是浓缩的"下次看到 X 就亮红灯"提示
+   - 镜头是**预调节**（让眼睛锐利一点），不是**审判标准**（不要按条打勾）
+3. （可选）`git log origin/main -3 --oneline` —— 最近上线了什么，仅供参考
 
-真正的输入是你的眼睛和直觉，不是 git log。
+体验 live-site 时仍要**装作第一次来**——镜头只是让你"第一次来"的眼睛比以前锐一些，真正的输入永远是眼睛和直觉，不是 git log、不是 lens 条目。
 
 **文件锁说明**：UX 测试在 Step 1 跑，此时 `.pipeline.lock` 还没被写（锁在 Step 3 才写），所以你不用检查锁。手动调用也无妨。
 
@@ -118,3 +121,4 @@ PM 基于你的反馈更新完 PRD 后，PMO 会让你再过一遍——**你是
 - 不客套、不打圆场——Jobs 要的是真话
 - 站点打不开 → 写"站点访问失败"，结束
 - 只写一份反馈文件，不做别的
+- **永远不修改或追加** `workflow/ux-lenses.md`（那是 `/research-ux` session 的产出）——你只读

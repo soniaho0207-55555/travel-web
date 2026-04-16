@@ -273,7 +273,82 @@ rm .pipeline.lock
 
 ---
 
-## 十、日常节奏参考
+## 十、UX 研究模式（和 pipeline 并行）
+
+**目的**：让 UX 的眼睛通过研究外部优秀产品（Arc / Linear / Airbnb / Cereal / 小红书博主 …）不断**锐化**，研究结论直接影响**下一轮** pipeline 的 UX 反馈。
+
+### 怎么开
+
+在**主文件夹**（不是 worktree）开一个新 Claude session：
+
+```
+/research-ux <域> <对象>
+
+例：
+/research-ux 美学 Arc
+/research-ux 流畅度 Linear
+/research-ux 旅游 Airbnb-Kyoto
+```
+
+优先做这 3 个域（其他后续再说）：
+- **美学** — Arc / Linear / Things 3 / Bear / Apple 原生
+- **流畅度** — iOS 原生 / WWDC / Rauno.me / Vercel
+- **旅游垂直** — Airbnb 城市页 / Lonely Planet / Michelin / 小红书头部博主
+
+### 信息流（怎么影响下一轮 pipeline）
+
+```
+research session:
+  → 读同域历史研究 + 现有 ux-lenses.md
+  → WebFetch 对象 + 写 research/<域>-<对象>-日期.md（长文）
+  → 提炼 3-5 条镜头追加到 workflow/ux-lenses.md
+  → 自 commit + push origin dev
+  → 关 session
+
+下一轮 pipeline Step 1（ux-tester subagent）:
+  → git pull origin dev
+  → cat workflow/ux-lenses.md（必读）
+  → 眼睛被"预调节"，live-site 体验时看到的东西更锐
+  → 反馈 md 质量提升
+```
+
+**关键**：研究成果不是"告诉 UX 产品问题在哪"，而是"让未来的 UX 自己看到"——镜头是**预调节眼力**的，不是**审判标准**。
+
+### 并行跑 pipeline + research 的纪律（防冲突）
+
+| 写什么 | 谁写 | 谁只读 |
+|---|---|---|
+| `research/*.md` | 只有 `/research-ux` session | 所有人 |
+| `workflow/ux-lenses.md` | 只有 `/research-ux` session | pipeline 的 UX subagent、你 |
+| `js/ css/ index-h5.html` | 只有 Dev-H5 (pipeline 内或 `/be-dev-h5`) | 所有人 |
+| `PRD` | 只有 PM (pipeline 内或 `/be-pm`) | 所有人 |
+
+**硬纪律**：
+- Dev-H5 commit 必须 `git add js/ css/ ...`，**严禁 `git add .` / `git add -A`**——避免把 research 的未完成草稿带进代码 commit
+- research session 必须**自 commit + push dev**，不等 pipeline
+- 同一时段**不要开两个 `/research-ux` session**（写同一个 lens 文件会 merge 冲突）
+
+### CEO 临时"本轮重点"（手动编辑）
+
+你可以在任何时候手动编辑 `workflow/ux-lenses.md` 的 `## 🔴 本轮重点` 段，加 1-3 条"这一轮 pipeline 我特别想 UX 注意的"。格式同其他段：
+
+```
+- 城市页第一屏的标题句子，是不是在"勾人"而不是在"介绍"？
+```
+
+UX subagent 下一轮会读到。建议每轮 pipeline 跑完后手动清空（或 PMO 帮你清），避免越攒越多。
+
+### 研究到一半被 pipeline push 干扰？
+
+不会。两边写的是**完全不同的文件**：
+- Research 写 `research/` + `ux-lenses.md`
+- Pipeline 写代码 + PRD + backlog + 反馈 md
+
+唯一的交集是**读**：UX subagent 开工前 `git pull origin dev` → 读到 research 刚 push 的 lens。如果 research 还没 push，UX 就读老 lens，下一轮再吸收——worst case 迟一轮，不会乱。
+
+---
+
+## 十一、日常节奏参考
 
 ```
 早上：

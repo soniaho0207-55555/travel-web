@@ -89,13 +89,18 @@ PMO 会告诉你当前是哪种：
 4. **自测**：`preview_start` 打开本地（localhost:8090），快速过一遍改动的页面
 5. **提交**：
    ```
-   git add <改的文件>
+   git add js/ css/ index-h5.html       # 或具体改的代码文件路径
    git commit -m "feat/fix: <简短描述>
    
    Implements: PRD changelog YYYY-MM-DD HH:MM
    - <条目1>
    - <条目2>"
    ```
+
+   ⚠️ **严禁 `git add .` 或 `git add -A`**
+   - 理由：`/research-ux` session 可能在**并行**写 `workflow/ux-lenses.md` 和 `research/*.md`。你用 `git add .` 会把人家未完成的草稿一起带进你的 commit，污染 dev 分支。
+   - 只 add 你自己实际改的代码文件（`js/`、`css/`、`index-h5.html`）。
+   - 不确定 add 了什么？先跑 `git status` 看清楚。
 6. **push 到 origin/dev**：`git push origin dev`
 
 ## 产出摘要给 PMO（≤200 字）
