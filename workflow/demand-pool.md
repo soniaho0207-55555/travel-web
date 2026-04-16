@@ -35,6 +35,26 @@
   佐证：tagline "The Definitive Guide To The World's Hidden Wonders" + meta "Curious and Wondrous Travel Destinations" (AO 首页, 2026-04-16)
   PM 可操作性：低（品牌决策，需 PM+UX+PMO 共议）
   → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
+- [2026-04-17][阵地 Craig Mod] whyVisit 字段需"城市级反主流叙事"（"为什么是它"而非"它有什么"）— Craig Mod 4 篇均把"中等城市作为大都市之外的文化保护区"作为城市的元理由，先于景点清单
+  佐证："These mid-sized options are more and more critical as cultures becomes more and more homogenous." (Ridgeline 221 NYT Nagasaki, 2026-01)
+  PM 可操作性：高（直接修订 PRD 中 whyVisit 的写作 SOP）
+  → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
+- [2026-04-17][阵地 Craig Mod] 城市页加"代表店铺/具名人物"卡（Tier 5 Sensory+Insider）— 4 篇均把具名小店和具名老板作为"城市肌理"的接入点，构成百科条目之外的"人"维度
+  佐证：Imoya 店"the crankiest husband and wife you ever met" (Ridgeline 218, 2025-11) ；Toyohashi Nekoze Shoten "Takeuchi-san & Nakagami-san" (Ridgeline 224, 2026-03)
+  PM 可操作性：中（新字段 + 编辑选店选人 SOP；非 UGC）
+  → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
+- [2026-04-17][阵地 Craig Mod] editorial 故事段加"时代叠加"结构（一段压三个时代：过去→现在→未定论未来）— 让"地点"变"时间切片"，避免景点叙事停在"建于 X 年"
+  佐证：Toyohashi 段从 1945 战后黑市 → 1964-67 水上楼建设 → 现在的衰退/复兴 → 混凝土寿命的猜测 (Ridgeline 224, 2026-03)；Imoya 23 年前 → 当代咖啡馆现象 → 未来手机柜子 (Ridgeline 218, 2025-11)
+  PM 可操作性：中（PRD 编辑指引："时间线最后一格必须是'现在仍在 X'或'未来可能 Y'"）
+  → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
+- [2026-04-17][阵地 Craig Mod] editorial 段落长度 SOP 放开（History Reader 能读 3000 字长文，不应被"段落 ≤ 3 句"限制）— 5 篇 Ridgeline 平均 3000 字，长段（200-400 字）承载完整论证
+  佐证：5 篇字数范围 2100-4000，全部≥2000；NYT Nagasaki 长达 3500-4000 字 (Ridgeline 221, 2026-01)
+  PM 可操作性：中（修 PRD 内容长度 SOP；同时分层——Armchair Tier 3 仍短 / History Reader Tier 4-5 解锁长段）
+  → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
+- [2026-04-17][阵地 Craig Mod] ticket-info 不抢叙事戏（PRD "产品原则"段补充参考）— Craig Mod 给 NYT 写 3500+ 字深度长文零 ticket-info，证明"故事段是真主角，ticket 是辅料"是上限可行的
+  佐证：NYT Nagasaki 全文无票价/开放时间 (Ridgeline 221, 2026-01)；Camino 全文只给"7 天 136 公里 / 15-22℃"，无报名链接 (Ridgeline 226, 2026-04)
+  PM 可操作性：低（确认现有 Tier 5 折叠定位正确，写入"产品原则"段；非新功能）
+  → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
 
 ---
 
