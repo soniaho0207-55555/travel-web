@@ -34,11 +34,18 @@ Step 1  UX 测试（taste-driven 28yo 用户体验）
    ↓
 Step 2  PM 改 PRD（读 5 personas + 反馈 → 更新 PRD）
    │
-   └─ Step 2.3  UX 评审 PM 摘要（自动，无闸门）
-         ├─ approve → 进闸门 ②
-         └─ 反对 → Step 2.3b PM 返工 1 次 → 进闸门 ②
+   ├─ Step 2.3  UX 评审 PM 摘要（自动，无闸门）
+   │     ├─ approve → 进 Step 2.4
+   │     └─ 反对 → Step 2.3b PM 返工 1 次 → 进 Step 2.4
+   │
+   └─ Step 2.4  PM 内容兑付闸（自动，无闸门，最多 2 轮补交）
+         ├─ PMO 扫 PRD 新增 appendix 的"本期交付量"承诺
+         ├─ 校验 PM-vX.Y-xxx/ 目录 / js/data.js 字段是否真交了
+         ├─ 全部 ✅ → 进闸门 ②
+         ├─ 有 ❌/⚠️ → 自动回 PM Mode A'' 补交（最多 2 轮）
+         └─ 2 轮仍未达标 → 升级 CEO：`砍条目`/`减半`/`hold`/`硬上`
    ↓
-⚠️ 闸门 ② PRD diff approve（带 UX 评语展示）
+⚠️ 闸门 ② PRD diff approve（带 UX 评语 + 内容兑付清单）
    ↓
 Step 3  Dev-H5 实现
    │  3a 需求完备性检查（2 分钟）
@@ -76,7 +83,7 @@ Step 5  merge + push
 | `drop 第 3 条` | 删掉反馈的第 3 条，再问一次 |
 | `stop` / `暂停` | 删锁，结束本轮 |
 
-### 闸门 ② PRD diff（展示 PRD diff + PM 摘要 + **UX 评语**）
+### 闸门 ② PRD diff（展示 PRD diff + PM 摘要 + **UX 评语** + **内容兑付清单**）
 | 你说 | PMO 做什么 |
 |---|---|
 | `approve` | 放行到 Dev-H5 |
@@ -85,10 +92,27 @@ Step 5  merge + push
 
 **Step 2.3 UX 评审说明**：
 - PM 写完 PRD 后，PMO 会**自动**让 UX 用模式 B 评审一次（taste-driven 视角）
-- UX `approve` → 直接到闸门 ②
-- UX `反对` → PM 进模式 A' 返工 **1 轮**（不叫 UX 第二次，防死循环）→ 进闸门 ②
+- UX `approve` → 直接到 Step 2.4
+- UX `反对` → PM 进模式 A' 返工 **1 轮**（不叫 UX 第二次，防死循环）→ 进 Step 2.4
 - 闸门 ② 展示时会带上 UX 评语（approve 原文 / 反对理由 + PM 返工前后对比）
 - 这一步是**自动**的，你不用回话——只影响闸门 ② 你看到的内容丰不丰富
+
+**Step 2.4 PM 内容兑付闸说明**（新增于 2026-04-16，v2.6 事后复盘后加）：
+
+- v2.6 教训：PM Mode A 可以只交 PRD 规范却不真的创建 `PM-vX.Y-xxx/` 目录里的内容，流水线没人发现就合并上线了（见 [workflow/v2.6-post-mortem.md](v2.6-post-mortem.md)）
+- PMO 扫 PRD 新增 appendix 里"本期交付 N 条"、"新建目录"、"PM 交付总量"等承诺
+- 逐条校验对应路径（目录存在 / 文件数够 / `js/data.js` 字段非空）
+- **全部 ✅** → 自动进闸门 ②，CEO 看到一张绿色兑付清单，心里有数
+- **有 ❌/⚠️** → 自动回 PM Mode A'' 补交，**最多 2 轮**
+- 2 轮仍未达标 → 升级到 CEO，见下节 Step 2.4.e 决策
+
+### Step 2.4.e 内容兑付升级决策（PM 2 轮补交仍未达标）
+| 你说 | PMO 做什么 |
+|---|---|
+| `砍条目` | PMO Edit PRD 把未交条目撤到 Future，本轮跳过 |
+| `减半` | PMO Edit PRD 改"首批 N 条" → "首批 N/2 条"，PM 再交一次（半量标准） |
+| `hold` | 删锁暂停，PM 离线补齐后回发 `/pipeline` 从 Step 2.4 恢复 |
+| `硬上` | 带缺口进 Dev（**不推荐**——你会复现 v2.6 那次） |
 
 ### 闸门 ③ Dev-H5 产出（宽松，只首次）
 | 你说 | PMO 做什么 |

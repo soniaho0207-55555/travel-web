@@ -21,6 +21,7 @@ CRITICAL: Each role MUST only modify their allowed files. Violating this will ca
 | Dev-MiniApp (Build WeChat mini program) | `miniprogram/**` | `PRD-travel-h5-v2.md`, H5 code (can read `js/data.js` as data source) |
 | QA (Testing) | NOTHING (read + test only) | everything |
 | UX (User feedback) | `用户反馈-*.md` (create new files only) | nothing to modify |
+| Demand Researcher (外部需求研究) | `research/demand-*.md`, `workflow/demand-pool.md` | everything else |
 | PMO (this conversation) | `workflow/backlog.md`, `CLAUDE.md` | everything |
 
 ### Dev 分工红线
@@ -76,6 +77,7 @@ Roles communicate ONLY through files:
 - Bug reports: QA writes in backlog.md under ## QA Findings
 - UX feedback: UX creates `用户反馈-{date}.md` files
 - PRD changes: PM updates PRD and notes in backlog.md under ## PRD Changes
+- **外部需求信号**：demand-researcher 在 `workflow/demand-pool.md` 沉淀（竞品/社区/阵地/脑暴/数据），PM 下一轮 Mode A 必读；转化后 PRD 变更日志注明"来源：demand-pool 条目 <日期>"
 
 DO NOT assume what other roles are doing. READ backlog.md before starting work.
 
