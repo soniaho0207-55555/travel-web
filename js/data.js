@@ -377,8 +377,9 @@ const CITIES = [
     themes: ['silk-road', 'maritime', 'imperial'],
     coords: "41°00'N 28°58'E",
     wiki: 'Sultan Ahmed Mosque',
-    // H-02 方案 B：列表卡用博斯普鲁斯夜景直链（跨洲意象），详情页 Hero 仍走 wiki API 取蓝色清真寺
-    wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Bosphorus_Bridge_at_night_in_Istanbul.jpg/1280px-Bosphorus_Bridge_at_night_in_Istanbul.jpg',
+    // H-02 方案 B：列表卡用博斯普鲁斯大桥直链（跨洲意象），详情页 Hero 仍走 wiki API 取蓝色清真寺
+    // QA round 1 修复：原 "Bosphorus_Bridge_at_night_in_Istanbul.jpg" Commons 不存在返 404，换 Bosphorus Bridge 词条官方 thumbnail（HEAD 200）
+    wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Bosphorus_Bridge_%28235499411%29.jpeg/960px-Bosphorus_Bridge_%28235499411%29.jpeg',
     heroGradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
     hook: '横跨两洲，拜占庭与奥斯曼的帝国交替',
     heroQuote: '1453年5月29日，当奥斯曼大军攻破城墙的那一刻，中世纪结束了',
