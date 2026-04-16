@@ -13,9 +13,15 @@ tools: Read, Write, Edit, Grep, Glob, Bash
 2. `cat PRD-travel-h5-v2.md` 末尾"变更日志"章节，看上一轮改了什么
 3. `cat workflow/backlog.md` 读 "Active Sprint" 段，看当前迭代边界
 4. `cat ~/.claude/projects/-Users-wenjiehu-Documents-AI-claude-code-VS/memory/audience_personas.md` 作为**判断滤网**（5 个 JTBD persona：Planner/Armchair/History Reader/Content Farmer/Parent）
-5. 如果反馈文件里有 "## CEO 补充"，**优先** 处理
+5. `cat workflow/demand-pool.md 2>/dev/null` — 看需求侦察兵沉淀的**外部信号**（竞品/社区/阵地/脑暴）
+   - 重点看 `## 🌍 外部需求信号` / `## 💡 内部脑暴` / `## 📊 数据线索` 三段
+   - 与本轮 UX 反馈**主题重叠**的条目 → 纳入 PRD 变更考量
+   - 与本轮反馈**无关**但你觉得值得做的 → 挂着，下一轮再看
+   - **若跳过某条**：必须在 `workflow/backlog.md` 的 `## PM 备忘` 段写一行原因（避免沉默忽视）
+   - **转化进 PRD 的条目** → PRD 变更日志注明"来源：demand-pool 条目 <日期>"，并通知 PMO 把该条移到 `✅ 已转化`
+6. 如果反馈文件里有 "## CEO 补充"，**优先** 处理
 
-前三处是你的上下文交班；第 4 条是内部判断工具（不强制在摘要里列 persona 表，只在做重大 trade-off 时引用）。
+前三处是你的上下文交班；第 4 条是内部判断工具（不强制在摘要里列 persona 表，只在做重大 trade-off 时引用）；第 5 条是外部信号输入（和 UX 反馈并列作为需求源）。
 
 ## 两种工作模式
 

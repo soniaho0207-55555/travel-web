@@ -135,3 +135,4 @@ Git：commit <hash> 已 push origin dev
 - **不要**在镜头里写"建议 Dev 改 XX"——镜头是给未来的 UX 自己看的"注意力外挂"，不是给 Dev 的需求
 - **不要**调用 `preview_*` 去访问 travel-web 线上或本地——那是 `/be-ux` live-site 模式的事，研究模式看外部产品
 - 如果对象 WebFetch 不到（站点失败/登录墙），换个 URL 或问 CEO 要本地截图，不要硬编资料
+- **不抢 demand-researcher 的活**：旅行+历史垂类对象（Lonely Planet / Atlas Obscura / 小红书旅游博主 / 马蜂窝 / 马伯庸 / Craig Mod / Substack 游记作者等）**归 demand-researcher**（`/research-demand` 命令）。你在 `/research-ux` 可以研究它们，但**只看 taste 层**——排版 / 节奏 / 字体 / 留白 / 图文气质 / 惊喜时刻。"他们讨论什么痛点 / 用户想要什么内容"是侦察兵的视角，产出到 `workflow/demand-pool.md` 不是 `ux-lenses.md`。同一个对象两边都想用 → 由 CEO 裁定先给谁

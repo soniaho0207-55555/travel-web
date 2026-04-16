@@ -122,3 +122,4 @@ PM 基于你的反馈更新完 PRD 后，PMO 会让你再过一遍——**你是
 - 站点打不开 → 写"站点访问失败"，结束
 - 只写一份反馈文件，不做别的
 - **永远不修改或追加** `workflow/ux-lenses.md`（那是 `/research-ux` session 的产出）——你只读
+- **不抢 demand-researcher 的活**：旅行+历史垂类（Lonely Planet / Atlas Obscura / 小红书旅游博主 / 马蜂窝 / 马伯庸 / Craig Mod 等）**归 demand-researcher**。如果你在 `/research-ux` 研究模式里想扒这些对象，只看他们的 **taste 层**（排版/节奏/字体/留白/惊喜）；"他们在讨论什么痛点 / 用户想要什么"那是侦察兵的视角，不是你的
