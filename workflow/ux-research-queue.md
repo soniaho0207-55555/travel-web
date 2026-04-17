@@ -1,0 +1,33 @@
+# UX 研究队列
+
+> **谁维护**：CEO 调优先级 / Explorer 建议新对象
+> **谁消费**：`/research-ux-auto` 命令自动从顶部 pending 逐个跑
+> **操作**：调优先级 → 拖行顺序 · 加新的 → 底部追加 · 跳过 → status 改 skip
+> **产出去向**：`workflow/ux-lenses.md` → pipeline Step 1 UX subagent 必读 → 更锐的反馈
+
+---
+
+## 队列
+
+| # | 域 | 对象 | status | 完成日期 | commit | 备注 |
+|---|---|---|---|---|---|---|
+| 1 | 旅游 | Airbnb-Kyoto | pending | | | 城市详情页 taste 标杆，UX 多次对标 |
+| 2 | 美学 | Things-3 | pending | | | 极简信息层级，景点卡/时间轴参照 |
+| 3 | 流畅度 | Apple-Music | pending | | | 页面切换动效，UX 吐槽"卡带感"的解药 |
+| 4 | 旅游 | Lonely-Planet-排版 | pending | | | 长文排版节奏，v2.7 放开段落长度需要参照 |
+| 5 | 美学 | Bear | pending | | | 中文 Markdown 渲染 + 留白，内容密度参照 |
+| 6 | 惊喜 | Stripe-官网 | pending | | | 微交互惊喜，🔵 段淘汰旧条目的替换源 |
+| 7 | 反向案例 | 小红书-旅游广告 | pending | | | 🟡 识别警报补充，"假高级"方向 |
+| 8 | 旅游 | Google-Arts-Culture | pending | | | 博物馆/文化遗产叙事，"历史"定位最近 |
+
+---
+
+## 已完成
+
+| 域 | 对象 | 完成日期 | 镜头数 |
+|---|---|---|---|
+| 流畅度 | Linear | 2026-04-16 | 5 条 → 🔵 |
+| 产品动线 | app 流畅度 | 2026-04-16 | 5 条 → 🔵 |
+| 产品动线 | H5 装 native | 2026-04-16 | 5 条 → 🔵 |
+| 旅游 | Cereal Magazine | 2026-04-16 | 5 条 → 🟢 |
+| 反向案例 | OTA 廉价感 | 2026-04-16 | 5 条 → 🟡 |
