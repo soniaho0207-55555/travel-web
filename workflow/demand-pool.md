@@ -83,7 +83,11 @@
   佐证："历史真正的魅力往往不在宏大的结论里，而在未被轻易察觉的小细节处" (书评 + 新湖南, 2025-12)
   PM 可操作性：高（funFact 字段写作 SOP：找"最小的那个意外"而非"最大的那个成就"）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）
+- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）[待 CEO 定档]
+- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行 [待 CEO 定档]
+  佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
+  PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
+  → 来源：research/demand-社区-Substack-2026-04-17.md
   佐证：GAC 罗马页 = 14 张文物缩略图 + 百科体简介 + 零 practical info；LP = Survival Guide 极完整但 Background 章弱；AO = 奇趣命题但无 ticket-info
   PM 可操作性：高（写入 PRD "产品定位"段作为三竞品象限图；指导后续所有字段优先级决策）
   → 来源：research/demand-竞品-Google-Arts-Culture-2026-04-17.md
