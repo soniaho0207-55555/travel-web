@@ -593,19 +593,7 @@ body::before {
   font-weight: 700;
 }
 
-/* H-05b: 城市详情 Hero 正文前的"更多城市"轻量入口 */
-.more-cities-link {
-  padding: 12px 20px 6px;
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: rgba(201,150,58,0.7);
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-.more-cities-link:hover {
-  color: rgba(201,150,58,1);
-}
+/* I-16: breadcrumb removed — left arrow back button is sufficient */
 
 /* H-10: Hero 到正文的过渡渐变（让全宽 Hero 到缩进正文不突兀） */
 .detail-hero::before {
@@ -1667,6 +1655,133 @@ body::before {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* ═══ v2.7 I-02: whyVisit structured rendering ═══ */
+.lm-why p { margin: 0; }
+.lm-why p + p { margin-top: 0.8em; }
+.why-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--gold);
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.why-num {
+  color: #d4af37;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ═══ v2.7 I-03: timeline detail expand ═══ */
+.timeline-detail-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.timeline-detail-btn:hover { opacity: 1; }
+.timeline-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.timeline-detail.open {
+  max-height: 800px;
+}
+.timeline-detail-section {
+  padding: 10px 12px;
+  margin-top: 8px;
+  background: rgba(201,150,58,0.04);
+  border-left: 2px solid rgba(201,150,58,0.25);
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--paper);
+}
+.timeline-detail-section-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+/* ═══ v2.7 I-07/I-17: ticket channel weight reversal ═══ */
+.ticket-channel-name {
+  color: rgba(245,239,224,0.75);
+  font-weight: 400;
+  font-size: 14px;
+}
+.ticket-channel-note {
+  color: rgba(245,239,224,0.92);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ═══ v2.7 I-08: season label pill ═══ */
+.ticket-booking-season {
+  font-size: 14px;
+  padding: 3px 8px;
+  border: 1px solid rgba(201,150,58,0.4);
+  border-radius: 2px;
+}
+.ticket-booking-row {
+  grid-template-columns: 80px 1fr;
+}
+
+/* ═══ v2.7 I-11: theme scroll right fade ═══ */
+.theme-scroll {
+  position: relative;
+}
+.theme-scroll::after {
+  content: '';
+  position: sticky;
+  right: 0;
+  top: 0;
+  flex-shrink: 0;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, var(--ink));
+  pointer-events: none;
+  margin-left: -60px;
+}
+
+/* ═══ v2.7 I-14: meanwhile multi-row ═══ */
+.timeline-world-context .mw-row {
+  line-height: 1.5;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+.timeline-world-context .mw-row:last-child {
+  margin-bottom: 0;
+}
+
+/* ═══ v2.7 I-15: tips group differentiation ═══ */
+.tips-group[data-tipcat="timing"] .tips-group-label,
+.tips-group[data-tipcat="ticket"] .tips-group-label {
+  font-weight: 600;
+  color: rgba(245,239,224,0.95);
+}
+.tips-group[data-tipcat="secret"] .tips-group-header {
+  border-left: 2px solid var(--gold);
+  padding-left: 8px;
 }
 
 /* ─── SAFE AREA ─── */
