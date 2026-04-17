@@ -109,6 +109,14 @@ function handleRoute() {
 
   const nav = document.querySelector('.bottom-nav');
 
+  if (hash.startsWith('#/list/')) {
+    const lid = hash.replace(/^#\/list\//, '').split('/')[0];
+    renderListDetail(lid);
+    if (nav) nav.style.display = '';
+    updateNav(null);
+    return;
+  }
+
   if (hash.startsWith('#/city/')) {
     // #/city/:id  OR  #/city/:id/landmark/:index
     const parts = hash.replace(/^#\//, '').split('/'); // ['city', id, 'landmark', idx?]
@@ -153,15 +161,39 @@ function dayOfYear() {
   return Math.floor((now - start) / 86400000);
 }
 
-function getTodayCity() {
-  return CITIES[dayOfYear() % CITIES.length];
+function dateHash(d) {
+  const s = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  let h = 0;
+  for (let i = 0; i < String(s).length; i++) {
+    h = ((h << 5) - h + String(s).charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+function getTodaysCity() {
+  return CITIES[dateHash(new Date()) % CITIES.length];
+}
+
+function getTodayCity() { return getTodaysCity(); }
+
+/* K-06: Random place button — session-scoped de-dup */
+function gotoRandomCity() {
+  let visited;
+  try { visited = JSON.parse(sessionStorage.getItem('visitedCities') || '[]'); }
+  catch { visited = []; }
+  let pool = CITIES.filter(c => !visited.includes(c.id));
+  if (!pool.length) { visited = []; pool = CITIES.slice(); }
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  visited.push(pick.id);
+  sessionStorage.setItem('visitedCities', JSON.stringify(visited));
+  navTo('#/city/' + pick.id);
 }
 
 /* ═══════════════════════════════════════
    HOME PAGE
    ═══════════════════════════════════════ */
 function renderHome() {
-  const today = getTodayCity();
+  const today = getTodaysCity();
   const app = document.getElementById('app');
 
   // Theme counts
@@ -383,6 +415,7 @@ function renderCityDetail(id) {
       <div class="section-tabs">
         <button class="section-tab active" data-tab="timeline" onclick="switchDetailTab('timeline')">历史时间轴</button>
         <button class="section-tab" data-tab="landmarks" onclick="switchDetailTab('landmarks')">重要景点</button>
+        ${c.practicalInfo ? `<button class="section-tab" data-tab="practical" onclick="switchDetailTab('practical')">实用信息</button>` : ''}
       </div>
 
       <div class="panel active" data-panel="timeline">
@@ -402,6 +435,7 @@ function renderCityDetail(id) {
                   </div>
                 ` : ''}
                 ${t.worldContext ? `<div class="timeline-world-context">${renderWorldContext(t.worldContext)}</div>` : ''}
+                ${t.epochTail ? renderEpochTail(t.epochTail) : ''}
               </div>
             `).join('')}
           </div>
@@ -422,6 +456,12 @@ function renderCityDetail(id) {
           `).join('')}
         </div>
       </div>
+
+      ${c.practicalInfo ? `
+      <div class="panel" data-panel="practical">
+        ${renderPracticalPanel(c.practicalInfo)}
+      </div>
+      ` : ''}
 
       <footer class="footer">
         <p>© 2026 环球史迹 · Global Chronicles</p>
@@ -452,6 +492,37 @@ function renderCityDetail(id) {
 
   // Update nav
   updateNav(null);
+}
+
+/* K-05: practical info panel — 4 folded cards, first (transport) open by default */
+function renderPracticalPanel(p) {
+  if (!p) return '';
+  const cards = [
+    { key: 'transport',  label: '交通',     iconName: 'compass' },
+    { key: 'currency',   label: '货币与支付', iconName: 'ticket' },
+    { key: 'bestSeason', label: '最佳季节',  iconName: 'clock' },
+    { key: 'visaTips',   label: '签证建议',  iconName: 'info' },
+  ].filter(c => p[c.key]);
+
+  return `
+    <div class="practical-panel">
+      ${cards.map((c, i) => `
+        <div class="practical-card ${i === 0 ? 'open' : ''}">
+          <div class="practical-card-header" onclick="togglePracticalCard(this)">
+            <span class="practical-icon">${icon(c.iconName, 18)}</span>
+            <span class="practical-card-label">${c.label}</span>
+            <span class="practical-card-caret">${icon('chevronDown', 14)}</span>
+          </div>
+          <div class="practical-card-body">${p[c.key]}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function togglePracticalCard(headerEl) {
+  const card = headerEl.parentElement;
+  if (card) card.classList.toggle('open');
 }
 
 function renderNotFound(id) {
@@ -612,14 +683,50 @@ function renderLmIntro(l) {
     <div class="lm-why">${renderWhyVisit(l.whyVisit)}</div>
   ` : '';
 
+  const relatedBlock = renderRelatedBlock(l);
+
   return `
     <div class="lm-section">
       ${whyBlock}
+      ${relatedBlock}
       <p class="landmark-desc">${l.desc}</p>
       ${noteBlock}
       ${worldEventsBlock}
     </div>
   `;
+}
+
+/* K-02: render relatedLiterature / relatedFigure — after whyVisit, before desc.
+   Empty field → block not rendered. */
+function renderRelatedBlock(l) {
+  const lit = Array.isArray(l.relatedLiterature) ? l.relatedLiterature.filter(Boolean) : [];
+  const fig = Array.isArray(l.relatedFigure)     ? l.relatedFigure.filter(Boolean)     : [];
+  if (!lit.length && !fig.length) return '';
+
+  const litHtml = lit.length ? `
+    <div class="lm-related">
+      <div class="lm-related-title">§ 文学</div>
+      ${lit.map(it => `
+        <div class="lm-related-item">
+          <strong>${it.title || ''}</strong>${it.author ? `<span class="lm-related-meta">${it.author}${it.year != null ? ' · ' + it.year : ''}</span>` : ''}
+          ${it.quote ? `<span class="lm-related-quote">「${it.quote}」</span>` : ''}
+          ${it.link ? `<div>${it.link}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  const figHtml = fig.length ? `
+    <div class="lm-related">
+      <div class="lm-related-title">§ 名人</div>
+      ${fig.map(it => `
+        <div class="lm-related-item">
+          <strong>${it.name || ''}</strong>${it.era || it.role ? `<span class="lm-related-meta">${[it.era, it.role].filter(Boolean).join(' · ')}</span>` : ''}
+          ${it.link ? `<div>${it.link}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  return litHtml + figHtml;
 }
 
 function renderLmTicket(l) {
@@ -750,6 +857,23 @@ function shortenCoords(coords) {
     const decimal = (parseInt(deg) + parseInt(min) / 60).toFixed(1);
     return decimal + '°' + dir;
   });
+}
+
+/* K-03: timeline epochTail — 现在仍在 / 未来可能 */
+function renderEpochTail(tail) {
+  if (!tail) return '';
+  const s = String(tail).trim();
+  // PM 写法可能以「未来可能」开头或无前缀；统一识别，抽出 prefix 作为高亮
+  let prefix = '／现在：';
+  let body = s;
+  if (/^未来可能[—:：\-\s]/.test(s)) {
+    prefix = '／未来：';
+    body = s.replace(/^未来可能[—:：\-\s]+/, '');
+  } else if (/^到今天/.test(s)) {
+    prefix = '／现在：';
+    body = s.replace(/^到今天[—:：\-\s]*/, '到今天');
+  }
+  return `<div class="timeline-now"><span class="timeline-now-prefix">${prefix}</span>${body}</div>`;
 }
 
 /* v2.7 I-14: worldContext 多行渲染 — \n 分隔的每行变成 div.mw-row */
@@ -918,6 +1042,75 @@ function formatYear(y) {
 }
 
 /* ═══════════════════════════════════════
+   K-04 · CURATED LISTS (编辑精选)
+   ═══════════════════════════════════════ */
+function renderCuratedListsBlock() {
+  if (typeof CURATED_LISTS === 'undefined' || !CURATED_LISTS.length) return '';
+  return `
+    <div class="sec-header" style="padding-left:0">编辑精选</div>
+    <div class="curated-list-scroll">
+      ${CURATED_LISTS.map(list => {
+        const lead = (list.items && list.items[0] && list.items[0].line) ? list.items[0].line : '';
+        return `
+          <div class="curated-list-card" onclick="navTo('#/list/${list.id}')">
+            <div class="curated-list-card-title">${list.title}</div>
+            <div class="curated-list-card-subtitle">${list.subtitle || ''}</div>
+            ${lead ? `<div class="curated-list-card-lead">${lead}</div>` : ''}
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderListDetail(id) {
+  const app = document.getElementById('app');
+  const list = (typeof CURATED_LISTS !== 'undefined') ? CURATED_LISTS.find(l => l.id === id) : null;
+  if (!list) {
+    app.innerHTML = `
+      <div class="not-found-page">
+        <button class="detail-back" onclick="navTo('#/search')">←</button>
+        <div class="not-found-icon">${icon('compass', 48)}</div>
+        <h2 class="not-found-title">未找到该精选</h2>
+      </div>
+    `;
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  app.innerHTML = `
+    <div class="list-detail-page">
+      <button class="list-detail-back" onclick="navTo('#/search')">←</button>
+      <h1 class="list-detail-title">${list.title}</h1>
+      <div class="list-detail-subtitle">${list.subtitle || ''}</div>
+      <div class="list-detail-items">
+        ${(list.items || []).map(it => {
+          let target = '';
+          let name = '';
+          if (it.type === 'city') {
+            const c = CITIES.find(x => x.id === it.id);
+            name = c ? `${c.name} · ${c.nameEn}` : it.id;
+            target = `#/city/${it.id}`;
+          } else if (it.type === 'landmark') {
+            const c = CITIES.find(x => x.id === it.cityId);
+            const idx = c ? c.landmarks.findIndex(l => l.name === it.landmarkName) : -1;
+            name = it.landmarkName + (c ? ` · ${c.name}` : '');
+            target = (c && idx >= 0) ? `#/city/${it.cityId}/landmark/${idx}` : `#/city/${it.cityId || ''}`;
+          }
+          return `
+            <div class="list-detail-item" onclick="navTo('${target}')">
+              <div class="list-detail-item-name">${name}</div>
+              <div class="list-detail-item-line">${it.line || ''}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════
    SEARCH PAGE
    ═══════════════════════════════════════ */
 function renderSearch() {
@@ -932,11 +1125,14 @@ function renderSearch() {
           ${icon('search', 18, 'search-input-icon')}
           <input class="search-input" id="searchInput" type="text" placeholder="搜索城市、国家或主题..." oninput="onSearch()" autofocus>
         </div>
+        <button class="random-place-btn" onclick="gotoRandomCity()">给我一座没去过的城 →</button>
       </div>
       <div class="search-content" id="searchContent">
         <div id="searchResults" style="display:none"></div>
 
         <div id="searchDefault">
+          ${renderCuratedListsBlock()}
+
           <div class="sec-header" style="padding-left:0">按主题探索</div>
           <div class="search-theme-grid">
             ${THEMES.map(t => `
