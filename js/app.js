@@ -74,6 +74,7 @@ let activeFilter = { type: null, value: null };
 let typewriterTimer = null;
 let heroScrollListener = null;
 const imgCache = {};
+let _savedScroll = 0;
 
 /* ═══════════════════════════════════════
    ROUTER
@@ -83,6 +84,10 @@ function navTo(hash) {
   if ((cur === '#/' || cur === '#' || cur === '') && hash !== '#/' && hash !== '#') {
     homeScrollPos = window.scrollY;
   }
+  // J-06: save city detail scroll when entering landmark detail
+  if (cur.startsWith('#/city/') && !cur.includes('/landmark/') && hash.includes('/landmark/')) {
+    _savedScroll = window.scrollY;
+  }
   history.pushState(null, '', hash);
   handleRoute();
 }
@@ -90,9 +95,17 @@ function navTo(hash) {
 window.addEventListener('popstate', handleRoute);
 
 function handleRoute() {
-  if (typewriterTimer) { clearInterval(typewriterTimer); typewriterTimer = null; }
+  if (typewriterTimer) { clearTimeout(typewriterTimer); typewriterTimer = null; }
   const hash = location.hash || '#/';
   const app = document.getElementById('app');
+
+  // J-05: page fade transition
+  app.classList.add('page-enter');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      app.classList.remove('page-enter');
+    });
+  });
 
   const nav = document.querySelector('.bottom-nav');
 
@@ -104,6 +117,12 @@ function handleRoute() {
       renderLandmarkDetail(id, parseInt(parts[3], 10));
     } else {
       renderCityDetail(id);
+      // J-06: restore scroll when returning from landmark detail
+      if (_savedScroll > 0) {
+        const s = _savedScroll;
+        _savedScroll = 0;
+        requestAnimationFrame(() => window.scrollTo(0, s));
+      }
     }
     // H-05a：详情页恢复 bottom-nav（原先隐藏），用户一键可跳发现/搜索
     if (nav) nav.style.display = '';
@@ -219,8 +238,10 @@ function renderHome() {
     startTypewriter();
   };
 
-  if (today.wikiImage && heroEl) {
-    heroEl.style.backgroundImage = `url('${today.wikiImage}')`;
+  // J-04: heroImage > wikiImage > wiki API
+  const heroSrc = today.heroImage || today.wikiImage;
+  if (heroSrc && heroEl) {
+    heroEl.style.backgroundImage = `url('${heroSrc}')`;
     setTimeout(() => { heroEl.classList.add('loaded'); onHeroLoaded(); }, 50);
   } else {
     loadWikiImage(today.wiki, (url) => {
@@ -410,10 +431,11 @@ function renderCityDetail(id) {
 
   window.scrollTo(0, 0);
 
-  // Load hero image (I-04/I-10: wikiImage direct link > wiki API)
-  if (c.wikiImage) {
+  // J-04: heroImage > wikiImage > wiki API
+  const cityHeroSrc = c.heroImage || c.wikiImage;
+  if (cityHeroSrc) {
     const bg = document.getElementById('detailHeroBg');
-    if (bg) bg.style.backgroundImage = `url('${c.wikiImage}')`;
+    if (bg) bg.style.backgroundImage = `url('${cityHeroSrc}')`;
   } else {
     loadWikiImage(c.wiki, (url) => {
       const bg = document.getElementById('detailHeroBg');
@@ -524,10 +546,11 @@ function renderLandmarkDetail(cityId, index) {
 
   window.scrollTo(0, 0);
 
-  // H-15/H-09: Hero 图加载优先级：l.wikiImage 直链 > wiki API > gradient 兜底
+  // J-04: heroImage > wikiImage > wiki API > gradient fallback
   const bg = document.getElementById('lmHero');
-  if (l.wikiImage && bg) {
-    bg.style.backgroundImage = `url('${l.wikiImage}')`;
+  const lmHeroSrc = l.heroImage || l.wikiImage;
+  if (lmHeroSrc && bg) {
+    bg.style.backgroundImage = `url('${lmHeroSrc}')`;
     bg.classList.add('loaded');
   } else if (l.wiki) {
     loadWikiImage(l.wiki, (url) => {
@@ -738,18 +761,39 @@ function renderWorldContext(wc) {
   return wc;
 }
 
-/* v2.7 I-02: whyVisit 结构化渲染 — {tag:...} → pill, 【...】→ 金色粗体, \n\n → <p> */
+/* v2.8 J-02: whyVisit v2 card-based layout — {tag} pill, 【】金色, \n\n → cards, fold 2-3 */
 function renderWhyVisit(text) {
   if (!text) return '';
-  // Split into paragraphs by \n\n
+  const WHY_LABELS = ['是什么', '为什么独特', '跨文明'];
   const paras = text.split('\n\n').filter(p => p.trim());
-  return paras.map(p => {
-    // Replace {tag: ...} with pill span
+
+  const cards = paras.map((p, i) => {
     let html = p.replace(/\{tag:\s*([^}]+)\}/g, '<span class="why-tag">$1</span>');
-    // Replace 【...】 with highlighted number span
     html = html.replace(/【([^】]+)】/g, '<span class="why-num">$1</span>');
-    return `<p>${html}</p>`;
-  }).join('');
+    // Bold first sentence (up to first 。or end of text)
+    html = html.replace(/^(<span class="why-tag">[^<]*<\/span>\s*)?([^。]+。)/, (match, tagPart, sentence) => {
+      if (tagPart) return tagPart + '<strong>' + sentence + '</strong>';
+      return '<strong>' + sentence + '</strong>';
+    });
+    const label = WHY_LABELS[i] || '';
+    return `<div class="why-card">${label ? `<span class="why-label">${label}</span>` : ''}<p>${html}</p></div>`;
+  });
+
+  if (cards.length <= 1) return cards.join('');
+
+  const first = cards[0];
+  const rest = cards.slice(1).join('');
+  const foldId = 'whyFold-' + Math.random().toString(36).slice(2, 8);
+  return first +
+    `<div class="why-fold" id="${foldId}">${rest}</div>` +
+    `<button class="why-fold-btn" onclick="toggleWhyFold('${foldId}', this)">展开阅读 →</button>`;
+}
+
+function toggleWhyFold(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.toggle('open');
+  btn.textContent = isOpen ? '收起 ←' : '展开阅读 →';
 }
 
 /* v2.7 I-03: timeline detail expand/collapse */
@@ -831,7 +875,7 @@ function renderTicket(t) {
   if (typeof bookingWindow === 'string' && bookingWindow.trim()) {
     bwBlock = `
     <div class="ticket-section ticket-booking">
-      <div class="ticket-section-title">预约提前</div>
+      <div class="booking-section-title">预约提前</div><span class="booking-subtitle">提前多久预约？不同季节不同策略</span>
       <div class="ticket-booking-single">${bookingWindow}</div>
     </div>`;
   } else if (bookingWindow && typeof bookingWindow === 'object') {
@@ -840,7 +884,7 @@ function renderTicket(t) {
     if (hasBW) {
       bwBlock = `
     <div class="ticket-section ticket-booking">
-      <div class="ticket-section-title">预约提前</div>
+      <div class="booking-section-title">预约提前</div><span class="booking-subtitle">提前多久预约？不同季节不同策略</span>
       ${bw.peak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">旺季</span><span class="ticket-booking-span">${bw.peak}</span></div>` : ''}
       ${bw.shoulder ? `<div class="ticket-booking-row"><span class="ticket-booking-season">肩季</span><span class="ticket-booking-span">${bw.shoulder}</span></div>` : ''}
       ${bw.offpeak ? `<div class="ticket-booking-row"><span class="ticket-booking-season">淡季</span><span class="ticket-booking-span">${bw.offpeak}</span></div>` : ''}
@@ -1082,9 +1126,9 @@ function loadWikiImage(title, cb) {
 }
 
 function loadAllCityImages() {
-  // H-02/H-09: 先把城市 wikiImage 直链图应用（同步，立即），再把剩余的走 wiki API
+  // J-04: heroImage/wikiImage 直链图应用（同步），剩余走 wiki API
   applyCityDirectImages();
-  const titles = CITIES.filter(c => !c.wikiImage).map(c => c.wiki).filter(t => t && !imgCache[t]);
+  const titles = CITIES.filter(c => !c.heroImage && !c.wikiImage).map(c => c.wiki).filter(t => t && !imgCache[t]);
   if (!titles.length) { applyCachedImages(); return; }
   batchLoadWiki(titles, () => applyCachedImages());
 }
@@ -1098,15 +1142,16 @@ function loadThemeImages() {
 }
 
 function loadLandmarkImages(landmarks) {
-  // H-15/H-09: 先把有 wikiImage 直链的 landmark banner 直接设置，API 只查剩余的
+  // J-04: heroImage > wikiImage 直链 > wiki API
   landmarks.forEach((l, i) => {
-    if (l.wikiImage) {
+    const src = l.heroImage || l.wikiImage;
+    if (src) {
       const banner = document.getElementById(`banner-${i}`);
-      if (banner) banner.style.backgroundImage = `url('${l.wikiImage}')`;
+      if (banner) banner.style.backgroundImage = `url('${src}')`;
     }
   });
 
-  const wikiLandmarks = landmarks.filter(l => l.wiki && !l.wikiImage);
+  const wikiLandmarks = landmarks.filter(l => l.wiki && !l.heroImage && !l.wikiImage);
   if (!wikiLandmarks.length) return;
 
   const titles = wikiLandmarks.map(l => l.wiki);
@@ -1141,12 +1186,13 @@ function loadLandmarkImages(landmarks) {
   }).catch(() => {});
 }
 
-/* H-02/H-09: 应用 CITIES.wikiImage 直链到列表卡（不走 API） */
+/* J-04: heroImage > wikiImage 直链到列表卡（不走 API） */
 function applyCityDirectImages() {
   CITIES.forEach(c => {
-    if (!c.wikiImage) return;
+    const src = c.heroImage || c.wikiImage;
+    if (!src) return;
     document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
-      el.style.backgroundImage = `url('${c.wikiImage}')`;
+      el.style.backgroundImage = `url('${src}')`;
     });
   });
 }
@@ -1194,10 +1240,11 @@ function batchLoadWiki(titles, cb) {
 
 function applyCachedImages() {
   CITIES.forEach(c => {
-    // H-02: 直链优先，不用 wiki API 盖回去
-    if (c.wikiImage) {
+    // J-04: heroImage > wikiImage > wiki API cache
+    const src = c.heroImage || c.wikiImage;
+    if (src) {
       document.querySelectorAll(`[data-city-img="${c.id}"]`).forEach(el => {
-        el.style.backgroundImage = `url('${c.wikiImage}')`;
+        el.style.backgroundImage = `url('${src}')`;
       });
       return;
     }
@@ -1234,16 +1281,24 @@ function typewriter(elId, text) {
   if (!el) return;
   el.innerHTML = '<span class="cursor"></span>';
   let i = 0;
-  typewriterTimer = setInterval(() => {
+  const PAUSE_CHARS = new Set(['，', '。', '！', '？', '—']);
+  const LONG_PAUSE_CHAR = '\u201D'; // closing curly quote "
+
+  function tick() {
     if (i < text.length) {
       el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
+      const ch = text[i];
       i++;
+      let delay = 40;
+      if (PAUSE_CHARS.has(ch)) delay = 180;
+      else if (ch === LONG_PAUSE_CHAR) delay = 300;
+      typewriterTimer = setTimeout(tick, delay);
     } else {
-      clearInterval(typewriterTimer);
       typewriterTimer = null;
       setTimeout(() => { if (el) el.innerHTML = text; }, 2000);
     }
-  }, 40);
+  }
+  tick();
 }
 
 /* ═══════════════════════════════════════
