@@ -202,26 +202,35 @@ function renderHome() {
     </footer>
   `;
 
-  // Load hero image
-  // H-02：首页 Hero 也是 today city；若 today 有 wikiImage 直链优先，否则 wiki API
+  // I-09: Hero 图加载编排 — 图 loaded → 600ms → 启动打字机；3s 超时兜底
   const heroEl = document.getElementById('heroBg');
+  let heroImageLoaded = false;
+  const startTypewriter = () => {
+    if (heroImageLoaded) return;
+    heroImageLoaded = true;
+    setTimeout(() => {
+      typewriter('heroQuote', '\u201C' + today.heroQuote + '\u201D');
+    }, 600);
+  };
+  // 3s timeout fallback
+  const heroTimeout = setTimeout(startTypewriter, 3000);
+  const onHeroLoaded = () => {
+    clearTimeout(heroTimeout);
+    startTypewriter();
+  };
+
   if (today.wikiImage && heroEl) {
     heroEl.style.backgroundImage = `url('${today.wikiImage}')`;
-    setTimeout(() => heroEl.classList.add('loaded'), 50);
+    setTimeout(() => { heroEl.classList.add('loaded'); onHeroLoaded(); }, 50);
   } else {
     loadWikiImage(today.wiki, (url) => {
       const bg = document.getElementById('heroBg');
       if (bg && url) {
         bg.style.backgroundImage = `url('${url}')`;
-        setTimeout(() => bg.classList.add('loaded'), 50);
+        setTimeout(() => { bg.classList.add('loaded'); onHeroLoaded(); }, 50);
       }
     });
   }
-
-  // Typewriter
-  setTimeout(() => {
-    typewriter('heroQuote', '\u201C' + today.heroQuote + '\u201D');
-  }, 400);
 
   // Load city card images & theme images
   loadAllCityImages();
@@ -334,13 +343,10 @@ function renderCityDetail(id) {
           <div class="detail-meta">
             <div class="detail-stat"><strong>${c.timeline.length}</strong>历史节点</div>
             <div class="detail-stat"><strong>${c.landmarks.length}</strong>重要景点</div>
-            <div class="detail-stat"><strong style="font-size:0.68rem;letter-spacing:0.03em">${c.coords}</strong>坐标</div>
+            <div class="detail-stat"><strong style="font-size:0.68rem;letter-spacing:0.03em">${shortenCoords(c.coords)}</strong>坐标</div>
           </div>
         </div>
       </section>
-
-      <!-- H-05b: 城市详情 Hero 与正文之间，加轻量"更多城市"入口，直接回发现页 -->
-      <div class="more-cities-link" onclick="navTo('#/')">← 更多城市</div>
 
       <div class="overview">
         <p>${c.overview}</p>
@@ -366,7 +372,15 @@ function renderCityDetail(id) {
                 <div class="timeline-year">${t.year}</div>
                 <div class="timeline-event">${t.event}</div>
                 <div class="timeline-desc">${t.desc}</div>
-                ${t.worldContext ? `<div class="timeline-world-context">${t.worldContext}</div>` : ''}
+                ${t.detail ? `
+                  <button class="timeline-detail-btn" onclick="toggleTimelineDetail(this)">展开阅读 →</button>
+                  <div class="timeline-detail">
+                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">背景</div><div>${t.detail.context}</div></div>
+                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">人物</div><div>${t.detail.figures}</div></div>
+                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">此时全球</div><div>${t.detail.parallel}</div></div>
+                  </div>
+                ` : ''}
+                ${t.worldContext ? `<div class="timeline-world-context">${renderWorldContext(t.worldContext)}</div>` : ''}
               </div>
             `).join('')}
           </div>
@@ -396,13 +410,18 @@ function renderCityDetail(id) {
 
   window.scrollTo(0, 0);
 
-  // Load hero image
-  loadWikiImage(c.wiki, (url) => {
+  // Load hero image (I-04/I-10: wikiImage direct link > wiki API)
+  if (c.wikiImage) {
     const bg = document.getElementById('detailHeroBg');
-    if (bg && url) {
-      bg.style.backgroundImage = `url('${url}')`;
-    }
-  });
+    if (bg) bg.style.backgroundImage = `url('${c.wikiImage}')`;
+  } else {
+    loadWikiImage(c.wiki, (url) => {
+      const bg = document.getElementById('detailHeroBg');
+      if (bg && url) {
+        bg.style.backgroundImage = `url('${url}')`;
+      }
+    });
+  }
 
   // Load landmark images
   loadLandmarkImages(c.landmarks);
@@ -567,7 +586,7 @@ function renderLmIntro(l) {
   ` : '';
 
   const whyBlock = l.whyVisit ? `
-    <div class="lm-why">${l.whyVisit}</div>
+    <div class="lm-why">${renderWhyVisit(l.whyVisit)}</div>
   ` : '';
 
   return `
@@ -680,7 +699,7 @@ function renderLmTips(tips) {
         const visible = items.slice(0, 3);
         const extra = items.slice(3);
         return `
-          <section class="tips-group">
+          <section class="tips-group" data-tipcat="${key}">
             <header class="tips-group-header">
               ${icon(iconKey, 14)}
               <span class="tips-group-label">${label}</span>
@@ -701,9 +720,51 @@ function renderLmTips(tips) {
   `;
 }
 
+/* v2.7 I-05: 坐标缩写 — "39°54'N 116°23'E" → "39.9°N 116.4°E" */
+function shortenCoords(coords) {
+  if (!coords) return '';
+  return coords.replace(/(\d+)°(\d+)'([NSEW])/g, (_, deg, min, dir) => {
+    const decimal = (parseInt(deg) + parseInt(min) / 60).toFixed(1);
+    return decimal + '°' + dir;
+  });
+}
+
+/* v2.7 I-14: worldContext 多行渲染 — \n 分隔的每行变成 div.mw-row */
+function renderWorldContext(wc) {
+  if (!wc) return '';
+  if (wc.includes('\n')) {
+    return wc.split('\n').map(row => `<div class="mw-row">${row}</div>`).join('');
+  }
+  return wc;
+}
+
+/* v2.7 I-02: whyVisit 结构化渲染 — {tag:...} → pill, 【...】→ 金色粗体, \n\n → <p> */
+function renderWhyVisit(text) {
+  if (!text) return '';
+  // Split into paragraphs by \n\n
+  const paras = text.split('\n\n').filter(p => p.trim());
+  return paras.map(p => {
+    // Replace {tag: ...} with pill span
+    let html = p.replace(/\{tag:\s*([^}]+)\}/g, '<span class="why-tag">$1</span>');
+    // Replace 【...】 with highlighted number span
+    html = html.replace(/【([^】]+)】/g, '<span class="why-num">$1</span>');
+    return `<p>${html}</p>`;
+  }).join('');
+}
+
+/* v2.7 I-03: timeline detail expand/collapse */
+function toggleTimelineDetail(btn) {
+  const panel = btn.nextElementSibling;
+  if (!panel) return;
+  const isOpen = panel.classList.toggle('open');
+  btn.textContent = isOpen ? '收起 ←' : '展开阅读 →';
+}
+
 /* v2.4 F-08: landmark card hook fallback — 优先 hookShort，否则 desc 截首句 */
+/* v2.7 I-06: warn if hookShort missing (defensive, should be 53/53) */
 function getLandmarkHook(l) {
   if (l.hookShort) return l.hookShort;
+  if (l.name) console.warn('[hookShort missing]', l.name);
   if (!l.desc) return '';
   // 取第一句（句号/感叹号/问号结尾），超过 40 字截断
   const m = l.desc.match(/^[^。！？!?]+[。！？!?]?/);
