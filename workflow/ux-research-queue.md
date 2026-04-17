@@ -11,8 +11,8 @@
 
 | # | 域 | 对象 | status | 完成日期 | commit | 备注 |
 |---|---|---|---|---|---|---|
-| 1 | 旅游 | Airbnb-Kyoto | pending | | | 城市详情页 taste 标杆，UX 多次对标 |
-| 2 | 美学 | Things-3 | pending | | | 极简信息层级，景点卡/时间轴参照 |
+| 1 | 旅游 | Airbnb-Kyoto | done | 2026-04-17 | (prior session) | 城市详情页 taste 标杆，UX 多次对标 |
+| 2 | 美学 | Things-3 | done | 2026-04-17 | (pending commit) | 极简信息层级，景点卡/时间轴参照 |
 | 3 | 流畅度 | Apple-Music | pending | | | 页面切换动效，UX 吐槽"卡带感"的解药 |
 | 4 | 旅游 | Lonely-Planet-排版 | pending | | | 长文排版节奏，v2.7 放开段落长度需要参照 |
 | 5 | 美学 | Bear | pending | | | 中文 Markdown 渲染 + 留白，内容密度参照 |
@@ -31,3 +31,5 @@
 | 产品动线 | H5 装 native | 2026-04-16 | 5 条 → 🔵 |
 | 旅游 | Cereal Magazine | 2026-04-16 | 5 条 → 🟢 |
 | 反向案例 | OTA 廉价感 | 2026-04-16 | 5 条 → 🟡 |
+| 旅游 | Airbnb-Kyoto | 2026-04-17 | 4 条 → 🟢（prior session）|
+| 美学 | Things-3 | 2026-04-17 | 4 条 → 🔵 |
