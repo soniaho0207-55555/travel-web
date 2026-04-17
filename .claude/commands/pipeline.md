@@ -72,6 +72,11 @@ description: Run one full cycle of the auto-pipeline — UX → [gate①] → PM
    模式：A (NEW PRD from UX feedback)
    输入：已 CEO approve 的反馈文件 用户反馈-YYYY-MM-DD-HHmm.md
    CEO 补充：<从反馈文件里 "## CEO 补充" 节读出，无则写"无">
+   额外输入：workflow/demand-pool.md
+     — 外部需求信号池（demand-researcher 异步沉淀）
+     — 与本轮 UX 反馈主题重叠的条目 → 纳入 PRD，变更日志注明"来源：demand-pool 条目 <日期>"
+     — 跳过的条目 → 在 workflow/backlog.md ## PM 备忘 写一行原因
+     — 池子为空则跳过这段
    请更新 PRD-travel-h5-v2.md 并产出摘要。
    ```
 3. PM 跑完 → 进 **Step 2.3 UX 评审**（不再直接跳闸门 ②）
