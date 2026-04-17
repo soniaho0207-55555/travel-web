@@ -33,20 +33,30 @@ $ARGUMENTS 形如 `<域> <对象>`：
 
 ### 第 1 步：资料采集（按域分流）
 
-#### 社区类（中文站：用 Chrome in MCP）
+#### 社区类（中文站：侦察兵自搜 + CEO 筛选 + Chrome in MCP 抓取）
 
-1. 先问 CEO："你给我 N 个具体帖子 URL（不是搜索列表页）"
-2. 拿到 URL 列表后：
+**默认流程（CEO 没空翻社区时）**：
+
+1. **侦察兵自搜**：用 `WebSearch` 搜 3-5 组关键词（基于研究主题自拟），每组取前 3-5 个候选
+   - 小红书关键词示例：`小红书 XX深度游` / `小红书 读完XX再去旅行` / `小红书 历史古迹吐槽`
+   - 知乎关键词示例：`知乎 XX深度游怎么做` / `知乎 读完某本书再去某地` / `知乎 历史旅行看不懂`
+   - B 站关键词示例：`B站 历史UP主 旅行` / `B站 小约翰可汗 旅行` / `B站 房琪 古迹`
+2. **返回候选列表给 CEO**：5-8 条，每条带 URL + 一句话摘要（读标题猜痛点就行）
+3. **CEO 30 秒筛选**：CEO 回复"抓 1/3/5/7"（编号），或"全抓"，或"换一批"
+4. **Chrome in MCP 抓取**（CEO 确认后才做）：
    ```
    a. 调 mcp__Claude_in_Chrome__tabs_context_mcp 看当前 tab group
    b. 调 mcp__Claude_in_Chrome__tabs_create_mcp 建独立 tab（不打扰 CEO 正在看的）
-   c. 对每个 URL：
+   c. 对 CEO 勾选的每个 URL：
       - mcp__Claude_in_Chrome__navigate 打开
       - mcp__Claude_in_Chrome__get_page_text 读全文（含评论区）
       - 如果触发验证码 → 停下告诉 CEO "请点一下验证码"
    d. 全部读完 → mcp__Claude_in_Chrome__tabs_close_mcp 关 tab（一个都别留）
    ```
-3. 一天不要抓 >8 帖（避免小红书/知乎风控）
+5. 一天不要抓 >8 帖（避免小红书/知乎风控）
+6. 长文里诚实标注"URL 由侦察兵搜索初筛，CEO 二次确认"
+
+**CEO 主动给 URL 时**：跳过第 1-3 步，直接从第 4 步开始抓取。两种模式等价。
 
 #### 社区类（英文站：优先 WebFetch）
 
