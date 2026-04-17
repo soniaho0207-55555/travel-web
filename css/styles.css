@@ -1872,3 +1872,171 @@ body::before {
   body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
   .bottom-nav { padding-bottom: env(safe-area-inset-bottom); height: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
 }
+
+/* ═══════════════════════════════════════
+   v3.0 K-## — 3 new classes only
+   ═══════════════════════════════════════ */
+
+/* K-03: timeline epochTail — 现在仍在 / 未来可能 */
+.timeline-now {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-left: 2px solid #C9B896;
+  background: rgba(201, 184, 150, 0.05);
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  opacity: 0.88;
+}
+.timeline-now-prefix {
+  color: #C9B896;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* K-04: curated-list-card — 编辑精选横滑卡 */
+.curated-list-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 16px 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.curated-list-scroll::-webkit-scrollbar { display: none; }
+.curated-list-card {
+  flex: 0 0 78%;
+  max-width: 300px;
+  padding: 16px 16px 14px;
+  background: linear-gradient(160deg, rgba(139, 26, 26, 0.14) 0%, rgba(201, 150, 58, 0.08) 100%);
+  border: 1px solid rgba(201, 150, 58, 0.22);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.curated-list-card:hover { transform: translateY(-2px); border-color: rgba(201, 150, 58, 0.44); }
+.curated-list-card-title {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: 0.02em;
+}
+.curated-list-card-subtitle {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--paper);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+.curated-list-card-lead {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(201, 150, 58, 0.25);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+/* K-04: list detail page */
+.list-detail-page { padding: 24px 16px 60px; }
+.list-detail-back { background: transparent; border: 0; color: var(--gold); font-size: 22px; padding: 4px 0 16px; cursor: pointer; }
+.list-detail-title { font-size: 22px; font-weight: 600; line-height: 1.35; color: var(--paper); margin: 0 0 8px; letter-spacing: 0.01em; }
+.list-detail-subtitle { font-size: 13px; line-height: 1.6; color: var(--paper); opacity: 0.7; margin-bottom: 22px; }
+.list-detail-items { display: flex; flex-direction: column; gap: 12px; }
+.list-detail-item {
+  padding: 14px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(201, 150, 58, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.list-detail-item:hover { background: rgba(201, 150, 58, 0.06); border-color: rgba(201, 150, 58, 0.3); }
+.list-detail-item-name { font-size: 15px; font-weight: 600; color: var(--paper); margin-bottom: 4px; }
+.list-detail-item-line { font-size: 13px; line-height: 1.6; color: var(--paper); opacity: 0.72; }
+
+/* K-06: random place button — 金色细描边药丸 */
+.random-place-btn {
+  display: block;
+  margin: 8px 0 0;
+  width: 100%;
+  padding: 11px 14px;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(201, 150, 58, 0.45);
+  border-radius: 999px;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  font-family: inherit;
+}
+.random-place-btn:hover { background: rgba(201, 150, 58, 0.08); border-color: rgba(201, 150, 58, 0.7); }
+
+/* K-02: related literature / figure block (inside lm intro panel) */
+.lm-related {
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  background: rgba(201, 150, 58, 0.05);
+  border-left: 2px solid rgba(201, 150, 58, 0.5);
+  border-radius: 4px;
+}
+.lm-related-title {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.lm-related-item {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--paper);
+  opacity: 0.9;
+  padding: 4px 0;
+}
+.lm-related-item + .lm-related-item { border-top: 1px dashed rgba(201, 150, 58, 0.18); margin-top: 4px; padding-top: 8px; }
+.lm-related-item strong { color: var(--gold); font-weight: 600; }
+.lm-related-item .lm-related-meta { font-size: 12px; opacity: 0.65; margin-left: 4px; }
+.lm-related-item .lm-related-quote { display: block; font-style: italic; opacity: 0.78; margin-top: 2px; }
+
+/* K-05: practicalInfo — folded cards */
+.practical-panel { display: flex; flex-direction: column; gap: 10px; padding: 4px 0 12px; }
+.practical-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(201, 150, 58, 0.18);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.practical-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.practical-card-header .practical-icon { flex: 0 0 auto; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; color: var(--gold); }
+.practical-card-label { flex: 1; font-size: 14.5px; font-weight: 600; color: var(--paper); letter-spacing: 0.02em; }
+.practical-card-caret { color: var(--gold); transition: transform 0.2s ease; }
+.practical-card.open .practical-card-caret { transform: rotate(180deg); }
+.practical-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 14px;
+  font-size: 13.5px;
+  line-height: 1.72;
+  color: var(--paper);
+  opacity: 0.88;
+  letter-spacing: 0.02em;
+}
+.practical-card.open .practical-card-body { max-height: 1200px; padding: 0 14px 14px; }
