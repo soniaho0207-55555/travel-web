@@ -19,10 +19,6 @@
   佐证："36 Graves of Beloved Animals — Dogs and cats aren't the only creatures honored here." (AO /lists, 2026-04-16)
   PM 可操作性：中
   → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
-- [2026-04-17][竞品 AO] 叙事↔目录双向穿针（article 中嵌入 place 卡 + place 页反向挂 stories）— 从"读故事"滑到"去这"的双向通道 — 证据：AO article 正文嵌"In This Story" + 城市页"Stories About X" [🟡 v2.8 做 · IA 调整]
-  佐证：Hansel 文中 "In This Story — Add Quedlinburg Abbey to a New List — Destination Guide Germany 69 Articles 813 Places" (AO article, 2026-04-16)
-  PM 可操作性：中
-  → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
 - [2026-04-17][阵地 Craig Mod] whyVisit 字段需"城市级反主流叙事"（"为什么是它"而非"它有什么"）— Craig Mod 4 篇均把"中等城市作为大都市之外的文化保护区"作为城市的元理由，先于景点清单 [🟢 v2.7 做 · 指向城市级 overviewLong 写作规范，v2.6.1 景点级 whyVisit 写作不中断]
   佐证："These mid-sized options are more and more critical as cultures becomes more and more homogenous." (Ridgeline 221 NYT Nagasaki, 2026-01)
   PM 可操作性：高（直接修订 PRD 中 whyVisit 的写作 SOP）
@@ -131,3 +127,4 @@ _（空）_
 - 2026-04-17 淘汰「[竞品 AO] 景点卡三动词按钮」 理由：CEO 已标 🔴 撤，依赖用户系统本期不接
 - 2026-04-17 淘汰「[竞品 AO] Gamification 只推供给端不推消费端」 理由：短期无 UGC 落地，品牌原则已有 ticket-info 条目覆盖
 - 2026-04-17 淘汰「[竞品 AO] 单一品牌词反复锚定」 理由：品牌决策远期，腾位给操作性更高的马伯庸条目
+- 2026-04-17 淘汰「[竞品 AO] 叙事↔目录双向穿针」 理由：与知乎"步行路线串联" + Craig Mod"时代叠加"部分重叠；腾位给 Substack AI 免疫条款；🟡 v2.8 IA 调整远期
