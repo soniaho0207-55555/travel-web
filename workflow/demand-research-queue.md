@@ -1,0 +1,32 @@
+# Demand 研究队列
+
+> **谁维护**：CEO 调优先级 / Explorer 建议新对象
+> **谁消费**：`/research-demand-auto` 命令自动从顶部 pending 逐个跑
+> **操作**：调优先级 → 拖行顺序 · 加新的 → 底部追加 · 跳过 → status 改 skip
+> **产出去向**：`workflow/demand-pool.md` → pipeline Step 2 PM Mode A 必读 → 更全面的 PRD
+> **社区类**：agent 会自搜 URL + 返回候选列表等 CEO 筛选（30 秒），不需要你提前找帖子
+
+---
+
+## 队列
+
+| # | 域 | 对象 | status | 完成日期 | commit | 备注 |
+|---|---|---|---|---|---|---|
+| 1 | 社区 | 小红书-历史名城 | pending | | | 补知乎的样本偏差，小红书/B 站视角 |
+| 2 | 竞品 | Lonely-Planet-城市页 | pending | | | 传统指南字段结构，和 AO 互补 |
+| 3 | 阵地 | 马伯庸-近 10 篇 | pending | | | 中文历史叙事腔调基线 |
+| 4 | 竞品 | Google-Arts-Culture | pending | | | 文化遗产数字化标杆 |
+| 5 | 社区 | Reddit-r/travel+r/history | pending | | | 英文圈需求，与知乎中文圈交叉对比 |
+| 6 | 竞品 | Culture-Trip | pending | | | 反面教材：编辑内容滑向 SEO 堆砌 |
+| 7 | 社区 | B 站-历史 UP 主评论区 | pending | | | 视频受众的文字需求信号源 |
+| 8 | App | 马蜂窝+携程-差评 | pending | | | 功能层痛点，v2.8+ 消费 |
+
+---
+
+## 已完成
+
+| 域 | 对象 | 完成日期 | 池条目数 | CEO 档位 |
+|---|---|---|---|---|
+| 竞品 | Atlas Obscura | 2026-04-17 | 6 条 | 已标 |
+| 阵地 | Craig Mod Ridgeline | 2026-04-17 | 5 条 | 已标 |
+| 社区 | 知乎-历史旅行者痛点 | 2026-04-17 | 4 条 | 已标 |
