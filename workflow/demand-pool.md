@@ -11,10 +11,6 @@
 
 > 来源：社区讨论（小红书/知乎/豆瓣/B 站/Reddit/马蜂窝）+ 竞品对标（Atlas Obscura / Lonely Planet / 马蜂窝 / Google Arts & Culture）+ 阵地（马伯庸 / Craig Mod）
 
-- [2026-04-17][竞品 AO] 景点卡三动词按钮（Been Here? / Want to Visit? / Add to List）— 一张卡同时服务 Armchair/Planner/Content Farmer 三种意图 — 证据：AO 城市页+place 详情两页共 8+ 张卡，按钮布局一致 [🔴 撤 · 依赖用户系统，本期不接]
-  佐证：Tokyo 页 7 张 Attractions 卡每张均有三按钮 (AO Tokyo 页, 2026-04-16)
-  PM 可操作性：高
-  → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
 - [2026-04-17][竞品 AO] 每日节奏钩子（"Place of the Day" + "Random Place" 双入口）— Armchair 3 分钟逃离场景的内容调度机制 — 证据：AO 首页 hero + 顶部 nav + 首屏按钮 3 处复用 [🟢 v2.7 做 · 无依赖]
   佐证："Get your daily burst of wonder with all-new episodes of The Atlas Obscura Podcast" (AO 首页, 2026-04-16)
   PM 可操作性：高
@@ -26,14 +22,6 @@
 - [2026-04-17][竞品 AO] 叙事↔目录双向穿针（article 中嵌入 place 卡 + place 页反向挂 stories）— 从"读故事"滑到"去这"的双向通道 — 证据：AO article 正文嵌"In This Story" + 城市页"Stories About X" [🟡 v2.8 做 · IA 调整]
   佐证：Hansel 文中 "In This Story — Add Quedlinburg Abbey to a New List — Destination Guide Germany 69 Articles 813 Places" (AO article, 2026-04-16)
   PM 可操作性：中
-  → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
-- [2026-04-17][竞品 AO] Gamification 只推供给端不推消费端（榜贡献者而非打卡者）— 未来开 UGC/社区时的品牌红线参考 — 证据：AO 城市页"Tokyo Leaderboard"三榜 Places Added/Edited/Visited，重心是贡献榜；place 详情有多人署名+"Edit this listing"显眼 [🔵 写进 PRD "产品原则"段，不进 backlog]
-  佐证：Vampire Café 2011 年发布 2026 年仍被 5+ 人持续编辑，"Added By serflac · Edited By Nyssa, Molly McBride Jacobson, atimian, Hermit09..." (AO Vampire Café 页, 2026-04-17)
-  PM 可操作性：低（短期无 UGC 落地；长期品牌原则）
-  → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
-- [2026-04-17][竞品 AO] 单一品牌词反复锚定（AO 以"wonder"贯穿所有触点）— 品牌人格化的纪律参考 — 证据：AO 首页 5 处"wonder"+ tagline + podcast slogan + newsletter slogan + meta title，单词反复而非同义词轮换 [🔵 品牌决策，CEO 后续拍板]
-  佐证：tagline "The Definitive Guide To The World's Hidden Wonders" + meta "Curious and Wondrous Travel Destinations" (AO 首页, 2026-04-16)
-  PM 可操作性：低（品牌决策，需 PM+UX+PMO 共议）
   → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
 - [2026-04-17][阵地 Craig Mod] whyVisit 字段需"城市级反主流叙事"（"为什么是它"而非"它有什么"）— Craig Mod 4 篇均把"中等城市作为大都市之外的文化保护区"作为城市的元理由，先于景点清单 [🟢 v2.7 做 · 指向城市级 overviewLong 写作规范，v2.6.1 景点级 whyVisit 写作不中断]
   佐证："These mid-sized options are more and more critical as cultures becomes more and more homogenous." (Ridgeline 221 NYT Nagasaki, 2026-01)
@@ -71,6 +59,34 @@
   佐证："打着古镇古街名号的新建的仿古商业街...就算模仿得很相似，那也看着不对味儿" (知乎 zhihu.com/question/37929762, 54 赞)；"63 个城市有'小圣托里尼'，62 有'小京都'" (界面新闻, 2021)
   PM 可操作性：低（品牌红线/内容质量底线，写入 PRD "产品原则"段；与 Craig Mod ticket-info 条目属同类）
   → 来源：research/demand-社区-历史旅行者痛点-2026-04-17.md
+- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白 [待 CEO 定档]
+  佐证："logistics, from which border crossings are reliable" + "cheap eats, local buses" (WorldLocals 六品牌对比文, 2024)；LP 纸质书 Survival Guide 章 = 签证/交通/货币/紧急电话/到达方式
+  PM 可操作性：高（新增城市级 practicalInfo 字段组：transport / currency / bestSeason / visaTips）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
+- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向 [待 CEO 定档]
+  佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
+  PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
+- [2026-04-17][竞品 LP] 分区/邻里导航概念（LP 按城市分区展开景点+餐厅+住宿）— LP 独有 IA 模式，当每城景点 20+ 时有分类必要；目前每城 5-8 个景点不急 [待 CEO 定档]
+  佐证：LP 纸质书 Explore 章按分区展开；App IA 以地图+分区为核心导航 (Pratt IxD 设计评论, 2019)
+  PM 可操作性：低（远期 IA 重构，当前不急）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
+- [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [待 CEO 定档]
+  佐证："当代读者阅读历史小说关注的不是历史本身，而是历史与自己的连接点" (中新网专访, 2024-10)；"不去改变历史，但在细处可以发挥想象" (中新网, 2024-10)
+  PM 可操作性：极高（直接产出 whyVisit 写作 SOP 模板）
+  → 来源：research/demand-阵地-马伯庸-2026-04-17.md
+- [2026-04-17][阵地 马伯庸] editorial 叙事切入 = 小人物而非帝王（"这里和谁有关？不是皇帝"）— 4 源支撑；与 Craig Mod"具名人物卡"+ 知乎"文学/名人/诗作"同方向 [待 CEO 定档]
+  佐证："99% 的历史都是帝王将相事迹，希望能通过写作让那些被尘封的小人物重新活过来" (CSDN 全景分析)；"只有理解小人物的生活才能反推大时代变迁" (中新网, 2024-10)
+  PM 可操作性：高（每个景点 editorial 加 SOP："找到一个和这个地方有关的非帝王人物"）
+  → 来源：research/demand-阵地-马伯庸-2026-04-17.md
+- [2026-04-17][阵地 马伯庸] funFact/didYouKnow 写法 = "大藏在小里"（一个小细节入口 > 一个大标签）— 2 源支撑 [待 CEO 定档]
+  佐证："历史真正的魅力往往不在宏大的结论里，而在未被轻易察觉的小细节处" (书评 + 新湖南, 2025-12)
+  PM 可操作性：高（funFact 字段写作 SOP：找"最小的那个意外"而非"最大的那个成就"）
+  → 来源：research/demand-阵地-马伯庸-2026-04-17.md
+- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）
+  佐证：GAC 罗马页 = 14 张文物缩略图 + 百科体简介 + 零 practical info；LP = Survival Guide 极完整但 Background 章弱；AO = 奇趣命题但无 ticket-info
+  PM 可操作性：高（写入 PRD "产品定位"段作为三竞品象限图；指导后续所有字段优先级决策）
+  → 来源：research/demand-竞品-Google-Arts-Culture-2026-04-17.md
 
 ---
 
@@ -78,7 +94,11 @@
 
 > 来源：GA / 埋点 / 错误日志 / WikiMedia 图片健康度（`audit-wiki-images.csv`）
 
-_（空）_
+- [2026-04-17][基建 CEO] 大陆用户图片全部不显示 — 图片源依赖 Wikipedia API (`en.wikipedia.org`) + `upload.wikimedia.org`，两者均被墙 — 国内用户（不开 VPN）看到的城市卡/景点卡全部无图 [🔴 P0 · 面向中国市场的基本可用性问题]
+  佐证：CEO 手机实测，大陆 4G 网络下所有图片区域为空白/渐变色兜底
+  建议方案：MVP 阶段将图片下载到项目 `images/` 目录，跟随 GitHub Pages 部署，零外部依赖；后期图片量大再迁国内 CDN
+  PM 可操作性：高（Dev 一次性批量下载 + 替换图片源路径）
+  → 来源：CEO 手机实测 + Explorer 代码审查（`js/app.js:1070` Wikipedia API 调用）
 
 ---
 
@@ -104,4 +124,6 @@ _（空）_
 > 长期未被 PM 触碰 / 被新条目覆盖 / 证据过时的条目移这里
 > 格式：`- YYYY-MM-DD 淘汰「XXX」 理由：XXX`
 
-_（空）_
+- 2026-04-17 淘汰「[竞品 AO] 景点卡三动词按钮」 理由：CEO 已标 🔴 撤，依赖用户系统本期不接
+- 2026-04-17 淘汰「[竞品 AO] Gamification 只推供给端不推消费端」 理由：短期无 UGC 落地，品牌原则已有 ticket-info 条目覆盖
+- 2026-04-17 淘汰「[竞品 AO] 单一品牌词反复锚定」 理由：品牌决策远期，腾位给操作性更高的马伯庸条目
