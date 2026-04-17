@@ -71,6 +71,18 @@
   佐证："打着古镇古街名号的新建的仿古商业街...就算模仿得很相似，那也看着不对味儿" (知乎 zhihu.com/question/37929762, 54 赞)；"63 个城市有'小圣托里尼'，62 有'小京都'" (界面新闻, 2021)
   PM 可操作性：低（品牌红线/内容质量底线，写入 PRD "产品原则"段；与 Craig Mod ticket-info 条目属同类）
   → 来源：research/demand-社区-历史旅行者痛点-2026-04-17.md
+- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白
+  佐证："logistics, from which border crossings are reliable" + "cheap eats, local buses" (WorldLocals 六品牌对比文, 2024)；LP 纸质书 Survival Guide 章 = 签证/交通/货币/紧急电话/到达方式
+  PM 可操作性：高（新增城市级 practicalInfo 字段组：transport / currency / bestSeason / visaTips）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
+- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向
+  佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
+  PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
+- [2026-04-17][竞品 LP] 分区/邻里导航概念（LP 按城市分区展开景点+餐厅+住宿）— LP 独有 IA 模式，当每城景点 20+ 时有分类必要；目前每城 5-8 个景点不急
+  佐证：LP 纸质书 Explore 章按分区展开；App IA 以地图+分区为核心导航 (Pratt IxD 设计评论, 2019)
+  PM 可操作性：低（远期 IA 重构，当前不急）
+  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
 
 ---
 
@@ -78,7 +90,11 @@
 
 > 来源：GA / 埋点 / 错误日志 / WikiMedia 图片健康度（`audit-wiki-images.csv`）
 
-_（空）_
+- [2026-04-17][基建 CEO] 大陆用户图片全部不显示 — 图片源依赖 Wikipedia API (`en.wikipedia.org`) + `upload.wikimedia.org`，两者均被墙 — 国内用户（不开 VPN）看到的城市卡/景点卡全部无图 [🔴 P0 · 面向中国市场的基本可用性问题]
+  佐证：CEO 手机实测，大陆 4G 网络下所有图片区域为空白/渐变色兜底
+  建议方案：MVP 阶段将图片下载到项目 `images/` 目录，跟随 GitHub Pages 部署，零外部依赖；后期图片量大再迁国内 CDN
+  PM 可操作性：高（Dev 一次性批量下载 + 替换图片源路径）
+  → 来源：CEO 手机实测 + Explorer 代码审查（`js/app.js:1070` Wikipedia API 调用）
 
 ---
 

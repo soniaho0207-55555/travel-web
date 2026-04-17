@@ -12,8 +12,8 @@
 
 | # | 域 | 对象 | status | 完成日期 | commit | 备注 |
 |---|---|---|---|---|---|---|
-| 1 | 社区 | 小红书-历史名城 | pending | | | 补知乎的样本偏差，小红书/B 站视角 |
-| 2 | 竞品 | Lonely-Planet-城市页 | pending | | | 传统指南字段结构，和 AO 互补 |
+| 1 | 社区 | 小红书-历史名城 | skip | | | 补知乎的样本偏差，小红书/B 站视角。xiaohongshu.com 被 Chrome MCP 硬编码拦截，需 CEO 手动贴原文 |
+| 2 | 竞品 | Lonely-Planet-城市页 | done | 2026-04-17 | pending | 传统指南字段结构，和 AO 互补 |
 | 3 | 阵地 | 马伯庸-近 10 篇 | pending | | | 中文历史叙事腔调基线 |
 | 4 | 竞品 | Google-Arts-Culture | pending | | | 文化遗产数字化标杆 |
 | 5 | 社区 | Reddit-r/travel+r/history | pending | | | 英文圈需求，与知乎中文圈交叉对比 |
@@ -30,3 +30,4 @@
 | 竞品 | Atlas Obscura | 2026-04-17 | 6 条 | 已标 |
 | 阵地 | Craig Mod Ridgeline | 2026-04-17 | 5 条 | 已标 |
 | 社区 | 知乎-历史旅行者痛点 | 2026-04-17 | 4 条 | 已标 |
+| 竞品 | Lonely-Planet-城市页 | 2026-04-17 | 3 条 | 待标 |
