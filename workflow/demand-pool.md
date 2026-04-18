@@ -59,10 +59,6 @@
   佐证："logistics, from which border crossings are reliable" + "cheap eats, local buses" (WorldLocals 六品牌对比文, 2024)；LP 纸质书 Survival Guide 章 = 签证/交通/货币/紧急电话/到达方式
   PM 可操作性：高（新增城市级 practicalInfo 字段组：transport / currency / bestSeason / visaTips）
   → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向 [🔵 进 PRD 产品原则段·确认方向 · 不是新功能]
-  佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
-  PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
-  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
 - [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [🟢 v2.7 做 · 极高 PM 可操作性 + 6 重交叉验证]
   佐证："当代读者阅读历史小说关注的不是历史本身，而是历史与自己的连接点" (中新网专访, 2024-10)；"不去改变历史，但在细处可以发挥想象" (中新网, 2024-10)
   PM 可操作性：极高（直接产出 whyVisit 写作 SOP 模板）
@@ -84,6 +80,10 @@
   PM 可操作性：极高（写入 PRD "产品原则·反面教材"段，作为内容生产 SOP 的负面 anchor）
   → 来源：research/demand-竞品-Culture-Trip-2026-04-18.md
 - [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [🟡 v2.8 做 · 强需求但需要 Dev 改 editorial 模板，比 SOP 重]
+- [2026-04-18][社区 知乎] whyVisit 写作 SOP 配方："**身在现场感官代入句**"+"**个体密码分层**"— 14 个高赞答案验证：旅行+历史爱好者要的是"密码激活后的幻觉"而非知识。PM 实施 whyVisit 时按此配方：1 句感官代入 + 浅密码（通用）+ 深密码（圈内）— 把抽象的"认知桥"变可执行写作模板 [🟢 v2.7 做 · whyVisit SOP 实施配方，与 [认知桥] [三明治理论] 互为执行细节]
+  佐证："古迹...给了你一种身在现场的美好幻觉" / "看一处古迹，就能心驰神远，与历史人物共呼吸" (张佳玮 3405 赞)；"那一刻，你仿佛听见历史低沉而绵长的呼吸" (wan了个琬 200 赞 唐建陵)；"每个人所喜欢的古迹...就像一个个体密码似的" (张佳玮)
+  PM 可操作性：极高（直接产出 whyVisit 写作模板：1 感官 + 2 密码层）；附带产出中文 Tier 字数标尺 Tier 3=300-800 / Tier 4-5=1000-2500
+  → 来源：research/demand-社区-知乎旅行历史爱好者真实需求-2026-04-18.md
   佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
   PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
   → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
@@ -115,7 +115,7 @@ _（空）_
 > PM 翻译成 PRD 条目后，侦察兵或 PMO 把原条目从上面移到这里（档案用）
 > 格式：`- [原条目] → PRD vX.Y 附录 X · X-## | 转化日期 YYYY-MM-DD`
 
-_（空）_
+- [竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）→ PRD v2.4 §1.1.1 第 5 条「差异化方向 = 历史文化深度，不是大而全」| 转化日期 2026-04-18
 
 ---
 
