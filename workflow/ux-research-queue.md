@@ -20,8 +20,8 @@
 | 7 | 反向案例 | 小红书-旅游广告 | done | 2026-04-18 | 8b98bb3 | 🟡 识别警报补充，"假高级"方向 |
 | 8 | 旅游 | Google-Arts-Culture | done | 2026-04-18 | 58ed48e | 博物馆/文化遗产叙事，"历史"定位最近 |
 | 9 | 图片 | 国内-CDN-对比 | done | 2026-04-18 | 2d93d34 | Plan B P0 · 图片大陆可用空白补齐（七牛/又拍/OSS/COS/火山） |
-| 10 | 图片 | 墙外源-ORB-拦截机制 | done | 2026-04-18 | (pending) | Plan B P0 · 为何 Google Photos/Unsplash 被拦，何时拦 |
-| 11 | 图片 | 格式-WebP-AVIF-fallback | pending | | | Plan B P0 · 国内浏览器支持率 + `<picture>` 策略 |
+| 10 | 图片 | 墙外源-ORB-拦截机制 | done | 2026-04-18 | cb1824f | Plan B P0 · 为何 Google Photos/Unsplash 被拦，何时拦 |
+| 11 | 图片 | 格式-WebP-AVIF-fallback | done | 2026-04-18 | (pending) | Plan B P0 · 国内浏览器支持率 + `<picture>` 策略 |
 | 12 | 图片 | 渐进加载美学对比 | pending | | | Plan B P0 · blur-up / LQIP / dominant color 哪种最 taste |
 | 13 | 配色 | 氛围色自适应规则 | pending | | | Plan B P1 · Apple Music + GAC + Material You 的可落地 CSS 规则 |
 | 14 | 流畅度 | iOS-26-Liquid-Glass | pending | | | Plan B P1 · 硬件 OS 过渡范式，H5 能借鉴什么 |
@@ -50,3 +50,4 @@
 | 旅游 | Google-Arts-Culture | 2026-04-18 | 4 条 → 🟢（替换 3 条） |
 | 图片 | 国内-CDN-对比 | 2026-04-18 | 3 条 → 🔵（替换 3 条） |
 | 图片 | 墙外源-ORB-拦截机制 | 2026-04-18 | 2 条 → 🔵（1 退 + 1 合并）|
+| 图片 | 格式-WebP-AVIF-fallback | 2026-04-18 | 2 条 → 🔵（替换 2 条）|
