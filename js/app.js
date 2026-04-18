@@ -71,7 +71,6 @@ function stripLeadEmoji(str) {
    ═══════════════════════════════════════ */
 let homeScrollPos = 0;
 let activeFilter = { type: null, value: null };
-let typewriterTimer = null;
 let heroScrollListener = null;
 const imgCache = {};
 let _savedScroll = 0;
@@ -95,7 +94,6 @@ function navTo(hash) {
 window.addEventListener('popstate', handleRoute);
 
 function handleRoute() {
-  if (typewriterTimer) { clearTimeout(typewriterTimer); typewriterTimer = null; }
   const hash = location.hash || '#/';
   const app = document.getElementById('app');
 
@@ -212,7 +210,7 @@ function renderHome() {
         <div class="hero-badge">${stripLeadEmoji(today.tagline)}</div>
         <div class="hero-city-name">${today.name}</div>
         <div class="hero-city-en">${today.nameEn}</div>
-        <div class="hero-quote" id="heroQuote"></div>
+        <div class="hero-quote" id="heroQuote">\u201C${today.heroQuote}\u201D</div>
         <button class="hero-cta">探索这座城市 ${icon('arrowRight', 14)}</button>
       </div>
       <div class="hero-scroll-hint" id="heroScrollHint">${icon('arrowDown', 24)}</div>
@@ -226,7 +224,7 @@ function renderHome() {
           <div class="theme-card-img" style="background-image: ${t.gradient}" data-theme-img="${t.id}"></div>
           <div class="theme-card-info">
             <div class="theme-card-name">${themeIcon(t.id, 14)}${t.name}</div>
-            <div class="theme-card-count">${themeCounts[t.id]} 座城市</div>
+            <div class="theme-card-subtitle">${t.subtitle}</div>
           </div>
         </div>
       `).join('')}
@@ -253,21 +251,21 @@ function renderHome() {
     </footer>
   `;
 
-  // I-09: Hero 图加载编排 — 图 loaded → 600ms → 启动打字机；3s 超时兜底
+  // L-04: Hero 图加载编排 — 图 loaded → 200ms → fade-in quote（300ms ease-out）；3s 超时兜底
   const heroEl = document.getElementById('heroBg');
   let heroImageLoaded = false;
-  const startTypewriter = () => {
+  const startHeroFadeIn = () => {
     if (heroImageLoaded) return;
     heroImageLoaded = true;
     setTimeout(() => {
-      typewriter('heroQuote', '\u201C' + today.heroQuote + '\u201D');
-    }, 600);
+      const quoteEl = document.getElementById('heroQuote');
+      if (quoteEl) quoteEl.classList.add('loaded');
+    }, 200);
   };
-  // 3s timeout fallback
-  const heroTimeout = setTimeout(startTypewriter, 3000);
+  const heroTimeout = setTimeout(startHeroFadeIn, 3000);
   const onHeroLoaded = () => {
     clearTimeout(heroTimeout);
-    startTypewriter();
+    startHeroFadeIn();
   };
 
   // J-04: heroImage > wikiImage > wiki API
@@ -404,7 +402,7 @@ function renderCityDetail(id) {
       <div class="overview">
         <p>${c.overview}</p>
         ${c.overviewFull ? `
-          <div class="overview-full" id="overviewFull">${c.overviewFull}</div>
+          <div class="overview-full" id="overviewFull">${renderParagraphs(c.overviewFull, c.overviewFullImages)}</div>
           <button class="overview-toggle" id="overviewToggle" onclick="toggleOverview()">
             <span class="overview-toggle-text">继续阅读</span>
             ${icon('chevronDown', 12)}
@@ -429,9 +427,9 @@ function renderCityDetail(id) {
                 ${t.detail ? `
                   <button class="timeline-detail-btn" onclick="toggleTimelineDetail(this)">展开阅读 →</button>
                   <div class="timeline-detail">
-                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">背景</div><div>${t.detail.context}</div></div>
-                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">人物</div><div>${t.detail.figures}</div></div>
-                    <div class="timeline-detail-section"><div class="timeline-detail-section-title">此时全球</div><div>${t.detail.parallel}</div></div>
+                    <div class="timeline-detail-section"><div class="rich-content-section-title">背景</div>${renderParagraphs(t.detail.context, t.detail.contextImages)}</div>
+                    <div class="timeline-detail-section"><div class="rich-content-section-title">人物</div>${renderParagraphs(t.detail.figures, t.detail.figuresImages)}</div>
+                    <div class="timeline-detail-section"><div class="rich-content-section-title">此时全球</div>${renderParagraphs(t.detail.parallel, t.detail.parallelImages)}</div>
                   </div>
                 ` : ''}
                 ${t.worldContext ? `<div class="timeline-world-context">${renderWorldContext(t.worldContext)}</div>` : ''}
@@ -665,7 +663,7 @@ function switchLmTab(tab) {
 function renderLmIntro(l) {
   const worldEventsBlock = (l.worldEvents && l.worldEvents.length) ? `
     <div class="world-events">
-      <div class="world-events-title">${icon('globe', 14)} ${formatYear(l.yearNum)}，世界其他地方</div>
+      <div class="rich-content-section-title">${formatYear(l.yearNum)}，世界其他地方</div>
       ${l.worldEvents.map(we => `
         <div class="world-event">
           <div class="world-event-city">${we.city}</div>
@@ -705,7 +703,7 @@ function renderRelatedBlock(l) {
 
   const litHtml = lit.length ? `
     <div class="lm-related">
-      <div class="lm-related-title">§ 文学</div>
+      <div class="rich-content-section-title">文学</div>
       ${lit.map(it => `
         <div class="lm-related-item">
           <strong>${it.title || ''}</strong>${it.author ? `<span class="lm-related-meta">${it.author}${it.year != null ? ' · ' + it.year : ''}</span>` : ''}
@@ -717,7 +715,7 @@ function renderRelatedBlock(l) {
 
   const figHtml = fig.length ? `
     <div class="lm-related">
-      <div class="lm-related-title">§ 名人</div>
+      <div class="rich-content-section-title">名人</div>
       ${fig.map(it => `
         <div class="lm-related-item">
           <strong>${it.name || ''}</strong>${it.era || it.role ? `<span class="lm-related-meta">${[it.era, it.role].filter(Boolean).join(' · ')}</span>` : ''}
@@ -859,30 +857,48 @@ function shortenCoords(coords) {
   });
 }
 
-/* K-03: timeline epochTail — 现在仍在 / 未来可能 */
+/* L-01: timeline epochTail — 今天 · 左金线 + 标签（PM 负责去前缀） */
 function renderEpochTail(tail) {
   if (!tail) return '';
-  const s = String(tail).trim();
-  // PM 写法可能以「未来可能」开头或无前缀；统一识别，抽出 prefix 作为高亮
-  let prefix = '／现在：';
-  let body = s;
-  if (/^未来可能[—:：\-\s]/.test(s)) {
-    prefix = '／未来：';
-    body = s.replace(/^未来可能[—:：\-\s]+/, '');
-  } else if (/^到今天/.test(s)) {
-    prefix = '／现在：';
-    body = s.replace(/^到今天[—:：\-\s]*/, '到今天');
-  }
-  return `<div class="timeline-now"><span class="timeline-now-prefix">${prefix}</span>${body}</div>`;
+  const body = String(tail).trim();
+  return `<div class="timeline-now"><span class="timeline-now-marker"></span><span class="timeline-now-label">今天</span><span class="timeline-now-text">${body}</span></div>`;
 }
 
-/* v2.7 I-14: worldContext 多行渲染 — \n 分隔的每行变成 div.mw-row */
+/* L-A #2/#3: renderParagraphs — split \n\n → <p>; insert images every ~200 chars */
+function renderParagraphs(text, images) {
+  if (!text) return '';
+  const paras = String(text).split('\n\n').map(p => p.trim()).filter(Boolean);
+  const imgs = Array.isArray(images) ? images : [];
+  if (!imgs.length) {
+    return paras.map(p => `<p class="rich-content-p">${p}</p>`).join('');
+  }
+  const out = [];
+  let charsSinceImg = 0;
+  let imgIdx = 0;
+  for (const p of paras) {
+    out.push(`<p class="rich-content-p">${p}</p>`);
+    charsSinceImg += p.length;
+    if (charsSinceImg >= 200 && imgIdx < imgs.length) {
+      const img = imgs[imgIdx++];
+      out.push(`<figure class="rich-content-figure"><img src="${img.src}" alt="${img.alt || ''}" loading="lazy" />${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}</figure>`);
+      charsSinceImg = 0;
+    }
+  }
+  return out.join('');
+}
+
+/* L-06: worldContext 多行 — 删 emoji，地域标签统一为 small-caps 金字 */
 function renderWorldContext(wc) {
   if (!wc) return '';
-  if (wc.includes('\n')) {
-    return wc.split('\n').map(row => `<div class="mw-row">${row}</div>`).join('');
-  }
-  return wc;
+  const rows = wc.includes('\n') ? wc.split('\n') : [wc];
+  return rows.map(raw => {
+    const row = stripLeadEmoji(raw);
+    const m = row.match(/^(.+?)(?:\s+·\s+|[：:]\s*)(.*)$/);
+    if (m) {
+      return `<div class="mw-row"><div class="timeline-world-region">${m[1].trim()}</div><div class="mw-row-text">${m[2]}</div></div>`;
+    }
+    return `<div class="mw-row">${row}</div>`;
+  }).join('');
 }
 
 /* v2.8 J-02: whyVisit v2 card-based layout — {tag} pill, 【】金色, \n\n → cards, fold 2-3 */
@@ -1467,34 +1483,6 @@ function applyThemeImages() {
       });
     }
   });
-}
-
-/* ═══════════════════════════════════════
-   TYPEWRITER
-   ═══════════════════════════════════════ */
-function typewriter(elId, text) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  el.innerHTML = '<span class="cursor"></span>';
-  let i = 0;
-  const PAUSE_CHARS = new Set(['，', '。', '！', '？', '—']);
-  const LONG_PAUSE_CHAR = '\u201D'; // closing curly quote "
-
-  function tick() {
-    if (i < text.length) {
-      el.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
-      const ch = text[i];
-      i++;
-      let delay = 40;
-      if (PAUSE_CHARS.has(ch)) delay = 180;
-      else if (ch === LONG_PAUSE_CHAR) delay = 300;
-      typewriterTimer = setTimeout(tick, delay);
-    } else {
-      typewriterTimer = null;
-      setTimeout(() => { if (el) el.innerHTML = text; }, 2000);
-    }
-  }
-  tick();
 }
 
 /* ═══════════════════════════════════════
