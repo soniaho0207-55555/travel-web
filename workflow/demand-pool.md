@@ -63,10 +63,6 @@
   佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
   PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
   → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][竞品 LP] 分区/邻里导航概念（LP 按城市分区展开景点+餐厅+住宿）— LP 独有 IA 模式，当每城景点 20+ 时有分类必要；目前每城 5-8 个景点不急 [待 CEO 定档]
-  佐证：LP 纸质书 Explore 章按分区展开；App IA 以地图+分区为核心导航 (Pratt IxD 设计评论, 2019)
-  PM 可操作性：低（远期 IA 重构，当前不急）
-  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
 - [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [待 CEO 定档]
   佐证："当代读者阅读历史小说关注的不是历史本身，而是历史与自己的连接点" (中新网专访, 2024-10)；"不去改变历史，但在细处可以发挥想象" (中新网, 2024-10)
   PM 可操作性：极高（直接产出 whyVisit 写作 SOP 模板）
@@ -87,6 +83,10 @@
   佐证："a very disappointing listicle mill" + "writers have quotas of 20+ articles per month" + "articles published about places closed for more than one year and copied almost directly from Google search results" (Glassdoor 撰稿人原话)；"Culture Trip's Final Pivot: Sells to U.S. News After Raising $155 Million" (Skift, 2024-02)
   PM 可操作性：极高（写入 PRD "产品原则·反面教材"段，作为内容生产 SOP 的负面 anchor）
   → 来源：research/demand-竞品-Culture-Trip-2026-04-18.md
+- [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [待 CEO 定档]
+  佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
+  PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
+  → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
 
 ---
 
@@ -129,3 +129,4 @@ _（空）_
 - 2026-04-17 淘汰「[竞品 AO] 单一品牌词反复锚定」 理由：品牌决策远期，腾位给操作性更高的马伯庸条目
 - 2026-04-17 淘汰「[竞品 AO] 叙事↔目录双向穿针」 理由：与知乎"步行路线串联" + Craig Mod"时代叠加"部分重叠；腾位给 Substack AI 免疫条款；🟡 v2.8 IA 调整远期
 - 2026-04-18 淘汰「[阵地 马伯庸] funFact 大藏在小里」 理由：证据弱（2 源同书评/介绍）+ 与 AO 命题式 list 概念重叠；马伯庸条目还有 whyVisit 三明治理论 + editorial 小人物 2 条主条目覆盖；腾位给 Culture Trip 反面教材
+- 2026-04-18 淘汰「[竞品 LP] 分区/邻里导航概念」 理由：PM 可操作性低（条目自承"远期 IA 重构，当前不急"）；当前每城 5-8 个景点不需要分区导航；腾位给马蜂窝视觉锚点系统
