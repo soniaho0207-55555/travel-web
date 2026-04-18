@@ -893,7 +893,7 @@ function renderWorldContext(wc) {
   const rows = wc.includes('\n') ? wc.split('\n') : [wc];
   return rows.map(raw => {
     const row = stripLeadEmoji(raw);
-    const m = row.match(/^([^：:]+)[：:]\s*(.*)$/);
+    const m = row.match(/^(.+?)(?:\s+·\s+|[：:]\s*)(.*)$/);
     if (m) {
       return `<div class="mw-row"><div class="timeline-world-region">${m[1].trim()}</div><div class="mw-row-text">${m[2]}</div></div>`;
     }
