@@ -27,7 +27,7 @@
 | 14 | 流畅度 | iOS-26-Liquid-Glass | pending | | | Plan B P1 · 硬件 OS 过渡范式，H5 能借鉴什么 |
 | 15 | 架构 | 多轴入口移动端案例 | pending | | | Plan B P1 · Spotify/NYT Cooking/Apple Arcade 首页入口并列 |
 | 16 | 内容 | AI 年代的人类编辑信号 | pending | | | Plan B P2 · 什么样细节一眼看出"人写而非 AI" |
-| 17 | 排版 | 移动端长内容自持极限 | done | 2026-04-19 | (pending) | Plan B P2→**P0 升级** 完成（CEO P00000 + UX 实测数据闭环）|
+| 17 | 排版 | 移动端长内容自持极限 | done | 2026-04-19 | e784cd8 | Plan B P2→**P0 升级** 完成（CEO P00000 + UX 实测数据闭环）|
 
 ---
 

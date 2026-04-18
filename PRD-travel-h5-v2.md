@@ -914,27 +914,34 @@ banner.onerror = () => {
 
 ### 9.5.2 排版与字体
 
+> **【v3.3 · N-03 覆盖】** 正文排版 token（字体栈 / 字号 / 行距 / 字重 / letter-spacing）已被 **附录 N §N-03** 重写——正文从 serif 16px 降为 sans-serif **15px / 1.75 / letter-spacing 0**，标题保留 serif。本节下方 v2.2 表格中**与正文 token 相关的行已废止**，以附录 N 为准。颜色对比度要求与 v2.2 保持一致。
+
 **v2.2 变更核心**：正文字号 +1 档、字重 +1 档、行距放宽、对比度拉满。
 
-| 元素 | 旧规格 | 新规格（v2.2） |
-|------|--------|----------------|
-| 正文（中文衬线） | 14–15px / Light / rgba(.., .85) | **16px / Regular / #F5EFE0 不透明** |
-| 正文行距 | 1.5 | **1.75** |
-| 时间轴 `desc` | 13–14px / 偏雾 | **15px / Regular / #F5EFE0** |
-| 景点 `desc` | 14px | **16px / Regular** |
-| 概述段 | 15px italic | **16px italic / Regular 字重** |
-| 小字注解（`worldContext` 等） | - | **13px / 灰色 #C9B896 / 行距 1.6** |
-| 最小可读字号 | 12px | **13px（除 footer/metadata 外）** |
+| 元素 | 旧规格 | 新规格（v2.2） | v3.3 修订 |
+|------|--------|----------------|------|
+| 正文（中文） | 14–15px / Light / rgba(.., .85) | 16px / Regular / #F5EFE0 不透明 | **15px / Regular / #F5EFE0 / sans-serif 栈 · 见附录 N §N-03** |
+| 正文行距 | 1.5 | **1.75** | 维持 1.75 ✅ |
+| 时间轴 `desc` | 13–14px / 偏雾 | 15px / Regular / #F5EFE0 | **15px / sans-serif · 见附录 N §N-03** |
+| 景点 `desc` | 14px | 16px / Regular | **15px · 见附录 N §N-03** |
+| 概述段 | 15px italic | 16px italic / Regular 字重 | **15px / Regular / 斜体禁止（§L-A 硬规 1）** |
+| 小字注解（`worldContext` 等） | - | **13px / 灰色 #C9B896 / 行距 1.6** | 维持 |
+| 最小可读字号 | 12px | **13px（除 footer/metadata 外）** | 维持 |
 
 **颜色对比度要求**：
 - 正文在深绿 `#1A6B4A` 背景上：**#F5EFE0**（不允许使用任何透明度）
 - 灰阶注解：**#C9B896**（金米色灰，保留品牌调性）
 - 深绿背景下**禁用**任何低于 WCAG AA 对比度 4.5:1 的文字色
 
-**中文衬线字体栈**（维持现有）：
+**字体栈**（v3.3 修订，替代 v2.2 衬线唯一栈）：
 ```css
-font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+/* 正文 · sans-serif（v3.3 N-03 冻结） */
+--body-font-family: -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+
+/* 标题 · serif（层级区分保留） */
+--heading-font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
 ```
+v2.2 的"中文衬线字体栈"仅适用于标题类层级，正文**禁止使用 serif 栈**（CJK mobile 可读性杀手，UX v3.1 取证确认）。
 
 ---
 
@@ -5815,9 +5822,388 @@ node -e "const {CITIES}=require('./js/data.js');CITIES.forEach(c=>c.landmarks?.f
 
 ---
 
+## 附录 N：v3.3 P00000 塌方急救（2026-04-19 · UX v3.1 上线回访 + 诊断清单驱动）
+
+> **背景**：v3.1 上线后 UX 于 2026-04-18 23:54 拍到 **P00000 · 景点介绍页"是什么"展示塌方**（拴日石 297 字单段、华纳比丘 280 字单段、金阁寺已做三段式但未推广）。核心诱因三叠：(1) whyVisit 字段是自由文本，数据层一致性失控（NEW-2）；(2) 正文字体栈 serif + 17px 在 CJK mobile 被误读为"斜体"，可读性差（NEW-3 / 目标 4 取证）；(3) 金阁寺模板已经存在但只覆盖 <10% 景点。CEO 2026-04-19 直派 PM 回 4 个问题 + 授权写进 PRD。  
+> **纪律**：PM 只出 schema / token / 条款文本 / 权威文案；Dev-H5 接派发工单执行；PMO 排 ticket。
+
+---
+
+### N-01 · P0 · 【Q1 答复】landmark 四段式强制结构（whyVisit 塌方根治）
+
+**PM 答：是。四段式写进 landmark 强制结构，53 个景点全量回灌。**
+
+#### N-01 · 决策理由
+
+1. 金阁寺模板已经在站内跑通（UX 实测确认三段式 + 折叠），不是"设计未完成"，是"没推广"。
+2. UX NEW-2 数据一致性 0 的根因正是 whyVisit 字段为自由文本——60%+ 景点没 `\n\n` 切分、没子标题。
+3. 单靠 §L-A 硬规 2（≥120 字强拆）不够：把 297 字无语义地拆成 3 段，还是 3 块"没有标签的灰墙"。**必须给每段子标题语义**，读者眼睛才知道"下一段换话题"。
+4. schema 化能让渲染层一次写对、所有景点天然继承；避免"数据层打补丁 / 渲染层兜底"的 hack 味。
+
+#### N-01 · 四段式定义（PM 权威冻结）
+
+| 段 | chip 文案 | 功能 | 单段上限 | 必填 |
+|---|---|---|---|---|
+| §1 | **是什么** | 一句话定位：名字 / 时代 / 地点 / 规模 / 功能 + 关键 meta | ≤120 字 | ✅ |
+| §2 | **为什么独特** | 1–2 个独占记忆点（技术 / 审美 / 历史转折） | ≤150 字 | ✅ |
+| §3 | **跨文明** | 同时期其他文明的并置对照或影响链（至少 1 个具体锚点） | ≤200 字 | ✅ |
+| §4 | **现场细节** | 感官 / 可触达锚点 / 在地线索（颜色 / 声音 / 手感 / 某块砖的故事） | ≤150 字 | ✅ |
+
+- **四段合计 ≤620 字**；任一段超上限 → 触发 §L-A 硬规 2 拆段，但 chip 保持不变（即段内可出多 `<p>`，chip 只在段首出一次）。
+- **不接受"先上线再补段"**：任一段为空 → 该 chip 行**不出现在 DOM**（不是留白 chip）；但 QA assertion 会把缺段的 landmark 标红。
+- 每段内容继续遵守 §L-A 硬规（斜体禁令 / 120 字强拆 / 200 字 1 图 / 章节标题 spec）。
+
+#### N-01 · 为什么不是 5 段（"古今连接"未入必填）
+
+CEO 诊断清单建议四段 = "为什么独特 / 跨文明 / 现场细节 / 古今连接"。PM 审后微调：
+- **"是什么"必须是第一段**（UX 截图里现状 chip 顺序 + 用户认知路径都以"是什么"起头，删掉会让用户进入即失重）。
+- **"古今连接"**（某细节通到今天用户的生活，Monocle 的保留手法）是 cherry on top。在 53 景点连"是什么 / 为什么独特 / 跨文明 / 现场细节"都还没齐的当下，先强推"古今连接"是胃口做大。
+- 本轮定 4 段必填；预留 `whyVisit.modernEcho: string`（可选）位置，v3.4 启用。
+
+#### N-01 · PR 合并红线 + QA assertion
+
+任何 landmark 新增 / 修改，若 `whyVisit` 不是对象或四段任一缺失 → PR 不许合并 main。QA 合并前跑：
+
+```bash
+node -e "
+const {CITIES}=require('./js/data.js');
+let fail=0;
+CITIES.forEach(c=>c.landmarks?.forEach((l,i)=>{
+  const w=l.whyVisit;
+  const keys=['what','whyUnique','crossCivilization','detail'];
+  if(typeof w!=='object'||w===null){console.log('NOT OBJECT:',c.name,l.name||'#'+i);fail++;return;}
+  keys.forEach(f=>{
+    if(!w[f]||typeof w[f]!=='string'||w[f].trim().length<20){
+      console.log('MISSING/SHORT whyVisit.'+f+':',c.name,l.name||'#'+i);fail++;
+    }
+  });
+}));
+if(fail)process.exit(1);
+"
+```
+
+非零输出 → PR 阻塞。过渡期见 N-02 fallback 条款。
+
+#### N-01 · 覆盖范围
+
+53 个 landmark 全量，不给"历史包袱豁免"。存量回灌由 Dev-H5 接派 PMO 分批工单（PM 不碰 `js/data.js`）。内容生产见 N-02 "内容生产分工"。
+
+---
+
+### N-02 · P0 · 【Q2 答复】whyVisit schema 从自由文本升级为结构化对象
+
+**PM 答：是。whyVisit 升级为结构化对象，字段名冻结，类型契约定义如下。**
+
+#### N-02 · Before / After
+
+**Before**（v3.1 及之前）：
+```javascript
+landmarks[].whyVisit = '一块精心凿刻的花岗岩柱……（297 字自由文本）'
+// 渲染层 split('\n\n') 或直接 innerHTML —— 数据层一致性失控
+```
+
+**After**（v3.3 起 · 冻结）：
+```javascript
+landmarks[].whyVisit = {
+  what:              '一块精心凿刻的花岗岩柱，印加人用它标记太阳的运行……',  // ≤120 字
+  whyUnique:         '柱顶角度精确对应南半球夏至日正午太阳的 45 度……',      // ≤150 字
+  crossCivilization: '同时期明代天文学正在完善郭守敬《授时历》……',            // ≤200 字
+  detail:            '石柱顶部有一角缺口，是 2000 年一台拍广告的起重机砸坏的……', // ≤150 字
+  // modernEcho: string   // （v3.4 预留，v3.3 不启用）
+}
+```
+
+#### N-02 · 字段契约（PM 权威）
+
+| key | 类型 | 必填 | 内容纪律 |
+|---|---|---|---|
+| `what` | string | ✅ | 一句话定位；**禁止**以"XXX 是……"八股开头；≤120 字；允许含 `\n\n` 内部分段 |
+| `whyUnique` | string | ✅ | 1–2 个独占记忆点；**禁止**"最……之一"降格修饰、"著名的"这种空壳评价词；≤150 字 |
+| `crossCivilization` | string | ✅ | 至少 1 个同时期其他文明的具体事件/作品/人物；**禁止**只说"同期的欧洲也很发达"；≤200 字 |
+| `detail` | string | ✅ | 至少 1 个可触达感官 / 在地锚点（颜色 / 声音 / 手感 / 具体位置 / 某件事故）；≤150 字 |
+
+**每个字符串值本身可含 `\n\n`**（硬规 2 ≥120 字强拆仍生效），但 chip（section-title）只在该段第一次出现。
+
+#### N-02 · 渲染层约定（交付 Dev-H5 的显式要求）
+
+```
+<whyVisit-block>
+  <chip class="rich-content-section-title">是什么</chip>
+  <p>{what} 的第 1 段</p>
+  <p>{what} 的第 2 段（若有 \n\n）</p>
+  
+  <chip class="rich-content-section-title">为什么独特</chip>
+  <p>{whyUnique}</p>
+  
+  <chip class="rich-content-section-title">跨文明</chip>
+  <p>{crossCivilization}</p>
+  <img src="{suggestedImages[0]?.src}" .../>   <!-- 若 ≥200 字必须配图（§L-A 硬规 3） -->
+  
+  <chip class="rich-content-section-title">现场细节</chip>
+  <p>{detail}</p>
+</whyVisit-block>
+```
+
+- chip 样式 = §L-A 硬规 4 `.rich-content-section-title`（左金线 + 无背景色块 + 无 emoji）。
+- 每个 `<p>` 间距 12px（§L-A 硬规 2）。
+- **折叠行为**：默认收起，只展示 §1 "是什么"前 3 行 + "展开阅读" CTA；点击展开后四段全出。
+- Chip 文案**字面硬编码**，不走 i18n（v3.3 范围内）。
+
+#### N-02 · 过渡期兼容（Dev-H5 必写 fallback + 红色警告）
+
+Dev-H5 必须在渲染 helper 里支持老数据兼容：
+
+```javascript
+function normalizeWhyVisit(w) {
+  if (typeof w === 'string') {
+    // 老数据降级：把整串当成 what，其他三段留空
+    return { what: w, whyUnique: '', crossCivilization: '', detail: '', _legacy: true };
+  }
+  return w;
+}
+
+// 渲染时：
+if (normalized._legacy) {
+  renderLegacyWarningBanner();  // 页面顶部红底白字："⚠️ 数据未迁移 · 四段式回灌待完成"
+}
+// 缺段（empty string）chip 不渲染
+```
+
+**红色 banner 是过渡期强信号**，用于 QA 一眼定位漏网景点。**v3.3 正式 release 前**（即 Dev-H5 回灌完成前），站点持续存在 banner 属正常状态；**v3.3 release 一刻 banner 必须 0 出现**（即 legacy 数据 0 条），否则不许合并 main。
+
+#### N-02 · 内容生产分工（关键 · PM 自己交）
+
+53 景点的四段式**内容由 PM 批次撰写**，不是 Dev-H5 自拟。原因：跨文明段尤其考验编辑视角（K-01 认知桥 + 跨文明并置），交给 Dev 会回到 v2.0 论文墙老路。
+
+- **批次 1**（PM 先交 5 景点样本）：首页 Hero 轮换的 5 城各取 1 个 landmark → 故宫 / 金阁寺 / 斗兽场 / 吉萨金字塔 / 马丘比丘遗址。交付文件 `PM-N02-whyVisit-四段式-批次1-2026-04-XX.md`，由 CEO 验收四段式写作 SOP。
+- **批次 2-N**：剩余 48 景点，每批 5–10 个，按首页曝光度排序。
+- **每批次独立挂 backlog 工单**（PMO 派），PM 交付文件 → Dev-H5 粘进 `js/data.js` → QA assertion 验过 → 合并。
+
+#### N-02 · 存量回灌纪律
+
+- **PM 不回灌数据**（PM 红线）。
+- **Dev-H5 的回灌动作**仅限于：把 PM 交付的四段文案粘进 `js/data.js` 对应景点的 `whyVisit` 对象；**不允许 Dev 自拟四段内容**。
+- 若某景点旧 whyVisit 字符串里已有高质量内容（如金阁寺、马丘比丘遗址），PM 可在交付时明注"以现有字段为底改写"。
+
+---
+
+### N-03 · P0 · 【Q3 答复】正文 design token 正式写进 PRD
+
+**PM 答：是。token 冻结为字面值，§9.5.2 同步修订（已在本轮 Edit 1 完成），本节为权威主锚。**
+
+#### N-03 · token 正式定义（冻结 · v3.3）
+
+| CSS custom property | 值 | 作用域 |
+|---|---|---|
+| `--body-font-family` | `-apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif` | 所有正文段（whyVisit 四段 / timeline detail / relatedFigure / relatedLiterature / overviewFull / landmark desc） |
+| `--body-font-size` | `15px` | 同上 |
+| `--body-line-height` | `1.75` | 同上（≈26.25px 行高 · CJK 甜点） |
+| `--body-font-weight` | `400` | 同上 |
+| `--body-letter-spacing` | `0` | 同上 · 删除现有 0.51px（纯英文段可就地覆盖 `0.02em`，但 CJK 段禁用） |
+| `--heading-font-family` | `"Playfair Display", "Noto Serif SC", Georgia, serif` | H1 城市名 / H2 景点名 / meta eyebrow（保留 serif 做层级区分） |
+| `--chip-font-family` | `-apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif` | `.rich-content-section-title`（§L-A 硬规 4） |
+
+#### N-03 · §9.5.2 修订对照
+
+| §9.5.2 原行 | v3.3 修订 | 原因 |
+|---|---|---|
+| 正文 16px / Regular | **15px / Regular / sans-serif 栈** | UX 实测 17px 偏大 + serif 在 CJK mobile 被误读为斜体 |
+| 行距 1.75 | 维持 1.75 ✅ | UX 实测 1.70 已是 CJK 甜点下沿，保留 1.75 不变 |
+| 景点 desc 16px | **15px** | 与正文统一 |
+| 概述段 16px italic | **15px / Regular / 斜体禁止** | §L-A 硬规 1 斜体禁令 |
+| letter-spacing 0.51px | **0** | 纯英文残留规则，CJK 适用反而挤 |
+| 正文衬线字体栈 | **废止**（转 sans-serif 栈） | serif 专供标题层级 |
+
+上表修订已同步落进 §9.5.2 表格（本轮 PM Edit 1）。本节为权威主锚，日后更新以本节为准。
+
+#### N-03 · QA 阻塞红线
+
+Dev-H5 修改 `css/styles.css` 后，QA 针对正文渲染 class（涵盖 `.rich-content p / .timeline-detail p / .overview-full / .landmark-desc / .whyVisit-block p`）验：
+
+- `computedStyle.fontFamily` 不以 `-apple-system` 起头 → FAIL
+- `computedStyle.fontSize` ≠ `15px` → FAIL
+- `computedStyle.lineHeight` 不在 [`24.5px`, `28.5px`]（即 1.63–1.9 倍 15px）→ FAIL
+- `computedStyle.letterSpacing` ≠ `normal`（或等价 `0px`）→ FAIL（纯英文段例外）
+- `computedStyle.fontStyle === 'italic'` 且段字数 ≥30 → FAIL（§L-A 硬规 1 复用）
+
+---
+
+### N-04 · P1 · 【Q4 答复】渲染结构变更 → PM 全字段 sweep 规则（CLAUDE.md 条款）
+
+**PM 答：是。写进 `CLAUDE.md`，性质为 release 阻塞红线，PMO 落地文本。**
+
+#### N-04 · 起因
+
+UX NEW-1 取证："今天 到今天北京地铁……"。PM 在 L-01 把渲染前缀由 `/现在：` 改为 `今天`，但没配套 grep 数据字段 `epochTail`，导致前缀 label "今天" 与正文起头"到今天……"撞词。**不是 bug，是流程漏洞**：渲染结构变更 → 没做数据字段 sweep。
+
+#### N-04 · 建议写入 CLAUDE.md 的条款全文（PMO 直接 copy）
+
+建议插入位置：`CLAUDE.md` `## Workflow` 之后新增一节 `## Render-Schema Sweep（渲染结构变更的 PM 强制回扫）`。
+
+```markdown
+## Render-Schema Sweep（渲染结构变更的 PM 强制回扫）
+
+触发条件（任一满足即触发）：
+- 渲染层改变了某字段的呈现方式（前缀词 / 标签 / 格式 / 顺序 / 断段规则）
+- Schema 新增或修改了字段定义（增字段 / 改类型 / 改必填 / 改命名）
+- 某字段的"硬规"改变（如段落上限、斜体禁令、图片节奏）
+
+PM 义务：
+1. Release 前对受影响字段做一次全量 grep sweep（示例：grep -n "epochTail:" js/data.js）
+2. 输出一份 "Sweep 清单"挂在 workflow/backlog.md ## PRD Changes 段
+3. 清单逐条列出每个数据条目当前是否与新 Schema / 渲染一致，不一致的给出权威修复文本
+
+阻塞规则：
+- Sweep 清单未挂 → PMO 不许 merge dev → main
+- Sweep 发现的问题 → PM 出权威修复文本 → Dev-H5 执行 → PR 合并前必须全部闭环
+- 渲染结构变更的 PR 若未附 Sweep 清单 URL → QA 直接 FAIL
+
+历史教训：
+- 2026-04-18 L-01 epochTail 前缀变更未 sweep → 新生"今天 到今天……"撞词（UX 2026-04-18 NEW-1 取证）
+- 2026-04-19 M-02 era/yearNum 必填红线建立后，存量回灌即典型 sweep 场景
+```
+
+#### N-04 · 实施路径
+
+- PM 出上述文本（本节即权威文本）。
+- PMO 接 backlog 工单把文本追加进 `CLAUDE.md`（该文件 PMO 共管，PM 不能改）。
+- 生效时间：写入后立即生效，下一轮 release 起 PMO 据此阻塞合并。
+
+---
+
+### N-05 · P1 · 顺手补丁（NEW-1 epochTail 撞词 + NEW-4 Hero badge L-05 复发）
+
+#### N-05.a · epochTail 撞词清洗（N-04 Sweep 规则的首个正式清单）
+
+**Sweep 触发**：L-01 渲染前缀改为"今天" → `epochTail` 字段需清洗。
+
+**PM 权威清洗规则**：
+
+| 原则 | Before（字段内容） | After（字段内容） |
+|---|---|---|
+| 删重复起头 | `'到今天北京地铁 2 号线走的就是元大都北城墙的位置'` | `'北京地铁 2 号线走的就是元大都北城墙的位置'` |
+| 删重复起头 | `'如今站在午门前的那条轴线……'` | `'站在午门前的那条轴线……'` |
+| 删重复起头 | `'到现在伊斯坦布尔机场……'` | `'伊斯坦布尔机场……'` |
+| 删重复起头 | `'今天的……'`（开头重复） | `'……'`（直接删"今天的"） |
+
+**Dev-H5 执行步骤**（PM 不碰 `js/data.js`）：
+
+1. `grep -nE "epochTail: *'(到今天|到现在|如今|今天)" js/data.js` 列出所有命中条目
+2. 逐条按上表清洗（规则简单：起头词删掉，保留后续正文）
+3. 验证收敛：`grep -cE "epochTail: *'(到今天|到现在|如今|今天)" js/data.js` = 0
+4. 渲染快照：首页进 3 个城市的时间轴，展开含 epochTail 的条目，确认渲染结果无"今天 到今天"撞词
+5. 若 grep 发现歧义条目（如起头词就是整句意义的一部分，删掉变语病）→ 挂 backlog "PM 裁定"
+
+#### N-05.b · Hero badge 对比度（L-05 复发 · UX 第 3 轮点名）
+
+**背景**：v3.1 §L-05 已规定"Hero badge 加半透明深色 chip 底"，UX 2026-04-18 实测马丘比丘 badge 在绿色山脊上对比度 ~3:1（不到 WCAG AA 4.5:1），L-05 实际未落地。
+
+**PM 权威 spec 重申 + 加强（替代 v3.1 L-05）**：
+
+```css
+.hero-badge {
+  background: rgba(0, 0, 0, 0.45);       /* 硬性 · 半透明黑底 · 替代 v3.1 L-05 的 0.35 */
+  backdrop-filter: blur(8px);            /* 弱背景虚化，在复杂背景上更稳 */
+  -webkit-backdrop-filter: blur(8px);    /* Safari 兼容 */
+  color: #F5EFE0;                        /* 高亮米白 */
+  padding: 4px 10px;
+  border-radius: 2px;                    /* 纸片感，不要圆胶囊 */
+  font-size: 12px;
+  letter-spacing: 0.04em;                /* badge 是装饰性 eyebrow，英文级 letter-spacing OK */
+  font-family: var(--body-font-family);  /* sans-serif */
+}
+```
+
+**QA 验收**：
+- 随机抽 5 张当日 Hero 图，Chrome DevTools Accessibility panel 测 badge 文字与背景对比度 ≥ 4.5:1 → PASS；任一不过 → FAIL + 挂"PM 调 alpha"工单
+- Safari 真机 iOS 14+ 验 `backdrop-filter` 兜底（Safari 要 `-webkit-` 前缀，不加会回退为无虚化，对比度仍应 ≥4.5:1 靠 alpha 0.45 本身保住）
+
+---
+
+### N · 覆盖总表（供 Dev-H5 派单参考）
+
+| 条目 | 文件改动 | 预估工时 | 交付分工 |
+|---|---|---|---|
+| N-01 + N-02 schema 定义 | `js/data.js` (53 处) + `js/app.js` renderer | Dev-H5 ~6h | 数据内容由 PM 批次交（N-02），Dev 粘入 |
+| N-02 fallback + 红色 banner | `js/app.js` + `css/styles.css` | Dev-H5 ~2h | Dev 独立写 |
+| N-03 design token | `css/styles.css`（正文类全量） | Dev-H5 ~2h | Dev 独立写 |
+| N-04 CLAUDE.md 条款 | `CLAUDE.md` | PMO ~0.5h | PMO 独立写 |
+| N-05.a epochTail sweep | `js/data.js` (≤15 处) | Dev-H5 ~1h | PM 规则 + Dev 执行 |
+| N-05.b Hero badge | `css/styles.css` | Dev-H5 ~0.5h | Dev 独立写 |
+| N-02 内容批次 1 (5 景点) | PM 交付文件 | PM ~4h | PM 独立交 |
+| N-02 内容批次 2-N (48 景点) | PM 交付文件 ×多批 | PM ~30-40h | PM 分批，并行于 Dev |
+
+**总工时**：Dev-H5 ~11.5h（单轮可完）+ PM ~4h（批次 1 · 阻塞 v3.3 release）+ PM 后续 30-40h（批次 2-N，随后续 release 滚动交付）+ PMO ~0.5h。
+
+---
+
+### N · release 门阀
+
+v3.3 **正式合并 main 前**必须满足：
+
+1. Dev-H5 完成 N-01+N-02 schema 改造 + N-03 token + N-05 两条补丁
+2. PM 交付批次 1（5 景点 whyVisit 四段式），Dev 已粘入 `js/data.js`
+3. 剩余 48 景点 whyVisit 处于 legacy 兼容态（字符串），渲染出红色 banner
+4. QA 跑：
+   - `node` assertion（N-01） → 5 景点 PASS，48 景点有 legacy 警告但不阻塞（fallback 生效）
+   - CSS token assertion（N-03）→ PASS
+   - Sweep 清单 epochTail 验收（N-05.a）→ 0 撞词
+   - Hero badge 对比度抽样（N-05.b）→ 5/5 PASS
+5. PMO 合并 dev → main；**v3.3 之后每批新增景点四段式**由 PM 正常走 `## PRD Changes` 通知
+
+---
+
+（附录 N 完）
+
+---
+
 ## 变更日志
 
-### v3.1（2026-04-18 · UX v3.0 体验复审驱动）· 富内容呈现规范 + 容器清扫
+### v3.3（2026-04-19 · UX v3.1 上线回访 P00000 驱动）· landmark 四段式 + 正文 token + 流程 sweep
+
+**来源**：`用户反馈-2026-04-18-2354.md`（v3.1 上线后 UX 6.5/10）+ `workflow/ux-live-site-diagnostic-2026-04-18.md` P00000 板块 + CEO 2026-04-19 直派 4 问。
+
+**评分目标**：v3.1 6.5/10 → v3.3 ≥ 8.5/10（重点打 P00000 景点介绍塌方）。
+
+**本期合入（1 新必填 schema + 1 设计 token + 1 流程红线 + 2 顺手补丁 = 5 条）**：
+- 【P0 · schema 硬化】**N-01 landmark 四段式强制结构**（是什么 / 为什么独特 / 跨文明 / 现场细节）+ 四段必填 + node assertion 阻塞 PR
+- 【P0 · schema 升级】**N-02 `whyVisit` 字段从 string 升级为 object**（4 字段必填 + 字符串 fallback + 红色 legacy banner 做过渡）；内容由 PM 分批次交付，Dev 粘入
+- 【P0 · design token】**N-03 正文 token 冻结**（`-apple-system/PingFang/Noto Sans SC` 栈 / 15px / 1.75 / weight 400 / letter-spacing 0）；标题仍保留 serif 栈；§9.5.2 同步修订
+- 【P1 · 流程红线】**N-04 Render-Schema Sweep 规则写入 CLAUDE.md**——任何渲染结构 / schema 变更，PM release 前必须做全字段 sweep 清单挂 backlog，否则 PMO 不许合并 main
+- 【P1 · 清扫】**N-05.a epochTail 撞词 sweep**（"今天 到今天……" NEW-1） + **N-05.b Hero badge 对比度**（L-05 复发 · 强化 alpha 至 0.45 + backdrop-filter）
+
+**数据结构变更**（Dev 必读）：
+- `landmarks[].whyVisit` 类型从 `string` 变为 `{ what, whyUnique, crossCivilization, detail }`（四字段必填）
+- 过渡期：`typeof whyVisit === 'string'` 降级显示 + 红色 banner 警告；v3.3 合并 main 前 48 存量景点允许 legacy 态，之后逐批回灌
+- `landmarks[].whyVisit.modernEcho?: string` 预留，v3.3 不启用
+
+**QA 硬性红线**（任一违反 = FAIL）：
+- whyVisit 非对象或四段任一 `.trim().length < 20` = FAIL（assertion 命令见 §N-01）
+- 正文 class `font-family` 不起头 `-apple-system` = FAIL
+- 正文 `font-size` ≠ 15px = FAIL
+- Hero badge 任一图背景下对比度 < 4.5:1 = FAIL
+- Sweep 清单未挂 backlog → PMO 不许合并 main
+
+**工作量估算**：
+- Dev-H5 ~11.5h（schema + renderer + fallback banner + token + sweep + badge）
+- PM ~4h（批次 1 · 5 景点 whyVisit 样本 · 阻塞 v3.3 release）
+- PM 后续 ~30–40h（批次 2-N · 48 景点，随后续 release 滚动交付）
+- PMO ~0.5h（CLAUDE.md 落条款）
+- QA ~3h（assertion + 渲染快照 + 对比度测样）
+
+**推迟（v3.4+）**：
+- `whyVisit.modernEcho`（古今连接第 5 段）—— 先保 4 段质量
+- relatedLiterature 卡片化（上一轮推迟条目延续）
+- 打字机 + Hero 图加载不同步（P0 1.1 · localhost 无法证伪，需 Slow 3G + 真机测）
+
+**纪律声明**：
+- N-01/N-02 schema 冻结，字段命名不再改
+- N-02 内容生产由 PM 交付，Dev-H5 不自拟四段文字（防 v2.0 论文墙复发）
+- N-04 CLAUDE.md 条款写入后，**本 PRD 变更就是 N-04 规则下的首个 sweep 生效案例**（L-01 epochTail 的清洗 = N-05.a）
+
+---
+
+
 
 **来源**：`用户反馈-2026-04-17-2105.md`（v3.0 上线后 UX 体验 7.0/10）+ CEO 二轮深度反馈定位致命伤 = 富内容呈现，而非细节容器。
 

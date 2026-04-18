@@ -901,32 +901,52 @@ function renderWorldContext(wc) {
   }).join('');
 }
 
-/* v2.8 J-02: whyVisit v2 card-based layout — {tag} pill, 【】金色, \n\n → cards, fold 2-3 */
-function renderWhyVisit(text) {
-  if (!text) return '';
-  const WHY_LABELS = ['是什么', '为什么独特', '跨文明'];
-  const paras = text.split('\n\n').filter(p => p.trim());
+/* v3.3 N-01/N-02: whyVisit 四段式 object — {what, whyUnique, crossCivilization, detail}
+   Legacy string fallback → renders under "是什么" chip + triggers red banner. */
+function normalizeWhyVisit(w) {
+  if (typeof w === 'string') {
+    return { what: w, whyUnique: '', crossCivilization: '', detail: '', _legacy: true };
+  }
+  return w || null;
+}
 
-  const cards = paras.map((p, i) => {
-    let html = p.replace(/\{tag:\s*([^}]+)\}/g, '<span class="why-tag">$1</span>');
-    html = html.replace(/【([^】]+)】/g, '<span class="why-num">$1</span>');
-    // Bold first sentence (up to first 。or end of text)
-    html = html.replace(/^(<span class="why-tag">[^<]*<\/span>\s*)?([^。]+。)/, (match, tagPart, sentence) => {
-      if (tagPart) return tagPart + '<strong>' + sentence + '</strong>';
-      return '<strong>' + sentence + '</strong>';
-    });
-    const label = WHY_LABELS[i] || '';
-    return `<div class="why-card">${label ? `<span class="why-label">${label}</span>` : ''}<p>${html}</p></div>`;
-  });
+const WHY_SECTIONS = [
+  { key: 'what',              label: '是什么' },
+  { key: 'whyUnique',         label: '为什么独特' },
+  { key: 'crossCivilization', label: '跨文明' },
+  { key: 'detail',            label: '现场细节' }
+];
 
-  if (cards.length <= 1) return cards.join('');
+function renderWhyVisit(raw) {
+  const w = normalizeWhyVisit(raw);
+  if (!w) return '';
+  const legacyBanner = w._legacy ? `<div class="why-legacy-banner">⚠️ 内容过渡中 · 四段式回灌待完成</div>` : '';
 
-  const first = cards[0];
-  const rest = cards.slice(1).join('');
+  const sections = WHY_SECTIONS.map(({ key, label }) => {
+    const value = typeof w[key] === 'string' ? w[key].trim() : '';
+    if (!value) return '';
+    const paras = value.split(/\n\n+/).filter(p => p.trim());
+    const pHtml = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    return `<div class="why-section"><div class="rich-content-section-title">${label}</div>${pHtml}</div>`;
+  }).filter(Boolean);
+
+  if (!sections.length) return legacyBanner;
+
+  const first = sections[0];
+  const rest = sections.slice(1).join('');
+  if (!rest) return legacyBanner + first;
+
   const foldId = 'whyFold-' + Math.random().toString(36).slice(2, 8);
-  return first +
+  return legacyBanner + first +
     `<div class="why-fold" id="${foldId}">${rest}</div>` +
     `<button class="why-fold-btn" onclick="toggleWhyFold('${foldId}', this)">展开阅读 →</button>`;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function toggleWhyFold(id, btn) {
