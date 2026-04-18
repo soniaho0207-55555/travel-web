@@ -6,6 +6,11 @@
   "scripts": {
     "audit:links": "node scripts/audit-links.js",
     "audit:wiki-images": "node scripts/audit-wiki-images.js",
-    "audit:all": "node scripts/audit-links.js && node scripts/audit-wiki-images.js"
+    "audit:all": "node scripts/audit-links.js && node scripts/audit-wiki-images.js",
+    "check:landmark-schema": "node scripts/check-landmark-schema.js",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }
