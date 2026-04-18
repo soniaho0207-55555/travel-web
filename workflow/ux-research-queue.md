@@ -19,6 +19,15 @@
 | 6 | 惊喜 | Stripe-官网 | done | 2026-04-17 | 5bf0c22 | 微交互惊喜，🔵 段淘汰旧条目的替换源 |
 | 7 | 反向案例 | 小红书-旅游广告 | done | 2026-04-18 | 8b98bb3 | 🟡 识别警报补充，"假高级"方向 |
 | 8 | 旅游 | Google-Arts-Culture | done | 2026-04-18 | 58ed48e | 博物馆/文化遗产叙事，"历史"定位最近 |
+| 9 | 图片 | 国内-CDN-对比 | done | 2026-04-18 | (pending) | Plan B P0 · 图片大陆可用空白补齐（七牛/又拍/OSS/COS/火山） |
+| 10 | 图片 | 墙外源-ORB-拦截机制 | pending | | | Plan B P0 · 为何 Google Photos/Unsplash 被拦，何时拦 |
+| 11 | 图片 | 格式-WebP-AVIF-fallback | pending | | | Plan B P0 · 国内浏览器支持率 + `<picture>` 策略 |
+| 12 | 图片 | 渐进加载美学对比 | pending | | | Plan B P0 · blur-up / LQIP / dominant color 哪种最 taste |
+| 13 | 配色 | 氛围色自适应规则 | pending | | | Plan B P1 · Apple Music + GAC + Material You 的可落地 CSS 规则 |
+| 14 | 流畅度 | iOS-26-Liquid-Glass | pending | | | Plan B P1 · 硬件 OS 过渡范式，H5 能借鉴什么 |
+| 15 | 架构 | 多轴入口移动端案例 | pending | | | Plan B P1 · Spotify/NYT Cooking/Apple Arcade 首页入口并列 |
+| 16 | 内容 | AI 年代的人类编辑信号 | pending | | | Plan B P2 · 什么样细节一眼看出"人写而非 AI" |
+| 17 | 排版 | 移动端长内容自持极限 | pending | | | Plan B P2 · Medium/Substack 移动端 typography 承压 |
 
 ---
 
@@ -39,3 +48,4 @@
 | 惊喜 | Stripe-官网 | 2026-04-17 | 3 条 → 🔵（替换 3 条） |
 | 反向案例 | 小红书-旅游广告 | 2026-04-18 | 4 条 → 🟡 |
 | 旅游 | Google-Arts-Culture | 2026-04-18 | 4 条 → 🟢（替换 3 条） |
+| 图片 | 国内-CDN-对比 | 2026-04-18 | 3 条 → 🔵（替换 3 条） |
