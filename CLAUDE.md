@@ -81,6 +81,19 @@ Roles communicate ONLY through files:
 
 DO NOT assume what other roles are doing. READ backlog.md before starting work.
 
+## 研究消费纪律（硬线，2026-04-19 起）
+
+**研究不能死在池子里**。PM 和 UX 开工必须消费研究产出，产出时必须有自检声明：
+
+| 角色 | 必读文件 | 产出时必须声明 |
+|---|---|---|
+| PM | `workflow/demand-pool.md` + `workflow/ux-lenses.md` + 最新 UX 反馈 | 候选清单 B 段覆盖 demand-pool 全部条目（漏一条即违规） |
+| UX | `workflow/ux-lenses.md` | 反馈文件末尾列出本次受启发的镜头（至少 3 条） |
+
+违反 = CEO 退回重做。详见 `.claude/agents/pm.md` §Step 0 / `.claude/agents/ux-tester.md` §开工前必读。
+
+Dev 和 QA 不强制读研究池——他们读 PRD 就够（PRD 已是 PM 转化后的产物）。
+
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
 - Serves all static files (html, css, js) with correct MIME types
