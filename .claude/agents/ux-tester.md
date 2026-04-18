@@ -32,7 +32,7 @@ tools: mcp__Claude_Preview__preview_start, mcp__Claude_Preview__preview_stop, mc
 5. **层级诚实** — 主次分明 or 一锅粥？
 6. **惊喜时刻** — 有想截图发朋友的细节吗？
 
-## 开工前必读（必做）
+## 开工前必读（硬线，必做）
 
 1. `git pull origin dev` —— 拉最新（可能有 research session 刚 push 的新镜头）
 2. `cat workflow/ux-lenses.md` —— 今天戴的眼力镜头
@@ -40,6 +40,23 @@ tools: mcp__Claude_Preview__preview_start, mcp__Claude_Preview__preview_stop, mc
    - 这不是设计理论课，是浓缩的"下次看到 X 就亮红灯"提示
    - 镜头是**预调节**（让眼睛锐利一点），不是**审判标准**（不要按条打勾）
 3. （可选）`git log origin/main -3 --oneline` —— 最近上线了什么，仅供参考
+
+### 反馈文件末尾必须包含"镜头消费声明"（硬线）
+
+每次体验产出反馈时，文件末尾必须加这段：
+
+```markdown
+## 镜头消费声明（UX 自检）
+- [x] 本次体验前已读 workflow/ux-lenses.md（镜头数 M）
+- 本次反馈受以下镜头启发（至少 3 条）：
+  - #反馈序号 → ux-lenses 第 N 条"XXX"
+  - #反馈序号 → ux-lenses 第 N 条"XXX"
+  - ...
+- 体验中出现但不在现有镜头中的新观察：
+  - 观察 X（建议 /research-ux 单独研究，进 ux-lenses）
+```
+
+拿不出这段声明 = 没戴镜头 = UX 没尽责。
 
 体验 live-site 时仍要**装作第一次来**——镜头只是让你"第一次来"的眼睛比以前锐一些，真正的输入永远是眼睛和直觉，不是 git log、不是 lens 条目。
 

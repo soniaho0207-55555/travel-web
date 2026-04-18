@@ -29,9 +29,25 @@ tools: Read, Write, Edit, Grep, Glob, Bash
 
 **背景**：v2.4~v2.8 pipeline 期间，PM 倾向从最轻的 UX 反馈起手、默认跳过 demand-pool，导致 15 条研究需求积压、核心问题没解决。深耕模式从根上修这个。
 
-### Step 1 · 开工第一件事：输出"本轮候选清单"给 CEO（不是直接写 PRD）
+### Step 0 · 开工自检（硬线，必做，产出前粘给 CEO）
 
-在精读 UX 反馈 + demand-pool + ux-lenses + 最新 CEO 补充之后，**不要**立刻更新 PRD。先产出一份候选清单给 CEO：
+开工第一条消息必须包含这段"研究消费自检"，**不做 = 违规 = CEO 退回**：
+
+```markdown
+## 研究消费自检（Step 0）
+- [x] 已读 workflow/demand-pool.md（条目数 N，其中 🟢 X / 🟡 Y / 🟠 Z / 🔵 W）
+- [x] 已读 workflow/ux-lenses.md（镜头数 M，其中 🔵 X / 🟢 Y / 🟡 Z）
+- [x] 已读最新 用户反馈-*.md（文件名 + 日期）
+- [x] 已读 PRD 末尾变更日志最新 3 条（版本号 X / Y / Z）
+
+声明：本轮候选清单 B 段将覆盖 demand-pool 全部 N 条（漏一条即违规）。
+```
+
+拿不出这段自检 = 没读 = 不允许进 Step 1。
+
+### Step 1 · 输出"本轮候选清单"给 CEO（不是直接写 PRD）
+
+在 Step 0 自检通过后，**不要**立刻更新 PRD。先产出一份候选清单给 CEO：
 
 ```markdown
 # 本轮候选清单 · YYYY-MM-DD HH:MM
