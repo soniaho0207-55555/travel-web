@@ -10,7 +10,15 @@
   --white: #faf8f3;
   --serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
   --mono: 'Courier Prime', 'Courier New', monospace;
-  --body: 'Noto Serif SC', Georgia, serif;
+  /* v3.3 N-03: body token frozen — sans-serif / 15px / 1.75 / 400 / ls 0 */
+  --body-font-family: -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --body-font-size: 15px;
+  --body-line-height: 1.75;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --heading-font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --chip-font-family: -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --body: var(--body-font-family);
   --nav-h: 56px;
 }
 
@@ -20,10 +28,11 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--body);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.75;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
+  font-weight: var(--body-font-weight);
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
   min-height: 100vh;
   overflow-x: hidden;
   padding-bottom: var(--nav-h);
@@ -165,19 +174,20 @@ body::before {
 
 .hero-content { position: relative; z-index: 1; cursor: pointer; }
 
-/* L-05: Hero tagline chip — black-glass pill */
+/* v3.3 N-05.b: Hero badge contrast — alpha 0.35 → 0.45 + backdrop-filter blur(8px) */
 .hero-badge {
   display: inline-block;
-  padding: 4px 8px;
-  background: rgba(0,0,0,0.35);
+  padding: 4px 10px;
+  background: rgba(0,0,0,0.45);
   border: none;
-  border-radius: 3px;
+  border-radius: 2px;
   box-shadow: none;
-  backdrop-filter: none;
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  color: var(--gold);
-  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  color: #F5EFE0;
+  letter-spacing: 0.04em;
   margin-bottom: 14px;
 }
 
@@ -631,11 +641,12 @@ body::before {
 }
 .overview-full {
   margin-top: 12px;
-  font-size: 17px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
   color: var(--text-primary, var(--paper));
-  line-height: 1.8;
-  letter-spacing: 0.03em;
-  font-weight: 400;
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
+  font-weight: var(--body-font-weight);
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease, margin-top 0.4s ease;
@@ -879,11 +890,12 @@ body::before {
 }
 
 .landmark-desc {
-  font-size: 16px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
   color: var(--paper);
-  line-height: 1.8;
-  letter-spacing: 0.03em;
-  font-weight: 400;
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
+  font-weight: var(--body-font-weight);
   margin-bottom: 14px;
 }
 
@@ -1649,9 +1661,31 @@ body::before {
   to { opacity: 1; }
 }
 
-/* ═══ v2.8 J-02: whyVisit v2 card-based layout ═══ */
-.lm-why p { margin: 0; }
-.lm-why p + p { margin-top: 0.8em; }
+/* ═══ v3.3 N-01/N-02: whyVisit 四段式 layout ═══ */
+.lm-why {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
+}
+.lm-why p { margin: 0 0 12px 0; }
+.lm-why p:last-child { margin-bottom: 0; }
+.why-section { margin-bottom: 18px; }
+.why-section:last-child { margin-bottom: 0; }
+.why-section .rich-content-section-title {
+  font-family: var(--chip-font-family);
+}
+.why-legacy-banner {
+  display: block;
+  background: #8B1A1A;
+  color: #F5EFE0;
+  font-family: var(--body-font-family);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+}
 .why-tag {
   display: inline-block;
   font-family: var(--mono);
@@ -1745,9 +1779,16 @@ body::before {
   background: rgba(201,150,58,0.04);
   border-left: 2px solid rgba(201,150,58,0.25);
   border-radius: 2px;
-  font-size: 14px;
-  line-height: 1.7;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
   color: var(--paper);
+}
+.timeline-detail-section p { margin: 0 0 12px 0; }
+.timeline-detail-section p:last-child { margin-bottom: 0; }
+.rich-content-section-title {
+  font-family: var(--chip-font-family);
 }
 /* L-A #4: unified rich-content section title (replaces .timeline-detail-section-title / .lm-related-title / .world-events-title) */
 .rich-content-section-title {
