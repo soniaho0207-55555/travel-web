@@ -75,15 +75,15 @@
   佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
   PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
   → 来源：research/demand-社区-Substack-2026-04-17.md
-- [2026-04-18][竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 — (1) 撰稿人配额制不可用（20+ 篇/月→ Google 搬运 → 关闭景点仍推荐）(2) commerce 不可污染 editorial（联盟链接造成选择偏见）(3) 规模化必带不准（数据库大但准确性可疑）(4) 本地编辑+复制编辑流程不可抛弃（早期对的方式被自己优化掉了）— $1.55 亿融资仍走不通，2024-02 被 U.S. News 收购 [🔵 进 PRD 产品原则·反面教材段 · 不进 backlog]
-  佐证："a very disappointing listicle mill" + "writers have quotas of 20+ articles per month" + "articles published about places closed for more than one year and copied almost directly from Google search results" (Glassdoor 撰稿人原话)；"Culture Trip's Final Pivot: Sells to U.S. News After Raising $155 Million" (Skift, 2024-02)
-  PM 可操作性：极高（写入 PRD "产品原则·反面教材"段，作为内容生产 SOP 的负面 anchor）
-  → 来源：research/demand-竞品-Culture-Trip-2026-04-18.md
 - [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [🟡 v2.8 做 · 强需求但需要 Dev 改 editorial 模板，比 SOP 重]
 - [2026-04-18][社区 知乎] whyVisit 写作 SOP 配方："**身在现场感官代入句**"+"**个体密码分层**"— 14 个高赞答案验证：旅行+历史爱好者要的是"密码激活后的幻觉"而非知识。PM 实施 whyVisit 时按此配方：1 句感官代入 + 浅密码（通用）+ 深密码（圈内）— 把抽象的"认知桥"变可执行写作模板 [🟢 v2.7 做 · whyVisit SOP 实施配方，与 [认知桥] [三明治理论] 互为执行细节]
   佐证："古迹...给了你一种身在现场的美好幻觉" / "看一处古迹，就能心驰神远，与历史人物共呼吸" (张佳玮 3405 赞)；"那一刻，你仿佛听见历史低沉而绵长的呼吸" (wan了个琬 200 赞 唐建陵)；"每个人所喜欢的古迹...就像一个个体密码似的" (张佳玮)
   PM 可操作性：极高（直接产出 whyVisit 写作模板：1 感官 + 2 密码层）；附带产出中文 Tier 字数标尺 Tier 3=300-800 / Tier 4-5=1000-2500
   → 来源：research/demand-社区-知乎旅行历史爱好者真实需求-2026-04-18.md
+- [2026-04-18][阵地 跨文明圈] **3 座例外城市**的 whyVisit 写作规则特殊处理——马丘比丘+吴哥窟+耶路撒冷不能套默认 SOP。马丘比丘/吴哥窟必须含殖民叙事（Galeano "被压迫集体"视角 vs 马伯庸"官僚小人物"）；耶路撒冷要承载创伤而非幻觉（三教交汇+多次屠城）；伊斯坦布尔可选 hüzün 集体忧郁层。避免 PM 用默认 SOP 踩雷（殖民/宗教敏感） [🟢 v2.7 做 · 写进 PRD whyVisit SOP 的"特殊城市"附录]
+  佐证："We lost; others won. But it happens that those who won, won because we lost." (Galeano《拉丁美洲被切开的血管》)；"hüzün...a communal feeling, an atmosphere and culture shared by millions" (Pamuk《伊斯坦布尔》Nobel)；Dalrymple《City of Djinns》德里 7 时代叠层 (1993 Thomas Cook Travel Book Award)
+  PM 可操作性：高（PRD whyVisit SOP 附录 3 页面级规则；12/15 城可直接用默认配方，3/15 例外）
+  → 来源：research/demand-阵地-跨文明圈叙事差异-2026-04-18.md
   佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
   PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
   → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
@@ -116,6 +116,7 @@ _（空）_
 > 格式：`- [原条目] → PRD vX.Y 附录 X · X-## | 转化日期 YYYY-MM-DD`
 
 - [竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）→ PRD v2.4 §1.1.1 第 5 条「差异化方向 = 历史文化深度，不是大而全」| 转化日期 2026-04-18
+- [竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 → PRD v2.4 §1.1.2 「反面教材 · 内容生产警戒线」全节逐条引用 | 转化日期 2026-04-18
 
 ---
 
