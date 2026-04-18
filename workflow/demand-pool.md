@@ -31,7 +31,7 @@
   佐证：Toyohashi 段从 1945 战后黑市 → 1964-67 水上楼建设 → 现在的衰退/复兴 → 混凝土寿命的猜测 (Ridgeline 224, 2026-03)；Imoya 23 年前 → 当代咖啡馆现象 → 未来手机柜子 (Ridgeline 218, 2025-11)
   PM 可操作性：中（PRD 编辑指引："时间线最后一格必须是'现在仍在 X'或'未来可能 Y'"）
   → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
-- [2026-04-17][阵地 Craig Mod] editorial 段落长度 SOP 放开（History Reader 能读 3000 字长文，不应被"段落 ≤ 3 句"限制）— 5 篇 Ridgeline 平均 3000 字，长段（200-400 字）承载完整论证 [🟠 v2.8 评估 · 分层试验，Armchair/Parent 用户禁用长文]
+- [2026-04-17][阵地 Craig Mod] editorial 段落长度 SOP 放开（History Reader 能读 3000 字长文，不应被"段落 ≤ 3 句"限制）— 5 篇 Ridgeline 平均 3000 字，长段（200-400 字）承载完整论证 [🟢 v2.7 做 · B 站渤海小吏 3035 万播放/59 分钟铁证中文长内容容忍度，提档自 🟠]
   佐证：5 篇字数范围 2100-4000，全部≥2000；NYT Nagasaki 长达 3500-4000 字 (Ridgeline 221, 2026-01)
   PM 可操作性：中（修 PRD 内容长度 SOP；同时分层——Armchair Tier 3 仍短 / History Reader Tier 4-5 解锁长段）
   → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
@@ -55,35 +55,35 @@
   佐证："打着古镇古街名号的新建的仿古商业街...就算模仿得很相似，那也看着不对味儿" (知乎 zhihu.com/question/37929762, 54 赞)；"63 个城市有'小圣托里尼'，62 有'小京都'" (界面新闻, 2021)
   PM 可操作性：低（品牌红线/内容质量底线，写入 PRD "产品原则"段；与 Craig Mod ticket-info 条目属同类）
   → 来源：research/demand-社区-历史旅行者痛点-2026-04-17.md
-- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白 [待 CEO 定档]
+- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白 [🟢 v2.7 做 · Planner 及格线，所有竞品都有我们空白]
   佐证："logistics, from which border crossings are reliable" + "cheap eats, local buses" (WorldLocals 六品牌对比文, 2024)；LP 纸质书 Survival Guide 章 = 签证/交通/货币/紧急电话/到达方式
   PM 可操作性：高（新增城市级 practicalInfo 字段组：transport / currency / bestSeason / visaTips）
   → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向 [待 CEO 定档]
+- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向 [🔵 进 PRD 产品原则段·确认方向 · 不是新功能]
   佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
   PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
   → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [待 CEO 定档]
+- [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [🟢 v2.7 做 · 极高 PM 可操作性 + 6 重交叉验证]
   佐证："当代读者阅读历史小说关注的不是历史本身，而是历史与自己的连接点" (中新网专访, 2024-10)；"不去改变历史，但在细处可以发挥想象" (中新网, 2024-10)
   PM 可操作性：极高（直接产出 whyVisit 写作 SOP 模板）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] editorial 叙事切入 = 小人物而非帝王（"这里和谁有关？不是皇帝"）— 4 源支撑；与 Craig Mod"具名人物卡"+ 知乎"文学/名人/诗作"同方向 [待 CEO 定档]
+- [2026-04-17][阵地 马伯庸] editorial 叙事切入 = 小人物而非帝王（"这里和谁有关？不是皇帝"）— 4 源支撑；与 Craig Mod"具名人物卡"+ 知乎"文学/名人/诗作"同方向 [🟢 v2.7 做 · 与 whyVisit 三明治理论 + Substack AI 免疫整合一次性产出 editorial 写作 SOP]
   佐证："99% 的历史都是帝王将相事迹，希望能通过写作让那些被尘封的小人物重新活过来" (CSDN 全景分析)；"只有理解小人物的生活才能反推大时代变迁" (中新网, 2024-10)
   PM 可操作性：高（每个景点 editorial 加 SOP："找到一个和这个地方有关的非帝王人物"）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）[待 CEO 定档]
+- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）[🔵 进 PRD 产品定位段 · 不是新功能，是产品定位坐标]
   佐证：GAC 罗马页 = 14 张文物缩略图 + 百科体简介 + 零 practical info；LP = Survival Guide 极完整但 Background 章弱；AO = 奇趣命题但无 ticket-info
   PM 可操作性：高（写入 PRD "产品定位"段作为三竞品象限图；指导后续所有字段优先级决策）
   → 来源：research/demand-竞品-Google-Arts-Culture-2026-04-17.md
-- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行；**Culture Trip 配额制人类内容反面验证：批量化必质劣** [待 CEO 定档]
+- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行；**Culture Trip 配额制人类内容反面验证：批量化必质劣** [🟢 v2.7 做 · 与马伯庸三明治理论 + 小人物切入整合一次性产出 editorial 写作 SOP]
   佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
   PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
   → 来源：research/demand-社区-Substack-2026-04-17.md
-- [2026-04-18][竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 — (1) 撰稿人配额制不可用（20+ 篇/月→ Google 搬运 → 关闭景点仍推荐）(2) commerce 不可污染 editorial（联盟链接造成选择偏见）(3) 规模化必带不准（数据库大但准确性可疑）(4) 本地编辑+复制编辑流程不可抛弃（早期对的方式被自己优化掉了）— $1.55 亿融资仍走不通，2024-02 被 U.S. News 收购 [待 CEO 定档]
+- [2026-04-18][竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 — (1) 撰稿人配额制不可用（20+ 篇/月→ Google 搬运 → 关闭景点仍推荐）(2) commerce 不可污染 editorial（联盟链接造成选择偏见）(3) 规模化必带不准（数据库大但准确性可疑）(4) 本地编辑+复制编辑流程不可抛弃（早期对的方式被自己优化掉了）— $1.55 亿融资仍走不通，2024-02 被 U.S. News 收购 [🔵 进 PRD 产品原则·反面教材段 · 不进 backlog]
   佐证："a very disappointing listicle mill" + "writers have quotas of 20+ articles per month" + "articles published about places closed for more than one year and copied almost directly from Google search results" (Glassdoor 撰稿人原话)；"Culture Trip's Final Pivot: Sells to U.S. News After Raising $155 Million" (Skift, 2024-02)
   PM 可操作性：极高（写入 PRD "产品原则·反面教材"段，作为内容生产 SOP 的负面 anchor）
   → 来源：research/demand-竞品-Culture-Trip-2026-04-18.md
-- [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [待 CEO 定档]
+- [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [🟡 v2.8 做 · 强需求但需要 Dev 改 editorial 模板，比 SOP 重]
   佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
   PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
   → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
