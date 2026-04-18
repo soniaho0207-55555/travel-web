@@ -17,7 +17,7 @@
 | 3 | 阵地 | 马伯庸-近 10 篇 | done | 2026-04-17 | pending | 中文历史叙事腔调基线 |
 | 4 | 竞品 | Google-Arts-Culture | done | 2026-04-17 | pending | 文化遗产数字化标杆 |
 | 5 | 社区 | Substack-英文深度旅行写作评论区 | done | 2026-04-17 | pending | 英文圈需求，与知乎中文圈交叉对比。原 Reddit 改 Substack（Reddit 全路径封死） |
-| 6 | 竞品 | Culture-Trip | pending | | | 反面教材：编辑内容滑向 SEO 堆砌 |
+| 6 | 竞品 | Culture-Trip | done | 2026-04-18 | pending | 反面教材：编辑内容滑向 SEO 堆砌 |
 | 7 | 社区 | B 站-历史 UP 主评论区 | pending | | | 视频受众的文字需求信号源 |
 | 8 | App | 马蜂窝+携程-差评 | pending | | | 功能层痛点，v2.8+ 消费 |
 
@@ -34,3 +34,4 @@
 | 阵地 | 马伯庸-近 10 篇 | 2026-04-17 | 3 条 | 待标 |
 | 竞品 | Google-Arts-Culture | 2026-04-17 | 1 条 | 待标 |
 | 社区 | Substack-英文深度旅行写作评论区 | 2026-04-17 | 1 条 | 待标（原 Reddit 改 Substack） |
+| 竞品 | Culture-Trip | 2026-04-18 | 1 条 | 待标（反面教材 4 教训） |

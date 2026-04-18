@@ -75,18 +75,18 @@
   佐证："99% 的历史都是帝王将相事迹，希望能通过写作让那些被尘封的小人物重新活过来" (CSDN 全景分析)；"只有理解小人物的生活才能反推大时代变迁" (中新网, 2024-10)
   PM 可操作性：高（每个景点 editorial 加 SOP："找到一个和这个地方有关的非帝王人物"）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] funFact/didYouKnow 写法 = "大藏在小里"（一个小细节入口 > 一个大标签）— 2 源支撑 [待 CEO 定档]
-  佐证："历史真正的魅力往往不在宏大的结论里，而在未被轻易察觉的小细节处" (书评 + 新湖南, 2025-12)
-  PM 可操作性：高（funFact 字段写作 SOP：找"最小的那个意外"而非"最大的那个成就"）
-  → 来源：research/demand-阵地-马伯庸-2026-04-17.md
 - [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）[待 CEO 定档]
-- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行 [待 CEO 定档]
-  佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
-  PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
-  → 来源：research/demand-社区-Substack-2026-04-17.md
   佐证：GAC 罗马页 = 14 张文物缩略图 + 百科体简介 + 零 practical info；LP = Survival Guide 极完整但 Background 章弱；AO = 奇趣命题但无 ticket-info
   PM 可操作性：高（写入 PRD "产品定位"段作为三竞品象限图；指导后续所有字段优先级决策）
   → 来源：research/demand-竞品-Google-Arts-Culture-2026-04-17.md
+- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行；**Culture Trip 配额制人类内容反面验证：批量化必质劣** [待 CEO 定档]
+  佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
+  PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
+  → 来源：research/demand-社区-Substack-2026-04-17.md
+- [2026-04-18][竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 — (1) 撰稿人配额制不可用（20+ 篇/月→ Google 搬运 → 关闭景点仍推荐）(2) commerce 不可污染 editorial（联盟链接造成选择偏见）(3) 规模化必带不准（数据库大但准确性可疑）(4) 本地编辑+复制编辑流程不可抛弃（早期对的方式被自己优化掉了）— $1.55 亿融资仍走不通，2024-02 被 U.S. News 收购 [待 CEO 定档]
+  佐证："a very disappointing listicle mill" + "writers have quotas of 20+ articles per month" + "articles published about places closed for more than one year and copied almost directly from Google search results" (Glassdoor 撰稿人原话)；"Culture Trip's Final Pivot: Sells to U.S. News After Raising $155 Million" (Skift, 2024-02)
+  PM 可操作性：极高（写入 PRD "产品原则·反面教材"段，作为内容生产 SOP 的负面 anchor）
+  → 来源：research/demand-竞品-Culture-Trip-2026-04-18.md
 
 ---
 
@@ -128,3 +128,4 @@ _（空）_
 - 2026-04-17 淘汰「[竞品 AO] Gamification 只推供给端不推消费端」 理由：短期无 UGC 落地，品牌原则已有 ticket-info 条目覆盖
 - 2026-04-17 淘汰「[竞品 AO] 单一品牌词反复锚定」 理由：品牌决策远期，腾位给操作性更高的马伯庸条目
 - 2026-04-17 淘汰「[竞品 AO] 叙事↔目录双向穿针」 理由：与知乎"步行路线串联" + Craig Mod"时代叠加"部分重叠；腾位给 Substack AI 免疫条款；🟡 v2.8 IA 调整远期
+- 2026-04-18 淘汰「[阵地 马伯庸] funFact 大藏在小里」 理由：证据弱（2 源同书评/介绍）+ 与 AO 命题式 list 概念重叠；马伯庸条目还有 whyVisit 三明治理论 + editorial 小人物 2 条主条目覆盖；腾位给 Culture Trip 反面教材
