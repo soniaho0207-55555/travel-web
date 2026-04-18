@@ -1,12 +1,12 @@
 const THEMES = [
   // H-06：帝都传奇改用"太和门"特写词条（v2.5 远景日落辨识度太低）
-  { id: 'imperial', name: '帝都传奇', emoji: '👑', cover: 'Gate of Supreme Harmony', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
-  { id: 'ancient', name: '古代奇迹', emoji: '🏛', cover: 'Great Pyramid of Giza', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 100%)' },
-  { id: 'silk-road', name: '丝绸之路', emoji: '🐪', cover: 'Mogao Caves', gradient: 'linear-gradient(135deg, #6B4C11 0%, #8B6914 100%)' },
-  { id: 'maritime', name: '海洋文明', emoji: '⚓', cover: 'Lighthouse of Alexandria', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
+  { id: 'imperial', name: '帝都传奇', emoji: '👑', subtitle: '王朝换了十几个，城墙的砖还是最早那一层', cover: 'Gate of Supreme Harmony', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C9963A 100%)' },
+  { id: 'ancient', name: '古代奇迹', emoji: '🏛', subtitle: '比《圣经》还老的石头，今天还站在风里', cover: 'Great Pyramid of Giza', gradient: 'linear-gradient(135deg, #4A3A1A 0%, #C9963A 100%)' },
+  { id: 'silk-road', name: '丝绸之路', emoji: '🐪', subtitle: '你厨房里的胡椒、葡萄和面粉，都曾是这条路上被护送的货', cover: 'Mogao Caves', gradient: 'linear-gradient(135deg, #6B4C11 0%, #8B6914 100%)' },
+  { id: 'maritime', name: '海洋文明', emoji: '⚓', subtitle: '出海的人回来时，已经不是同一个人', cover: 'Lighthouse of Alexandria', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 100%)' },
   // H-03：信仰之城换用"岩石圆顶"（Interior of Hagia Sophia 不是独立条目，wiki API 返空）
-  { id: 'religion', name: '信仰之城', emoji: '🕌', cover: 'Dome of the Rock', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
-  { id: 'renaissance', name: '文明复兴', emoji: '🎨', cover: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 100%)' },
+  { id: 'religion', name: '信仰之城', emoji: '🕌', subtitle: '同一块石头上，三个神轮流被供奉', cover: 'Dome of the Rock', gradient: 'linear-gradient(135deg, #2A1A3A 0%, #6A4A8B 100%)' },
+  { id: 'renaissance', name: '文明复兴', emoji: '🎨', subtitle: '一座城在某个早晨决定，不再相信中世纪', cover: 'Florence Cathedral', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 100%)' },
 ];
 
 const CONTINENTS = [
