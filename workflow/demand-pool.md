@@ -19,10 +19,6 @@
   佐证："36 Graves of Beloved Animals — Dogs and cats aren't the only creatures honored here." (AO /lists, 2026-04-16)
   PM 可操作性：中
   → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
-- [2026-04-17][竞品 AO] 叙事↔目录双向穿针（article 中嵌入 place 卡 + place 页反向挂 stories）— 从"读故事"滑到"去这"的双向通道 — 证据：AO article 正文嵌"In This Story" + 城市页"Stories About X" [🟡 v2.8 做 · IA 调整]
-  佐证：Hansel 文中 "In This Story — Add Quedlinburg Abbey to a New List — Destination Guide Germany 69 Articles 813 Places" (AO article, 2026-04-16)
-  PM 可操作性：中
-  → 来源：research/demand-竞品-Atlas-Obscura-2026-04-17.md
 - [2026-04-17][阵地 Craig Mod] whyVisit 字段需"城市级反主流叙事"（"为什么是它"而非"它有什么"）— Craig Mod 4 篇均把"中等城市作为大都市之外的文化保护区"作为城市的元理由，先于景点清单 [🟢 v2.7 做 · 指向城市级 overviewLong 写作规范，v2.6.1 景点级 whyVisit 写作不中断]
   佐证："These mid-sized options are more and more critical as cultures becomes more and more homogenous." (Ridgeline 221 NYT Nagasaki, 2026-01)
   PM 可操作性：高（直接修订 PRD 中 whyVisit 的写作 SOP）
@@ -35,7 +31,7 @@
   佐证：Toyohashi 段从 1945 战后黑市 → 1964-67 水上楼建设 → 现在的衰退/复兴 → 混凝土寿命的猜测 (Ridgeline 224, 2026-03)；Imoya 23 年前 → 当代咖啡馆现象 → 未来手机柜子 (Ridgeline 218, 2025-11)
   PM 可操作性：中（PRD 编辑指引："时间线最后一格必须是'现在仍在 X'或'未来可能 Y'"）
   → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
-- [2026-04-17][阵地 Craig Mod] editorial 段落长度 SOP 放开（History Reader 能读 3000 字长文，不应被"段落 ≤ 3 句"限制）— 5 篇 Ridgeline 平均 3000 字，长段（200-400 字）承载完整论证 [🟠 v2.8 评估 · 分层试验，Armchair/Parent 用户禁用长文]
+- [2026-04-17][阵地 Craig Mod] editorial 段落长度 SOP 放开（History Reader 能读 3000 字长文，不应被"段落 ≤ 3 句"限制）— 5 篇 Ridgeline 平均 3000 字，长段（200-400 字）承载完整论证 [🟢 v2.7 做 · B 站渤海小吏 3035 万播放/59 分钟铁证中文长内容容忍度，提档自 🟠]
   佐证：5 篇字数范围 2100-4000，全部≥2000；NYT Nagasaki 长达 3500-4000 字 (Ridgeline 221, 2026-01)
   PM 可操作性：中（修 PRD 内容长度 SOP；同时分层——Armchair Tier 3 仍短 / History Reader Tier 4-5 解锁长段）
   → 来源：research/demand-阵地-Craig-Mod-Ridgeline-2026-04-17.md
@@ -59,34 +55,38 @@
   佐证："打着古镇古街名号的新建的仿古商业街...就算模仿得很相似，那也看着不对味儿" (知乎 zhihu.com/question/37929762, 54 赞)；"63 个城市有'小圣托里尼'，62 有'小京都'" (界面新闻, 2021)
   PM 可操作性：低（品牌红线/内容质量底线，写入 PRD "产品原则"段；与 Craig Mod ticket-info 条目属同类）
   → 来源：research/demand-社区-历史旅行者痛点-2026-04-17.md
-- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白 [待 CEO 定档]
+- [2026-04-17][竞品 LP] 城市级 practical info 及格线（交通/到达/货币/最佳季节/签证提示）— LP 的核心强项，所有主流旅行指南（Rick Steves/Rough Guides/DK/Fodor's）均有此模块；我们完全空白 [🟢 v2.7 做 · Planner 及格线，所有竞品都有我们空白]
   佐证："logistics, from which border crossings are reliable" + "cheap eats, local buses" (WorldLocals 六品牌对比文, 2024)；LP 纸质书 Survival Guide 章 = 签证/交通/货币/紧急电话/到达方式
   PM 可操作性：高（新增城市级 practicalInfo 字段组：transport / currency / bestSeason / visaTips）
   → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）— Rick Steves 在 "storytelling, historical context" 上胜出 LP；LP 自己 2023 消费者研究承认旅行者要"fresh takes"而非传统罗列；与 Craig Mod + 知乎多条信号同方向 [待 CEO 定档]
-  佐证："today's travelers are seeking more local content, fresh takes on ways to experience popular hotspots and off-the-beaten track recommendations" (LP trade 官网, 2023)
-  PM 可操作性：高（确认 PRD 叙事深度路线正确，whyVisit/editorial 是差异化武器不是可选配置）
-  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][竞品 LP] 分区/邻里导航概念（LP 按城市分区展开景点+餐厅+住宿）— LP 独有 IA 模式，当每城景点 20+ 时有分类必要；目前每城 5-8 个景点不急 [待 CEO 定档]
-  佐证：LP 纸质书 Explore 章按分区展开；App IA 以地图+分区为核心导航 (Pratt IxD 设计评论, 2019)
-  PM 可操作性：低（远期 IA 重构，当前不急）
-  → 来源：research/demand-竞品-Lonely-Planet-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [待 CEO 定档]
+- [2026-04-17][阵地 马伯庸] whyVisit 写法 SOP 参考马伯庸"三明治理论"（大事件不变 / 生活细节考据 / 中间层填想象）+ "古今连接点"（把历史翻译成当代读者能代入的情境）— 5 源强支撑；与 Craig Mod + 知乎"认知桥"条目形成中英+用户侧三角验证 [🟢 v2.7 做 · 极高 PM 可操作性 + 6 重交叉验证]
   佐证："当代读者阅读历史小说关注的不是历史本身，而是历史与自己的连接点" (中新网专访, 2024-10)；"不去改变历史，但在细处可以发挥想象" (中新网, 2024-10)
   PM 可操作性：极高（直接产出 whyVisit 写作 SOP 模板）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] editorial 叙事切入 = 小人物而非帝王（"这里和谁有关？不是皇帝"）— 4 源支撑；与 Craig Mod"具名人物卡"+ 知乎"文学/名人/诗作"同方向 [待 CEO 定档]
+- [2026-04-17][阵地 马伯庸] editorial 叙事切入 = 小人物而非帝王（"这里和谁有关？不是皇帝"）— 4 源支撑；与 Craig Mod"具名人物卡"+ 知乎"文学/名人/诗作"同方向 [🟢 v2.7 做 · 与 whyVisit 三明治理论 + Substack AI 免疫整合一次性产出 editorial 写作 SOP]
   佐证："99% 的历史都是帝王将相事迹，希望能通过写作让那些被尘封的小人物重新活过来" (CSDN 全景分析)；"只有理解小人物的生活才能反推大时代变迁" (中新网, 2024-10)
   PM 可操作性：高（每个景点 editorial 加 SOP："找到一个和这个地方有关的非帝王人物"）
   → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][阵地 马伯庸] funFact/didYouKnow 写法 = "大藏在小里"（一个小细节入口 > 一个大标签）— 2 源支撑 [待 CEO 定档]
-  佐证："历史真正的魅力往往不在宏大的结论里，而在未被轻易察觉的小细节处" (书评 + 新湖南, 2025-12)
-  PM 可操作性：高（funFact 字段写作 SOP：找"最小的那个意外"而非"最大的那个成就"）
-  → 来源：research/demand-阵地-马伯庸-2026-04-17.md
-- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）
+- [2026-04-17][竞品 GAC] 产品象限定位 = "内容深度接近 GAC/Craig Mod，实用信息达到 LP 及格线"— 3 竞品交叉验证：AO 奇趣但浅 / LP 实用但内容弱 / GAC 策展级深但零实用 → 我们的差异化 = 中间位（叙事深度 + 实用及格线）[🔵 进 PRD 产品定位段 · 不是新功能，是产品定位坐标]
   佐证：GAC 罗马页 = 14 张文物缩略图 + 百科体简介 + 零 practical info；LP = Survival Guide 极完整但 Background 章弱；AO = 奇趣命题但无 ticket-info
   PM 可操作性：高（写入 PRD "产品定位"段作为三竞品象限图；指导后续所有字段优先级决策）
   → 来源：research/demand-竞品-Google-Arts-Culture-2026-04-17.md
+- [2026-04-17][社区 Substack] editorial 写作 SOP 加"AI 免疫条款"（必须有可辨识编辑声音/视角，避免百科体机械生成感）— 2024-2025 新涌现信号：AI 生成旅行内容泛滥 → 读者对"有人味"内容溢价；Substack 订阅市场已验证深度内容付费可行；**Culture Trip 配额制人类内容反面验证：批量化必质劣** [🟢 v2.7 做 · 与马伯庸三明治理论 + 小人物切入整合一次性产出 editorial 写作 SOP]
+  佐证：AI-generated cookie-cutter itineraries 进 Substack 读者"不想要"列 (Laura McVeigh, 2025)；"人们正在'夺回旅行写作'，回归真实故事" (评论 N.V. Foxes)；"最终是声音、独特思维方式和真实地方体验让读者产生共鸣" (同文)
+  PM 可操作性：高（PRD editorial 写作 SOP 加条款："每段必须有可辨识视角，禁止纯事实堆砌"；人工抽检 AI 味测试）
+  → 来源：research/demand-社区-Substack-2026-04-17.md
+- [2026-04-18][App 马蜂窝] editorial 长内容必须配视觉锚点系统（分段标题 / 内嵌图 / 时间线卡 / 地图标注 / 关键金句卡）— 移动端纯文字海死，但 B 站长视频活；差异在视觉锚点。马蜂窝 PC 万字长文移动化失败 vs 渤海小吏 59 分钟视频 3035 万播放 = 同长度内容因载体形式分生死 [🟡 v2.8 做 · 强需求但需要 Dev 改 editorial 模板，比 SOP 重]
+- [2026-04-18][社区 知乎] whyVisit 写作 SOP 配方："**身在现场感官代入句**"+"**个体密码分层**"— 14 个高赞答案验证：旅行+历史爱好者要的是"密码激活后的幻觉"而非知识。PM 实施 whyVisit 时按此配方：1 句感官代入 + 浅密码（通用）+ 深密码（圈内）— 把抽象的"认知桥"变可执行写作模板 [🟢 v2.7 做 · whyVisit SOP 实施配方，与 [认知桥] [三明治理论] 互为执行细节]
+  佐证："古迹...给了你一种身在现场的美好幻觉" / "看一处古迹，就能心驰神远，与历史人物共呼吸" (张佳玮 3405 赞)；"那一刻，你仿佛听见历史低沉而绵长的呼吸" (wan了个琬 200 赞 唐建陵)；"每个人所喜欢的古迹...就像一个个体密码似的" (张佳玮)
+  PM 可操作性：极高（直接产出 whyVisit 写作模板：1 感官 + 2 密码层）；附带产出中文 Tier 字数标尺 Tier 3=300-800 / Tier 4-5=1000-2500
+  → 来源：research/demand-社区-知乎旅行历史爱好者真实需求-2026-04-18.md
+- [2026-04-18][阵地 跨文明圈] **3 座例外城市**的 whyVisit 写作规则特殊处理——马丘比丘+吴哥窟+耶路撒冷不能套默认 SOP。马丘比丘/吴哥窟必须含殖民叙事（Galeano "被压迫集体"视角 vs 马伯庸"官僚小人物"）；耶路撒冷要承载创伤而非幻觉（三教交汇+多次屠城）；伊斯坦布尔可选 hüzün 集体忧郁层。避免 PM 用默认 SOP 踩雷（殖民/宗教敏感） [🟢 v2.7 做 · 写进 PRD whyVisit SOP 的"特殊城市"附录]
+  佐证："We lost; others won. But it happens that those who won, won because we lost." (Galeano《拉丁美洲被切开的血管》)；"hüzün...a communal feeling, an atmosphere and culture shared by millions" (Pamuk《伊斯坦布尔》Nobel)；Dalrymple《City of Djinns》德里 7 时代叠层 (1993 Thomas Cook Travel Book Award)
+  PM 可操作性：高（PRD whyVisit SOP 附录 3 页面级规则；12/15 城可直接用默认配方，3/15 例外）
+  → 来源：research/demand-阵地-跨文明圈叙事差异-2026-04-18.md
+  佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
+  PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
+  → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
 
 ---
 
@@ -115,7 +115,8 @@ _（空）_
 > PM 翻译成 PRD 条目后，侦察兵或 PMO 把原条目从上面移到这里（档案用）
 > 格式：`- [原条目] → PRD vX.Y 附录 X · X-## | 转化日期 YYYY-MM-DD`
 
-_（空）_
+- [竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）→ PRD v2.4 §1.1.1 第 5 条「差异化方向 = 历史文化深度，不是大而全」| 转化日期 2026-04-18
+- [竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 → PRD v2.4 §1.1.2 「反面教材 · 内容生产警戒线」全节逐条引用 | 转化日期 2026-04-18
 
 ---
 
@@ -127,3 +128,6 @@ _（空）_
 - 2026-04-17 淘汰「[竞品 AO] 景点卡三动词按钮」 理由：CEO 已标 🔴 撤，依赖用户系统本期不接
 - 2026-04-17 淘汰「[竞品 AO] Gamification 只推供给端不推消费端」 理由：短期无 UGC 落地，品牌原则已有 ticket-info 条目覆盖
 - 2026-04-17 淘汰「[竞品 AO] 单一品牌词反复锚定」 理由：品牌决策远期，腾位给操作性更高的马伯庸条目
+- 2026-04-17 淘汰「[竞品 AO] 叙事↔目录双向穿针」 理由：与知乎"步行路线串联" + Craig Mod"时代叠加"部分重叠；腾位给 Substack AI 免疫条款；🟡 v2.8 IA 调整远期
+- 2026-04-18 淘汰「[阵地 马伯庸] funFact 大藏在小里」 理由：证据弱（2 源同书评/介绍）+ 与 AO 命题式 list 概念重叠；马伯庸条目还有 whyVisit 三明治理论 + editorial 小人物 2 条主条目覆盖；腾位给 Culture Trip 反面教材
+- 2026-04-18 淘汰「[竞品 LP] 分区/邻里导航概念」 理由：PM 可操作性低（条目自承"远期 IA 重构，当前不急"）；当前每城 5-8 个景点不需要分区导航；腾位给马蜂窝视觉锚点系统
