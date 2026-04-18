@@ -5,3 +5,9 @@
 
 # Pipeline round counter (local bookkeeping)
 workflow/pipeline-rounds.log
+
+# Node dependencies (husky + devDeps) — 装起来但不进仓库
+node_modules/
+
+# husky 内部运行时 shim（pre-commit 脚本本身要进 git，_/ 目录不进）
+.husky/_/
