@@ -22,12 +22,12 @@
 | 9 | 图片 | 国内-CDN-对比 | done | 2026-04-18 | 2d93d34 | Plan B P0 · 图片大陆可用空白补齐（七牛/又拍/OSS/COS/火山） |
 | 10 | 图片 | 墙外源-ORB-拦截机制 | done | 2026-04-18 | cb1824f | Plan B P0 · 为何 Google Photos/Unsplash 被拦，何时拦 |
 | 11 | 图片 | 格式-WebP-AVIF-fallback | done | 2026-04-18 | 669af5a | Plan B P0 · 国内浏览器支持率 + `<picture>` 策略 |
-| 12 | 图片 | 渐进加载美学对比 | done | 2026-04-19 | (pending) | Plan B P0 · blur-up / LQIP / dominant color 哪种最 taste |
+| 12 | 图片 | 渐进加载美学对比 | done | 2026-04-19 | b83f016 | Plan B P0 · blur-up / LQIP / dominant color 哪种最 taste |
 | 13 | 配色 | 氛围色自适应规则 | pending | | | Plan B P1 · Apple Music + GAC + Material You 的可落地 CSS 规则 |
 | 14 | 流畅度 | iOS-26-Liquid-Glass | pending | | | Plan B P1 · 硬件 OS 过渡范式，H5 能借鉴什么 |
 | 15 | 架构 | 多轴入口移动端案例 | pending | | | Plan B P1 · Spotify/NYT Cooking/Apple Arcade 首页入口并列 |
 | 16 | 内容 | AI 年代的人类编辑信号 | pending | | | Plan B P2 · 什么样细节一眼看出"人写而非 AI" |
-| 17 | 排版 | 移动端长内容自持极限 | pending | | | Plan B P2 · Medium/Substack 移动端 typography 承压 |
+| 17 | 排版 | 移动端长内容自持极限 | done | 2026-04-19 | (pending) | Plan B P2→**P0 升级** 完成（CEO P00000 + UX 实测数据闭环）|
 
 ---
 
@@ -52,3 +52,4 @@
 | 图片 | 墙外源-ORB-拦截机制 | 2026-04-18 | 2 条 → 🔵（1 退 + 1 合并）|
 | 图片 | 格式-WebP-AVIF-fallback | 2026-04-18 | 2 条 → 🔵（替换 2 条）|
 | 图片 | 渐进加载美学对比 | 2026-04-19 | 1 条 → 🔵（替换 1 条）|
+| 排版 | 移动端长内容自持极限 | 2026-04-19 | 2 条 → 🟢（1 合并 + 1 新增替换）|
