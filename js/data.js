@@ -89,7 +89,7 @@ const CITIES = [
   whyUnique: '墙从来不是用来挡住人的——它是用来"拖慢人"。两米宽的墙顶站不住一支军队，但能把游牧骑兵拖住够久，让烽火在山顶一座一座传下去：每一公里一烽，白天狼粪烟可飘几十公里。明代沿墙驻军 100 万人，一年耗白银 2500 万两——帝国半数预算花在一道把视野变成武器的石堤上。',
   crossCivilization: '秦修长城同一百年内，罗马共和国在北非屠平迦太基（前 146 年），开始用 Limes 防线围住莱茵—多瑙河；127 年后哈德良又在英格兰修 117 公里石墙。两个帝国都在做同一件事——用石头和工程画出"我们 vs 野蛮人"。一条是墙 + 烽火，一条是堡 + 道路，方案不同，直觉相同：真正的墙不是挡敌，是给自己的内部画出一道清楚的边界。',
   detail: '八达岭的每一块条石由下方河滩运上山，人拉人抬了几代；砖面至今嵌着工匠留下的姓名戳——"韩四""张二"，他们是谁的爹谁的儿子已无从查，姓名只剩在那块砖上继续承压。冬天起风时墙顶落雪被吹得像在走一条灰白的龙。'
-}, relatedFigure: [{ name: '戚继光', era: '明', role: '将军 · 修长城的人（不是秦始皇）', link: '八达岭这段是他督造的；他留下的《练兵实纪》今天仍在军校里被读' }], yearNum: -214, wiki: 'Great Wall of China', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/The_Great_Wall_of_China_at_Jinshanling.jpg?width=1600', gradient: 'linear-gradient(135deg, #3D5A3E 0%, #8aad96 50%, #1a2d22 100%)', desc: '万里长城始建于春秋战国，总长度超过21,000公里，是人类历史上最伟大的建筑工程之一。', hours: '旺季 07:30—18:00；淡季 08:00—17:00', ticket: {
+}, relatedFigure: [{ name: '戚继光', era: '明', role: '将军 · 修长城的人（不是秦始皇）', link: '八达岭这段是他督造的；他留下的《练兵实纪》今天仍在军校里被读' }], yearNum: -214, wiki: 'Great Wall of China', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Great_Wall_of_China_at_Jinshanling.jpg/1920px-The_Great_Wall_of_China_at_Jinshanling.jpg', gradient: 'linear-gradient(135deg, #3D5A3E 0%, #8aad96 50%, #1a2d22 100%)', desc: '万里长城始建于春秋战国，总长度超过21,000公里，是人类历史上最伟大的建筑工程之一。', hours: '旺季 07:30—18:00；淡季 08:00—17:00', ticket: {
   price: '八达岭 ¥40（旺季 4-10 月 ¥40 / 淡季 11-3 月 ¥35）；慕田峪 ¥45；司马台（含夜游）¥40+',
   channels: [
     {
@@ -143,7 +143,7 @@ const CITIES = [
   whyUnique: '圆丘坛中心一块"天心石"，四周共九圈，每圈石头数是 9 的倍数：1、9、18、27……最外圈 81。站上去朝任何方向轻喊，回声被高台栏杆四面反射回耳朵，像整座天都在答应你。皇帝每年冬至在这里念一遍祝文，全国再无第二个人听见。',
   crossCivilization: '1420 年西方建筑学进入两个高潮：佛罗伦萨布鲁内莱斯基的圣母百花穹顶正要开工，靠砖的自锁对抗重力；布达佩斯、布拉格的哥特尖顶还在冲天指向神。三方都在用建筑结构向上伸——一个让砖站住、一个指神的座位、一个用九层层叠把权威叠进天数。中国选了最隐蔽的路：把数学偷偷藏在几何里，不对任何人解释。',
   detail: '秋天走进祈年殿，光从隔扇透进来，28 根柱子各自投出一道深影落在青砖地上；中央四根金丝楠木柱叫"龙井柱"，象征春夏秋冬，每根周长 4 米——四百年没一根倾斜，靠的是柱脚石础留 1 厘米缝隙让木头在地震里能轻微滑动。'
-}, relatedLiterature: [{ title: '《天工开物》', author: '宋应星', year: 1637, quote: '凡稷粟稻黍，祈年殿所祭', link: '明末一本技术书，记下了这座祭坛背后的农业观' }], yearNum: 1420, wiki: 'Temple of Heaven', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/11_Temple_of_Heaven.jpg?width=1600', gradient: 'linear-gradient(135deg, #1A4A7A 0%, #4A90C4 50%, #0d2940 100%)', desc: '天坛是明清两代皇帝祭天祈谷的场所，祈年殿三层蓝色琉璃瓦攒尖顶，纯木榫卯结构，被誉为中国古代建筑的杰作。', hours: '公园 06:00—22:00；景区 08:00—17:30', ticket: {
+}, relatedLiterature: [{ title: '《天工开物》', author: '宋应星', year: 1637, quote: '凡稷粟稻黍，祈年殿所祭', link: '明末一本技术书，记下了这座祭坛背后的农业观' }], yearNum: 1420, wiki: 'Temple of Heaven', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/11_Temple_of_Heaven.jpg/1920px-11_Temple_of_Heaven.jpg', gradient: 'linear-gradient(135deg, #1A4A7A 0%, #4A90C4 50%, #0d2940 100%)', desc: '天坛是明清两代皇帝祭天祈谷的场所，祈年殿三层蓝色琉璃瓦攒尖顶，纯木榫卯结构，被誉为中国古代建筑的杰作。', hours: '公园 06:00—22:00；景区 08:00—17:30', ticket: {
   price: '联票 ¥35（旺季 4-10 月） / ¥30（淡季）；公园门票 ¥15；60 岁以上免费',
   channels: [
     {
@@ -180,7 +180,7 @@ const CITIES = [
   whyUnique: '昆明湖按杭州西湖 1:1 复制，苏州街仿江南小镇——乾隆没去过江南，颐和园是他把江南叠进北方的方式。全园最极端一笔是长廊：728 米长、273 间，每间梁上一幅彩绘，共 4 万多幅画，从苏州园林到希腊神话都塞进去。一座廊子就是一本 18 世纪的图像百科。',
   crossCivilization: '1750 年乾隆修园子同一年，法国狄德罗《百科全书》刚出第一卷——两种百科，一种用文字一种用图像，都宣告"知识可以被穷尽"。乾隆要在一座园子装下整个江南加一部分海外，百科派要把所有人类知识压进 28 卷书。两种皇帝般的野心之后都被揭破——园子会被烧，书会被查禁，但压缩世界的欲望至今还在。',
   detail: '清晨六点佛香阁从湖面水汽里升起，整座万寿山从雾里显形的那一刻；十七孔桥上 544 头石狮子，没有两头表情相同。1888 年慈禧挪海军军费 3000 万两重修这园子时，日本正把全国预算砸进吴镇水雷艇队——六年后甲午战争，颐和园还在建，北洋水师已沉。'
-}, yearNum: 1750, wiki: 'Summer Palace', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Summer_Palace_in_Beijing_10.jpg?width=1600', gradient: 'linear-gradient(135deg, #2D6A4F 0%, #74C69D 50%, #1B4332 100%)', desc: '颐和园占地约290万平方米，万寿山与昆明湖相映，长廊、佛香阁、十七孔桥构成中国皇家园林最后的绝唱。', hours: '旺季 06:30—18:00；淡季 07:00—17:00', ticket: {
+}, yearNum: 1750, wiki: 'Summer Palace', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Longevity_Hill_of_the_Summer_Palace.jpg/1920px-Longevity_Hill_of_the_Summer_Palace.jpg', gradient: 'linear-gradient(135deg, #2D6A4F 0%, #74C69D 50%, #1B4332 100%)', desc: '颐和园占地约290万平方米，万寿山与昆明湖相映，长廊、佛香阁、十七孔桥构成中国皇家园林最后的绝唱。', hours: '旺季 06:30—18:00；淡季 07:00—17:00', ticket: {
   price: '联票 ¥50（旺季） / ¥30（淡季）；公园门票 ¥30 / ¥20；德和园 / 佛香阁需另买',
   channels: [
     {
@@ -437,7 +437,7 @@ const CITIES = [
     coords: "41°00'N 28°58'E",
     wiki: 'Sultan Ahmed Mosque',
     // J-01: 圣索菲亚日落剪影（CEO-P0-01 换图）
-    heroImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hagia_Sophia_Mars_2013.jpg?width=1600',
+    heroImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/1920px-Hagia_Sophia_Mars_2013.jpg',
     // H-02: 列表卡仍用博斯普鲁斯大桥
     wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Bosphorus_Bridge_%28235499411%29.jpeg/960px-Bosphorus_Bridge_%28235499411%29.jpeg',
     heroGradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
@@ -643,11 +643,11 @@ const CITIES = [
     coords: "35°00'N 135°46'E",
     wiki: 'Fushimi Inari-taisha',
     // J-04: 京都城市 Hero 千本鸟居近景
-    heroImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi_Inari-taisha_Torii_2018.jpg?width=1600',
-    wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Fushimi_Inari-taisha%2C_Senbon-torii.jpg/1920px-Fushimi_Inari-taisha%2C_Senbon-torii.jpg',
+    heroImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/1920px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg',
+    wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Kinkaku-ji_in_November_2016_-02.jpg/1920px-Kinkaku-ji_in_November_2016_-02.jpg',
     heroGradient: 'linear-gradient(160deg, #2a1a3a 0%, #150d20 60%, #1a2a10 100%)',
     hook: '千年古都，茶道与禅宗的最后守护者',
-    heroQuote: '二战中美军刻意绕过京都的轰炸，因为一位学者说“毁掉京都就是毁掉日本的灵魂”',
+    heroQuote: '二战中美军刻意绕过京都的轰炸，因为一位学者说‘毁掉京都就是毁掉日本的灵魂’',
     tagline: '🎨 千年古都 · 1200年',
     overview: '京都是日本天皇都城长达1100年，积淀了日本文化最精华的层次：神社、寺院、茶道、能乐、传统庭园。二战期间美军刻意绕过京都的轰炸，使其成为保存最完好的古代都市之一。',
     timeline: [
@@ -664,7 +664,7 @@ const CITIES = [
   whyUnique: '这不是景点，是一本刻在山上的企业名册。每座鸟居柱脚的黑漆小字写着供奉者姓名和年月——从 1911 年一直排到上个月。最小一座 5 万日元起捐，最大的"大鸟居"由前代持有家族负责终身维修。日本公司能活一百年不稀奇，这里半数立柱的主人家比股票代码还长寿。',
   crossCivilization: '711 年奈良时代建社那年，唐玄宗开元盛世前 5 年——中日两边的统治者都在用神给权力盖章：一个拜天子（皇帝即天的代理），一个拜稻神（天皇通过稻祭宣告与土地的血缘）。同期阿拉伯帝国倭马亚王朝正在北非建立爱资哈尔清真寺前身；三种不同神祇，三种"把权力装进宗教"的方案，各自抵达开元 / 平安 / 倭马亚三个帝国的早期顶点。',
   detail: '凌晨 4 点到 6 点走千本鸟居，朱红色在黑色山道里像一条体温管子，耳边只有自己鞋底踩松针的声。狐狸石像口中叼着四种不同的东西：稻穗、钥匙、卷轴、宝珠——谁占哪样由捐立者自选。秋天山上枫红时整个山道像被血染过一遍，游客几乎看不见自己的脚。'
-}, relatedFigure: [{ name: '秦伊呂具', era: '奈良·711', role: '渡来人氏族长', link: '不是天皇，是从朝鲜半岛来的移民家族建了这座社，感谢丰收' }], yearNum: 711, wiki: 'Fushimi Inari-taisha', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi_Inari-taisha%2C_Senbon-torii.jpg?width=1600', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '全日本3万余座稻荷神社的总本社，山道上绵延约4公里、多达10,000座朱红色鸟居。', hours: '24小时开放', ticket: {
+}, relatedFigure: [{ name: '秦伊呂具', era: '奈良·711', role: '渡来人氏族长', link: '不是天皇，是从朝鲜半岛来的移民家族建了这座社，感谢丰收' }], yearNum: 711, wiki: 'Fushimi Inari-taisha', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Fushimi_Inari-taisha_senbon-torii%2C_August_2019.jpg/1920px-Fushimi_Inari-taisha_senbon-torii%2C_August_2019.jpg', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '全日本3万余座稻荷神社的总本社，山道上绵延约4公里、多达10,000座朱红色鸟居。', hours: '24小时开放', ticket: {
   price: '免费；24 小时开放',
   channels: [
     {
@@ -1075,7 +1075,7 @@ const CITIES = [
     wiki: 'Paris',
     heroGradient: 'linear-gradient(160deg, #1a1a3a 0%, #0d0d1e 60%, #2a1a0a 100%)',
     hook: '从卢浮宫到埃菲尔铁塔，光之都永不黯淡',
-    heroQuote: '1889年，当埃菲尔铁塔拔地而起时，全巴黎的艺术家都在抗议这座“金属怪物”',
+    heroQuote: '1889年，当埃菲尔铁塔拔地而起时，全巴黎的艺术家都在抗议这座‘金属怪物’',
     tagline: '👑 光之都 · 2000年',
     overview: '巴黎是法国的心脏与灵魂。从中世纪的哥特大教堂到拿破仑的凯旋门，从印象派画家的塞纳河到香榭丽舍大道的华灯，这座城市将艺术、革命与浪漫编织成了人类文明最璀璨的篇章。',
     timeline: [
@@ -1304,7 +1304,7 @@ const CITIES = [
     wiki: 'Athens',
     heroGradient: 'linear-gradient(160deg, #2a2a1a 0%, #1a1a0d 60%, #0d1a2a 100%)',
     hook: '民主在这里诞生，哲学在这里启蒙',
-    heroQuote: '2500年前，一群雅典公民发明了一种叫“民主”的东西，至今仍在塑造世界',
+    heroQuote: '2500年前，一群雅典公民发明了一种叫‘民主’的东西，至今仍在塑造世界',
     tagline: '🏛 民主摇篮 · 3400年',
     overview: '雅典是西方文明的摇篮。在这座城市，苏格拉底追问真理，柏拉图创建学园，帕特农神庙至今仍是人类建筑美学的巅峰之作。',
     timeline: [
@@ -1857,7 +1857,7 @@ const CITIES = [
   whyUnique: 'Diwan-i-Am 大殿的「孔雀宝座」原镶 108 颗红宝石、116 颗祖母绿、186 克拉的「光之山」钻石——1739 年波斯纳迪尔沙洗劫德里时整座宝座被带走，现在"光之山"镶在英国王后王冠正中。Diwan-i-Khas 墙上刻着波斯语：「如果人间有天堂，那就是这里，就是这里，就是这里。」三遍。',
   crossCivilization: '沙贾汗 1648 年迁都、1666 年在泰姬陵隔壁被儿子奥朗则布软禁——莫卧儿帝国在「爱情与囚禁」里分裂。同期清顺治五年，多尔衮摄政、南明隆武已死；北京紫禁城刚被满人接管 4 年。两座皇宫在同一时间完成权力交接：一个父亲被儿子囚禁窗户遥望泰姬陵，一个王朝被外族取代皇帝在煤山自缢。红砂岩和紫禁城红墙同时见证帝国由盛转衰。',
   detail: '主门拉合尔门是每年 8 月 15 日印度总理发表独立日讲话的位置，从 1947 年尼赫鲁起未变——每任总理站到同一块红砂岩上向国家讲话。"Diwan-i-Khas"天花原是纯银镶金，英军 1857 年占领后拆去熔化运回伦敦；现在的天花是 1911 年英王乔治五世访印时临时补上的石膏赝品。'
-}, yearNum: 1648, wiki: 'Red Fort', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Delhi-Red_Fort-Lahori_Gate-20080210.jpg?width=1600', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C94A2A 50%, #4A0A0A 100%)', desc: '莫卧儿皇帝沙贾汗建造的红砂岩宫殿，城墙高33米。每年独立日总理在此发表讲话。', hours: '09:30—16:30，周一闭馆', ticket: {
+}, yearNum: 1648, wiki: 'Red Fort', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lahori_Gate%2C_Red_Fort%2C_Delhi.jpg/1920px-Lahori_Gate%2C_Red_Fort%2C_Delhi.jpg', gradient: 'linear-gradient(135deg, #8B1A1A 0%, #C94A2A 50%, #4A0A0A 100%)', desc: '莫卧儿皇帝沙贾汗建造的红砂岩宫殿，城墙高33米。每年独立日总理在此发表讲话。', hours: '09:30—16:30，周一闭馆', ticket: {
   price: '印度公民 ₹50；外国人 ₹600（约 ¥56）；晚间 Sound and Light Show ₹80 印 / ₹200 外',
   channels: [
     { name: '官方 ASI · eTicket 平台', url: 'https://eticket.webfront.in/asi/', note: '印度考古局统一票务；实名购票 + 时段入场，外国游客 ₹600' },
@@ -2200,7 +2200,7 @@ const CITIES = [
   whyUnique: '主殿中央塔 65 米高，与四座副塔共同象征「须弥山五峰」。日出时从西门进入，走 350 米西参道到荷花池东岸，五塔尖的倒影正好落在水面——柬埔寨国旗的图案就是这个角度。动用 30 万工匠、6000 头大象建造。',
   crossCivilization: '1150 年建成同期南宋绍兴二十年，秦桧刚死五年；西方第二次十字军东征刚失败——东西两端都在打仗，中南半岛丛林里却完成了人类史上最大的宗教建筑。南宋把资源用在临安的柳浪闻莺、吴哥把资源垒成 5.5 公里护城河、十字军把资源埋在中东沙漠里；三种文明同时期做出三种完全不同的选择，500 年后只有吴哥的石头还站着。',
   detail: '浮雕回廊长 800 米——「搅乳海」一段，阿修罗与天神用蛇拽住须弥山转 1000 年挤出甘露。1432 年此都被遗忘 400 年，1861 年法国博物学家亨利·穆奥才重新发现它——他的向导砍开丛林时，一棵木棉树的根已经从佛头上长了出来，这幅画面现在就在塔布隆寺能看到。'
-}, yearNum: 1150, wiki: 'Angkor Wat', wikiImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Angkor_Wat_temple.jpg?width=1600', gradient: 'linear-gradient(135deg, #2A3A1A 0%, #6B8A4A 50%, #1A2A0A 100%)', desc: '世界最大的宗教建筑，护城河宽190米，中央塔高65米。日出时五座塔尖的倒影是柬埔寨国旗的灵感来源。', hours: '05:00—17:30', ticket: {
+}, yearNum: 1150, wiki: 'Angkor Wat', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Sunrise_at_Angkor_Wat_Cambodia.jpg/1920px-Sunrise_at_Angkor_Wat_Cambodia.jpg', gradient: 'linear-gradient(135deg, #2A3A1A 0%, #6B8A4A 50%, #1A2A0A 100%)', desc: '世界最大的宗教建筑，护城河宽190米，中央塔高65米。日出时五座塔尖的倒影是柬埔寨国旗的灵感来源。', hours: '05:00—17:30', ticket: {
   price: 'Angkor Pass：1 日 $37 / 3 日 $62（10 日内用）/ 7 日 $72（1 个月内用）',
   channels: [
     { name: '官方 · Angkor Enterprise 在线售票', url: 'https://www.angkorenterprise.gov.kh/en/', note: '唯一官方售票（英文）；出发前在线购票可避免清晨排队 1 小时，$37 1-day / $62 3-day / $72 7-day（Cloudflare 反爬待 QA 复验）' },
@@ -2512,7 +2512,7 @@ const CITIES = [
     wiki: 'Metropolitan Cathedral, Mexico City',
     heroGradient: 'linear-gradient(160deg, #1a2a1a 0%, #0d1a0d 60%, #2a1a0a 100%)',
     hook: '湖中帝都，从特诺奇提特兰到现代巨城',
-    heroQuote: '1519年，科尔特斯看到特诺奇提特兰时说：“我们不知道这是真实的还是梦境”',
+    heroQuote: '1519年，科尔特斯看到特诺奇提特兰时说：‘我们不知道这是真实的还是梦境’',
     tagline: '👑 阿兹特克之心 · 700年',
     overview: '墨西哥城建在一座被摧毁的帝国之上。阿兹特克人曾在湖心建造特诺奇提特兰——当时世界上最大的城市之一。西班牙征服者将其夷为平地，在废墟上建起殖民城市。',
     timeline: [
