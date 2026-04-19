@@ -643,7 +643,7 @@ const CITIES = [
     coords: "35°00'N 135°46'E",
     wiki: 'Fushimi Inari-taisha',
     // J-04: 京都城市 Hero 千本鸟居近景
-    heroImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/1920px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg',
+    heroImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Fushimi_Inari_Taisha_tunnel.jpg/1920px-Fushimi_Inari_Taisha_tunnel.jpg',
     wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Kinkaku-ji_in_November_2016_-02.jpg/1920px-Kinkaku-ji_in_November_2016_-02.jpg',
     heroGradient: 'linear-gradient(160deg, #2a1a3a 0%, #150d20 60%, #1a2a10 100%)',
     hook: '千年古都，茶道与禅宗的最后守护者',
@@ -664,7 +664,7 @@ const CITIES = [
   whyUnique: '这不是景点，是一本刻在山上的企业名册。每座鸟居柱脚的黑漆小字写着供奉者姓名和年月——从 1911 年一直排到上个月。最小一座 5 万日元起捐，最大的"大鸟居"由前代持有家族负责终身维修。日本公司能活一百年不稀奇，这里半数立柱的主人家比股票代码还长寿。',
   crossCivilization: '711 年奈良时代建社那年，唐玄宗开元盛世前 5 年——中日两边的统治者都在用神给权力盖章：一个拜天子（皇帝即天的代理），一个拜稻神（天皇通过稻祭宣告与土地的血缘）。同期阿拉伯帝国倭马亚王朝正在北非建立爱资哈尔清真寺前身；三种不同神祇，三种"把权力装进宗教"的方案，各自抵达开元 / 平安 / 倭马亚三个帝国的早期顶点。',
   detail: '凌晨 4 点到 6 点走千本鸟居，朱红色在黑色山道里像一条体温管子，耳边只有自己鞋底踩松针的声。狐狸石像口中叼着四种不同的东西：稻穗、钥匙、卷轴、宝珠——谁占哪样由捐立者自选。秋天山上枫红时整个山道像被血染过一遍，游客几乎看不见自己的脚。'
-}, relatedFigure: [{ name: '秦伊呂具', era: '奈良·711', role: '渡来人氏族长', link: '不是天皇，是从朝鲜半岛来的移民家族建了这座社，感谢丰收' }], yearNum: 711, wiki: 'Fushimi Inari-taisha', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Fushimi_Inari-taisha_senbon-torii%2C_August_2019.jpg/1920px-Fushimi_Inari-taisha_senbon-torii%2C_August_2019.jpg', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '全日本3万余座稻荷神社的总本社，山道上绵延约4公里、多达10,000座朱红色鸟居。', hours: '24小时开放', ticket: {
+}, relatedFigure: [{ name: '秦伊呂具', era: '奈良·711', role: '渡来人氏族长', link: '不是天皇，是从朝鲜半岛来的移民家族建了这座社，感谢丰收' }], yearNum: 711, wiki: 'Fushimi Inari-taisha', wikiImage: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Kitsune_holding_a_Key_at_Fushimi-Inari_Taisha_-_panoramio.jpg', gradient: 'linear-gradient(135deg, #7A1A0A 0%, #E84A1A 50%, #3D0D00 100%)', desc: '全日本3万余座稻荷神社的总本社，山道上绵延约4公里、多达10,000座朱红色鸟居。', hours: '24小时开放', ticket: {
   price: '免费；24 小时开放',
   channels: [
     {
