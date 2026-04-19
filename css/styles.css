@@ -632,11 +632,11 @@ body::before {
   border-left: 4px solid var(--gold);
 }
 .overview p {
-  font-size: 17px;
+  font-size: var(--body-font-size);
   color: var(--text-primary, var(--paper));
-  line-height: 1.8;
-  letter-spacing: 0.03em;
-  font-weight: 400;
+  line-height: var(--body-line-height);
+  letter-spacing: var(--body-letter-spacing);
+  font-weight: var(--body-font-weight);
   margin: 0;
 }
 .overview-full {
