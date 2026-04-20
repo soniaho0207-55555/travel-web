@@ -16,7 +16,14 @@ https://soniaho0207-55555.github.io/travel-web/index-h5.html
 4. **图片在大屏的表现**：原本手机清晰的图，在大屏是否模糊或被拉伸
 
 ## 标准测试流程
-1. `preview_start` 打开站点
+
+### Step 0 · 环境校验（必跑，跳过本步直接 FAIL 报告）
+- `pwd` 必须输出 `/Users/wenjiehu/Documents/AI/claude code VS`（项目根，**不是** `.claude/worktrees/*` 子目录）
+- 若 pwd 不对：立即停下，报告"环境污染：cwd=<实际路径>，应在项目根"，**不要** preview_start，**不要**继续测试
+- 本 agent 测**线上 GitHub Pages**，不测本地 dev server。`preview_start` 必须显式传 `url: https://soniaho0207-55555.github.io/travel-web/index-h5.html`，禁止以 cwd 为根起本地服务
+
+### Step 1+ · 测试
+1. `preview_start { url: "https://soniaho0207-55555.github.io/travel-web/index-h5.html" }`
 2. `preview_resize` 到 1440×900
 3. `preview_snapshot` + `preview_screenshot`
 4. `preview_eval` 检查 body/main 容器的实际宽度（getBoundingClientRect）

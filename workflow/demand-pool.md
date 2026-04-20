@@ -80,10 +80,6 @@
   佐证："古迹...给了你一种身在现场的美好幻觉" / "看一处古迹，就能心驰神远，与历史人物共呼吸" (张佳玮 3405 赞)；"那一刻，你仿佛听见历史低沉而绵长的呼吸" (wan了个琬 200 赞 唐建陵)；"每个人所喜欢的古迹...就像一个个体密码似的" (张佳玮)
   PM 可操作性：极高（直接产出 whyVisit 写作模板：1 感官 + 2 密码层）；附带产出中文 Tier 字数标尺 Tier 3=300-800 / Tier 4-5=1000-2500
   → 来源：research/demand-社区-知乎旅行历史爱好者真实需求-2026-04-18.md
-- [2026-04-18][阵地 跨文明圈] **3 座例外城市**的 whyVisit 写作规则特殊处理——马丘比丘+吴哥窟+耶路撒冷不能套默认 SOP。马丘比丘/吴哥窟必须含殖民叙事（Galeano "被压迫集体"视角 vs 马伯庸"官僚小人物"）；耶路撒冷要承载创伤而非幻觉（三教交汇+多次屠城）；伊斯坦布尔可选 hüzün 集体忧郁层。避免 PM 用默认 SOP 踩雷（殖民/宗教敏感） [🟢 v2.7 做 · 写进 PRD whyVisit SOP 的"特殊城市"附录]
-  佐证："We lost; others won. But it happens that those who won, won because we lost." (Galeano《拉丁美洲被切开的血管》)；"hüzün...a communal feeling, an atmosphere and culture shared by millions" (Pamuk《伊斯坦布尔》Nobel)；Dalrymple《City of Djinns》德里 7 时代叠层 (1993 Thomas Cook Travel Book Award)
-  PM 可操作性：高（PRD whyVisit SOP 附录 3 页面级规则；12/15 城可直接用默认配方，3/15 例外）
-  → 来源：research/demand-阵地-跨文明圈叙事差异-2026-04-18.md
   佐证："万字蜂首到了移动端与九宫格图文 PK，就如同博客遇上微博，注定会逐渐没落" (界面新闻, 2023)；"上千字游记找不到一个推荐景点，不适合当作工具类 APP 使用" (用户原话)；与 [Craig Mod 段落长度] 形成精准执行配对——不只是放开段落长度，是放开 + 加视觉锚点
   PM 可操作性：高（PRD editorial 写作 SOP 加"视觉锚点 checklist"——每 N 段必须配图/卡/地图）
   → 来源：research/demand-App-马蜂窝携程差评-2026-04-18.md
@@ -117,6 +113,38 @@ _（空）_
 
 - [竞品 LP] 我们的差异化 = 历史文化深度（LP 最弱的方向）→ PRD v2.4 §1.1.1 第 5 条「差异化方向 = 历史文化深度，不是大而全」| 转化日期 2026-04-18
 - [竞品 CT] PRD 反面教材段：Culture Trip 失败 4 教训 → PRD v2.4 §1.1.2 「反面教材 · 内容生产警戒线」全节逐条引用 | 转化日期 2026-04-18
+- [阵地 跨文明圈 2026-04-18] 3 座例外城市 whyVisit 特殊处理（马丘比丘+吴哥+耶路撒冷，+ 伊斯坦布尔可选）→ PRD v3.4 §O-05「跨文明圈例外城市 crossCivilization 兜底附录」| 转化日期 2026-04-19 · 来源 research/demand-阵地-跨文明圈叙事差异-2026-04-18.md
+
+---
+
+## ⏳ 待 demand-researcher 批量核实（PM 2026-04-19 自抽遗漏）
+
+> PM 手动联动审计发现：以下 🟢 条目大概率已在 v3.0 K-01~K-08 / v3.1 L-A / v3.3 N-01 消费，但未同步归档。**PM 无权单方面归档**（越权），挂此段待 demand-researcher 下次上工批量核实 → 确认已消费的移到 ✅ 已转化。
+
+| 条目（行号在 "🌍 外部需求信号" 段） | 怀疑已落地于 | 核实方法 |
+|---|---|---|
+| [竞品 AO 2026-04-17] 命题式 List 策展 | v3.0 CURATED_LISTS（搜索页/首页） | 读 `js/data.js` CURATED_LISTS 段 |
+| [阵地 Craig Mod 2026-04-17] whyVisit "为什么是它" 反主流叙事 | v3.0 K-01 认知桥 SOP | 读 PRD §K-01 |
+| [阵地 Craig Mod 2026-04-17] editorial "时代叠加" 结构 | v3.0 K-03 epochTail + v3.3 MEANWHILE | 读 PRD §K-03 + §L-06 |
+| [阵地 Craig Mod 2026-04-17] editorial 段落长度 SOP 放开 | v3.1 L-A 4 硬规（120 字拆 + Tier 分层） | 读 PRD §L-A |
+| [社区 知乎 2026-04-17] whyVisit 从"标签"升级"认知桥" | v3.0 K-01（与 Craig Mod 互为中英验证） | 同上 |
+| [社区 知乎 2026-04-17] 景点关联"文学/名人/诗作" | data.js `relatedLiterature` / `relatedFigure` 字段已落 | 读 data.js landmark schema |
+| [竞品 LP 2026-04-17] 城市级 practical info 及格线 | v3.0 K-05 ticket completeness 六要素 | 读 PRD §K-05 |
+| [阵地 马伯庸 2026-04-17] whyVisit "三明治理论" + "古今连接点" | v3.0 K-01 SOP 明文引用 | 同上 |
+| [阵地 马伯庸 2026-04-17] editorial 小人物切入 | v3.0 K-01/K-03 已写 SOP | 同上 |
+| [竞品 GAC 2026-04-17] 产品象限定位（🔵 产品原则段） | v2.4 §1.1.1 差异化方向条款 | 读 PRD §1.1.1 |
+| [社区 Substack 2026-04-17] editorial "AI 免疫条款" | v3.0 K-01 SOP "必须有可辨识视角" | 读 PRD §K-01 |
+| [社区 知乎 2026-04-18] whyVisit "身在现场感官代入 + 个体密码" | v3.0 K-01 / v3.1 L-A | 同上 |
+| [App 马蜂窝 2026-04-18] editorial 视觉锚点系统 | v3.3 B19 绿条小标 + v3.4 O-04 .expanded-section | 读 PRD §O-04 |
+
+**未落地、保留**：
+- [竞品 AO 2026-04-17] 每日节奏钩子 "Place of the Day" —— 未做，保留 🟢
+- [阵地 Craig Mod 2026-04-17] 代表店铺/具名人物卡 —— 未做，🟡 v2.8
+- [社区 知乎 2026-04-17] 城市级步行路线 —— 未做，🟡 v2.8
+- [竞品 LP 2026-04-17] practical info 城市级（viza/交通/季节）—— 部分 K-05 只做了景点级，城市级未做，保留 🟢
+- [阵地 Craig Mod 2026-04-17] ticket-info 不抢叙事戏 🔵 —— 未明写进产品原则段，保留挂 🔵
+- [社区 知乎 2026-04-17] 品牌红线仿古商业街 🔵 —— 未写进产品原则段，保留 🔵
+- [📊 基建 CEO 2026-04-17] 大陆图片被墙 P0 🔴 —— backlog B20 挂着，Dev-H5 未派单，保留 🔴
 
 ---
 

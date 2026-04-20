@@ -94,6 +94,92 @@ DO NOT assume what other roles are doing. READ backlog.md before starting work.
 
 Dev 和 QA 不强制读研究池——他们读 PRD 就够（PRD 已是 PM 转化后的产物）。
 
+## Git 操作分工与越权规范（2026-04-19 起）
+
+### 什么是 commit（给不熟 git 的角色看）
+- commit = 一次改动的存档快照。每个 commit 都能单独回滚
+- 改了 4 个文件可以打 1 个 commit（粗）或 4 个 commit（细）
+- 粗 = 以后想撤任何一段，必须连累其他改动一起撤
+- 细 = 可以精准撤一段不影响别段
+
+### 谁来 commit + push
+
+| 场景 | 谁做 |
+|---|---|
+| PM 改动**只涉及** `PRD-travel-h5-v2.md` 一个文件 | PM 自己提交 |
+| PM 动了别的文件（CLAUDE.md / backlog / demand-pool / 代码）| 必须 PMO 提交 |
+| Dev-H5 改 H5 代码（data.js / app.js / styles.css / index-h5.html）| Dev-H5 自己提交到 dev 分支 |
+| Dev-MiniApp 改 miniprogram/** | Dev-MiniApp 自己提交到 dev 分支 |
+| dev → main merge / push main / 回滚 / force push | PMO 专属 |
+| UX / QA 任何场景 | 不提交（只读/写反馈文件，PMO 兜底提交） |
+
+### 越权规范
+
+**定义**：角色动了**非自己 Allowed to MODIFY 域**的文件 = 越权。
+
+**规则**：
+1. 越权必须在当次 session 明确声明："越权改 `<文件>`，理由 `<X>`，CEO 授权 Y/N"
+2. 未经 CEO 授权的越权 → PMO 提交前有权要求回滚
+3. CEO 授权过的越权 → 通过
+
+### 提交粒度（硬规）
+
+**跨域改动必须拆 commit**。一个 commit 只装同一个域的改动：
+- PRD 改动 → 一个 commit（message 前缀 `docs(prd):`）
+- CLAUDE.md / backlog 规则类 → 一个 commit（`docs(rules):`）
+- demand-pool 归档 → 一个 commit（`docs(demand-pool):`）
+- 代码改动 → 一个 commit（`feat(h5):` / `fix(h5):`）
+
+**禁止** 把跨域改动打成一个 commit —— 这是本项目的头号回滚风险来源（场景 1）。
+
+### 越权 / 提交常见灾难（白话）
+
+1. **粗打包牵连**：4 件事拍一张总照片，想撤 1 件只能全撤
+2. **强推覆盖**：推被拒了用 `git push -f` 硬覆盖 → 吞掉别人刚推的东西
+3. **合并失手**：和别人改了同文件，合并时误删他的或自己的改动
+4. **reset --hard**：敲错命令把自己没存档的改动直接擦了，找不回来
+5. **垃圾误推**：把 `.DS_Store` / 缓存一起推了，清理要重写历史影响所有人
+
+PMO 每天做 commit，对这 5 条有肌肉记忆；PM / Dev / UX 专注内容，遇到这些容易慌 —— 这是"跨域必须 PMO 提交"的根本理由。
+
+---
+
+## D2 红线 · 头号 icon 景点不允许占位上线（2026-04-19 起，PRD §O-06）
+
+每城 `landmarks[0]` / `[1]` / `[2]`（前 3 位 icon）必须达标：
+
+- `ticket` 对象 **4 必填**（对齐 `js/app.js:990 renderTicket`）：
+  - `price` · `channels` · `bookingWindow` · `timingTip`
+  - `photography` / `crowdAdvice` / `dressCode` 等字段当前 renderer 不显示，不列硬规（v3.5+ 候选）
+- `tips[]` **≥ 4 条**，category 至少覆盖 **3 种不同的 canonical category**（`ticket` / `timing` / `photo` / `route` / `dress` / `season` / `secret` 七选三），由 renderer 决定，不允许 PM 自造
+- 禁止字符串："补齐中" / "待更新" / "TBD" —— 任一出现 = FAIL
+
+**QA gate**：dev → main merge 前必扫 15 城 × 3 = 45 硬点位。
+**长尾景点**（landmarks[3+]）允许占位或字段缺失。
+
+**QA 扫描对象 = `js/data.js`**（不是 PRD）。PRD 只是规矩，`js/data.js` 才是落地真相。
+
+## 语言风格硬线（2026-04-20 起 · 所有角色）
+
+CEO 不是技术背景。所有角色（PM / Dev / QA / UX / PMO / Explorer / Demand）产出给 CEO 看的文字**必须白话优先**。
+
+**硬规**：
+1. 能用白话说的不用术语。比如"renderer 不认这个 category" → "把数据变成网页那段代码不认识这个分类"
+2. 必须用术语时，**紧跟一个括号白话例子**。比如 "commit（一次改动的存档快照）"、"dev 分支（草稿箱）"、"merge（把草稿复印到线上）"
+3. 列表优于段落，对比表优于列表
+4. 数字具体化。不说"很多 tips"，说"63 个 tips"
+5. 禁止："根据以上分析..." / "综上所述..." / "复核确认..."这类公文腔
+
+**检测法**：产出完自己读一遍——"如果我是 CEO 看到这段，会不会第一反应是'这啥意思'？" 会，就改。
+
+**惯犯名单**：QA / Dev / Explorer 最容易用术语（职业病）。PM / UX / Demand 相对好。但这条规**对所有人**。
+
+## dev 分支同步硬规（2026-04-20 起）
+
+PMO 每次开工用 dev 前，第一件事：`git fetch origin && git merge origin/main`。
+
+防止 main 的规则改动不倒灌回 dev（CLAUDE.md / PRD / agent 定义 等在 main 上先改的文件）。
+
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
 - Serves all static files (html, css, js) with correct MIME types
