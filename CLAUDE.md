@@ -94,6 +94,69 @@ DO NOT assume what other roles are doing. READ backlog.md before starting work.
 
 Dev 和 QA 不强制读研究池——他们读 PRD 就够（PRD 已是 PM 转化后的产物）。
 
+## Git 操作分工与越权规范（2026-04-19 起）
+
+### 什么是 commit（给不熟 git 的角色看）
+- commit = 一次改动的存档快照。每个 commit 都能单独回滚
+- 改了 4 个文件可以打 1 个 commit（粗）或 4 个 commit（细）
+- 粗 = 以后想撤任何一段，必须连累其他改动一起撤
+- 细 = 可以精准撤一段不影响别段
+
+### 谁来 commit + push
+
+| 场景 | 谁做 |
+|---|---|
+| PM 改动**只涉及** `PRD-travel-h5-v2.md` 一个文件 | PM 自己提交 |
+| PM 动了别的文件（CLAUDE.md / backlog / demand-pool / 代码）| 必须 PMO 提交 |
+| Dev-H5 改 H5 代码（data.js / app.js / styles.css / index-h5.html）| Dev-H5 自己提交到 dev 分支 |
+| Dev-MiniApp 改 miniprogram/** | Dev-MiniApp 自己提交到 dev 分支 |
+| dev → main merge / push main / 回滚 / force push | PMO 专属 |
+| UX / QA 任何场景 | 不提交（只读/写反馈文件，PMO 兜底提交） |
+
+### 越权规范
+
+**定义**：角色动了**非自己 Allowed to MODIFY 域**的文件 = 越权。
+
+**规则**：
+1. 越权必须在当次 session 明确声明："越权改 `<文件>`，理由 `<X>`，CEO 授权 Y/N"
+2. 未经 CEO 授权的越权 → PMO 提交前有权要求回滚
+3. CEO 授权过的越权 → 通过
+
+### 提交粒度（硬规）
+
+**跨域改动必须拆 commit**。一个 commit 只装同一个域的改动：
+- PRD 改动 → 一个 commit（message 前缀 `docs(prd):`）
+- CLAUDE.md / backlog 规则类 → 一个 commit（`docs(rules):`）
+- demand-pool 归档 → 一个 commit（`docs(demand-pool):`）
+- 代码改动 → 一个 commit（`feat(h5):` / `fix(h5):`）
+
+**禁止** 把跨域改动打成一个 commit —— 这是本项目的头号回滚风险来源（场景 1）。
+
+### 越权 / 提交常见灾难（白话）
+
+1. **粗打包牵连**：4 件事拍一张总照片，想撤 1 件只能全撤
+2. **强推覆盖**：推被拒了用 `git push -f` 硬覆盖 → 吞掉别人刚推的东西
+3. **合并失手**：和别人改了同文件，合并时误删他的或自己的改动
+4. **reset --hard**：敲错命令把自己没存档的改动直接擦了，找不回来
+5. **垃圾误推**：把 `.DS_Store` / 缓存一起推了，清理要重写历史影响所有人
+
+PMO 每天做 commit，对这 5 条有肌肉记忆；PM / Dev / UX 专注内容，遇到这些容易慌 —— 这是"跨域必须 PMO 提交"的根本理由。
+
+---
+
+## D2 红线 · 头号 icon 景点不允许占位上线（2026-04-19 起，PRD §O-06）
+
+每城 `landmarks[0]` / `[1]` / `[2]`（前 3 位 icon）必须达标：
+
+- `ticket` 对象 **4 必填**（对齐 `js/app.js:990 renderTicket`）：
+  - `price` · `channels` · `bookingWindow` · `timingTip`
+  - `photography` / `crowdAdvice` / `dressCode` 等字段当前 renderer 不显示，不列硬规（v3.5+ 候选）
+- `tips[]` **≥ 4 条**，category 至少覆盖 `what` + `where` + `avoid` 三类
+- 禁止字符串："补齐中" / "待更新" / "TBD" —— 任一出现 = FAIL
+
+**QA gate**：dev → main merge 前必扫 15 城 × 3 = 45 硬点位。
+**长尾景点**（landmarks[3+]）允许占位或字段缺失。
+
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
 - Serves all static files (html, css, js) with correct MIME types
