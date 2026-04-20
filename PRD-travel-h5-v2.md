@@ -6196,16 +6196,18 @@ ticket: {
 
 ```js
 tips: [
-  { category: 'what',  text: '西侧墙基留有带阿兹特克雕刻的方石——1573 年从被拆的大神庙直接搬来砌教堂，科尔特斯留下的物证' },
-  { category: 'what',  text: '中央祭坛正下方地板上有一个圆形铅锤装置——1990 年代工程师挂下去测沉降，至今仍在读数（详见主殿 detail 段）' },
-  { category: 'where', text: '内部 16 个小教堂沿十字形环绕主厅，Altar de los Reyes（王者祭坛）最值得久坐；金祭坛材质是殖民地秘鲁白银' },
-  { category: 'combo', text: '大教堂与邻接的 Templo Mayor 博物馆（阿兹特克大神庙遗址）是同一条殖民叠压叙事的两面，同一天串联，步行 2 分钟' },
-  { category: 'avoid', text: '主厅内禁用闪光灯与三脚架；金祭坛区段禁拍（现场有告示）；塔楼顶对 Zócalo 广场俯拍无限制' },
-  { category: 'avoid', text: '入内需遮蔽肩膀与膝盖（宗教场所硬规，保安会挡）；雨季（6—10 月）午后雷暴会临时关塔楼，不退票' }
+  { category: 'secret', text: '西侧墙基留有带阿兹特克雕刻的方石——1573 年从被拆的大神庙直接搬来砌教堂，科尔特斯留下的物证' },
+  { category: 'secret', text: '中央祭坛正下方地板上有一个圆形铅锤装置——1990 年代工程师挂下去测沉降，至今仍在读数（详见主殿 detail 段）' },
+  { category: 'route',  text: '内部 16 个小教堂沿十字形环绕主厅，Altar de los Reyes（王者祭坛）最值得久坐；金祭坛材质是殖民地秘鲁白银' },
+  { category: 'ticket', text: '大教堂与邻接的 Templo Mayor 博物馆（阿兹特克大神庙遗址）是同一条殖民叠压叙事的两面，同一天串联联票路线，步行 2 分钟' },
+  { category: 'photo',  text: '主厅内禁用闪光灯与三脚架；金祭坛区段禁拍（现场有告示）；塔楼顶对 Zócalo 广场俯拍无限制' },
+  { category: 'dress',  text: '入内需遮蔽肩膀与膝盖（宗教场所硬规，保安会挡）；雨季（6—10 月）午后雷暴会临时关塔楼，不退票' }
 ]
 ```
 
-**验收标准**：符合 ux-lenses 🟢 "旅游垂直 · 门票完整性"（price/channels/bookingWindow/timingTip 四渲染字段全填 + tips[] ≥ 4 条覆盖拍照/着装/combo）；**不含精确数字除非 demand-researcher 提供可追溯来源**（PM 纪律硬线，见 O-06 修订段）。
+**category 覆盖校验**：secret × 2 / route / ticket / photo / dress = **5 种 canonical 类**，满足"七选三"。
+
+**验收标准**：符合 ux-lenses 🟢 "旅游垂直 · 门票完整性"（price/channels/bookingWindow/timingTip 四渲染字段全填 + tips[] ≥ 4 条 · category 覆盖 canonical 七选三 ≥ 3 类）；**不含精确数字除非 demand-researcher 提供可追溯来源**（PM 纪律硬线，见 O-06 修订段）。
 
 ---
 
@@ -6414,7 +6416,7 @@ tips: [
 
 3. **Tips 归位硬规**：
    - tips[] ≥ 4 条（保持）
-   - category 至少覆盖 `what` + `where` + `avoid` 三类（旧版是 when/where/what，本轮调整为**包含 avoid** 以承接拍照/着装等 photography+dressCode 原意）
+   - category 至少覆盖 3 种不同的 canonical category（**仅限 `ticket` / `timing` / `photo` / `route` / `dress` / `season` / `secret` 七选三**，由 renderer 决定，不允许 PM 自造）；combo 类联票信息并入 `ticket` 类 tip 描述，不独立成类
    - "补齐中" / "待更新" / "TBD" 字符串 = FAIL（保持）
 
 4. **v3.5+ backlog**（Dev-H5 候选单）：扩 renderTicket 支持 `photography` / `crowdAdvice` 两块 UI（小标题 + body），PM 扫 45 点位补这两字段——但**本轮不做**，避免工作量虚高。
@@ -6425,7 +6427,7 @@ tips: [
 硬规：每城 landmarks[0]、landmarks[1]、landmarks[2]（各城前 3 位 icon）
       不允许任何占位：
       - ticket 对象 4 必填（price / channels / bookingWindow / timingTip）
-      - tips[] ≥ 4 条，category 覆盖 what + where + avoid 三类
+      - tips[] ≥ 4 条，category 覆盖七选三 (ticket/timing/photo/route/dress/season/secret) 中 ≥ 3 类
       - "补齐中" "待更新" "TBD" 一律 FAIL
       QA 在 dev→main merge 前扫 15 城 × 3 = 45 硬点位。
 ```
@@ -6441,6 +6443,13 @@ tips: [
 ---
 
 ## 变更日志
+
+### 2026-04-20 16:00（D2 红线修正 · PRD 内部一致性 patch）
+- 【修正】§O-06 / §K-01 / §O-01：D2 category 规则从 `what` / `where` / `avoid` → 七选三 canonical (`ticket` / `timing` / `photo` / `route` / `dress` / `season` / `secret`)
+- 【修正】combo 类不独立成类，联票信息并入 `ticket` 类 tip 描述
+- 【修正】§O-01 大教堂 tips[] category 字段翻译到七选三（secret × 2 / route / ticket / photo / dress = 5 类覆盖）
+- 原因：`what` / `where` / `avoid` 是纸面规矩，`data.js` 0 命中、`js/app.js:32 TIP_CATEGORY_ICON` 不认
+- 新增元规（CLAUDE.md 待 PMO 落地）：PM 立规前必须 grep `data.js` + `app.js` 确认 schema 实际支持
 
 ### v3.4（2026-04-19 · UX v3.3-hotfix 回访 8.5/10 驱动）· 内容校准 + SOP 升级 + 红线收紧
 
@@ -6458,12 +6467,12 @@ tips: [
 
 **数据结构变更**：
 - `landmarks[].ticket` 契约首次明文化 4 必填字段（price / channels / bookingWindow / timingTip）—— 对齐现 renderer (`js/app.js:990`)；`photography` / `crowdAdvice` / `dressCode` 暂不列硬规（renderer 未实现，挂 v3.5+ backlog）
-- `tips[].category` 约束 ≥3 类：what + where + avoid（avoid 承接拍照/着装等原 photography/dressCode 意图）
+- `tips[].category` 约束 ≥3 类 canonical：**仅限七选三 `ticket` / `timing` / `photo` / `route` / `dress` / `season` / `secret`**（对齐 `js/app.js:32 TIP_CATEGORY_ICON`）；combo 类联票信息并入 `ticket` 类 tip 描述，不独立成类
 - `crossCivilization` 例外策略字段（代码注释层，无 schema 变化）
 
 **QA 硬性红线**（任一违反 = FAIL）：
 - 任一 landmarks[0-2] 的 ticket 对象缺少 4 必填字段之一 = FAIL
-- 任一 landmarks[0-2] 的 tips[].length < 4 或 category 未覆盖 what+where+avoid 三类 = FAIL
+- 任一 landmarks[0-2] 的 tips[].length < 4 或 category 未覆盖七选三 canonical (ticket/timing/photo/route/dress/season/secret) 中 ≥ 3 类 = FAIL
 - 正文含"补齐中" / "待更新" / "TBD" 字符串 = FAIL
 - era 字段含裸朝代名歧义（"奈良" / "长安" / "古典" 等需复查清单）= 警告（QA 人工判断）
 
