@@ -201,11 +201,16 @@ CEO 不是技术背景。所有角色（PM / Dev / QA / UX / PMO / Explorer / De
 
 **用意**：CEO 看完摘要能直接复制发下一角色，不用每次追问"那现在给谁发什么"。
 
-## dev 分支同步硬规（2026-04-20 起）
+## dev 分支同步硬规（2026-04-20 起 · 补丁 2026-04-21）
 
-PMO 每次开工用 dev 前，第一件事：`git fetch origin && git merge origin/main`。
+PMO 每次开工用 dev 前，第一件事：`git fetch origin && git merge origin/main`
 
-防止 main 的规则改动不倒灌回 dev（CLAUDE.md / PRD / agent 定义 等在 main 上先改的文件）。
+**补丁（2026-04-21）**：PMO 每次合完 `dev → main` 后，**立刻做反向倒灌**：
+    git checkout dev
+    git merge origin/main
+    git push origin dev
+
+目的：让 dev 永远和 main 对齐，消除"下次用 dev 要临时追赶"的窗口。不反向倒灌 = 本次合并未完成。
 
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
