@@ -406,3 +406,79 @@ route_suggestions: [
   - `.claude/worktrees/affectionate-dirac-24badf/PRD-travel-h5-v2.md` §P-02 / §P-04 / §P-07
   - `.claude/worktrees/affectionate-dirac-24badf/js/data.js`（伊斯坦布尔三景点 whyVisit.detail）
 - **本审查**：未调用 preview_* 看实图像素（研究模式约定）；结论基于 manifest overlay 定义 + body verbatim 文本
+
+---
+
+## Part 8 · v3 二轮验收（2026-04-21）
+
+基于 v2 → v3 的三处针对性改动（PM 修 bazaar-3 body + 改 overlay 文字条；Dev 改 maps 颜色+空心环；PM 补 PRD §P-07 冷知识钩豁免），UX research mode 回审。
+
+### Q1 · bazaar-3 图文一致性 · **PASS** ✅
+
+三方 verbatim 对照：
+- **图**：保留 Nuruosmaniye 门
+- **overlay 文字条**（manifest-v3.5-exp.json line 210）："③ Nuruosmaniye · 右转 20 步"
+- **body**（PRD §P-04-C #3）："Nuruosmaniye 门进，右转 20 步就是 Kalpakcılar Caddesi——金饰主干道..."
+- **anchor 字段**：同步改为 "Nuruosmaniye 门进，右转 20 步"
+
+**理由**：四处（图 / overlay / body / anchor）全部指向同一实体 Nuruosmaniye，且"右转 20 步"把图（门）与 body（金饰街）的空间关系显式锚定——比 v1 的"从 Beyazıt 门直走"还更**现场化**。这是比修 bug 更好的副产品。
+
+---
+
+### Q2 · maps #B53A1F + 空心环 vs v2 实心盘 #E34B2C · **PASS** ✅
+
+v3 参数（manifest lines 402-461 + annotate.py lines 78-88）：
+- 颜色：`#B53A1F`（从 `#E34B2C` 调暗，正是我 P2-01 建议选项之一）
+- 类型：`outline_circle_number`（空心环，从实心 fill 改 outline stroke）
+- radius：**28px**（从 32px 降一档，更节制）
+- stroke_width：5
+- **额外**：白底 halo `#FFFFFFDD` 在环后铺（annotate.py line 86）
+
+**理由**：不只是"改色"，是完整升级到 **LP Pocket 索引色三件套**——深红色 + 空心环 + 白 halo 垫底。这比我 P2-01 只建议"调暗颜色"更进一步：Dev 主动加了空心化 + 白 halo（UX P0 建议），结果是 **LP 级严肃索引**。
+
+**不是过头复古**：
+- 深红 `#B53A1F` 不是咖啡色不是酒红，还是红色家族（索引可识别）
+- 空心环比实心盘视觉压制更轻（地图底图还能看清）
+- 白 halo 只在环下铺 2px，不是全白底 —— 不会像 19 世纪地图出版物
+
+超出我原建议的两项（空心环 + 白 halo），证明 Dev 读懂了**索引 vs 压制**这一层次。
+
+---
+
+### Q3 · PRD §P-07 冷知识钩豁免定义够锐吗 · **PASS** ✅（有微调建议）
+
+PRD verbatim（lines 6798-6799）：
+> 第一句**四选一**：时间戳 / 小人物 / 具体动作 / **冷知识钩**（v3.5-exp v3 三方审图补 · 误听/误译/悖论式开场）
+> 公式：1 动作 + 1 感官 + ≤1 年份（**冷知识钩范式豁免**——此类 body 走"反差+历史钩"节奏，不强求动作/感官）... 冷知识钩类 body（如 B#1 6 塔误听 / C#1 İç Bedesten 典故）允许无用户动作无感官
+
+**理由**：
+- **定义三要素都锐**：①识别特征（误听/误译/悖论式）②内部结构（反差+历史钩）③豁免条款（不强求动作/感官）
+- **双保险设计**：定义 + 示例 whitelist（B#1 / C#1）—— QA 扫这两条不会误判
+- **B#1（6 塔误听）**：完美命中"误听"，定义独立可判
+- **C#1（İç Bedesten 典故）**：靠 whitelist 保护。严格说 C#1 是"历史典故式"（苏丹金库→圣索菲亚发薪→你现在站这儿），是**弱悖论**不是"误听/误译"——定义独立命中有边缘，但有 whitelist 兜底
+
+**未来能让 QA 豁免 B#1/C#1 不误判吗**：**能**。
+- B#1 从定义直接过
+- C#1 从示例 whitelist 过
+- **边缘风险**（非本轮问题）：未来 PM 写**新的**"历史典故式/历史关联式"body 且不是误听/误译/悖论，QA 可能按定义判"不合豁免"→退稿。这时 PM 需要在 PRD 追加具体 case 进 whitelist。**P3 级建议**：未来可把"或历史关联式开场（典故/资金链/人物关联）"加进定义主体，让定义独立覆盖面更广。
+
+**本轮结论**：够锐 + 双保险设计稳。PRD 把"冷知识钩"升格到四选一起手式（和时间戳/小人物/具体动作平列）而不是藏在豁免条款里，语义重塑正确。
+
+---
+
+### 新评分：**8.5 → 9.5 / 10**
+
+**+1.0 怎么来的**：
+- P0-01（bazaar-3 图文不对位）→ 修复，且空间锚定比 v1 更现场化（+0.5）
+- P2-01（maps 颜色偏亮）→ 超预期修复：改色 + 空心环 + 白 halo 三件套（+0.3）
+- P2-03（冷知识钩豁免缺失）→ 补定义 + whitelist 双保险（+0.2）
+
+**仍扣的 0.5**：
+- 冷知识钩定义"误听/误译/悖论式"对 C#1 式历史典故有微弱覆盖边缘（靠 whitelist 兜底，非独立命中）。**P3 级**，不阻塞。
+- P1-01 route_suggestions 渲染规则仍在 PRD 层，Dev 实施后需第三轮验。
+
+---
+
+### 一句话总结
+
+> v3 把上轮三扣分点全部回补，两处超预期（maps 升到 LP Pocket 三件套、冷知识钩双保险设计）。可以出审。剩下 0.5 分等 Dev 实施 route_suggestions UI 时再验。
