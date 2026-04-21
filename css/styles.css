@@ -2104,3 +2104,21 @@ body::before {
   letter-spacing: 0.02em;
 }
 .practical-card.open .practical-card-body { max-height: 1200px; padding: 0 14px 14px; }
+
+/* v3.4 O-04: 主动展开段视觉锚点范式（>150 字须配绿条 + caps 小标） */
+.expanded-section {
+  border-left: 2px solid var(--gold);
+  padding-left: 12px;
+  margin-bottom: 20px;
+}
+.expanded-section-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-muted, #C9B896);
+  margin-bottom: 6px;
+}
+.expanded-section-body {
+  font-size: 15px;
+  line-height: 1.75;
+}
