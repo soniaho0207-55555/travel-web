@@ -5,7 +5,58 @@
 
 ---
 
-## Active Sprint — 2026-04-15（v2.3 内容深度 · Phase 1）
+## Active Sprint — 2026-04-21（v3.5 容器对齐手术）
+
+> **来源**：UX taste 代表战略 plan `~/.claude/plans/plan-taste-sleepy-snowglobe.md`（2026-04-21）
+> **主张**：v3.5 = 容器对齐手术，**禁止加新城 / 新景点 / 新功能**。三条动作并发，不能挑。
+> **前置硬闸**：B20 图片基建 P0 必须先通（大陆 VPN off 图片可见率 ≥ 95%），否则 Hero 图工程等于画饼。
+> **成败线**：UX 回访整体 ≥ 8.8、第 1 秒气质 ≥ 8 分的城 ≥ 12/15、大陆图片可见率 ≥ 95%、`js/data.js` ASCII 直引号 = 0。
+> **边界**：禁止混入 whyVisit.modernEcho 第 5 段 / relatedLiterature 卡片化 / 打字机同步 / 编辑人物卡 / Random Landmark 入口（均 v3.6+ / v4 候选）。
+
+### 动作 1：图片基建 P0（阻塞前提）
+
+| # | 任务 | 分配 | 状态 | 说明 |
+|---|------|------|------|------|
+| v3.5-Dev-H5-01 | **B20 升级** · Wikipedia API / `*.wikimedia.org` 迁国内 CDN 或加墙外 fallback；大陆测试账号（VPN off）图片可见率 ≥ 95% | [ASSIGNED:Dev-H5] | 🔴 P0 **BLOCKER** | 原 B20 pending 条目（PM 备忘 2026-04-19 行 544 催办）升格为 v3.5 阻塞前提。MVP 方向：本地化资源或 jsDelivr 迁移。方案需 CEO 过目成本/选型（CDN 选型请先给 3 个候选） |
+
+### 动作 2：Hero 图气质工程（决定第 1 秒）
+
+| # | 任务 | 分配 | 状态 | 说明 |
+|---|------|------|------|------|
+| v3.5-PM-01 | 15 城 Hero 图按"主编视角三选一"重选：每城 3 候选（构图/色彩/情绪三选一），拒绝 Wikipedia 默认首图；每城策展理由一句话写进 PRD。硬线：图气质年代感 vs whyVisit 时代感差距 ≤ 10 年 | [ASSIGNED:PM] | TODO | v2.7-01 候选池已有雏形。评判线示例：紫禁城 = 紫禁城实拍（非 CBD）/ 京都 = 苔寺石庭（非京都塔）/ 墨西哥城 = 大教堂内部光影（非航拍） |
+| v3.5-Dev-H5-02 | `js/data.js` 15 城 hero 字段按 v3.5-PM-01 交付更新 | [ASSIGNED:Dev-H5] | BLOCKED on v3.5-PM-01 | 图来源须过 v3.5-Dev-H5-01（否则大陆看不到） |
+
+### 动作 3：排版呼吸器（决定第 3-10 秒）
+
+| # | 任务 | 分配 | 状态 | 说明 |
+|---|------|------|------|------|
+| v3.5-Dev-H5-03 | 直引号全站 sweep：`js/data.js` 中 ASCII `"..."` → 中文弯引号 `"..."`（15+ 处一次性） | [ASSIGNED:Dev-H5] | TODO | 验收：`grep '"' js/data.js` ASCII 直引号出现次数 = 0 |
+| v3.5-Dev-H5-04 | 景点卡 click-close 事件阻止：外层 `.landmark-card` onClick 加 `e.target === this` 判断 或 close 按钮专属事件（v2.8 P1 交互遗留） | [ASSIGNED:Dev-H5] | TODO | 验收：回归 3 城 × 3 景点，点卡内任意非 × 位置不关闭 |
+| v3.5-Dev-H5-05 | `relatedLiterature` 呼吸层：**不**做卡片化（v3.6+）。最低成本：渲染加左竖线抬头 + 段落间距 + L-A 4 硬规（每段 ≤ 4 行白话）。可复用 `js/app.js` `renderTicket` / `renderLandmark` pattern + §O-04 三 class（`.expanded-section` / `.expanded-section-label` / `.expanded-section-body`，已在 styles.css 就位） | [ASSIGNED:Dev-H5] + PM 配合内容微调 | TODO | 需 PM 回看若干长段原文做必要删减以符合 L-A 4 硬规 |
+| v3.5-Dev-H5-06 | CJK 数字空格：中文与阿拉伯数字之间自动细空格（CSS 或文本层） | [ASSIGNED:Dev-H5] | TODO | 镜头已有但未全面应用；CSS 首选（无需改数据） |
+
+### PRD 章节
+
+| # | 任务 | 分配 | 状态 | 说明 |
+|---|------|------|------|------|
+| v3.5-PM-02 | PRD v3.5 章节（新建）：Hero 图策展规范 + 15 城策展理由清单 + 排版硬规（引号 / CJK 空格 / 景点卡事件 / relatedLiterature 左竖线）。参考 §O-06"头号 icon 硬规"格式写"Hero 气质硬规"（景点年代 vs 图年代差距 ≤ 10 年） | [ASSIGNED:PM] | TODO | 本章节需和 v3.5-PM-01 内容交付同轮出；Dev-H5 粘入 data.js 前必须读到 |
+
+### UX 配套（不走派单，UX research 模式自管）
+
+- `workflow/ux-lenses.md` 🟢 段新增锐镜头：**"Hero 图是气质主键——图的年代感 < whyVisit 时代感 10 年以上 = 廉价信号"**（来源 v2.8-v3.3 四轮反馈）
+
+### v3.5 release 门阀（PMO 合 main 前必过）
+
+1. v3.5-Dev-H5-01（B20）大陆 VPN off 图片可见率 ≥ 95% 实测通过
+2. v3.5-PM-01 + v3.5-PM-02 PRD 章节交付
+3. v3.5-Dev-H5-02~06 全部 DONE
+4. QA：直引号 = 0 / 景点卡交互回归 / Hero 15 城视觉扫（气质主键硬线）
+5. UX live-site 回访整体 ≥ 8.8、第 1 秒气质 ≥ 8 分的城 ≥ 12/15
+6. 任一未过 = CEO 决策复盘，不机械放行
+
+---
+
+## Previous Sprint — 2026-04-15（v2.3 内容深度 · Phase 1 · 已关闭）
 
 > **v2.2 已全量上线**（气质 7 → 8.5，1526 UAT 报告全 PASS），详见下方 Done 区。本期聚焦内容深度。
 >
