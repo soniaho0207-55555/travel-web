@@ -212,6 +212,19 @@ PMO 每次开工用 dev 前，第一件事：`git fetch origin && git merge orig
 
 目的：让 dev 永远和 main 对齐，消除"下次用 dev 要临时追赶"的窗口。不反向倒灌 = 本次合并未完成。
 
+## 所有角色开工第 0 步硬规（2026-04-21 起）
+
+任何角色新 session 第一件事：
+
+    git fetch origin && git merge origin/dev
+
+**例外**：
+- **PMO**：已有专属规则（见上"dev 分支同步硬规"），走 `git fetch origin && git merge origin/main`（它的方向是 dev→main 合并，不是消费 dev）
+- **UX-tester**（线上体验）：无需 merge，只看 GitHub Pages 部署版，不动本地
+- **QA / QA 子角色**（只读测试）：走 fetch 不走 merge（QA 的 Step 0 已专项写好）
+
+**为什么**：每个 session 在独立 worktree（git 的多工作副本功能，相当于同一仓库的多个平行工作间），本地缓存**不会**自动和 GitHub 同步。不 fetch 就看不到别人今天的产出，容易翻车——今天 PMO 就翻过一次（demand-researcher 把 2 份 research 推到 dev 后 PMO 本地没有，差点判错）。
+
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
 - Serves all static files (html, css, js) with correct MIME types
