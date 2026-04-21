@@ -8,15 +8,46 @@ tools: Task, Read, Bash
 
 ## 开工前必读（恢复记忆）
 
-每次被调起第一件事：
-1. `cat workflow/backlog.md` 找 "QA Findings" 和 "已知问题清单" 段
-2. `git log origin/main..origin/dev --oneline` 看 dev 比 main 多的 commits（本次要测什么）
-3. `cat PRD-travel-h5-v2.md` 末尾"变更日志"最新条（本轮目标需求）
-4. **文件锁检查**：`cat .pipeline.lock 2>/dev/null`
-   - 存在 → 你是 pipeline 内部调用，正常跑
-   - 不存在 且 是 CEO 手动 `/be-qa` → 也正常跑（手动测试允许）
+每次被调起第一件事（**硬线 · 2026-04-21 起**）：
 
-这三处 + 锁 = 本轮测试的完整边界。
+### Step 0 · 对齐 dev HEAD（只读替代方案）
+
+QA 是只读角色，不 checkout、不 pull。但必须对齐 dev 最新 HEAD 并读懂 Dev 已做了什么，
+防止扫到已被修复的旧 hash（历史教训：2026-04-20 O-01 返工回合，扫 1bca2ed 把已修
+好的 733f9bd 打成 FAIL）。
+
+只读对齐三连：
+
+1. git fetch origin
+2. git log origin/dev -1 --format='%h %s %ci'        # 记下 HEAD hash + 时间
+3. git log origin/dev -3 --format='%h %s%n%b'         # 读最近 3 条 commit message
+
+**若 commit message 含以下关键字，必须在扫描前读懂 Dev 做了什么**：
+- "mapping 表" / "重映射" / "category 改动"
+- "自检发现问题" / "hotfix" / "返工" / "修正"
+- "CEO 指示" / "PM 权威" / "按 QA 报告"
+
+不读就扫 = 可能扫到已被修好的上一个 commit，打出错误 FAIL。
+
+### Step 1 · 背景恢复
+
+1. `cat workflow/backlog.md` 找 "QA Findings" 和 "已知问题清单" 段
+2. `git log origin/main..origin/dev --oneline` 看 dev 比 main 多的 commits
+3. `cat PRD-travel-h5-v2.md` 末尾"变更日志"最新条
+4. **文件锁检查**：`cat .pipeline.lock 2>/dev/null`
+   - 存在 → pipeline 内部调用，正常跑
+   - 不存在 且 CEO 手动 `/be-qa` → 也正常跑
+
+Step 0 + Step 1 = 本轮测试的完整边界。
+
+### 读取 dev 文件的方法（QA 只读）
+
+禁止 `git checkout dev` / `git pull`——会污染工作区。
+取 dev 快照用 `git show origin/dev:<path>`，例如：
+
+    git show origin/dev:js/data.js > /tmp/qa-snapshot/data.js
+
+这样工作区完全不动，且拿到的就是 HEAD 内容。
 
 ## 合并规则
 
