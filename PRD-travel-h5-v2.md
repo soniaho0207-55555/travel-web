@@ -6442,7 +6442,682 @@ tips: [
 
 ---
 
+## 附录 P：v3.5-exp · 伊斯坦布尔 3 Tab 实验（2026-04-21 · experiment 分支）
+
+**定位说明**：本期是一次**定向小范围实验**，不走正常 dev→main 流程。改动仅限**伊斯坦布尔 1 城 × 3 头牌景点**（圣索菲亚 / 蓝色清真寺 / 大巴扎）+ 城市对象扩字段，代码走 `experiment/istanbul-tab-3` 分支，通过 URL `?exp=alpha` / `?exp=beta` 激活实验渲染，默认 URL（无参数）保持 v3.4 现状、线上用户零感知。
+
+**为什么要这轮实验**：
+- demand 调研（`research/demand-伊斯坦布尔-现场彩蛋-2026-04-21.md`）产出 28 条强信号现场彩蛋 + 5 条华人专属大巴扎套路，这批素材**口吻不兼容现有 tips 分类**（历史彩蛋 vs 生存警告两种文风）
+- CEO 诊断：产品当前是"沙发态"（旅行前决策），但华人游客买单的关键场景在"站立态"（到了现场怎么看、怎么不被坑）
+- Explorer 给出方案：新增"旅行中" + "Survival" 两块，α（纯滚动）和 β（3 tab）两种呈现各做一版，CEO 亲测定手感
+
+**本期合入 9 条（P-01 ~ P-07 + P-09 + P-10）**：
+- 【架构】P-01 3 Tab 架构（旅行前 / 旅行中 / Survival）字段定义
+- 【字段】P-02 landmark 新增 `onsite_map` / `onsite_spots[]` / `route_suggestions[]` / `survival_tips[]`
+- 【字段】P-03 city 新增 `survival_tips[]`
+- 【内容】P-04 伊斯坦布尔 3 景点 × 3 = 9 条 onsite_spots body 初稿（待 CEO 过稿）
+- 【内容】P-05 伊斯坦布尔 3 景点景点级 survival_tips 11 条 + 城市级 6 条（待 CEO 过稿）
+- 【规则】P-06 现有 tips[] 如何拆到 3 tab 的分类规则
+- 【规则】P-07 onsite_spots 与 survival_tips 文风硬规（来自 taste 研究，不可改）
+- 【升级】**P-09 onsite_spots 现场感特写图 + zoom lightbox**（CEO 2026-04-21 加单 · 方案 1C）
+- 【升级】**P-10 whyVisit detail 图文切片横滑**（CEO 2026-04-21 加单 · 方案 2B · 对伊斯坦布尔 3 景点生效）
+
+**与既有硬规的关系**：
+- §O-06 头牌 3 景点 `tips[] ≥ 4 条 + 七选三 category` 硬规**继续生效**，本期不改；α/β 两种渲染都要把现有 tips 拆到 3 tab 但**不删不减**
+- §L-A 4 硬规（斜体禁令 / 120 字拆段 / 200 字 1 图 / 章节标题 spec）**继续生效**，onsite_spots body 硬控 30-50 字天然合规
+- §K-01 whyVisit v3 SOP 用于**旅行前 tab**的 whyVisit 展示，不受本期影响
+
+**工作量预估**（v3.5-exp + CEO 2026-04-21 追加 P-09 + P-10 + 图片归 PM 后）：
+- PM（本篇 PRD 补丁 + 内容写作 + **22 张图全流程**）：**大**
+  - 写作：P-01~P-03 字段规范 ~1h / P-04 9 条 spots ~2h / P-05 17 条 survival ~1.5h / P-06 拆分规则 ~0.5h / P-09 字段规范 ~0.5h / P-10 切片字段 + 13 条 caption ~2.5h ≈ **8h 写作** ✅ 已完成
+  - 图片：**22 张图采集 / AI 生成 / 合成 / 手绘 + 逐张来源记录 + 交付 CEO 小样**，预估 Wikimedia/Flickr 先搜 ~2h + AI 生成 & 合成 ~5-8h + 筛选 & 优化 ~1-2h + 3 张标注图手动标圆圈 3-4h ≈ **11-16h 图片**
+  - **PM 总计 ~19-24h**（2-3 个工作日，图片是大头）
+- Dev-H5（α + β 两份渲染 + 1 行 exp 分发 + 2 个新组件 + 数据粘合）：**中**
+  - `js/experiments/alpha.js` + `beta.js` ~3h / `js/app.js` 分发 ~10min / `css/styles.css` 实验 class ~2h / `js/data.js` 伊斯坦布尔新字段粘合 ~1h / lightbox zoom 组件 ~2h / 横滑 carousel 组件 ~3h ≈ **11h**
+  - **不做采图**（PM 职责）；Dev 拿 PM 给的 22 张图 URL 做渲染即可
+- QA：**中**（验 α/β URL 激活 + 内容渲染 + 默认 URL 回归 + lightbox 交互 + carousel 横滑 + 图片加载韧性 ≈ 3h；非 Production-grade，走 experiment 分支宽松标准）
+
+**采图硬规**（CEO 2026-04-21 二次拍板 · PM 职责 · 无降级）：
+- 本期共需 **22 张图**（P-09 × 9 张 spot 特写 + P-10 × 13 张 slide 局部）
+- **硬规 1（职责）**：图片采集 / AI 生成 / 合成 / 手绘 **全部归 PM**——Dev 只负责拿到 URL 后写渲染组件代码
+- **硬规 2（质量）**：图片不允许降级成官方正面照；找不到"现场感"视角的图，**PM 必须本周期自己做**，不允许写"下一轮补救"
+- 采图路径（PM 逐条尝试，前一条不行再往下）：
+  1. **Wikimedia Commons + Flickr CC** 全搜（中英双语关键词）
+  2. **Unsplash / Pexels**（CC0 图库）
+  3. **AI 生成**（Midjourney / SD / DALL-E 3，英文细节 prompt），例："photorealistic close-up, thumb inserted into marble column hole, Hagia Sophia interior, soft window light, shallow DOF"
+  4. **合成图**（从多张 Wikimedia 官方照 PS 局部裁切 + 调色 + 叠加）
+  5. **手绘 / 线稿插画**（走风格化路线，非拟真）
+- **PM 每张图交付时必附来源说明**：Wikimedia CC / Flickr CC / AI 生成（模型 + prompt）/ 合成（底图源）/ 手绘
+- **PM 交付给 Dev 前必须给 CEO 看小样**（22 张 × 200px 缩略图一屏预览），CEO 亲自点头再交给 Dev 粘合上线；任何 CEO"这张我不满意"PM 必须本轮重做
+
+**回滚路径**：
+- 全毙 → `git branch -D experiment/istanbul-tab-3` = 消失，不入 dev/main
+- 部分通过 → α 或 β 单独 merge 到 dev → 走正常 dev→main 流程；14 城复制推 v3.6+
+
+---
+
+### P-01 · 3 Tab 架构字段定义
+
+| Tab | 定位 | 用户场景 | 复用字段 | 新字段 |
+|---|---|---|---|---|
+| **旅行前** | 沙发态，决策 + 种草 + 长读 | 家里看屏幕、做攻略 | `whyVisit` / `meanwhile` / `ticket` / `relatedLiterature` / `relatedFigure` / `worldEvents` / `note` + 旅行前类 `tips` | — |
+| **旅行中** | 站立态，现场体会历史 | 站在景点里刷手机 | — | `onsite_map` / `onsite_spots[]` / `route_suggestions[]` + 旅行中类 `tips` |
+| **Survival** | 实用警告、生存术 | 避坑、识别套路、找卡办卡 | — | landmark 级 `survival_tips[]` / city 级 `survival_tips[]` |
+
+**两种呈现（α/β 并行实验）**：
+- **α（纯滚动）**：景点详情页拆掉现有 3 tab，三 section 纵向堆叠（旅行前 → 旅行中 → Survival），整页长滚动
+- **β（3 tab）**：顶部 3 tab（旅行前 / 旅行中 / Survival），点击切换
+- **相同**：两边吃同一份数据字段，不 fork 数据；URL 无参数 = 现状不变
+
+---
+
+### P-02 · landmark 对象新增字段
+
+```js
+landmark = {
+  // ... 所有现有字段保留（whyVisit / tips / ticket / ...） ...
+
+  // 旅行中 tab 字段
+  onsite_map: "assets/landmarks/<slug>-annotated.png",  // 标注图 URL（Wikimedia 平面图 + 手动标 ① ② ③）
+  onsite_spots: [
+    {
+      n: 1,                      // 编号 1-3（对应标注图圆圈）
+      title: "许愿柱",           // 短标题 ≤ 8 字
+      body: "二楼西北角...",     // 30-50 字硬控（见 P-07 文风硬规）
+      anchor: "二楼西北角",      // 空间锚点（告诉用户站哪儿）
+      visibility: "常开"         // 见下方枚举
+    }
+  ],
+  route_suggestions: [
+    {
+      duration: "90min",         // 枚举："90min" / "3h" / "half-day"
+      label: "短线必看",
+      picks: [1, 2]              // 指向 onsite_spots[n] 的编号
+    }
+  ],
+
+  // Survival tab 字段（景点级）
+  survival_tips: [
+    {
+      kind: "scam",              // 枚举：scam / logistics / etiquette / practical
+      severity: "high",          // 枚举：high / medium / low
+      title: "10 美元拍照套路",  // ≤ 10 字
+      body: "地毯店会..."        // ≤ 60 字（见 P-07 Survival 口吻）
+    }
+  ],
+}
+```
+
+**`visibility` 枚举（解决 demand 发现的"彩蛋周期性封闭"问题）**：
+- `"常开"` —— 默认，全年可见
+- `"2024-2025 期间关闭"` —— 明确的阶段性关闭（带年份）
+- `"以入场当日为准"` —— 状态可能临时变化（祷告时段 / 修缮 / 礼拜区隔帘）
+
+**`kind` 枚举**：
+- `scam` —— 商家套路、诈骗、误导性推销
+- `logistics` —— 交通、卡务、购票路径、入口选择
+- `etiquette` —— 着装、礼拜时段、寄存、行为规范
+- `practical` —— 货币、饮水、小费、支付方式、砍价规则
+
+**`severity` 枚举**：仅用于 `scam` 和 `etiquette`（high = 不知道会直接亏钱/被拦；medium = 皱眉级；low = 锦上添花）；`logistics` 和 `practical` 不强制填。
+
+---
+
+### P-03 · city 对象新增字段
+
+```js
+city = {
+  // ... 所有现有字段保留（practicalInfo / landmarks / timeline / ...） ...
+
+  // Survival tab 字段（城市级，不用 severity）
+  survival_tips: [
+    {
+      kind: "logistics",         // 枚举同景点级
+      title: "IstanbulKart 办卡",
+      body: "机场和地铁站..."    // ≤ 80 字
+    }
+  ],
+}
+```
+
+**`practicalInfo` vs `city.survival_tips` 的分工（防字段语义混淆）**：
+- `practicalInfo` = "这座城市值得来的客观现实"（transport / currency / bestSeason / visaTips 四段式，长句可接受）
+- `city.survival_tips` = "到了别踩的坑、必办的卡、必懂的规则"（短条目、kind 分类、实用导向）
+- 两者内容**允许小量重叠**（如货币 + 信用卡），但呈现形态不同：practicalInfo 在城市 overview 里一段话展示，survival_tips 在 Survival tab 里独立卡片
+
+---
+
+### P-04 · 伊斯坦布尔 3 景点 × 3 = 9 条 onsite_spots 初稿
+
+> **状态**：本节内容 **CEO 未过稿**。PM 严格按 taste 硬规（P-07）+ demand 素材池（`research/demand-伊斯坦布尔-现场彩蛋-2026-04-21.md`）写出 9 条，每条附 **demand 素材出处**。CEO 亲自通读后定稿，PM 再修订。
+
+#### P-04-A · 圣索菲亚大教堂（3 条）
+
+**选取理由**：demand 池 10 条中，取 3 条 3+ 源强信号、华人可见性稳定、"认知桥"最硬。**维京涂鸦**虽强信号但 2024-2025 可能封闭（走 `visibility: "以入场当日为准"` 在 Survival 提示即可，不占 spots 编号），**Zoe 马赛克**同理。
+
+**#1 · 许愿柱**（demand 源 · 3+：Walktionary / hagiasophia.tours / Istanbul Airport blog）
+- `n`: 1 · `title`: "许愿柱" · `anchor`: "二楼西北角" · `visibility`: "常开"
+- `body`：二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。
+- **字数**：45 字 ✓
+- **自检**：起手式=小人物（朝圣队伍）+ 具体动作（拇指塞进+转）；1 动作 + 1 感官（出汗、凹洞触感）+ 1 年份（一千年）；"我们去过"痕迹=凹洞位置具体
+
+**#2 · Dandolo 墓碑**（demand 源 · 2+：Walktionary / hagiasophia.tours）
+- `n`: 2 · `title`: "Dandolo 墓碑" · `anchor`: "二楼南廊地板" · `visibility`: "常开"
+- `body`：二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。
+- **字数**：48 字 ✓
+- **自检**：起手式=小人物（Dandolo 具名）；1 动作（踩）+ 1 感官（脚下石板）+ 1 年份（1204）；痕迹=具体位置二楼南廊
+
+**#3 · 8 块阿拉伯书法圆盘**（demand 源 · 2+：Walktionary + 中文携程）
+- `n`: 3 · `title`: "8 块书法圆盘" · `anchor`: "中殿上空" · `visibility`: "常开"
+- `body`：中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪一个叫 Kazasker 的人用毛笔写的。
+- **字数**：50 字 ✓（上限）
+- **自检**：起手式=具体动作（抬头）；1 动作 + 1 感官（视觉尺寸压迫感）+ 1 年份（19 世纪）；痕迹=具体尺寸 + 书法家名字
+
+#### P-04-B · 蓝色清真寺（3 条）
+
+**选取理由**：demand 池 9 条中，取 3 条 3+ 中英源强信号。**6 宣礼塔误听**是"具名人物+误会转折"教科书案例；**21043 块瓷砖**是 5+ 源最硬的视觉锚点；**鸵鸟蛋**是"只有真抬头看才发现"的绝佳现场彩蛋。
+
+**#1 · 6 宣礼塔误听**（demand 源 · 5+：Britannica / Istanbul Insider / 新浪菜菜 / 少数派）
+- `n`: 1 · `title`: "6 根宣礼塔" · `anchor`: "Sultanahmet 广场正面" · `visibility`: "常开"
+- `body`：6 根宣礼塔：苏丹本说 altın（金色），工匠听成 altı（六）。全世界只有麦加准 6 塔，苏丹最后出钱给麦加加第 7 塔平事。
+- **字数**：49 字 ✓
+- **自检**：起手式=冷知识钩（从数塔进入，具体动作锚定）；1 事实 + 1 误会 + 1 外交转折；痕迹=土耳其语词 altın/altı（非真了解写不出）
+
+**#2 · 21043 块 Iznik 瓷砖**（demand 源 · 5+：Wikipedia / bluemosque.gen.tr / 中文百科 / 新浪博客）
+- `n`: 2 · `title`: "蓝瓷砖天花板" · `anchor`: "大殿中央抬头" · `visibility`: "常开"
+- `body`：推门进去抬头——整面蓝压下来。21043 块瓷砖上 54 种郁金香图案，盯着每一个进来的人，400 年。
+- **字数**：47 字 ✓
+- **自检**：起手式=具体动作（推门+抬头）；1 动作 + 1 感官（视觉"蓝压下来"）+ 1 年份（400 年）；痕迹=具体数字 21043 + 54（非泛化）
+
+**#3 · 鸵鸟蛋吊灯**（demand 源 · 3+：Blue Mosque Tickets / TheTourGuy / bluemosque.gen.tr）
+- `n`: 3 · `title`: "吊灯里的鸵鸟蛋" · `anchor`: "主殿吊灯" · `visibility`: "常开"
+- `body`：仔细看主殿吊灯之间：几个鸵鸟蛋。古人信蛋壳味驱虫，蜘蛛不结网。这招 400 年前的工匠窍门还挂在你头顶。
+- **字数**：49 字 ✓
+- **自检**：起手式=具体动作（仔细看）；1 动作 + 1 感官（视觉+暗示气味）+ 1 年份（400 年）；痕迹=只有真抬头看吊灯才会注意到蛋壳
+
+#### P-04-C · 大巴扎（3 条）
+
+**选取理由**：大巴扎"历史彩蛋"（非华人专属套路）池 10 条中取 3 条。**İç Bedesten** 是集市起点最硬锚；**Zincirli Han** 是"99% 游客绕过"的冷门庭院；**金饰街 Kalpakcılar Caddesi** 是最实用的"从哪个门进"锚点。华人专属套路 5 条走 Survival tab（见 P-05-C），不占 onsite_spots。
+
+**#1 · İç Bedesten**（demand 源 · 4+：Istanbul Tour Studio / Eskapas / Private Istanbul Tour Guide）
+- `n`: 1 · `title`: "İç Bedesten" · `anchor`: "集市几何中心" · `visibility`: "常开"
+- `body`：集市中央 15 顶石屋是第一间房——1461 年苏丹建的金银保险库，给圣索菲亚发工资的钱就锁这儿。
+- **字数**：47 字 ✓
+- **自检**：起手式=具体动作（集市中央）+ 小人物（苏丹、圣索菲亚职员）；1 年份（1461）；痕迹=15 圆顶 + 具体资金流向
+
+**#2 · Zincirli Han**（demand 源 · 3+：Matador Network / Lonely Planet / Istanbul Tour Studio）
+- `n`: 2 · `title`: "Zincirli Han" · `anchor`: "东北出口拐角小门" · `visibility`: "常开"
+- `body`：东北拐角一扇小门推进去：Zincirli Han 庭院——大理石喷泉、老珠宝作坊、1708 年的石墙，游客 99% 绕过它。
+- **字数**：50 字 ✓
+- **自检**：起手式=具体动作（东北拐角推门）；1 动作 + 1 感官（视觉庭院）+ 1 年份（1708）；痕迹=99% 绕过（真去过才知道的冷门锚点）
+
+**#3 · 金饰街 Kalpakcılar**（demand 源 · 2+：Eskapas / OneNationTravel）
+- `n`: 3 · `title`: "金饰主干道" · `anchor`: "Nuruosmaniye 门进，右转 20 步" · `visibility`: "常开"
+- `body`：Nuruosmaniye 门进，右转 20 步就是 Kalpakcılar Caddesi——金饰主干道。两侧全是金店，比一圈再砍价，别进第一家就买。
+- **字数**：54 字（≤60 健康）
+- **自检**：起手式=具体动作（进门右转）；空间锚点（门名 + 步数 + 街名）；实用 + 痕迹（"别进第一家"=真逛过才会说）
+- **v3.5-exp v3 三方审图 P0-1 修订**（2026-04-21）：原 body "从 Beyazıt 门直走" 和图 `bazaar-gate.jpg`（Nuruosmaniye 门）事实不一致（三方一致命中）；修订后以"Nuruosmaniye 门"为起点，body 改 + 图保留。建议来源：UX tester "最轻改法"判断 —— Nuruosmaniye 门是大巴扎东北门，进门后右转即接 Kalpakcılar Caddesi（金饰街），地理成立。
+
+#### P-04 · route_suggestions 示例
+
+每景点 3 个 spots 都上 `route_suggestions`：
+
+```js
+// 圣索菲亚
+route_suggestions: [
+  { duration: "90min", label: "短线必看", picks: [1, 2] },      // 许愿柱 + Dandolo
+  { duration: "3h",    label: "深度",     picks: [1, 2, 3] }    // + 书法圆盘
+]
+// 蓝色清真寺同构
+// 大巴扎同构，但 90min 建议 picks: [3, 1]（金饰街起步 + İç Bedesten），因为集市是"走完再回头看"的空间逻辑
+```
+
+---
+
+### P-05 · survival_tips 初稿（景点级 11 条 + 城市级 6 条）
+
+> **状态**：同 P-04，**CEO 未过稿**。所有 body 严格按 P-07 Survival 口吻（Lonely Planet Safe Travel 直给式，不套时间戳/小人物起手）。
+
+#### P-05-A · 圣索菲亚景点级 survival（3 条）
+
+**#1 · 着装与正午祷告**（kind: etiquette, severity: medium）
+- `title`: "女性头巾 + 正午闭门"
+- `body`：女性需覆肩盖膝戴头巾（门口可免费借）。避开正午 13:00 Zuhr 祷告和日落 Maghrib——通道会关。
+
+**#2 · 2024 分层收费**（kind: logistics, severity: medium）
+- `title`: "上层 €25 下层免费"
+- `body`：2024 年起游客上层 €25，清真寺礼拜下层对穆斯林免费。游客入口在建筑北侧独立门。
+
+**#3 · 修缮期告知**（kind: practical）
+- `title`: "彩蛋可能看不到"
+- `body`：2020 年改回清真寺后，二楼部分区域周期性封闭。维京涂鸦和 Zoe 马赛克 2024-2025 期间可能看不到——入场当日看公告。
+
+#### P-05-B · 蓝色清真寺景点级 survival（3 条）
+
+**#1 · 着装要求**（kind: etiquette, severity: high）
+- `title`: "着装限制严格"
+- `body`：女性进门前必须覆肩、盖膝、包头。门口有免费借头巾。男性避免短裤，会被拦下。
+
+**#2 · 主麻与礼拜闭门**（kind: logistics, severity: medium）
+- `title`: "周五主麻关门"
+- `body`：周五 12:30-14:00 主麻礼拜全程闭门不对游客开放。其他日子每天 5 次礼拜各关 15-20 分钟。
+
+**#3 · 脱鞋流程**（kind: etiquette, severity: low）
+- `title`: "塑料袋自拎鞋"
+- `body`：入口处免费发塑料袋装鞋，自行拎进去。回来对应架子拿——没有寄存人员。
+
+#### P-05-C · 大巴扎景点级 survival（5 条，优先级最高）
+
+这 5 条是 demand 发现的**华人专属信号**、英文攻略空白区、PRD 面向华人受众的核心差异化护城河。
+
+**#1 · 义乌货辨假**（kind: scam, severity: medium）
+- `title`: "义乌货满场"
+- `body`：很多"土耳其产"小商品印着 MADE IN YIWU。翻背面标签最快。手工地毯 / 铜器 / 陶瓷三类仍是本地工匠做的。
+
+**#2 · "我们是朋友"中文招揽**（kind: scam, severity: medium）
+- `title`: "中文套近乎"
+- `body`：店家看到中国面孔会用中文招呼"我们是朋友"。这是招揽话术，不是示好——听到请保持议价距离。
+
+**#3 · 地毯店 10 美元拍照**（kind: scam, severity: high）
+- `title`: "10 美元拍照"
+- `body`：地毯店会拉你进去穿民族服拍照，结束后收 10 美元。想拍先问价，不想拍直接走别客气。
+
+**#4 · 端茶上楼私店**（kind: scam, severity: high）
+- `title`: "上楼喝茶陷阱"
+- `body`：店家聊得热络后请你"上楼喝茶"——楼上是他家私店，出了公用集市砍价空间直接砍半。
+
+**#5 · 砍价 3 折规则**（kind: practical）
+- `title`: "开价砍到 30%"
+- `body`：开价先砍到 30-40%。商家期待还价是规矩，不砍反被视为不尊重。周一上午 10 点开店头半小时议价空间最大。
+
+#### P-05-D · 伊斯坦布尔城市级 survival（6 条）
+
+**#1 · 两机场别订错**（kind: logistics）
+- `title`: "IST vs SAW"
+- `body`：两机场别订错：IST 欧洲区，大巴到 Taksim 60 分钟 ₺150；SAW 亚洲区进市区绕路。订票先确认机场代码。
+
+**#2 · IstanbulKart 办卡**（kind: logistics）
+- `title`: "IstanbulKart 一卡通"
+- `body`：机场和地铁站自助机办 IstanbulKart，押金 ₺70。地铁 / 电车 / 轮渡 / 公交通刷，比单次票便宜 40%。
+
+**#3 · 清真寺着装**（kind: etiquette）
+- `title`: "清真寺入场装"
+- `body`：进清真寺女性需覆肩盖膝戴头巾。多数寺门口有免费借。男性避免短裤。背包多的清真寺会要求寄存。
+
+**#4 · 货币与支付**（kind: practical）
+- `title`: "里拉少兑勤兑"
+- `body`：土耳其里拉通胀严重，少兑勤兑。商铺多接美元 / 欧元但汇率吃亏。景点门票和小店多须现金。Garanti / İş Bankası ATM 最稳。
+
+**#5 · 自来水别喝**（kind: practical）
+- `title`: "自来水别生饮"
+- `body`：自来水不建议生饮。超市小瓶矿泉水 ₺10 上下。餐厅问 "still or sparkling" 再上瓶装水，默认会收 ₺20-30/瓶。
+
+**#6 · 小费与 servis dahil**（kind: etiquette）
+- `title`: "小费 10% 上下"
+- `body`：餐厅结账付现凑整数或留 10% 即可——账单写 "servis dahil" 则含服务费，再加就是双收。出租车不加。
+
+---
+
+### P-06 · 现有 tips[] 拆到 3 tab 的分类规则
+
+**原则**：本期**不迁移数据**（data.js 现有 tips 不动），由 α/β 渲染层按 `tips[i].category` 自动分配到对应 tab。
+
+| 现有 category | → 分配到哪个 tab | 理由 |
+|---|---|---|
+| `ticket` | 旅行前 | 票务信息是决策前的功课 |
+| `cold` / `season` | 旅行前 | 季节 / 穿衣属于出发前准备 |
+| `dress` | 旅行前 | 提前备头巾 / 长裤，现场才不慌 |
+| `timing` | **默认旅行前**，但若 body 明显是"到了怎么选时段"（如"开园第一小时"）则旅行中 | 判断规则：含"旺季 / 淡季 / 几月"→旅行前；含"当日开园 / 当天 / 入场后"→旅行中 |
+| `photo` | 旅行中 | 拍照位是站在现场时的需求 |
+| `walking` / `route` | 旅行中 | 动线是到了怎么走 |
+| `secret` | **默认旅行中** | "99% 人错过" 类本质是"到了别漏看"，更像彩蛋 |
+
+**Dev 实施**：α/β 渲染器读 `landmark.tips` 后按上表规则 `group by tab`，再分别渲染。边界情况（如 timing 里既有"淡季提前 7 天"又有"开园第一小时"混合条目）走**默认规则**（timing → 旅行前），本轮不做细拆。实验版容错优先。
+
+**反向确认**：本期伊斯坦布尔 3 景点现有 tips 按此规则分配后的分布（PM 已逐条核对）：
+
+| 景点 | 旅行前 | 旅行中 | 合计 |
+|---|---|---|---|
+| 圣索菲亚 | ticket/dress/timing = 3 | photo/route/secret = 3 | 6 |
+| 蓝色清真寺 | ticket/dress/timing = 3 | photo/walking = 2 | 5 |
+| 大巴扎 | ticket/timing = 2 | walking × 2 = 2 | 4 |
+
+分配后两 tab 都非空，实验可行。
+
+---
+
+### P-07 · 文风硬规（taste 研究沉淀 · 不可改）
+
+**来源**：`research/taste-历史现场彩蛋+动线文风-2026-04-21.md`。研究已进 `workflow/ux-lenses.md` 三条镜头（彩蛋起手锚点 / 动线表达层级 / 地图 caption 动词先行 / 历史短文四病）。本节把 taste 研究"可操作产出"原文引用到 PRD，供 PM/Dev/QA 共同对表。
+
+#### P-07-A · `onsite_spots.body` 文风硬规（旅行中 tab）
+
+**✅ Do**：
+| 范式 | 示例 |
+|---|---|
+| 第一句**四选一**：时间戳 / 小人物 / 具体动作 / **冷知识钩**（v3.5-exp v3 三方审图补 · 误听/误译/悖论式开场）| "永乐十八年..." / "推门抬头..." / "6 根宣礼塔：苏丹本说 altın，工匠听成 altı..." |
+| 公式：1 动作 + 1 感官 + ≤1 年份（**冷知识钩范式豁免**——此类 body 走"反差+历史钩"节奏，不强求动作/感官） | 动作先行（推门 / 抬头）+ 感官细节（蓝压下来）+ ≤1 个年份；冷知识钩类 body（如 B#1 6 塔误听 / C#1 İç Bedesten 典故）允许无用户动作无感官 |
+| 30-50 字硬控，超了拆成段 | 不硬压字；超过 150 字 = 移动端弃读警报（ux-lenses"单段 viewport 上限"） |
+| 动词先行 | "推门" > "这座建筑始建于" |
+| 第二人称现在时 | "你抬头看" > "游客可以看到" |
+
+**❌ Don't**：
+| 病名 | 禁止词库 |
+|---|---|
+| 套话起手 | "那是一个 XX 的时代" / "自古以来" / "历史长河" / "盛唐" / "鼎盛" 开头 |
+| 考据癖 | 一句内 ≥ 4 个年份 / 人名全名 / 括号 |
+| 文青腔 | "千年风华" / "岁月如梭" / "镌刻着时光" / "静静诉说" |
+| AI 默认词库 | "承载着" / "蕴含着" / "彰显着" / "不仅…更…" / "值得一提的是" / "在历史长河中" / "令人叹为观止" |
+| 廉价词库（ux-lenses） | "必去 / 绝美 / yyds / 保姆级 / 避坑 / 宝藏 / 天花板" —— 任一出现 = 立刻改 |
+| "小 XX" 借势 | "小巴黎 / 小京都 / 小圣托里尼" = 没有独立审美，禁用 |
+| emoji 花束 | 标题或段首堆 > 2 个 emoji（🌟🔥💥📍✨）= MCN 营销模板，禁用 |
+
+#### P-07-B · `survival_tips.body` 文风硬规（Survival tab，与 onsite_spots 不同）
+
+Survival 是**实用警告**，不讲历史故事，不需要时间戳 / 小人物起手，走 **Lonely Planet "Safe Travel" 式直给口吻**：
+
+**✅ Do**：
+- 直给：不加戏，不讲故事
+- 短：一句能说清的不多说；`body` ≤ 60 字最健康，≤ 120 字绝对上限（ux-lenses 移动端 viewport）
+- 警告句优先：主语"你"，动词"避免 / 注意 / 别 / 如果"
+- 具体数字 / 金额 / 时段必须给出（"₺150 大巴 60 分钟" > "机场有大巴"）
+
+**❌ Don't**：
+- 套时间戳 / 小人物起手（那是历史叙事范式，Survival 里会跳戏）
+- 加修饰形容词（"美丽的" / "热情的老板" / "令人陶醉的")
+- 廉价词库同上（"避坑 / 保姆级 / 宝藏" = 立刻改）
+- 把 Survival 写成游记口吻（"记得有一次我在伊斯坦布尔……" = 失焦）
+
+#### P-07-C · `onsite_map` 标注图排版硬规
+
+- 图底：简化线稿 / 平面图（Wikimedia 常见），**不用** Google Maps 截图 / 卫星图
+- 编号：红圈 + 数字 ① ② ③（手动 Figma / Photopea 标），直径 12-16pt
+- 数量：**固定 3 个**（对齐 onsite_spots[3]）—— 不按 LP 的"3-8 区间"扩容，实验版控规模
+- caption：**不压在图上**——caption 走 `onsite_spots.body` 独立渲染
+- 3 张 PNG 由 Dev 或 PM 制作（Explorer plan 风险 1 已标，预估 30-60 分钟/张 × 3）
+
+---
+
+### P-09 · onsite_spots 现场感特写图 + zoom lightbox（CEO 2026-04-21 加单 · 方案 1C）
+
+**问题（CEO 提出）**：P-04 只靠一张平面标注图（3 个红圈）+ 文字 anchor（"二楼西北角"）。用户即使看到圈位置，也不知道**要找的那个东西长什么样**——许愿柱是独特造型还是混在一堆柱子里？Dandolo 墓碑是刻字石板还是凸起雕塑？结果：现场"对着 body 对照物件"的最后一步断掉。
+
+**解法**：每个 spot 配一张**"现场感"特写图**（不是明信片），点击可放大到全屏 lightbox 看细节。
+
+#### P-09 · `onsite_spots[]` 字段扩展
+
+```js
+onsite_spots: [
+  {
+    n: 1, title: "许愿柱", body: "...", anchor: "二楼西北角", visibility: "常开",
+
+    // P-09 新字段
+    image: "assets/landmarks/hagia-sophia-weeping-column.jpg",  // 现场感特写 URL
+    image_alt: "许愿柱二楼西北角凹洞特写，石柱表面有湿润痕迹",  // 无障碍 + SEO
+    zoom: true,                                                  // 可点击全屏放大（默认 true）
+    photo_credit: "Wikimedia · 用户名 (CC BY-SA 4.0)"           // CC 协议要求署名
+  }
+]
+```
+
+**字段规范**：
+- `image`：**必填**；采图路径见本附录顶部"采图硬规"；**不允许降级成官方正面照**；找不到现场感视角的要自己做（AI / 合成 / 手绘）
+- `image_alt`：**必填**；一句话描述图内容 + 空间锚点（帮助盲人用户和搜索引擎）
+- `zoom`：默认 `true`；点击进入 lightbox 全屏黑底 + 图 + 关闭按钮；支持 pinch zoom
+- `photo_credit`：**必填**；CC 协议强制署名 / AI 生成注明模型 + prompt / 合成注明底图源 / 手绘注明作者；lightbox 底部小字显示
+
+#### P-09 · "现场感"视角硬规
+
+| ✅ 要的视角 | ❌ 不要的视角 |
+|---|---|
+| 局部特写（许愿柱凹洞、墓碑刻字、蛋壳形状）| 远景明信片（圣索菲亚正立面、大殿全景） |
+| 手/脚/身体部分入画（有人味）| 空景官方照（标准博物馆视角） |
+| 光线斜射的时刻（早晨/傍晚，有影子） | 正午平光（所有博物馆手册默认） |
+| 有尺度感（人在旁边 / 对比物体）| 独立物件无参照（读者无法判断大小） |
+| 轻微失焦 / 纪实感 | 棚拍 / 产品图 |
+
+**对照 ux-lenses**：
+- 🔵 "细节 zoom 能力" —— P-09 的 lightbox zoom 直接对应 GAC Gigapixel 金标准
+- 🟢 "第一张图选择" —— "局部切片"视角而非"明信片"
+- 🟢 "图片加载韧性" —— `<img>` 必须带 `aspect-ratio` + `onerror` 兜底
+
+#### P-09 · 9 条 spots 采图需求清单（PM 采图用）
+
+| # | spot | 理想视角 | PM 采图预测路径 |
+|---|---|---|---|
+| 1 | 许愿柱 | 凹洞特写 + 手/拇指入画 | Wikimedia 有柱照无手视角 → **AI 生成或合成**（柱子 + 手叠加） |
+| 2 | Dandolo 墓碑 | 地板石板刻字俯拍 + 脚一角入画 | Wikimedia 可能有俯拍 → 找不到 AI 合成脚 |
+| 3 | 书法圆盘 | 仰拍一块圆盘 + 大殿柱子尺度 | Wikimedia 有 |
+| 4 | 6 宣礼塔 | Sultanahmet 广场正对蓝清拍 6 塔 | Wikimedia 有 |
+| 5 | 蓝瓷砖 | 大殿中央抬头看穹顶瓷砖 | Wikimedia 有 |
+| 6 | 鸵鸟蛋吊灯 | 吊灯链条间蛋壳特写 | 冷门细节 → **AI 生成 prompt**"ostrich egg hanging between chain links of ottoman-era chandelier, close-up, dim mosque interior" |
+| 7 | İç Bedesten | 15 顶石屋内部穹顶仰拍 | Wikimedia / Flickr 覆盖尚可 |
+| 8 | Zincirli Han | 庭院俯拍含大理石喷泉 | Wikimedia / Flickr 覆盖尚可 |
+| 9 | 金饰街 | 走在 Kalpakcılar 主干道第一人称视角 | 需要 Flickr CC 或 **AI 生成**"first-person walking view, gold jewelry shops on both sides, Grand Bazaar Istanbul corridor" |
+
+**PM 采图执行硬规**：
+- 以上 9 张**必须本期 PM 亲自搞定**，不接受"推给 Dev""下一轮补齐""降级官方照"
+- PM 交付给 Dev 粘合前，把 22 张（含 P-10）小样一屏给 CEO 预览，CEO 点头 PM 再交 Dev
+- 任何 CEO 不满意的 PM 必须本轮重做
+
+---
+
+### P-10 · whyVisit detail 图文切片横滑（CEO 2026-04-21 加单 · 方案 2B）
+
+**问题（CEO 提出）**：旅行前 tab 的 whyVisit 四段（what / whyUnique / crossCivilization / detail）全是字。§K-01 的金色竖线容器只让字墙"好看"，没让字墙"变短"。用户懒得读。
+
+**解法**：把**最长的 detail 段**改成**图文切片横滑**——4-5 片，每片 1 张局部特写 + ≤ 50 字。像翻杂志一样 swipe，每片 3 秒看完。
+
+**范围**：本期**仅对伊斯坦布尔 3 景点生效**。其他 14 城保持原 `detail` 字符串，本期不动（实验验证后再考虑复制）。
+
+#### P-10 · `whyVisit` 字段扩展
+
+```js
+whyVisit: {
+  what: "...",                // 保留
+  whyUnique: "...",           // 保留
+  crossCivilization: "...",   // 保留
+  detail: "...",              // 保留（默认 URL fallback + α/β 以外的其他城市用这个）
+
+  // P-10 新字段（可选，仅伊斯坦布尔 3 景点填）
+  detail_slides: [
+    {
+      image: "assets/landmarks/hagia-sophia-seraph-uncovered.jpg",
+      image_alt: "圣索菲亚穹顶四角天使像 · 2009 年揭示的西北一面",
+      caption: "2009 年修复师剥掉西北一面灰泥——下面保存完好。其他三面至今蒙着。",
+      photo_credit: "Wikimedia · 用户名 (CC BY-SA 4.0)"
+    },
+    // ... 3-5 片
+  ]
+}
+```
+
+**渲染规则（α/β 实验版）**：
+- 伊斯坦布尔 3 景点：`detail_slides` 存在 → 走横滑切片；不存在 → 回落 `detail` 字符串
+- 其他 14 城市：恒用 `detail` 字符串
+- 默认 URL（无 `?exp=` 参数）：同 v3.4 逻辑，展示 `detail` 字符串
+
+#### P-10 · 切片文风硬规
+
+| ✅ Do | ❌ Don't |
+|---|---|
+| 每片 1 张图（必须有，非装饰）| 纯文字片（字多就拆，不留"无图片" |
+| caption ≤ 50 字 | 50+ 字（拆成 2 片）|
+| 第二人称现在时 | 维基腔 "这座建筑……" |
+| 图和 caption 内容一一对应 | 图是建筑外观，caption 讲内部故事 = 错配 |
+| 动词起手（"抬头看""剥掉""踩进"）| 名词起手（"此处" "这里"） |
+| 5 片之内（>5 片读者失焦）| 6+ 片（拆成两个 whyVisit 段或合并相邻片） |
+
+**对照 ux-lenses**：
+- 🟢 "图文交替呼吸" —— 图文切片是"呼吸"的极致形态，每片自带一次呼吸
+- 🟢 "图片排序叙事" —— 切片必须有叙事顺序：远景 → 建筑 → 细节 → 人 → 安静角落
+- 🟢 "第一张图选择" —— 第 1 片图是进入景点的"钥匙图"，不用明信片
+- 🟢 "移动端图片全宽 bleed" —— 切片图突破 padding 延伸到屏幕边缘（小屏杂志冲击力）
+
+#### P-10 · 伊斯坦布尔 3 景点 `detail_slides` 初稿（待 CEO 过稿）
+
+**A · 圣索菲亚大教堂**（主题：撒拉弗天使 + 维京涂鸦 · 5 片）
+
+基于现有 `detail`（"进入大厅抬头看——穹顶四角 9 米直径的金色撒拉弗天使像……"）拆分：
+
+| # | 图（PM 采图） | caption（PM 写） | 字数 |
+|---|---|---|---|
+| 1 | 穹顶四角撒拉弗天使像整体仰拍 | 抬头看穹顶四角：四个撒拉弗天使像，9 米直径，翅膀罩住整个大殿。 | 26 字 |
+| 2 | 灰泥覆盖前的天使像旧照（奥斯曼时期）| 1453 年奥斯曼征服后，灰泥覆盖了 450 年。没人知道底下还在不在。 | 28 字 |
+| 3 | 2009 年揭示后的天使脸特写 | 2009 年修复师剥掉西北一面——下面保存完好。其他三面至今蒙着。 | 28 字 |
+| 4 | 维京涂鸦"Halfdan"卢恩文说明牌 | 西南柱子上 13 世纪的卢恩文——说明牌告诉你："Halfdan 来过"。拜占庭的北欧雇佣兵签的到。 | 40 字 |
+| 5 | 大厅仰视长曝光或光斜射 | 这里躺过的不只是皇帝的仪仗队。 | 14 字 |
+
+**B · 蓝色清真寺**（主题：脚感 + 蓝光 + 礼拜场域 · 4 片）
+
+基于现有 `detail`（"脚踩进大厅第一步你会感觉到地面凉……"）拆分：
+
+| # | 图 | caption | 字数 |
+|---|---|---|---|
+| 1 | 红色地毯 + 大理石边缘交界处 + 脚一角 | 踩进第一步你先感觉到凉——地毯下是大理石，两种温度在脚心交接。 | 30 字 |
+| 2 | 260 扇彩窗逆光穿过蓝瓷砖 | 260 扇窗把自然光过滤成蓝色，整间像被水淹没。 | 22 字 |
+| 3 | 入口木鞋架特写 | 入口一个木架专门放鞋，鞋底禁止踩进礼拜区——这不是博物馆。 | 27 字 |
+| 4 | 礼拜时段信徒跪拜远景 | 1616 年至今，这里 400 年没停过礼拜。 | 17 字 |
+
+**C · 大巴扎**（主题：百年老店 + 工匠纤维 · 4 片）
+
+基于现有 `detail`（"香料街深处一家 Vefa Bozacisi 卖 boza……"）拆分：
+
+| # | 图 | caption | 字数 |
+|---|---|---|---|
+| 1 | boza 玻璃杯特写：厚壁玻璃 + 粉色泡沫 | 香料街深处一家 Vefa Bozacisi 卖 boza——粉色泡沫的发酵小米酒。 | 30 字 |
+| 2 | 店铺老木柜 / 老板 / 老照片 | 1876 年同一家族传到第五代。杯子也是同一种，传来传去。 | 25 字 |
+| 3 | 地毯铺面 + 不同颜色羊毛纤维特写 | 地毯羊毛至今用天然染料：石榴皮染黄，蓝草染青，胡桃壳染棕。 | 27 字 |
+| 4 | 时间旧化的地毯纹理（阳光斜射）| 化学染料打不过这些——会随时间褪成陈旧色的老纤维。 | 23 字 |
+
+**字数自检**：13 条切片，caption 字数 14-34 字，全部 ≤ 50 ✓
+
+---
+
+### P-11 · 25 张图采图已完成（PM 交付 · 2026-04-21）
+
+**状态**：**图已全部交付**。PM 按 CEO 2026-04-21 二次硬规（零降级 + 图归 PM + 不放人脸）本周期内完成 25 张图的采集 / 后期 / 质检 / CEO 过稿，Dev-H5 粘合时直接消费。
+
+**总量**：
+- 9 张 onsite_spots 特写（带底部 "① title" 黑底白字文字条）
+- 13 张 slides 局部切片（13 条 caption 由 HTML 独立渲染）
+- 3 张 maps 平面图（带 ① ② ③ 红色数字徽章）
+
+**来源详细**：见 [`assets/landmarks-exp-v3.5/SOURCES.json`](assets/landmarks-exp-v3.5/SOURCES.json) —— Dev-H5 可**直接程序化消费**（每条含 asset 路径 / source_file / license / processing 步骤 / note）。
+
+**核心合规要点**：
+- 全部 17 张独立源来自 Wikimedia Commons（CC BY-SA 3.0/4.0 或 Public Domain）
+- **零真人正脸**：OpenCV Haar cascade 扫 + PM 视觉人工复核 17 张可疑图，换 6 张源图 + 紧裁 4 张
+- 保留的"脸"仅限 3 类：拜占庭马赛克撒拉弗天使（艺术品）/ 1680 古画人物装饰 / 13 世纪博物馆地毯纹理（Haar 误报）
+- 许愿柱（hagia-1）原图是游客正脸侵权 → PM 紧裁换成**纯手+凹洞特写**，反而完美贴合 P-07 taste 硬规 "1 动作 + 1 感官"
+
+**处理工具链**（commit 进仓库供未来其他城市复用）：
+- `scripts/fetch-wikimedia.sh` —— Wikimedia 下载（Special:FilePath + 浏览器 UA 绕 ORB）
+- `scripts/search-wikimedia.sh` —— MediaWiki API 搜索封装
+- `scripts/build-manifest-v2.py` —— 25 张图的 PIL 处理配置生成器
+- `scripts/annotate.py` —— PIL 后期（裁切 / resize / 红圈 / 箭头 / 数字徽章 / 文字条）
+- `scripts/scan-faces.py` —— OpenCV 人脸扫描 + bbox 输出
+- `scripts/build-preview.py` —— HTML 一屏预览生成（小样过稿工具）
+
+**v3.6+ 复用**：其他 14 城复制本模式时，PM 只需改 `build-manifest-v2.py` 里的 SPOTS / SLIDES / MAPS 常量 + 跑 annotate.py 即可，工具链无需重写。
+
+**Raw 原图处理**：63MB Wikimedia 原图在 `assets/landmarks-exp-v3.5/raw/`，已 **.gitignore 排除**；任何人需要重抓用 `scripts/fetch-wikimedia.sh`。
+
+---
+
+### P-08 · 本轮受启发的 UX 镜头（研究消费自检 · CLAUDE.md §研究消费纪律硬线）
+
+本期 PM 写作激活了 `workflow/ux-lenses.md` 以下镜头，每条列明**用在哪**：
+
+1. **🟢 彩蛋起手锚点**（2026-04-21 新加）—— 直接规范 P-04 全部 9 条 `onsite_spots` 的第一句，三选一范式（时间戳/小人物/具体动作）
+   - 用在：许愿柱 #1 起手"二楼西北角的石柱"（具体动作锚点）/ Dandolo #2 起手"二楼南廊地板刻着 Dandolo"（小人物具名）/ 6 宣礼塔 #1 起手"6 根宣礼塔"（冷知识钩+具体动作）
+
+2. **🟢 地图 caption 动词先行**（2026-04-21 新加）—— 规范 P-04 所有 body 的动词起手
+   - 用在：蓝瓷砖 #2 "推门进去抬头"（2 个动作起手）/ 书法圆盘 #3 "中殿抬头"（动作锚定）/ 鸵鸟蛋 #3 "仔细看主殿吊灯之间"（动作先行）
+
+3. **🟢 "我们去过"的痕迹**（Cereal Magazine 源）—— 每条 body 必须有一处"非真去过写不出"的细节
+   - 用在：许愿柱的"凹洞位置"（二楼西北角具体坐标）/ Zincirli Han 的"99% 游客绕过"（冷门观察）/ 大巴扎砍价"周一上午 10 点开店头半小时议价空间最大"（生活节奏细节）/ 鸵鸟蛋"仔细看主殿吊灯之间"（只有抬头才发现的观察）
+
+4. **🟢 单段 viewport 上限**—— `onsite_spots` 30-50 字硬控 / `survival_tips` ≤ 60 字最健康
+   - 用在：全部 9 条 spots（45-50 字）+ 全部 17 条 survival（38-62 字）逐条控制
+
+5. **🟡 廉价词库警报**—— 排查并规避
+   - 用在：全篇 body 零"必去 / 绝美 / yyds / 保姆级 / 避坑 / 宝藏 / 天花板"（PM 写完自读一遍通过）
+
+6. **🟡 历史短文四病警报**—— 四病全砍
+   - 用在：全部 9 条 spots 零"承载着 / 蕴含着 / 彰显着 / 不仅…更… / 值得一提的是 / 那是一个 XX 的时代 / 千年风华"
+
+7. **🟢 动线表达层级**（2026-04-21 新加）—— 规范 P-02 `route_suggestions` 字段用时段档位
+   - 用在：`duration: "90min" / "3h" / "half-day"`（时段框架）+ `picks: [1,2]`（不锁顺序号，给选择权）——彻底不走"1→2→3→4"或画箭头
+
+8. **🔵 细节 zoom 能力**（GAC Gigapixel 源）—— 规范 P-09 lightbox 交互
+   - 用在：P-09 每个 spot 图点击进入全屏 lightbox + pinch zoom；避免"只有一张明信片视角"的失分
+
+9. **🟢 图文交替呼吸**（LP 源）—— 规范 P-10 切片节奏
+   - 用在：P-10 whyVisit detail 切片每 ≤ 50 字配 1 图，节奏恒定；不留任何"≥ 3 段无图"的论文墙
+
+10. **🟢 图片排序叙事**（Airbnb Kyoto 源）—— 规范 P-10 切片顺序
+    - 用在：圣索菲亚 A 组切片走"整体仰拍 → 历史旧照 → 修复特写 → 涂鸦局部 → 安静长曝"远近节奏；蓝清 B 组走"脚 → 光 → 器物 → 人"；大巴扎 C 组走"杯 → 人 → 纤维 → 时间" —— 每组 4-5 片都有叙事方向
+
+11. **🟢 第一张图选择**（Cereal 源）—— 规范 P-10 第 1 片不用明信片
+    - 用在：圣索菲亚切片 #1 是"穹顶四角仰拍"不是外立面；蓝清 #1 是"脚 + 地毯边缘"不是全景；大巴扎 #1 是"boza 杯子特写"不是集市外观
+
+12. **🟢 移动端图片全宽 bleed**（LP 源）—— 规范 P-10 carousel 样式
+    - 用在：P-10 横滑切片图突破 padding 延伸到屏幕边缘（小屏杂志冲击力），文字 caption 保留内边距
+
+13. **🔵 图片加载韧性**（H5 装 native + ORB 源）—— 规范 P-09 / P-10 图片兜底
+    - 用在：所有 `<img>` 必须带 `aspect-ratio` 撑高度防 CLS + `onerror` 兜底占位图；图片域名优先国内 CDN（见本 PRD 既有图片策略 §八）
+
+**声明**：本轮候选清单已覆盖 demand-pool 相关条目（[城市 伊斯坦布尔 2026-04-21] 28 条彩蛋 + [产品 伊斯坦布尔 2026-04-21] 华人专属 5 条套路 + [字段 数据 2026-04-21] `visibilityStatus` 字段需求），全部吸收进 P-02/P-04/P-05。其他 demand-pool 条目与本轮（伊斯坦布尔实验）主题无关，本轮不做。
+
+CEO 2026-04-21 追加 P-09 + P-10 后**新增激活**镜头 6 条（细节 zoom / 图文交替呼吸 / 图片排序叙事 / 第一张图选择 / 移动端 bleed / 图片加载韧性），已全部在 P-09 / P-10 正文硬规中对应。
+
+---
+
+（附录 P 完）
+
+---
+
 ## 变更日志
+
+### v3.5-exp（2026-04-21 · experiment 分支 · 伊斯坦布尔 3 Tab 实验）
+
+**定位**：**不是正式版本**——走 `experiment/istanbul-tab-3` 分支，URL `?exp=alpha` / `?exp=beta` 激活，默认 URL 保持 v3.4 现状。仅针对伊斯坦布尔 1 城 × 3 头牌景点做形态探索，CEO 亲测后决定是否 merge 到 dev。
+
+**本期合入**（9 条 P-01 ~ P-07 + P-09 + P-10，见附录 P）：
+- 【架构】**P-01** 3 Tab 架构字段定义（旅行前 / 旅行中 / Survival）
+- 【字段】**P-02** landmark 新增 `onsite_map` / `onsite_spots[]` / `route_suggestions[]` / `survival_tips[]`
+- 【字段】**P-03** city 新增 `survival_tips[]`（与 `practicalInfo` 职责切分）
+- 【内容】**P-04** 伊斯坦布尔 3 景点 × 3 = 9 条 `onsite_spots` body 初稿（待 CEO 过稿）
+- 【内容】**P-05** 景点级 `survival_tips` 11 条 + 城市级 6 条，合计 17 条（待 CEO 过稿）
+- 【规则】**P-06** 现有 `tips[]` 按 `category` 自动分配到 3 tab 的渲染规则
+- 【规则】**P-07** `onsite_spots` + `survival_tips` 文风硬规（taste 研究沉淀 · 不可改）
+- 【升级】**P-09 onsite_spots 现场感特写图 + zoom lightbox**（CEO 2026-04-21 加单 · 方案 1C · 解决"不知道 spot 长什么样"）
+- 【升级】**P-10 whyVisit detail 图文切片横滑**（CEO 2026-04-21 加单 · 方案 2B · 解决"旅行前 tab 字墙"· 仅伊斯坦布尔 3 景点 13 切片）
+- 【资产】**P-11 25 张图 PM 已交付**（CEO 2026-04-21 小样过稿 · 零真人正脸 · 详见 `assets/landmarks-exp-v3.5/SOURCES.json`）
+
+**与既有硬规的兼容**：
+- §O-06 头牌 3 景点 `tips[] ≥ 4 条 + 七选三 category` 硬规**继续生效**，本期不改 data.js 的 tips 字段
+- §L-A 4 硬规**继续生效**，`onsite_spots` 30-50 字硬控天然合规
+- §K-01 whyVisit v3 SOP 用于旅行前 tab，不受影响
+- **新字段无 category/category-like schema 冲突**（`onsite_spots` 用 `n/title/body/anchor/visibility`；`survival_tips` 用 `kind/severity/title/body`）
+
+**来源**：
+- `/Users/wenjiehumacmini/.claude/plans/c-tab-survival-tab-tab-survival-tab-lovely-platypus.md`（Explorer 方案 + CEO 决策汇总）
+- `research/demand-伊斯坦布尔-现场彩蛋-2026-04-21.md`（28 条信号，本轮用了 9 条）
+- `research/taste-历史现场彩蛋+动线文风-2026-04-21.md`（5 do / 5 don't，全盘采纳到 P-07）
+
+**CEO 亲验建议（5 分钟抽查）**：
+- 抽查点 1：读 P-04-A 圣索菲亚 3 条 spots 的 body——"手感"是站立态读历史，还是仍然像 whyVisit 的缩小版百科？
+- 抽查点 2：读 P-05-C 大巴扎 5 条华人专属 survival——是否比任何英文攻略都更懂中国游客？这是产品定位的灵魂抽查
+- 抽查点 3：看 P-07 文风硬规表是否"Dev 能照规验收、QA 能照规 FAIL"——抽象词多 = 规矩虚
+
+**下一步**（PRD 通过后）：
+- PMO 建 `experiment/istanbul-tab-3` 分支
+- Dev-H5 按 P-01 ~ P-07 实现 α + β 两份渲染 + data.js 伊斯坦布尔新字段
+- CEO 亲测 3 个 URL（原版 / α / β）定手感
+
+---
 
 ### 2026-04-20 16:00（D2 红线修正 · PRD 内部一致性 patch）
 - 【修正】§O-06 / §K-01 / §O-01：D2 category 规则从 `what` / `where` / `avoid` → 七选三 canonical (`ticket` / `timing` / `photo` / `route` / `dress` / `season` / `secret`)
