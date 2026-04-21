@@ -579,6 +579,13 @@ function renderLandmarkDetail(cityId, index) {
   const l = c.landmarks[index];
   if (!l) { renderLandmarkNotFound(cityId); return; }
 
+  // v3.5-exp: ?exp=alpha / ?exp=beta 激活实验渲染（仅对有 onsite_spots 的景点生效；默认 URL 零感知）
+  const expParam = (() => { try { return new URLSearchParams(location.search).get('exp'); } catch (_) { return null; } })();
+  if (expParam && Array.isArray(l.onsite_spots) && l.onsite_spots.length) {
+    if (expParam === 'alpha' && typeof renderExperimentAlpha === 'function') return renderExperimentAlpha(c, l, cityId, index);
+    if (expParam === 'beta'  && typeof renderExperimentBeta  === 'function') return renderExperimentBeta(c, l, cityId, index);
+  }
+
   lmDetailTab = 'intro';
   const app = document.getElementById('app');
 

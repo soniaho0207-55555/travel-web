@@ -25,6 +25,10 @@
 </nav>
 
 <script src="js/data.js"></script>
+<!-- v3.5-exp · 伊斯坦布尔 α/β 实验脚本必须先于 app.js 加载，否则首次 handleRoute() 找不到 renderExperimentAlpha/Beta 会回落默认（无 ?exp= 时仍零副作用） -->
+<script src="js/experiments/common.js"></script>
+<script src="js/experiments/alpha.js"></script>
+<script src="js/experiments/beta.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

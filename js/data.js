@@ -432,6 +432,21 @@ const CITIES = [
       bestSeason: '4-5 月 + 9-10 月（博斯普鲁斯风景最佳，气温 18-25℃）；避开 7-8 月（30℃+ 且大巴扎闷热）；1-2 月清真寺不冷不热但雪后拍摄最好',
       visaTips: '持中国护照需电子签证（e-Visa，网上 15 分钟，费用 $60）；持申根/美/英签证可直接免签落地 30 天；斋月期间白天市内餐厅多不营业，提前查年份'
     },
+    // v3.5-exp: 城市级 Survival（PRD §P-05-D · 6 条 · CEO 过稿定稿）
+    survival_tips: [
+      { kind: 'logistics', title: 'IST vs SAW',
+        body: '两机场别订错：IST 欧洲区，大巴到 Taksim 60 分钟 ₺150；SAW 亚洲区进市区绕路。订票先确认机场代码。' },
+      { kind: 'logistics', title: 'IstanbulKart 一卡通',
+        body: '机场和地铁站自助机办 IstanbulKart，押金 ₺70。地铁 / 电车 / 轮渡 / 公交通刷，比单次票便宜 40%。' },
+      { kind: 'etiquette', title: '清真寺入场装',
+        body: '进清真寺女性需覆肩盖膝戴头巾。多数寺门口有免费借。男性避免短裤。背包多的清真寺会要求寄存。' },
+      { kind: 'practical', title: '里拉少兑勤兑',
+        body: '土耳其里拉通胀严重，少兑勤兑。商铺多接美元 / 欧元但汇率吃亏。景点门票和小店多须现金。Garanti / İş Bankası ATM 最稳。' },
+      { kind: 'practical', title: '自来水别生饮',
+        body: '自来水不建议生饮。超市小瓶矿泉水 ₺10 上下。餐厅问 "still or sparkling" 再上瓶装水，默认会收 ₺20-30/瓶。' },
+      { kind: 'etiquette', title: '小费 10% 上下',
+        body: '餐厅结账付现凑整数或留 10% 即可——账单写 "servis dahil" 则含服务费，再加就是双收。出租车不加。' }
+    ],
     country: '土耳其', countryFlag: '🇹🇷', continent: 'europe',
     themes: ['silk-road', 'maritime', 'imperial'],
     coords: "41°00'N 28°58'E",
@@ -459,7 +474,30 @@ const CITIES = [
   what: '伊斯坦布尔老城海角上一座 537 年建成的巨型穹顶建筑。先是东正教主教座堂（916 年）、后是清真寺（482 年）、1934 年改博物馆、2020 年再变清真寺——同一座建筑横跨 1500 年，服务过两种宗教里的"同一个神"。',
   whyUnique: '主穹顶直径 31 米、离地 55 米——工程师米利都的伊西多尔和特拉勒斯的安特米奥斯用 40 根窗柱托起穹顶，让整座圆顶看起来像"浮在空中"。16 世纪奥斯曼建筑师锡南来这里看了一眼说："我终于明白穹顶该怎么建了"——他回去设计了蓝色清真寺。一座建筑教会了另一个帝国。',
   crossCivilization: '537 年查士丁尼建这座教堂时，中国处于南北朝北魏末年——河南洛阳龙门石窟宾阳中洞正在开凿，北魏皇室用石头把佛陀凿进山体。两个帝国都在用建筑回答"神该如何被看见"：查士丁尼让光从 40 扇窗洒进穹顶下一片金色马赛克，让神显形在空间里；北魏让佛陀从岩壁浮出，让神显形在物质里。一个让神飘在空中、一个让神埋进岩石——都在对抗同一个时代的普遍困惑：神是否仍在。',
-  detail: '进入大厅抬头看——穹顶四角 9 米直径的金色撒拉弗天使像，1453 年奥斯曼征服后被灰泥覆盖了 450 年，2009 年修复师剥掉西北角一层发现底下保存完好，其他三面至今蒙着。西南柱子上有 13 世纪一个北欧维京雇佣兵用卢恩文刻的名字 "Halfdan"——这里躺过的不只是皇帝的仪仗队。'
+  detail: '进入大厅抬头看——穹顶四角 9 米直径的金色撒拉弗天使像，1453 年奥斯曼征服后被灰泥覆盖了 450 年，2009 年修复师剥掉西北角一层发现底下保存完好，其他三面至今蒙着。西南柱子上有 13 世纪一个北欧维京雇佣兵用卢恩文刻的名字 "Halfdan"——这里躺过的不只是皇帝的仪仗队。',
+  // v3.5-exp: whyVisit.detail 图文切片（PRD §P-10-A · 5 片 · CEO 过稿定稿）
+  detail_slides: [
+    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A1-seraphim-all.jpg',
+      image_alt: '圣索菲亚穹顶四角撒拉弗天使像整体仰拍',
+      caption: '抬头看穹顶四角：四个撒拉弗天使像，9 米直径，翅膀罩住整个大殿。',
+      photo_credit: 'Wikimedia · Seraphim below Hagia Sophia\'s dome.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A2-panorama-crop.jpg',
+      image_alt: '圣索菲亚穹顶广角全景（奥斯曼时期灰泥覆盖后样貌）',
+      caption: '1453 年奥斯曼征服后，灰泥覆盖了 450 年。没人知道底下还在不在。',
+      photo_credit: 'Wikimedia · Hagia Sophia Interior Panorama.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A3-seraphim-face.jpg',
+      image_alt: '2016 年揭示的撒拉弗天使面部马赛克特写',
+      caption: '2009 年修复师剥掉西北一面——下面保存完好。其他三面至今蒙着。',
+      photo_credit: 'Wikimedia · Hagia Sophia Seraphim with face in 2016 9122.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A4-viking.jpg',
+      image_alt: '维京涂鸦 Halfdan 卢恩文说明牌与栏杆刻痕',
+      caption: '西南柱子上 13 世纪的卢恩文——说明牌告诉你："Halfdan 来过"。拜占庭的北欧雇佣兵签的到。',
+      photo_credit: 'Wikimedia · Hagia-sofia-viking.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg',
+      image_alt: '圣索菲亚大厅从二层廊台斜视右下拱门视角',
+      caption: '这里躺过的不只是皇帝的仪仗队。',
+      photo_credit: 'Wikimedia · Hagia Sophia Interior Panorama.jpg (CC BY-SA)' }
+  ]
 }, relatedFigure: [{ name: '安特米奥斯', era: '东罗马', role: '建筑师（不是查士丁尼）', link: '穹顶的几何是他和伊西多尔算出来的，皇帝只是付钱的人' }], yearNum: 537, wiki: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 45%, #C9963A 100%)', desc: '圣索菲亚是拜占庭建筑的顶峰之作，近千年来一直是世界上最大的教堂。', hours: '礼拜时间外开放 09:00—17:30', ticket: {
   price: '游客上层 €25（2024 年起实施），下层礼拜区对穆斯林免费',
   channels: [
@@ -486,13 +524,66 @@ const CITIES = [
   { category: 'photo',  text: '上层廊台北侧的《圣母与幼儿基督》马赛克最清晰，13:30 后西射阳光角度最佳' },
   { category: 'route',  text: '出圣索菲亚穿 Sultanahmet Square 广场 3 分钟到蓝色清真寺，两馆连看最省时' },
   { category: 'secret', text: '二楼楼梯口大理石栏杆上刻着 Halvdan 的北欧海盗涂鸦（9 世纪），在西南角人容易错过' }
-]
+],
+        // v3.5-exp: 旅行中 + Survival（PRD §P-02 / §P-04-A / §P-05-A · CEO 过稿定稿）
+        onsite_map: 'assets/landmarks-exp-v3.5/maps/map-hagia-annotated.jpg',
+        onsite_spots: [
+          { n: 1, title: '许愿柱', anchor: '二楼西北角', visibility: '常开',
+            body: '二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg',
+            image_alt: '许愿柱二楼西北角金色凹洞特写，两只手伸向凹洞',
+            zoom: true,
+            photo_credit: 'Wikimedia · Płacząca kolumna Haga Sofia RB.jpg (CC BY-SA)' },
+          { n: 2, title: 'Dandolo 墓碑', anchor: '二楼南廊地板', visibility: '常开',
+            body: '二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg',
+            image_alt: 'HENRICUS DANDOLO 墓碑石板刻字俯拍',
+            zoom: true,
+            photo_credit: 'Wikimedia · Enrico Dandolo gravestone.jpg (CC BY-SA)' },
+          { n: 3, title: '8 块书法圆盘', anchor: '中殿上空', visibility: '常开',
+            body: '中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg',
+            image_alt: '圣索菲亚中殿黑底金字阿拉伯书法圆盘近景',
+            zoom: true,
+            photo_credit: 'Wikimedia · Calligraphy Hagia Sophia.jpg (CC BY-SA)' }
+        ],
+        route_suggestions: [
+          { duration: '90min', label: '短线必看', picks: [1, 2] },
+          { duration: '3h',    label: '深度',     picks: [1, 2, 3] }
+        ],
+        survival_tips: [
+          { kind: 'etiquette', severity: 'medium', title: '女性头巾 + 正午闭门',
+            body: '女性需覆肩盖膝戴头巾（门口可免费借）。避开正午 13:00 Zuhr 祷告和日落 Maghrib——通道会关。' },
+          { kind: 'logistics', severity: 'medium', title: '上层 €25 下层免费',
+            body: '2024 年起游客上层 €25，清真寺礼拜下层对穆斯林免费。游客入口在建筑北侧独立门。' },
+          { kind: 'practical', title: '彩蛋可能看不到',
+            body: '2020 年改回清真寺后，二楼部分区域周期性封闭。维京涂鸦和 Zoe 马赛克 2024-2025 期间可能看不到——入场当日看公告。' }
+        ]
       },
       { name: '蓝色清真寺', era: '奥斯曼·1616年', hookShort: '那片蓝，是矢车菊花瓣烧出来的钴料。', whyVisit: {
   what: '伊斯坦布尔老城中心一座 1616 年落成的奥斯曼帝国皇家清真寺。六座宣礼塔——穆斯林世界唯一超过麦加禁寺 六塔规格的例外——苏丹艾哈迈德一世靠"麦加塔数再加一"化解了这次僭越。',
   whyUnique: '内墙贴满 2 万多块伊兹尼克蓝色瓷砖——郁金香、玫瑰、康乃馨，每一块手工彩绘、烧制温度 900 度。蓝色来自钴矿，这种钴只产于波斯；奥斯曼人拿战利品换取钴料，把波斯的矿运了 3000 公里来烧自己的神秘。主穹顶直径 23.5 米，260 扇彩窗从天光引入蓝色。',
   crossCivilization: '1616 年同时期，中国明朝万历四十四年——努尔哈赤刚建立后金（1616 年），明朝还剩 28 年国祚；英国莎士比亚这一年去世（4 月 23 日）。西方文学、东方帝国、伊斯兰建筑三线同时抵达各自的顶点又开始断崖下跌：莎翁留下悲剧的密钥、明朝留下一部《永乐大典》、奥斯曼建起最后一座超级工程。三种崩溃都是在巅峰之后的第二天开始。',
-  detail: '脚踩进大厅第一步你会感觉到地面凉——整间大殿铺着红色土耳其地毯，但底下是大理石，脚心在两种温度的交接处体验这座城的深沉。260 扇窗把自然光变成蓝色，整间空间像被水淹没；大殿入口处有一个专门放鞋的木架，鞋底禁止踩进礼拜区。'
+  detail: '脚踩进大厅第一步你会感觉到地面凉——整间大殿铺着红色土耳其地毯，但底下是大理石，脚心在两种温度的交接处体验这座城的深沉。260 扇窗把自然光变成蓝色，整间空间像被水淹没；大殿入口处有一个专门放鞋的木架，鞋底禁止踩进礼拜区。',
+  // v3.5-exp: whyVisit.detail 图文切片（PRD §P-10-B · 4 片 · CEO 过稿定稿）
+  detail_slides: [
+    { image: 'assets/landmarks-exp-v3.5/slides/bluemosque-B1-carpet.jpg',
+      image_alt: '蓝色清真寺红色地毯与大理石边缘交界',
+      caption: '踩进第一步你先感觉到凉——地毯下是大理石，两种温度在脚心交接。',
+      photo_credit: 'Wikimedia · Carpet on the floor of Sultan Ahmed Mosque.JPG (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bluemosque-B2-windows.jpg',
+      image_alt: '蓝色清真寺穹顶 260 扇彩窗与吊灯',
+      caption: '260 扇窗把自然光过滤成蓝色，整间像被水淹没。',
+      photo_credit: 'Wikimedia · Interior view of Sultan Ahmed Mosque Dome.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bluemosque-B3-entrance.jpg',
+      image_alt: '蓝色清真寺入口区吊灯与模糊人影',
+      caption: '入口一个木架专门放鞋，鞋底禁止踩进礼拜区——这不是博物馆。',
+      photo_credit: 'Wikimedia · Blue Mosque Interior 2009.JPG (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bluemosque-B4-prayer.jpg',
+      image_alt: '蓝色清真寺穹顶上部 + 悬链吊灯',
+      caption: '1616 年至今，这里 400 年没停过礼拜。',
+      photo_credit: 'Wikimedia · Blue Mosque Interior 2009.JPG (CC BY-SA)' }
+  ]
 }, relatedLiterature: [{ title: '《伊斯坦布尔：一座城市的记忆》', author: '奥尔罕·帕慕克', year: 2003, quote: '忧愁是这座城市的底色', link: '他写自己从小在蓝色清真寺对面长大，穹顶是他童年的天花板' }], yearNum: 1616, wiki: 'Sultan Ahmed Mosque', gradient: 'linear-gradient(135deg, #0A2A4A 0%, #1A6B9A 50%, #0D3D6B 100%)', desc: '因内部2万余块伊兹尼克蓝色瓷砖得名，六座宣礼塔至今仍是活跃的礼拜场所。', hours: '日出—日落，礼拜期间关闭', ticket: {
   price: '免费进入；鞋套与塑料袋入口免费提供',
   channels: [
@@ -535,7 +626,41 @@ const CITIES = [
     category: 'walking',
     text: '与圣索菲亚隔广场相望步行 3 分钟，建议上午圣索菲亚 + 下午蓝色清真寺，两者光线方向相反' // ✓ 锚点：数字 3 分钟 + 只有去过才知道
   }
-]
+],
+        // v3.5-exp: 旅行中 + Survival（PRD §P-02 / §P-04-B / §P-05-B · CEO 过稿定稿）
+        onsite_map: 'assets/landmarks-exp-v3.5/maps/map-bluemosque-annotated.jpg',
+        onsite_spots: [
+          { n: 1, title: '6 根宣礼塔', anchor: 'Sultanahmet 广场正面', visibility: '常开',
+            body: '6 根宣礼塔：苏丹本说 altın（金色），工匠听成 altı（六）。全世界只有麦加准 6 塔，苏丹最后出钱给麦加加第 7 塔平事。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg',
+            image_alt: '蓝色清真寺 6 根宣礼塔 Sultanahmet 广场远景',
+            zoom: true,
+            photo_credit: 'Wikimedia · Sultan Ahmet Camii, İstanbul.jpg (CC BY-SA)' },
+          { n: 2, title: '蓝瓷砖天花板', anchor: '大殿中央抬头', visibility: '常开',
+            body: '推门进去抬头——整面蓝压下来。21043 块瓷砖上 54 种郁金香图案，盯着每一个进来的人，400 年。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles.jpg',
+            image_alt: '蓝色清真寺穹顶伊兹尼克蓝瓷砖纹饰仰拍',
+            zoom: true,
+            photo_credit: 'Wikimedia · Blue Mosque Ceiling Blue Tiles.JPG (CC BY-SA)' },
+          { n: 3, title: '吊灯里的鸵鸟蛋', anchor: '主殿吊灯', visibility: '常开',
+            body: '仔细看主殿吊灯之间：几个鸵鸟蛋。古人信蛋壳味驱虫，蜘蛛不结网。这招 400 年前的工匠窍门还挂在你头顶。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich.jpg',
+            image_alt: '蓝色清真寺主殿吊灯与鸵鸟蛋位置红圈标注',
+            zoom: true,
+            photo_credit: 'Wikimedia · Blue Mosque Interior 2009.JPG (CC BY-SA)' }
+        ],
+        route_suggestions: [
+          { duration: '90min', label: '短线必看', picks: [1, 2] },
+          { duration: '3h',    label: '深度',     picks: [1, 2, 3] }
+        ],
+        survival_tips: [
+          { kind: 'etiquette', severity: 'high', title: '着装限制严格',
+            body: '女性进门前必须覆肩、盖膝、包头。门口有免费借头巾。男性避免短裤，会被拦下。' },
+          { kind: 'logistics', severity: 'medium', title: '周五主麻关门',
+            body: '周五 12:30-14:00 主麻礼拜全程闭门不对游客开放。其他日子每天 5 次礼拜各关 15-20 分钟。' },
+          { kind: 'etiquette', severity: 'low', title: '塑料袋自拎鞋',
+            body: '入口处免费发塑料袋装鞋，自行拎进去。回来对应架子拿——没有寄存人员。' }
+        ]
       },
       { name: '托普卡帕宫', era: '奥斯曼·1465年', hookShort: '苏丹 5000 人的羊和米，从十个烟囱下出锅。', whyVisit: {
   what: '博斯普鲁斯海峡岬角上一座 1465 年建成的奥斯曼帝国皇宫，占地 70 万平方米——相当于 98 个故宫太和殿。1465—1856 年 4 个世纪里，26 位苏丹在这里统治横跨三大洲的帝国，直到最后一位苏丹搬到多尔马巴赫切宫。',
@@ -595,7 +720,26 @@ const CITIES = [
   what: '伊斯坦布尔老城中心一座 1461 年兴建的室内集市，4000 多家店铺、61 条带顶街道、30 多座客栈——全世界最早、最大的室内购物中心之一。每天 25 万至 40 万人进出，以色列的犹太商人、伊朗的地毯匠、中国的丝绸贩都曾在这里叫卖。',
   whyUnique: '设计灵感来自波斯古 Bazaar：顶棚遮阳、走廊通风、客栈（han）让外来商人可以住下。一条规则把整个集市定下来——"同类商品同街"：金匠在一条街、皮毛在另一条、香料在第三条。你要买什么先问"去哪条街"，而不是"去哪家店"；集市不是卖货的，是帮客人定位世界的。',
   crossCivilization: '1461 年同时期西方佛罗伦萨洛伦佐·美第奇 12 岁——他将来要赞助波提切利和达芬奇；东方明英宗刚复辟（1457 年夺门之变）、土木堡之变 12 年后。三座城市同时在 15 世纪中期构建各自的"商业引擎"：大巴扎把陆上丝路终点内化为建筑、佛罗伦萨把美第奇银行变成全欧信贷中心、北京把漕运体系继续运转。哪座城市的引擎开得更久？伊斯坦布尔的这座开到今天。',
-  detail: '香料街深处一家"Vefa Bozacisi"卖 boza——发酵小米做的轻度酒精饮料，自 1876 年起同一家族传五代人；杯子传来传去都是同一种：厚壁玻璃 + 粉色泡沫。地毯铺面上的羊毛至今用天然染料——石榴皮染黄、蓝草染青、胡桃壳染棕——化学染料在国际市场上打不过这些会随时间褪成陈旧色的老纤维。'
+  detail: '香料街深处一家"Vefa Bozacisi"卖 boza——发酵小米做的轻度酒精饮料，自 1876 年起同一家族传五代人；杯子传来传去都是同一种：厚壁玻璃 + 粉色泡沫。地毯铺面上的羊毛至今用天然染料——石榴皮染黄、蓝草染青、胡桃壳染棕——化学染料在国际市场上打不过这些会随时间褪成陈旧色的老纤维。',
+  // v3.5-exp: whyVisit.detail 图文切片（PRD §P-10-C · 4 片 · CEO 过稿定稿）
+  detail_slides: [
+    { image: 'assets/landmarks-exp-v3.5/slides/bazaar-C1-boza-cup.jpg',
+      image_alt: 'Vefa Bozacısı 店铺立面招牌特写',
+      caption: '香料街深处一家 Vefa Bozacisi 卖 boza——粉色泡沫的发酵小米酒。',
+      photo_credit: 'Wikimedia · Vefa Bozacısı in Istanbul.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bazaar-C2-boza-store.jpg',
+      image_alt: 'Vefa Bozacısı 店顶部货架与奥斯曼晚期装饰窗',
+      caption: '1876 年同一家族传到第五代。杯子也是同一种，传来传去。',
+      photo_credit: 'Wikimedia · Vefa Bozacısı in Istanbul.jpg (CC BY-SA)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bazaar-C3-dye-yarn.jpg',
+      image_alt: '13 世纪塞尔柱博物馆地毯天然染料纹理',
+      caption: '地毯羊毛至今用天然染料：石榴皮染黄，蓝草染青，胡桃壳染棕。',
+      photo_credit: 'Wikimedia · Istanbul Turkish and Islamic Museum Seljuk carpet.jpg (PD)' },
+    { image: 'assets/landmarks-exp-v3.5/slides/bazaar-C4-aged-fiber.jpg',
+      image_alt: '13 世纪塞尔柱博物馆地毯时间旧化纹理',
+      caption: '化学染料打不过这些——会随时间褪成陈旧色的老纤维。',
+      photo_credit: 'Wikimedia · Istanbul Turkish and Islamic Museum Seljuk carpet.jpg (PD)' }
+  ]
 }, yearNum: 1461, wiki: 'Grand Bazaar, Istanbul', gradient: 'linear-gradient(135deg, #4A0A0A 0%, #C94A1A 50%, #2A0A00 100%)', desc: '世界上最古老、最大的有顶集市之一，60余条街道、4000余间店铺。', hours: '周一至周六 08:30—19:00，周日闭馆', ticket: {
   price: '免费入场；内含 60 条街 4000 间店铺',
   channels: [
@@ -626,7 +770,46 @@ const CITIES = [
     category: 'walking',
     text: '带现金里拉，大部分小店不刷卡或加 8% 手续费；ATM 在巴扎各入口都有' // ✓ 锚点：数字 8% + 只有去过才知道
   }
-]
+],
+        // v3.5-exp: 旅行中 + Survival（PRD §P-02 / §P-04-C / §P-05-C · CEO 过稿定稿）
+        onsite_map: 'assets/landmarks-exp-v3.5/maps/map-bazaar-annotated.jpg',
+        onsite_spots: [
+          { n: 1, title: 'İç Bedesten', anchor: '集市几何中心', visibility: '常开',
+            body: '集市中央 15 顶石屋是第一间房——1461 年苏丹建的金银保险库，奥斯曼帝国最早的国库之一。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten.jpg',
+            image_alt: 'İç Bedesten 15 顶石屋内部拱顶仰拍',
+            zoom: true,
+            photo_credit: 'Wikimedia · Kapali Carsi-Grand Bazar-Istanbul-Sep08.jpg (CC BY-SA)' },
+          { n: 2, title: 'Zincirli Han', anchor: '东北出口拐角小门', visibility: '常开',
+            body: '东北拐角一扇小门推进去：Zincirli Han 庭院——大理石喷泉、老珠宝作坊、1708 年的石墙，游客 99% 绕过它。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli.jpg',
+            image_alt: 'Zincirli Han 粉色外墙庭院与拱廊',
+            zoom: true,
+            photo_credit: 'Wikimedia · Business making, Istanbul Grand Bazaar.jpg (CC BY-SA)' },
+          { n: 3, title: '金饰主干道', anchor: 'Nuruosmaniye 门进，右转 20 步', visibility: '常开',
+            body: 'Nuruosmaniye 门进右转 20 步——Kalpakcılar Caddesi 金饰主干道。两侧金店一条龙，比一圈再砍，别进头家就买。',
+            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar.jpg',
+            image_alt: 'Nuruosmaniye 门楣 KAPALIÇARŞI 牌与拱顶',
+            zoom: true,
+            photo_credit: 'Wikimedia · Nuruosmaniye Kapısı.jpg (CC BY-SA)' }
+        ],
+        route_suggestions: [
+          // PRD §P-04 note: 大巴扎 90min 建议从金饰街起步，再回头看 Bedesten（集市是"走完再回头看"的空间逻辑）
+          { duration: '90min', label: '短线必看', picks: [3, 1] },
+          { duration: '3h',    label: '深度',     picks: [1, 2, 3] }
+        ],
+        survival_tips: [
+          { kind: 'scam', severity: 'medium', title: '义乌货满场',
+            body: '很多"土耳其产"小商品印着 MADE IN YIWU。翻背面标签最快。手工地毯 / 铜器 / 陶瓷三类仍是本地工匠做的。' },
+          { kind: 'scam', severity: 'medium', title: '中文套近乎',
+            body: '店家看到中国面孔会用中文招呼"我们是朋友"。这是招揽话术，不是示好——听到请保持议价距离。' },
+          { kind: 'scam', severity: 'high', title: '10 美元拍照',
+            body: '地毯店会拉你进去穿民族服拍照，结束后收 10 美元。想拍先问价，不想拍直接走别客气。' },
+          { kind: 'scam', severity: 'high', title: '上楼喝茶陷阱',
+            body: '店家聊得热络后请你"上楼喝茶"——楼上是他家私店，出了公用集市砍价空间直接砍半。' },
+          { kind: 'practical', title: '开价砍到 30%',
+            body: '开价先砍到 30-40%。商家期待还价是规矩，不砍反被视为不尊重。周一上午 10 点开店头半小时议价空间最大。' }
+        ]
       },
     ]
   },
