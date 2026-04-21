@@ -6609,7 +6609,7 @@ city = {
 
 **#3 · 8 块阿拉伯书法圆盘**（demand 源 · 2+：Walktionary + 中文携程）
 - `n`: 3 · `title`: "8 块书法圆盘" · `anchor`: "中殿上空" · `visibility`: "常开"
-- `body`：中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪一个叫 Kazasker 的人用毛笔写的。
+- `body`：中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。
 - **字数**：50 字 ✓（上限）
 - **自检**：起手式=具体动作（抬头）；1 动作 + 1 感官（视觉尺寸压迫感）+ 1 年份（19 世纪）；痕迹=具体尺寸 + 书法家名字
 
@@ -6641,7 +6641,7 @@ city = {
 
 **#1 · İç Bedesten**（demand 源 · 4+：Istanbul Tour Studio / Eskapas / Private Istanbul Tour Guide）
 - `n`: 1 · `title`: "İç Bedesten" · `anchor`: "集市几何中心" · `visibility`: "常开"
-- `body`：集市中央 15 顶石屋是第一间房——1461 年苏丹建的金银保险库，给圣索菲亚发工资的钱就锁这儿。
+- `body`：集市中央 15 顶石屋是第一间房——1461 年苏丹建的金银保险库，奥斯曼帝国最早的国库之一。
 - **字数**：47 字 ✓
 - **自检**：起手式=具体动作（集市中央）+ 小人物（苏丹、圣索菲亚职员）；1 年份（1461）；痕迹=15 圆顶 + 具体资金流向
 
@@ -6653,7 +6653,7 @@ city = {
 
 **#3 · 金饰街 Kalpakcılar**（demand 源 · 2+：Eskapas / OneNationTravel）
 - `n`: 3 · `title`: "金饰主干道" · `anchor`: "Nuruosmaniye 门进，右转 20 步" · `visibility`: "常开"
-- `body`：Nuruosmaniye 门进，右转 20 步就是 Kalpakcılar Caddesi——金饰主干道。两侧全是金店，比一圈再砍价，别进第一家就买。
+- `body`：Nuruosmaniye 门进右转 20 步——Kalpakcılar Caddesi 金饰主干道。两侧金店一条龙，比一圈再砍，别进头家就买。
 - **字数**：54 字（≤60 健康）
 - **自检**：起手式=具体动作（进门右转）；空间锚点（门名 + 步数 + 街名）；实用 + 痕迹（"别进第一家"=真逛过才会说）
 - **v3.5-exp v3 三方审图 P0-1 修订**（2026-04-21）：原 body "从 Beyazıt 门直走" 和图 `bazaar-gate.jpg`（Nuruosmaniye 门）事实不一致（三方一致命中）；修订后以"Nuruosmaniye 门"为起点，body 改 + 图保留。建议来源：UX tester "最轻改法"判断 —— Nuruosmaniye 门是大巴扎东北门，进门后右转即接 Kalpakcılar Caddesi（金饰街），地理成立。
@@ -7116,6 +7116,27 @@ CEO 2026-04-21 追加 P-09 + P-10 后**新增激活**镜头 6 条（细节 zoom 
 - PMO 建 `experiment/istanbul-tab-3` 分支
 - Dev-H5 按 P-01 ~ P-07 实现 α + β 两份渲染 + data.js 伊斯坦布尔新字段
 - CEO 亲测 3 个 URL（原版 / α / β）定手感
+
+**v3.5-exp v4 · CEO 过稿 + PM 自审 3 处修订**（2026-04-22）：
+
+- 【修订】P-04-A #3 书法圆盘 body："19 世纪一个叫 Kazasker 的人用毛笔写的" → "19 世纪首席大法官 Mustafa İzzet 的手笔"
+  - 理由：Kazasker 是奥斯曼"军事首席法官"头衔，**不是人名**；8 圆盘真实作者为 Mustafa İzzet Efendi（1801-1876），身兼 Kazasker 头衔
+  - 事实来源：Wikipedia · Mustafa İzzet Efendi / Hagia Sophia 书法圆盘条目
+
+- 【修订】P-04-C #1 İç Bedesten body："给圣索菲亚发工资的钱就锁这儿" → "奥斯曼帝国最早的国库之一"
+  - 理由：Bedesten 最初属 Fatih Camii vakfı（征服者清真寺基金）非 Ayasofya vakfı，"给圣索菲亚发工资"具体连接 PM 上一轮写作无文献支撑
+  - 处理：去掉未证实连接、保留"国库"定位，钩子不减
+
+- 【修订】P-04-C #3 金饰主干道 body：54 字 → 50 字（破 §P-07 第 4 条 `onsite_spots` 30-50 字硬控）
+  - 原文："Nuruosmaniye 门进，右转 20 步就是 Kalpakcılar Caddesi——金饰主干道。两侧全是金店，比一圈再砍价，别进第一家就买。"
+  - 新版："Nuruosmaniye 门进右转 20 步——Kalpakcılar Caddesi 金饰主干道。两侧金店一条龙，比一圈再砍，别进头家就买。"
+  - 修订手法：删"就是"/"全是"、"别进第一家"→"别进头家"（语气利落 + 压字）
+
+- 【保留】P-04-B #1 蓝清真寺 altın/altı 民间传说：CEO 2026-04-22 决定方案 A（保留原样）——原词对照（altın/altı）是整条最强的冷知识钩，民间传说在旅行语境里等同"本地故事"，不损文风
+
+- **来源**：PM 复审报告（2026-04-22 过稿前自审）· 26 条文案 22/26 初稿 PASS · 3 处必改（字数破线 1 / 事实错误 1 / 事实需求证 1）+ 1 处可讨论（传说标注，CEO 保留原样）
+
+**过稿状态**：9 条 `onsite_spots` + 17 条 `survival_tips` **全部 CEO 过稿定稿**，文案冻结。Dev-H5 实现阶段禁止改文字（§P-07 文风红线），违规由 QA 扫出 FAIL。
 
 ---
 
