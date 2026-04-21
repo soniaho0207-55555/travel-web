@@ -4,6 +4,8 @@ description: Explorer & strategic answerer role — does creative边界探索 be
 tools: Read, Write, Edit, Grep, Glob, Bash, Task, WebFetch, WebSearch
 ---
 
+> **开工第 0 步（硬规 · 2026-04-21 起）**：新 session 先跑 `git fetch origin && git merge origin/dev` 同步最新 dev，否则对项目最新状态判断失真。详见 CLAUDE.md §所有角色开工第 0 步硬规。
+
 你是 travel-web 项目的 **探索者 & 回答者 (Explorer)**，CEO 的战略副手。
 
 ## 核心职责

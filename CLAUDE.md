@@ -201,16 +201,45 @@ CEO 不是技术背景。所有角色（PM / Dev / QA / UX / PMO / Explorer / De
 
 **用意**：CEO 看完摘要能直接复制发下一角色，不用每次追问"那现在给谁发什么"。
 
-## dev 分支同步硬规（2026-04-20 起 · 补丁 2026-04-21）
+## dev 分支同步硬规（2026-04-20 起 · 补丁 2026-04-21 二次）
 
-PMO 每次开工用 dev 前，第一件事：`git fetch origin && git merge origin/main`
+**硬规分两级**（第一级每次必跑，第二级按需跑）：
 
-**补丁（2026-04-21）**：PMO 每次合完 `dev → main` 后，**立刻做反向倒灌**：
+**第一级 · fetch（每次 PMO 新 session 开工第 0 步必跑，零副作用）**：
+    git fetch origin
+
+作用：把远端快照（main / dev / 其他分支的最新状态）拉进本地 **awareness**，不改任何本地文件。
+这是 PMO 知道"别人在 dev 上推了什么"的**唯一方式**。不 fetch = 瞎判断。
+
+查 dev 上有什么新文件：`git ls-tree origin/dev <目录>` 或 `git log origin/main..origin/dev --oneline`
+
+**第二级 · merge（要实际用到 dev 的时候再跑）**：
+    git merge origin/main
+
+作用：把 origin/main 的最新状态合到本地当前分支（PMO 默认在 main 或基于 main 的 worktree）。
+
+**补丁（2026-04-21 首次）**：PMO 每次合完 `dev → main` 后，**立刻做反向倒灌**：
     git checkout dev
     git merge origin/main
     git push origin dev
 
 目的：让 dev 永远和 main 对齐，消除"下次用 dev 要临时追赶"的窗口。不反向倒灌 = 本次合并未完成。
+
+**补丁（2026-04-21 二次·为什么拆 fetch 和 merge）**：
+早上新 PMO session 被 CEO 问"dev 上那两个 research 文件在哪"，它只查本地 worktree（老 main 快照）没 fetch，直接回"不存在"——结果文件明明在 origin/dev 上。**fetch 是情报、merge 是动作**，两者不能等同。PMO 任何时候回答"某文件/改动存不存在"之前，必须先 fetch，再用 `git ls-tree origin/dev` 查实际仓库状态。
+
+## 所有角色开工第 0 步硬规（2026-04-21 起）
+
+任何角色新 session 第一件事：
+
+    git fetch origin && git merge origin/dev
+
+**例外**：
+- **PMO**：也要每次 session 先跑 `git fetch origin`（awareness 必做），但后续 merge 走专属规则——`git merge origin/main`（方向是管 dev→main 合并，不是消费 dev）。**回答"dev 上有没有某某"之前必须 fetch + `git ls-tree origin/dev`**，不能只看本地 worktree（详见上"dev 分支同步硬规"补丁二次）
+- **UX-tester**（线上体验）：无需 merge，只看 GitHub Pages 部署版，不动本地
+- **QA / QA 子角色**（只读测试）：走 fetch 不走 merge（QA 的 Step 0 已专项写好）
+
+**为什么**：每个 session 在独立 worktree（git 的多工作副本功能，相当于同一仓库的多个平行工作间），本地缓存**不会**自动和 GitHub 同步。不 fetch 就看不到别人今天的产出，容易翻车——今天 PMO 就翻过一次（demand-researcher 把 2 份 research 推到 dev 后 PMO 本地没有，差点判错）。
 
 ## Dev Server
 - Config: `.claude/launch.json`, name: `travel-h5`, port: 8090
