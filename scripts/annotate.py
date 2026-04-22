@@ -18,7 +18,7 @@ Manifest 示例：
 ]
 """
 import json, sys, os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 # macOS 中文字体 fallback
 FONT_PATHS = [
@@ -36,8 +36,16 @@ def get_font(size):
 def process(item):
     src = item["src"]
     dst = item["dst"]
-    img = Image.open(src).convert("RGB")
+    img = Image.open(src)
+    # v5: 按 EXIF Orientation 矫正方向（v4 iPhone 拍的图常见 Orientation=6/8）
+    img = ImageOps.exif_transpose(img)
+    img = img.convert("RGB")
     w, h = img.size
+
+    # v5: 可选手动 rotate（覆盖 EXIF）
+    if "rotate" in item:
+        img = img.rotate(item["rotate"], expand=True)
+        w, h = img.size
 
     # 可选裁切（百分比或像素）
     if "crop_pct" in item:
