@@ -1,0 +1,62 @@
+{
+  "schema_version": "v3.5-exp",
+  "description": "v3.5-exp 伊斯坦布尔实验 25 张图的 Wikimedia Commons 来源清单。Dev-H5 粘合 js/data.js 时把 source_file 填到对应字段的 photo_credit，把 license 标在 lightbox 底部小字。",
+  "license_note": "全部来源 Wikimedia Commons。多数 CC BY-SA 3.0/4.0；古地图（1680 Grelot, 1895 SPRY）和 Grundriss 为 Public Domain（作者超过版权期）。具体协议以 Wikimedia 文件页为准：https://commons.wikimedia.org/wiki/File:<source_file>",
+  "onsite_spots": [
+    {"n": 1, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-1-wishstone.jpg", "source_file": "Płacząca kolumna Haga Sofia RB.jpg", "processing": "crop (12,10,65,85) + 底部文字条 '① 许愿柱'"},
+    {"n": 2, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-2-dandolo.jpg", "source_file": "Enrico Dandolo gravestone.jpg", "processing": "resize 1200w + 底部文字条 '② Dandolo 墓碑'"},
+    {"n": 3, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-3-calligraphy.jpg", "source_file": "Calligraphy Hagia Sophia.jpg", "processing": "resize 1200w + 底部文字条 '③ 书法圆盘'"},
+    {"n": 1, "landmark": "blue-mosque", "asset": "onsite-spots/bluemosque-1-minarets.jpg", "source_file": "Sultan Ahmet Camii, İstanbul. Sultan Ahmed Mosque, Constantinople (Blue Mosque). Τέμενος Σουλτάνου Αχμέτ 'Α (Μπλέ Τζαμί), Κωνσταντινούπολη.jpg", "processing": "crop (0,0,100,85) + 底部文字条"},
+    {"n": 2, "landmark": "blue-mosque", "asset": "onsite-spots/bluemosque-2-tiles.jpg", "source_file": "Blue Mosque Ceiling Blue Tiles.JPG", "processing": "resize 1200w + 底部文字条"},
+    {"n": 3, "landmark": "blue-mosque", "asset": "onsite-spots/bluemosque-3-ostrich.jpg", "source_file": "Blue Mosque Interior 2009.JPG", "processing": "crop (0,0,100,75) + 红圈 52/50 + 红箭头 + '鸵鸟蛋位置' 文字 + 底部文字条"},
+    {"n": 1, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-1-bedesten.jpg", "source_file": "Kapali Carsi-Grand Bazar-Istanbul-Sep08.jpg", "processing": "crop (0,0,100,50) 只留拱顶 + 底部文字条 '① İç Bedesten · 1461'"},
+    {"n": 2, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-2-zincirli.jpg", "source_file": "Business making, Istanbul Grand Bazaar (456333936).jpg", "processing": "crop (0,0,100,55) 只留上部拱廊庭院 + 底部文字条 '② Zincirli Han · 1708'"},
+    {"n": 3, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-3-kalpakcilar.jpg", "source_file": "Nuruosmaniye Kapısı.jpg", "processing": "crop (0,0,100,55) 只留门楣 KAPALIÇARŞI + 底部文字条 '③ 金饰主干道入口'"}
+  ],
+  "slides": [
+    {"group": "A", "n": 1, "landmark": "hagia-sophia", "asset": "slides/hagia-A1-seraphim-all.jpg", "source_file": "Seraphim below Hagia Sophia's dome.jpg", "processing": "resize 1200w", "note": "包含 4 角撒拉弗艺术品——非真人，无肖像权风险"},
+    {"group": "A", "n": 2, "landmark": "hagia-sophia", "asset": "slides/hagia-A2-panorama-crop.jpg", "source_file": "Hagia Sophia Interior Panorama.jpg", "processing": "crop (20,10,80,60) 裁穹顶"},
+    {"group": "A", "n": 3, "landmark": "hagia-sophia", "asset": "slides/hagia-A3-seraphim-face.jpg", "source_file": "Hagia Sophia Seraphim with face in 2016 9122.jpg", "processing": "crop (10,10,90,70)", "note": "撒拉弗 2016 揭示面部——拜占庭马赛克艺术品"},
+    {"group": "A", "n": 4, "landmark": "hagia-sophia", "asset": "slides/hagia-A4-viking.jpg", "source_file": "Hagia-sofia-viking.jpg", "processing": "crop (0,0,75,100) 裁左 75% 避边缘小身影"},
+    {"group": "A", "n": 5, "landmark": "hagia-sophia", "asset": "slides/hagia-A5-panorama-full.jpg", "source_file": "Hagia Sophia Interior Panorama.jpg", "processing": "crop (18,8,78,92) 四边收窄避边缘人影"},
+    {"group": "B", "n": 1, "landmark": "blue-mosque", "asset": "slides/bluemosque-B1-carpet.jpg", "source_file": "Carpet on the floor of Sultan Ahmed Mosque.JPG", "processing": "crop (0,0,93,100) 避开右侧手部"},
+    {"group": "B", "n": 2, "landmark": "blue-mosque", "asset": "slides/bluemosque-B2-windows.jpg", "source_file": "Interior view of Sultan Ahmed Mosque Dome, Istanbul, Turkey (Ank Kumar) 04.jpg", "processing": "crop (20,10,80,60) 裁穹顶彩窗"},
+    {"group": "B", "n": 3, "landmark": "blue-mosque", "asset": "slides/bluemosque-B3-entrance.jpg", "source_file": "Blue Mosque Interior 2009.JPG", "processing": "crop (0,55,55,95) 左下入口区"},
+    {"group": "B", "n": 4, "landmark": "blue-mosque", "asset": "slides/bluemosque-B4-prayer.jpg", "source_file": "Blue Mosque Interior 2009.JPG", "processing": "crop (20,5,95,60) 上部穹顶"},
+    {"group": "C", "n": 1, "landmark": "grand-bazaar", "asset": "slides/bazaar-C1-boza-cup.jpg", "source_file": "Vefa Bozacısı in Istanbul (33067215220).jpg", "processing": "crop (0,20,100,70) boza 杯特写"},
+    {"group": "C", "n": 2, "landmark": "grand-bazaar", "asset": "slides/bazaar-C2-boza-store.jpg", "source_file": "Vefa Bozacısı in Istanbul (33067215220).jpg", "processing": "crop (0,0,100,20) 顶部货架区（避开店员）"},
+    {"group": "C", "n": 3, "landmark": "grand-bazaar", "asset": "slides/bazaar-C3-dye-yarn.jpg", "source_file": "Istanbul Turkish and Islamic Museum Seljuk carpet C 13th century from Konya in 2006 0904.jpg", "processing": "crop (0,20,100,70) 天然染料地毯纹理", "note": "13 世纪博物馆展品地毯，无真人"},
+    {"group": "C", "n": 4, "landmark": "grand-bazaar", "asset": "slides/bazaar-C4-aged-fiber.jpg", "source_file": "Istanbul Turkish and Islamic Museum Seljuk carpet C 13th century from Konya in 2006 0904.jpg", "processing": "crop (20,50,80,100) 时间旧化纹理"}
+  ],
+  "maps": [
+    {"landmark": "hagia-sophia", "asset": "maps/map-hagia-annotated.jpg", "source_file": "Hagia-Sophia-Grundriss.jpg", "processing": "resize 1200w + ① 72/20 ② 40/75 ③ 45/48 红圈数字", "note": "纯平面图德文版 · Public Domain（作者超过版权期）"},
+    {"landmark": "blue-mosque", "asset": "maps/map-bluemosque-annotated.jpg", "source_file": "L'Elevation et le Plan de la Mosquée de Sultan Ahmed - Grelot Guillaume-joseph - 1680.jpg", "processing": "resize 1200w + ① 50/22 ② 75/79 ③ 70/73 红圈数字", "note": "1680 年 Grelot 手绘立面+平面图 · Public Domain"},
+    {"landmark": "grand-bazaar", "asset": "maps/map-bazaar-annotated.jpg", "source_file": "SPRY(1895) p178 PLAN OF CENTRAL BAZARS OF CONSTANTINOPLE.jpg", "processing": "resize 1200w + ① 35/60 ② 60/35 ③ 50/72 红圈数字", "note": "1895 年 SPRY 印刷平面图 · Public Domain"}
+  ],
+  "onsite_spots_overview_v5": [
+    {"n": 1, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-1-wishstone-overview.jpg", "source_file": "Gaspare Fossati - Louis Haghe - Vue générale de la grande nef, en regardant l'occident (Hagia Sophia - Ayasofya Mosque nave).jpg", "license": "Public Domain (Fossati 1809-1883)", "processing": "crop (5,0,95,70) + ①许愿柱 圈 78/52 · 二楼北侧 gallery"},
+    {"n": 2, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-2-dandolo-overview.jpg", "source_file": "Central nave - Hagia Sophia (8291196158).jpg", "license": "CC BY-SA 2.0", "processing": "crop (2,10,98,95) + ②脚下 圈 50/65 + 向下箭头 · 从二楼南廊俯视中殿 · Dandolo 在镜头后脚下"},
+    {"n": 3, "landmark": "hagia-sophia", "asset": "onsite-spots/hagia-3-calligraphy-overview.jpg", "source_file": "Hagia Sophia Interior Panorama.jpg", "license": "CC BY-SA 3.0", "processing": "crop (20,12,80,65) 居中裁 360 拼接 + 3 红圈标圆盘位 · 和 slides/hagia-A5 同源不同裁"},
+    {"n": 5, "landmark": "blue-mosque", "asset": "onsite-spots/bluemosque-2-tiles-overview.jpg", "source_file": "Domes - Blue Mosque (8395054221).jpg", "license": "CC BY-SA 2.0", "processing": "EXIF 矫正 (Orientation=8) + crop (0,8,100,92) + 大红圈环绕主穹顶"},
+    {"n": 6, "landmark": "blue-mosque", "asset": "onsite-spots/bluemosque-3-ostrich-overview.jpg", "source_file": "Interior of Sultan Ahmed Mosque, Istanbul, Turkey (Ank Kumar) 06.jpg", "license": "CC BY-SA 4.0", "processing": "crop (0,5,100,95) + 5 圆圈沿 y=22% 吊灯链节点散布（每盏都藏蛋 · 分布标注）"},
+    {"n": 7, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-1-bedesten-overview.jpg", "source_file": "SPRY(1895) p178 PLAN OF CENTRAL BAZARS OF CONSTANTINOPLE.jpg", "license": "Public Domain (1895)", "processing": "复用 maps/map-bazaar-annotated.jpg · crop (15,45,65,90) zoom-in 到 Jewel/Arms Bezestan 区域 · ①③ 原标保留"},
+    {"n": 8, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-2-zincirli-overview.jpg", "source_file": "Zincirli Han.jpg", "license": "CC BY-SA 4.0", "processing": "crop (0,5,100,95) 冬季庭院俯拍 + 大红圈圈庭院中央"},
+    {"n": 9, "landmark": "grand-bazaar", "asset": "onsite-spots/bazaar-3-kalpakcilar-overview.jpg", "source_file": "Istanbul-Grand Bazaar Sebah.jpg", "license": "Public Domain (Pascal Sébah 1823-1886)", "processing": "crop (0,2,100,98) + 红箭头指 corridor 深处 · 1880s 历史黑白照", "note": "照片中 19 世纪店员人物 · 去世 > 100 年 · 无现代肖像权"}
+  ],
+  "v5_data_js_guidance": {
+    "image_array_schema": "v5 PRD §P-09 · image: [overview, detail] 双图数组。6 塔无全局图保留 image: [detail] 单图。",
+    "examples": {
+      "hagia-sophia_landmark_0_onsite_spot_0": "image: ['assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone-overview.jpg', 'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg']",
+      "blue-mosque_landmark_1_onsite_spot_0_塔": "image: ['assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg']"
+    }
+  },
+  "raw_sources_gitignored": "原图 63MB 已 .gitignore 排除，随时可用 scripts/fetch-wikimedia.sh 重新抓取",
+  "build_tools": {
+    "fetch": "scripts/fetch-wikimedia.sh",
+    "search": "scripts/search-wikimedia.sh",
+    "build_manifest": "scripts/build-manifest-v2.py",
+    "annotate": "scripts/annotate.py",
+    "scan_faces": "scripts/scan-faces.py",
+    "build_preview": "scripts/build-preview.py"
+  }
+}
