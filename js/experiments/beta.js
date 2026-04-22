@@ -21,6 +21,7 @@ function switchExpBetaTab(tab) {
 function renderExperimentBeta(city, landmark, cityId, index) {
   const app = document.getElementById('app');
   const l = landmark;
+  const c = city;  // v6 行动层需 city 读取 bestSeason（§P-13-B / §P-03）
   const showSurvival = expLandmarkHasSurvival(l);  // §P-12-G 空态 tab 隐藏
   expBetaTab = 'before';
 
@@ -50,7 +51,7 @@ function renderExperimentBeta(city, landmark, cityId, index) {
       </div>
 
       <div class="exp-beta-panel active" role="tabpanel" data-exppanel="before">
-        ${expRenderBeforeSection(l)}
+        ${expRenderBeforeSection(l, c)}
       </div>
       <div class="exp-beta-panel" role="tabpanel" data-exppanel="onsite">
         ${expRenderOnsiteSection(l)}

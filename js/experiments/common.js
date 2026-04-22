@@ -12,6 +12,20 @@ function expEscape(s) {
   }[ch]));
 }
 
+/* v6 · 内联 markdown（仅 bold / italic · 书名号兼容）
+   先 escape 再处理：先 ** 强调再 * 斜体，避免嵌套误吞。
+   用于 deep_dive.body 的 PM 文本里 **bold** / *italic* / *Book Title* 标记。*/
+function expInlineMD(escapedStr) {
+  if (!escapedStr) return '';
+  let out = escapedStr.replace(/\*\*([^\*]+?)\*\*/g, '<strong>$1</strong>');
+  out = out.replace(/\*([^\*]+?)\*/g, '<em>$1</em>');
+  return out;
+}
+
+function expEscapeMD(text) {
+  return expInlineMD(expEscape(text));
+}
+
 /* PRD §P-06 · 现有 tips[] 拆到 3 tab
    - 旅行前：ticket / cold / season / dress / timing（默认）
    - 旅行中：photo / walking / route / secret */
@@ -92,10 +106,10 @@ function expLightboxClose() {
   document.body.style.overflow = '';
 }
 
-/* ——— 旅行前 tab v5 三层结构（PRD §P-07-D） ——— */
-/* 层 1 · 阅读层：whyVisit + detail_slides + relatedLiterature（默认展开）
-   层 2 · 深度层：worldEvents + relatedFigure（默认折叠）
-   层 3 · 行动层：ticket + 旅行前 tips + note（默认展开，微灰底）*/
+/* ——— 旅行前 tab v6 三层结构（PRD §P-07-D v6） ——— */
+/* 层 1 · 阅读层：whyVisit + detail_slides + relatedLiterature + 延伸阅读折叠（worldEvents/relatedFigure · v6 降级）
+   层 2 · 深度层：deep_dive[] · single-focus 下钻 · 默认折叠（v6 主改 · 不再是 worldEvents 横向扫）
+   层 3 · 行动层：ticket + visitTiming 卡片 + city.bestSeason + 旅行前 tips + note · 微灰底 */
 
 function expRenderBeforeLayer1Reading(l) {
   return `
@@ -107,44 +121,45 @@ function expRenderBeforeLayer1Reading(l) {
       <div class="exp-layer-body">
         ${expRenderWhyVisitReading(l)}
         ${expRenderRelatedLiterature(l)}
+        ${expRenderExtendedReading(l)}
       </div>
     </section>
   `;
 }
 
 function expRenderBeforeLayer2Depth(l) {
-  const worldHtml = expRenderMeanwhile(l);
-  const figHtml = expRenderRelatedFigure(l);
-  if (!worldHtml && !figHtml) return '';  // 整层为空时不渲染
+  const ddHtml = expRenderDeepDive(l);
+  if (!ddHtml) return '';  // 没 deep_dive → 整层不渲染（§P-07-D 硬规：宁可无也不塞外围信号）
   return `
     <section class="exp-layer exp-layer-depth" data-layer="depth">
       <header class="exp-layer-head exp-layer-head-toggle" onclick="expToggleLayer(this)" role="button" tabindex="0">
         <span class="exp-layer-caret">▶</span>
         <span class="exp-layer-label">深一步</span>
-        <span class="exp-layer-sub">历史背景 · 点开读</span>
+        <span class="exp-layer-sub">single-focus 下钻 · 点开读</span>
       </header>
       <div class="exp-layer-body exp-layer-body-collapsed">
-        ${worldHtml}
-        ${figHtml}
+        ${ddHtml}
       </div>
     </section>
   `;
 }
 
-function expRenderBeforeLayer3Action(l) {
+function expRenderBeforeLayer3Action(l, c) {
   const ticketHtml = expRenderTicketBlock(l);
+  const timingHtml = expRenderVisitTiming(l, c);
   const tips = expSplitTips(l.tips).before;
   const tipsHtml = expRenderTipsFlat(tips, '');
   const noteHtml = expRenderNote(l);
-  if (!ticketHtml && !tipsHtml && !noteHtml) return '';
+  if (!ticketHtml && !timingHtml && !tipsHtml && !noteHtml) return '';
   return `
     <section class="exp-layer exp-layer-action" data-layer="action">
       <header class="exp-layer-head">
         <span class="exp-layer-label">出发前</span>
-        <span class="exp-layer-sub">票务 · 实用手册</span>
+        <span class="exp-layer-sub">票务 · 时段 · 实用手册</span>
       </header>
       <div class="exp-layer-body">
         ${ticketHtml}
+        ${timingHtml}
         ${tipsHtml}
         ${noteHtml}
       </div>
@@ -437,13 +452,141 @@ function expLandmarkHasSurvival(l) {
   return Array.isArray(l && l.survival_tips) && l.survival_tips.length > 0;
 }
 
-/* ——— β 3 大 tab 区块（beta.js 消费） ——— */
-function expRenderBeforeSection(l) {
+/* ——— v6 · deep_dive 渲染（深度层主内容） ——— */
+function expRenderDeepDive(l) {
+  const list = Array.isArray(l && l.deep_dive) ? l.deep_dive : [];
+  if (!list.length) return '';
+  const TYPE_LABEL = { craft: '工艺', controversy: '争议', aftermath: '后续', event_echo: '事件' };
+  // v6 "不采新图 · 复用 onsite_spot.image[0] 作 placeholder"（§P-13-C）
+  const fallbackImage = (() => {
+    const spots = Array.isArray(l.onsite_spots) ? l.onsite_spots : [];
+    for (const sp of spots) {
+      const imgs = Array.isArray(sp.image) ? sp.image : (sp.image ? [sp.image] : []);
+      if (imgs[0]) return { src: imgs[0], alt: (Array.isArray(sp.image_alt) ? sp.image_alt[0] : sp.image_alt) || '' };
+    }
+    return null;
+  })();
+
+  const cards = list.map((dd, i) => `
+    <article class="exp-deep-card" data-dd-type="${expEscape(dd.type || '')}" data-dd-idx="${i}">
+      <header class="exp-deep-head">
+        <span class="exp-deep-type">${expEscape(TYPE_LABEL[dd.type] || dd.type || '')}</span>
+        <h3 class="exp-deep-title">${expEscapeMD(dd.title || '')}</h3>
+      </header>
+      <div class="exp-deep-body">
+        ${expRenderBodyBlocks(dd.body, fallbackImage)}
+      </div>
+      ${dd.evidence ? `<footer class="exp-deep-evidence">来源 · ${expEscapeMD(dd.evidence)}</footer>` : ''}
+    </article>
+  `).join('');
+  return `<div class="exp-deep-dive">${cards}</div>`;
+}
+
+/* v6 · body block 数组渲染（paragraph / pullquote / image / sub_heading）
+   支持内联 MD（**bold** / *italic*）· PM 文本不动字 */
+function expRenderBodyBlocks(blocks, fallbackImage) {
+  if (!Array.isArray(blocks) || !blocks.length) return '';
+  return blocks.map(b => {
+    if (!b || !b.kind) return '';
+    if (b.kind === 'paragraph') {
+      return `<p class="exp-block-paragraph">${expEscapeMD(b.text || '')}</p>`;
+    }
+    if (b.kind === 'pullquote') {
+      const src = b.source ? `<cite class="exp-block-pullquote-source">${expEscapeMD(b.source)}</cite>` : '';
+      return `
+        <blockquote class="exp-block-pullquote">
+          <p class="exp-block-pullquote-text">${expEscapeMD(b.text || '')}</p>
+          ${src}
+        </blockquote>`;
+    }
+    if (b.kind === 'sub_heading') {
+      return `<h4 class="exp-block-sub-heading">${expEscapeMD(b.text || '')}</h4>`;
+    }
+    if (b.kind === 'image') {
+      // v6 §P-13-C · 无专属采图时复用 onsite_spot.image[0] 作 placeholder
+      const src = b.asset || (fallbackImage && fallbackImage.src) || '';
+      const alt = b.image_alt || (fallbackImage && fallbackImage.alt) || b.caption || '';
+      if (!src) return '';
+      const credit = b.photo_credit || '';
+      return `
+        <figure class="exp-block-image">
+          <img src="${expEscape(src)}"
+               alt="${expEscape(alt)}"
+               loading="lazy"
+               onerror="this.classList.add('failed')"
+               onclick="expLightboxOpen('${expEscape(src)}', '${expEscape(alt)}', '${expEscape(credit)}')" />
+          ${b.caption ? `<figcaption class="exp-block-image-caption">${expEscapeMD(b.caption)}</figcaption>` : ''}
+        </figure>`;
+    }
+    return '';  // 未知 kind · 静默丢弃
+  }).join('');
+}
+
+/* v6 · visitTiming 卡片组 + city.bestSeason */
+function expRenderVisitTiming(l, c) {
+  const vt = Array.isArray(l && l.visitTiming) ? l.visitTiming : [];
+  const bs = c && typeof c.bestSeason === 'string' ? c.bestSeason.trim() : '';
+  if (!vt.length && !bs) return '';
+  const cards = vt.map(t => `
+    <article class="exp-visit-card">
+      <div class="exp-visit-when">${expEscape(t.when || '')}</div>
+      <p class="exp-visit-body">${expEscape(t.body || '')}</p>
+    </article>
+  `).join('');
+  const season = bs ? `
+    <div class="exp-best-season">
+      <span class="exp-best-season-label">这座城市的季节</span>
+      <p class="exp-best-season-body">${expEscape(bs)}</p>
+    </div>` : '';
+  return `
+    <div class="exp-visit-timing">
+      ${vt.length ? `<div class="exp-visit-timing-head">
+        <span class="rich-content-section-title">什么时候去</span>
+        <span class="exp-visit-timing-sub">2-3 条氛围锚点 · 策展不是时刻表</span>
+      </div>
+      <div class="exp-visit-list">${cards}</div>` : ''}
+      ${season}
+    </div>`;
+}
+
+/* v6 · 延伸阅读折叠（v5 的 worldEvents + relatedFigure · v6 降级到阅读层尾部）
+   默认折起 · 点击展开 · 如果两者都空则不渲染 */
+function expRenderExtendedReading(l) {
+  const worldHtml = expRenderMeanwhile(l);
+  const figHtml = expRenderRelatedFigure(l);
+  if (!worldHtml && !figHtml) return '';
+  return `
+    <section class="exp-ext-reading" data-ext="extended">
+      <header class="exp-ext-head" onclick="expToggleExt(this)" role="button" tabindex="0">
+        <span class="exp-ext-caret">▶</span>
+        <span class="exp-ext-label">延伸阅读</span>
+        <span class="exp-ext-sub">同期世界 / 相关人物</span>
+      </header>
+      <div class="exp-ext-body exp-ext-body-collapsed">
+        ${worldHtml}
+        ${figHtml}
+      </div>
+    </section>
+  `;
+}
+
+function expToggleExt(headEl) {
+  const section = headEl.closest('.exp-ext-reading');
+  if (!section) return;
+  section.classList.toggle('expanded');
+  const body = section.querySelector('.exp-ext-body');
+  if (body) body.classList.toggle('exp-ext-body-collapsed');
+  const caret = headEl.querySelector('.exp-ext-caret');
+  if (caret) caret.textContent = section.classList.contains('expanded') ? '▼' : '▶';
+}
+
+/* ——— β 3 大 tab 区块（beta.js 消费 · v6 行动层需 city 参数） ——— */
+function expRenderBeforeSection(l, c) {
   return `
     <div class="exp-before">
       ${expRenderBeforeLayer1Reading(l)}
       ${expRenderBeforeLayer2Depth(l)}
-      ${expRenderBeforeLayer3Action(l)}
+      ${expRenderBeforeLayer3Action(l, c)}
     </div>
   `;
 }

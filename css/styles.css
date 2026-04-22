@@ -2745,3 +2745,236 @@ body::before {
   background: rgba(255, 255, 255, 0.35);
 }
 .exp-dual-dot.active { background: #D4A574; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v6 · 深度层返工 · deep_dive / visitTiming / bestSeason / 延伸阅读
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— 深度层 · deep_dive 卡片组 —— */
+.exp-deep-dive {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.exp-deep-card {
+  background: rgba(24, 32, 28, 0.55);
+  border-left: 3px solid #D4A574;
+  border-radius: 2px;
+  padding: 18px 18px 16px;
+}
+.exp-deep-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(201, 184, 150, 0.16);
+}
+.exp-deep-type {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B53A1F;
+  padding: 2px 8px;
+  background: rgba(181, 58, 31, 0.08);
+  border-radius: 2px;
+}
+.exp-deep-title {
+  flex: 1 1 100%;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #E8D4B0;
+  margin: 4px 0 0;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+.exp-deep-body { }
+.exp-deep-evidence {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dotted rgba(201, 184, 150, 0.16);
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* —— body block 样式（paragraph / pullquote / image / sub_heading） —— */
+.exp-block-paragraph {
+  font-size: 15px;
+  line-height: 1.78;
+  color: #d8cfbf;
+  margin: 0 0 14px 0;
+}
+.exp-block-paragraph:last-child { margin-bottom: 0; }
+.exp-block-paragraph strong { color: #E8D4B0; font-weight: 600; }
+.exp-block-paragraph em { color: #C9B896; font-style: italic; }
+
+.exp-block-pullquote {
+  margin: 18px 0 18px 0;
+  padding: 4px 0 4px 14px;
+  border-left: 4px solid #B53A1F;
+  background: transparent;
+}
+.exp-block-pullquote-text {
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #E8D4B0;
+  margin: 0 0 6px 0;
+}
+.exp-block-pullquote-source {
+  display: block;
+  font-size: 11px;
+  font-style: normal;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-block-pullquote-source em { font-style: italic; color: #C9B896; }
+
+.exp-block-sub-heading {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #E8D4B0;
+  margin: 18px 0 10px 0;
+  letter-spacing: 0.01em;
+}
+
+.exp-block-image {
+  margin: 14px -18px;   /* 负 margin 抵消 deep-card padding · 实现左右 bleed 感 */
+  padding: 0;
+}
+.exp-block-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background: #121510;
+  cursor: zoom-in;
+}
+.exp-block-image img.failed { opacity: 0.35; filter: grayscale(1); }
+.exp-block-image-caption {
+  padding: 6px 18px 0;
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* —— 行动层 · visitTiming 卡片组 —— */
+.exp-visit-timing {
+  margin-top: 22px;
+}
+.exp-visit-timing-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.exp-visit-timing-head .rich-content-section-title { color: #D4A574; margin: 0; }
+.exp-visit-timing-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-visit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-visit-card {
+  padding: 10px 14px 12px;
+  background: rgba(201, 184, 150, 0.05);
+  border-left: 2px solid #C9B896;
+  border-radius: 2px;
+}
+.exp-visit-when {
+  font-size: 14px;
+  font-weight: 600;
+  color: #D4A574;
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+.exp-visit-body {
+  font-size: 13.5px;
+  line-height: 1.68;
+  color: #d8cfbf;
+  margin: 0;
+}
+
+/* —— city.bestSeason 叙事段 —— */
+.exp-best-season {
+  margin-top: 18px;
+  padding: 12px 14px 14px;
+  background: rgba(212, 165, 116, 0.06);
+  border-left: 2px solid #D4A574;
+  border-radius: 2px;
+}
+.exp-best-season-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7f6d;
+  margin-bottom: 4px;
+  display: block;
+}
+.exp-best-season-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #d8cfbf;
+  margin: 0;
+}
+
+/* —— 阅读层尾部 · 延伸阅读折叠 section —— */
+.exp-ext-reading {
+  margin-top: 18px;
+  border-top: 1px dashed rgba(201, 184, 150, 0.18);
+  padding-top: 10px;
+}
+.exp-ext-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 0;
+  transition: opacity 0.2s;
+}
+.exp-ext-head:hover { opacity: 0.85; }
+.exp-ext-caret {
+  font-size: 10px;
+  color: #8a7f6d;
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.exp-ext-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #C9B896;
+  letter-spacing: 0.08em;
+}
+.exp-ext-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-ext-body {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+.exp-ext-body-collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+.exp-ext-reading.expanded .exp-ext-body-collapsed {
+  max-height: 5000px;
+  opacity: 1;
+  padding-top: 8px;
+}
