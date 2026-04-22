@@ -382,6 +382,14 @@ function renderCityDetail(id) {
   if (!c) { renderNotFound(id); return; }
   detailTab = 'timeline';
 
+  // v5 §P-12: 城市页 3 Tab（介绍 / 景点 / Survival）· URL ?t= 参数决定初始 tab · 空态自动隐藏
+  const showCitySurvival = Array.isArray(c.survival_tips) && c.survival_tips.length > 0;
+  const requestedTab = getCityTabParam();
+  let initialCityTab = 'intro';
+  if (requestedTab === 'spots') initialCityTab = 'spots';
+  else if (requestedTab === 'survival' && showCitySurvival) initialCityTab = 'survival';
+  // 其他值（包括空 / 未知 / survival 但数据空）fallback 到 intro
+
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="detail-page">
@@ -399,48 +407,61 @@ function renderCityDetail(id) {
         </div>
       </section>
 
-      <div class="overview">
-        <p>${c.overview}</p>
-        ${c.overviewFull ? `
-          <div class="overview-full" id="overviewFull">${renderParagraphs(c.overviewFull, c.overviewFullImages)}</div>
-          <button class="overview-toggle" id="overviewToggle" onclick="toggleOverview()">
-            <span class="overview-toggle-text">继续阅读</span>
-            ${icon('chevronDown', 12)}
-          </button>
+      <div class="city-tabs" role="tablist">
+        <button class="city-tab${initialCityTab === 'intro' ? ' active' : ''}" role="tab" data-ctab="intro" onclick="switchCityTab('intro')">介绍</button>
+        <button class="city-tab${initialCityTab === 'spots' ? ' active' : ''}" role="tab" data-ctab="spots" onclick="switchCityTab('spots')">景点</button>
+        ${showCitySurvival ? `<button class="city-tab${initialCityTab === 'survival' ? ' active' : ''}" role="tab" data-ctab="survival" onclick="switchCityTab('survival')">Survival</button>` : ''}
+      </div>
+
+      <div class="city-panel${initialCityTab === 'intro' ? ' active' : ''}" role="tabpanel" data-cpanel="intro">
+        <div class="overview">
+          <p>${c.overview}</p>
+          ${c.overviewFull ? `
+            <div class="overview-full" id="overviewFull">${renderParagraphs(c.overviewFull, c.overviewFullImages)}</div>
+            <button class="overview-toggle" id="overviewToggle" onclick="toggleOverview()">
+              <span class="overview-toggle-text">继续阅读</span>
+              ${icon('chevronDown', 12)}
+            </button>
+          ` : ''}
+        </div>
+
+        <div class="section-tabs">
+          <button class="section-tab active" data-tab="timeline" onclick="switchDetailTab('timeline')">历史时间轴</button>
+          ${c.practicalInfo ? `<button class="section-tab" data-tab="practical" onclick="switchDetailTab('practical')">实用信息</button>` : ''}
+        </div>
+
+        <div class="panel active" data-panel="timeline">
+          <div class="timeline-wrap">
+            <div class="timeline">
+              ${c.timeline.map((t, i) => `
+                <div class="timeline-item" style="transition-delay:${i * 0.06}s">
+                  <div class="timeline-year">${t.year}</div>
+                  <div class="timeline-event">${t.event}</div>
+                  <div class="timeline-desc">${t.desc}</div>
+                  ${t.detail ? `
+                    <button class="timeline-detail-btn" onclick="toggleTimelineDetail(this)">展开阅读 →</button>
+                    <div class="timeline-detail">
+                      <div class="timeline-detail-section"><div class="rich-content-section-title">背景</div>${renderParagraphs(t.detail.context, t.detail.contextImages)}</div>
+                      <div class="timeline-detail-section"><div class="rich-content-section-title">人物</div>${renderParagraphs(t.detail.figures, t.detail.figuresImages)}</div>
+                      <div class="timeline-detail-section"><div class="rich-content-section-title">此时全球</div>${renderParagraphs(t.detail.parallel, t.detail.parallelImages)}</div>
+                    </div>
+                  ` : ''}
+                  ${t.worldContext ? `<div class="timeline-world-context">${renderWorldContext(t.worldContext)}</div>` : ''}
+                  ${t.epochTail ? renderEpochTail(t.epochTail) : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        ${c.practicalInfo ? `
+        <div class="panel" data-panel="practical">
+          ${renderPracticalPanel(c.practicalInfo)}
+        </div>
         ` : ''}
       </div>
 
-      <div class="section-tabs">
-        <button class="section-tab active" data-tab="timeline" onclick="switchDetailTab('timeline')">历史时间轴</button>
-        <button class="section-tab" data-tab="landmarks" onclick="switchDetailTab('landmarks')">重要景点</button>
-        ${c.practicalInfo ? `<button class="section-tab" data-tab="practical" onclick="switchDetailTab('practical')">实用信息</button>` : ''}
-      </div>
-
-      <div class="panel active" data-panel="timeline">
-        <div class="timeline-wrap">
-          <div class="timeline">
-            ${c.timeline.map((t, i) => `
-              <div class="timeline-item" style="transition-delay:${i * 0.06}s">
-                <div class="timeline-year">${t.year}</div>
-                <div class="timeline-event">${t.event}</div>
-                <div class="timeline-desc">${t.desc}</div>
-                ${t.detail ? `
-                  <button class="timeline-detail-btn" onclick="toggleTimelineDetail(this)">展开阅读 →</button>
-                  <div class="timeline-detail">
-                    <div class="timeline-detail-section"><div class="rich-content-section-title">背景</div>${renderParagraphs(t.detail.context, t.detail.contextImages)}</div>
-                    <div class="timeline-detail-section"><div class="rich-content-section-title">人物</div>${renderParagraphs(t.detail.figures, t.detail.figuresImages)}</div>
-                    <div class="timeline-detail-section"><div class="rich-content-section-title">此时全球</div>${renderParagraphs(t.detail.parallel, t.detail.parallelImages)}</div>
-                  </div>
-                ` : ''}
-                ${t.worldContext ? `<div class="timeline-world-context">${renderWorldContext(t.worldContext)}</div>` : ''}
-                ${t.epochTail ? renderEpochTail(t.epochTail) : ''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="panel" data-panel="landmarks">
+      <div class="city-panel${initialCityTab === 'spots' ? ' active' : ''}" role="tabpanel" data-cpanel="spots">
         <div class="landmarks-wrap">
           ${c.landmarks.map((l, i) => `
             <div class="landmark-card landmark-card-simple" style="transition-delay:${i * 0.08}s" onclick="navTo('#/city/${c.id}/landmark/${i}')">
@@ -455,9 +476,9 @@ function renderCityDetail(id) {
         </div>
       </div>
 
-      ${c.practicalInfo ? `
-      <div class="panel" data-panel="practical">
-        ${renderPracticalPanel(c.practicalInfo)}
+      ${showCitySurvival ? `
+      <div class="city-panel${initialCityTab === 'survival' ? ' active' : ''}" role="tabpanel" data-cpanel="survival">
+        ${renderCitySurvival(c)}
       </div>
       ` : ''}
 
@@ -559,6 +580,7 @@ function switchDetailTab(tab) {
     el.classList.toggle('active', el.dataset.panel === tab);
   });
   setTimeout(() => setupScrollAnimations(), 60);
+  // v5: landmarks 子 tab 已移到城市页顶 3 tab 的"景点"tab，本分支不再进入（保留兼容不报错）
   if (tab === 'landmarks') {
     const hash = location.hash;
     const parts = hash.replace(/^#\//, '').split('/');
@@ -566,6 +588,46 @@ function switchDetailTab(tab) {
     const c = CITIES.find(ci => ci.id === id);
     if (c) loadLandmarkImages(c.landmarks);
   }
+}
+
+/* v5 §P-12 · 城市页 3 Tab 切换 + URL 参数 + Survival 渲染 */
+function getCityTabParam() {
+  try { return new URLSearchParams(location.search).get('t'); } catch (_) { return null; }
+}
+
+function switchCityTab(tab) {
+  document.querySelectorAll('.city-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.ctab === tab);
+  });
+  document.querySelectorAll('.city-panel').forEach(el => {
+    el.classList.toggle('active', el.dataset.cpanel === tab);
+  });
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* city.survival_tips 渲染 · LP 直给式 · kind 分组色 + severity 徽章（沿用 common.js EXP_KIND_LABEL / EXP_SEVERITY_BADGE）*/
+function renderCitySurvival(c) {
+  const list = Array.isArray(c && c.survival_tips) ? c.survival_tips : [];
+  if (!list.length) return '';
+  const cards = list.map(t => {
+    const kindLabel = (typeof EXP_KIND_LABEL === 'object' && EXP_KIND_LABEL[t.kind]) || (t.kind || '');
+    const sev = (typeof EXP_SEVERITY_BADGE === 'object') ? EXP_SEVERITY_BADGE[t.severity] : null;
+    const sevBadge = sev ? `<span class="exp-surv-sev exp-surv-sev-${sev.cls}">${sev.txt}</span>` : '';
+    return `
+      <article class="exp-surv-card exp-surv-kind-${t.kind || 'practical'}">
+        <header class="exp-surv-head">
+          <span class="exp-surv-kind">${kindLabel}</span>
+          ${sevBadge}
+          <h4 class="exp-surv-title">${t.title || ''}</h4>
+        </header>
+        <p class="exp-surv-body">${t.body || ''}</p>
+      </article>`;
+  }).join('');
+  return `
+    <div class="city-survival">
+      <div class="city-survival-intro">在这座城市活下来</div>
+      <div class="exp-surv-list">${cards}</div>
+    </div>`;
 }
 
 /* ═══════════════════════════════════════
@@ -579,11 +641,10 @@ function renderLandmarkDetail(cityId, index) {
   const l = c.landmarks[index];
   if (!l) { renderLandmarkNotFound(cityId); return; }
 
-  // v3.5-exp: ?exp=alpha / ?exp=beta 激活实验渲染（仅对有 onsite_spots 的景点生效；默认 URL 零感知）
-  const expParam = (() => { try { return new URLSearchParams(location.search).get('exp'); } catch (_) { return null; } })();
-  if (expParam && Array.isArray(l.onsite_spots) && l.onsite_spots.length) {
-    if (expParam === 'alpha' && typeof renderExperimentAlpha === 'function') return renderExperimentAlpha(c, l, cityId, index);
-    if (expParam === 'beta'  && typeof renderExperimentBeta  === 'function') return renderExperimentBeta(c, l, cityId, index);
+  // v3.5-exp v5: α 砍掉，默认 URL 无参数即 β 形态（仅对 onsite_spots 非空的景点生效；其他仍走原 3-tab）
+  // ?exp=beta 保留作为显式入口；?exp=alpha v5 起无效（silent fallback 到 β）
+  if (Array.isArray(l.onsite_spots) && l.onsite_spots.length && typeof renderExperimentBeta === 'function') {
+    return renderExperimentBeta(c, l, cityId, index);
   }
 
   lmDetailTab = 'intro';

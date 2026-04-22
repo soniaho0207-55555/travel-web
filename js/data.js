@@ -445,7 +445,16 @@ const CITIES = [
       { kind: 'practical', title: '自来水别生饮',
         body: '自来水不建议生饮。超市小瓶矿泉水 ₺10 上下。餐厅问 "still or sparkling" 再上瓶装水，默认会收 ₺20-30/瓶。' },
       { kind: 'etiquette', title: '小费 10% 上下',
-        body: '餐厅结账付现凑整数或留 10% 即可——账单写 "servis dahil" 则含服务费，再加就是双收。出租车不加。' }
+        body: '餐厅结账付现凑整数或留 10% 即可——账单写 "servis dahil" 则含服务费，再加就是双收。出租车不加。' },
+      // v5 新增 4 条（从大巴扎景点级迁来 · PRD §P-05-D · LP 直给式重写 · CEO 过稿定稿）
+      { kind: 'scam', severity: 'medium', title: '义乌货满场',
+        body: '买前翻背面标签：印 MADE IN YIWU = 义乌货。手工地毯 / 铜器 / 陶瓷三类仍是本地工匠做的。' },
+      { kind: 'scam', severity: 'medium', title: '中文套近乎',
+        body: '警惕中文"我们是朋友"：招揽话术 ≠ 示好。听到照砍价。' },
+      { kind: 'scam', severity: 'high', title: '上楼喝茶陷阱',
+        body: '邀你"上楼喝茶" = 私店诱导。离开公共集市 = 砍价空间砍半。婉拒或坚持楼下谈。' },
+      { kind: 'practical', title: '开价砍到 30%',
+        body: '开价砍到 30-40%。不砍 = 失礼。周一 10 点头半小时议价空间最大。' }
     ],
     country: '土耳其', countryFlag: '🇹🇷', continent: 'europe',
     themes: ['silk-road', 'maritime', 'imperial'],
@@ -530,22 +539,49 @@ const CITIES = [
         onsite_spots: [
           { n: 1, title: '许愿柱', anchor: '二楼西北角', visibility: '常开',
             body: '二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg',
-            image_alt: '许愿柱二楼西北角金色凹洞特写，两只手伸向凹洞',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg'
+            ],
+            image_alt: [
+              'Fossati 1852 圣索菲亚内殿版画全景，许愿柱位于二楼北侧 gallery（① 位置高亮）',
+              '许愿柱二楼西北角金色凹洞特写，两只手伸向凹洞'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Płacząca kolumna Haga Sofia RB.jpg (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · Gaspare Fossati / Louis Haghe (Public Domain · 1852)',
+              'Wikimedia · Płacząca kolumna Haga Sofia RB.jpg (CC BY-SA)'
+            ] },
           { n: 2, title: 'Dandolo 墓碑', anchor: '二楼南廊地板', visibility: '常开',
             body: '二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg',
-            image_alt: 'HENRICUS DANDOLO 墓碑石板刻字俯拍',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg'
+            ],
+            image_alt: [
+              '从二楼南廊俯视中殿，脚下即 Dandolo 墓碑（② 位置向下箭头指示）',
+              'HENRICUS DANDOLO 墓碑石板刻字俯拍'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Enrico Dandolo gravestone.jpg (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · Central nave Hagia Sophia (CC BY-SA 2.0)',
+              'Wikimedia · Enrico Dandolo gravestone.jpg (CC BY-SA)'
+            ] },
           { n: 3, title: '8 块书法圆盘', anchor: '中殿上空', visibility: '常开',
             body: '中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg',
-            image_alt: '圣索菲亚中殿黑底金字阿拉伯书法圆盘近景',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg'
+            ],
+            image_alt: [
+              '圣索菲亚中殿 360 全景裁切，3 红圈标出 8 圆盘中可见的 3 块（数量级锚定）',
+              '圣索菲亚中殿黑底金字阿拉伯书法圆盘近景'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Calligraphy Hagia Sophia.jpg (CC BY-SA)' }
+            photo_credit: [
+              'Wikimedia · Hagia Sophia Interior Panorama (CC BY-SA 3.0)',
+              'Wikimedia · Calligraphy Hagia Sophia.jpg (CC BY-SA)'
+            ] }
         ],
         route_suggestions: [
           { duration: '90min', label: '短线必看', picks: [1, 2] },
@@ -632,22 +668,46 @@ const CITIES = [
         onsite_spots: [
           { n: 1, title: '6 根宣礼塔', anchor: 'Sultanahmet 广场正面', visibility: '常开',
             body: '6 根宣礼塔：苏丹本说 altın（金色），工匠听成 altı（六）。全世界只有麦加准 6 塔，苏丹最后出钱给麦加加第 7 塔平事。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg',
-            image_alt: '蓝色清真寺 6 根宣礼塔 Sultanahmet 广场远景',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg'
+            ],
+            image_alt: [
+              '蓝色清真寺 6 根宣礼塔 Sultanahmet 广场远景'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Sultan Ahmet Camii, İstanbul.jpg (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · Sultan Ahmet Camii, İstanbul.jpg (CC BY-SA)'
+            ] },
           { n: 2, title: '蓝瓷砖天花板', anchor: '大殿中央抬头', visibility: '常开',
             body: '推门进去抬头——整面蓝压下来。21043 块瓷砖上 54 种郁金香图案，盯着每一个进来的人，400 年。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles.jpg',
-            image_alt: '蓝色清真寺穹顶伊兹尼克蓝瓷砖纹饰仰拍',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles.jpg'
+            ],
+            image_alt: [
+              '蓝清主殿仰视穹顶全貌（大红圈环绕主穹顶 · 21043 块瓷砖数量级锚定）',
+              '蓝色清真寺穹顶伊兹尼克蓝瓷砖纹饰仰拍'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Blue Mosque Ceiling Blue Tiles.JPG (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · Domes - Blue Mosque (CC BY-SA 2.0)',
+              'Wikimedia · Blue Mosque Ceiling Blue Tiles.JPG (CC BY-SA)'
+            ] },
           { n: 3, title: '吊灯里的鸵鸟蛋', anchor: '主殿吊灯', visibility: '常开',
             body: '仔细看主殿吊灯之间：几个鸵鸟蛋。古人信蛋壳味驱虫，蜘蛛不结网。这招 400 年前的工匠窍门还挂在你头顶。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich.jpg',
-            image_alt: '蓝色清真寺主殿吊灯与鸵鸟蛋位置红圈标注',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich.jpg'
+            ],
+            image_alt: [
+              '蓝清吊灯阵列全貌，5 圆圈沿吊灯链节点散布（每盏都藏蛋 · 位置锚定）',
+              '蓝色清真寺主殿吊灯与鸵鸟蛋位置红圈标注'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Blue Mosque Interior 2009.JPG (CC BY-SA)' }
+            photo_credit: [
+              'Wikimedia · Interior of Sultan Ahmed Mosque (Ank Kumar) 06 (CC BY-SA 4.0)',
+              'Wikimedia · Blue Mosque Interior 2009.JPG (CC BY-SA)'
+            ] }
         ],
         route_suggestions: [
           { duration: '90min', label: '短线必看', picks: [1, 2] },
@@ -776,39 +836,59 @@ const CITIES = [
         onsite_spots: [
           { n: 1, title: 'İç Bedesten', anchor: '集市几何中心', visibility: '常开',
             body: '集市中央 15 顶石屋是第一间房——1461 年苏丹建的金银保险库，奥斯曼帝国最早的国库之一。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten.jpg',
-            image_alt: 'İç Bedesten 15 顶石屋内部拱顶仰拍',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten.jpg'
+            ],
+            image_alt: [
+              '1895 年大巴扎平面图 zoom-in 到 Jewel/Arms Bezestan 区域（①③ 红圈位置锚定）',
+              'İç Bedesten 15 顶石屋内部拱顶仰拍'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Kapali Carsi-Grand Bazar-Istanbul-Sep08.jpg (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · SPRY (1895) PLAN OF CENTRAL BAZARS (Public Domain)',
+              'Wikimedia · Kapali Carsi-Grand Bazar-Istanbul-Sep08.jpg (CC BY-SA)'
+            ] },
           { n: 2, title: 'Zincirli Han', anchor: '东北出口拐角小门', visibility: '常开',
             body: '东北拐角一扇小门推进去：Zincirli Han 庭院——大理石喷泉、老珠宝作坊、1708 年的石墙，游客 99% 绕过它。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli.jpg',
-            image_alt: 'Zincirli Han 粉色外墙庭院与拱廊',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli.jpg'
+            ],
+            image_alt: [
+              'Zincirli Han 冬季庭院俯拍全貌（大红圈圈庭院中央 · 位置锚定）',
+              'Zincirli Han 粉色外墙庭院与拱廊'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Business making, Istanbul Grand Bazaar.jpg (CC BY-SA)' },
+            photo_credit: [
+              'Wikimedia · Zincirli Han.jpg (CC BY-SA 4.0)',
+              'Wikimedia · Business making, Istanbul Grand Bazaar.jpg (CC BY-SA)'
+            ] },
           { n: 3, title: '金饰主干道', anchor: 'Nuruosmaniye 门进，右转 20 步', visibility: '常开',
             body: 'Nuruosmaniye 门进右转 20 步——Kalpakcılar Caddesi 金饰主干道。两侧金店一条龙，比一圈再砍，别进头家就买。',
-            image: 'assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar.jpg',
-            image_alt: 'Nuruosmaniye 门楣 KAPALIÇARŞI 牌与拱顶',
+            image: [
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar-overview.jpg',
+              'assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar.jpg'
+            ],
+            image_alt: [
+              '1880s Kalpakcılar 主干道第一人称长焦（红箭头指 corridor 深处 · 两侧金店延伸感）',
+              'Nuruosmaniye 门楣 KAPALIÇARŞI 牌与拱顶'
+            ],
             zoom: true,
-            photo_credit: 'Wikimedia · Nuruosmaniye Kapısı.jpg (CC BY-SA)' }
+            photo_credit: [
+              'Wikimedia · Istanbul-Grand Bazaar Sebah (Public Domain · Pascal Sébah)',
+              'Wikimedia · Nuruosmaniye Kapısı.jpg (CC BY-SA)'
+            ] }
         ],
         route_suggestions: [
           // PRD §P-04 note: 大巴扎 90min 建议从金饰街起步，再回头看 Bedesten（集市是"走完再回头看"的空间逻辑）
           { duration: '90min', label: '短线必看', picks: [3, 1] },
           { duration: '3h',    label: '深度',     picks: [1, 2, 3] }
         ],
+        // v5: 5 → 1（4 条跨场景 survival 迁到城市页 § P-05-D，景点级只保留大巴扎专属"10 美元拍照"· demand Q1 判据）
         survival_tips: [
-          { kind: 'scam', severity: 'medium', title: '义乌货满场',
-            body: '很多"土耳其产"小商品印着 MADE IN YIWU。翻背面标签最快。手工地毯 / 铜器 / 陶瓷三类仍是本地工匠做的。' },
-          { kind: 'scam', severity: 'medium', title: '中文套近乎',
-            body: '店家看到中国面孔会用中文招呼"我们是朋友"。这是招揽话术，不是示好——听到请保持议价距离。' },
           { kind: 'scam', severity: 'high', title: '10 美元拍照',
-            body: '地毯店会拉你进去穿民族服拍照，结束后收 10 美元。想拍先问价，不想拍直接走别客气。' },
-          { kind: 'scam', severity: 'high', title: '上楼喝茶陷阱',
-            body: '店家聊得热络后请你"上楼喝茶"——楼上是他家私店，出了公用集市砍价空间直接砍半。' },
-          { kind: 'practical', title: '开价砍到 30%',
-            body: '开价先砍到 30-40%。商家期待还价是规矩，不砍反被视为不尊重。周一上午 10 点开店头半小时议价空间最大。' }
+            body: '地毯店会拉你进去穿民族服拍照，结束后收 10 美元。想拍先问价，不想拍直接走别客气。' }
         ]
       },
     ]

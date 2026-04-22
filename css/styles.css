@@ -2540,3 +2540,208 @@ body::before {
   color: #8a7f6d;
   letter-spacing: 0.04em;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v5 · 新增：城市页 3 tab · 旅行前 tab 三层 · spot 双图
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— 城市页顶 3 Tab（§P-12）—— */
+.city-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 16px;
+  margin: 12px 0 4px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg, #0c1810);
+}
+.city-tab {
+  flex: 1;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8a7f6d;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.city-tab.active {
+  color: #E8D4B0;
+  border-bottom-color: #D4A574;
+}
+.city-panel {
+  display: none;
+  padding: 0;
+}
+.city-panel.active { display: block; }
+
+/* 城市级 Survival panel · LP 手册质感 */
+.city-survival {
+  padding: 22px 16px 40px;
+}
+.city-survival-intro {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  color: #E8D4B0;
+  margin-bottom: 18px;
+  letter-spacing: 0.02em;
+}
+
+/* —— 景点页 Survival tab 小引子 —— */
+.exp-surv-intro {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+/* —— 旅行前 tab v5 三层分隔（§P-07-D）—— */
+.exp-before { padding: 8px 0 4px; }
+.exp-layer {
+  padding: 20px 16px 24px;
+  margin-bottom: 16px;
+}
+.exp-layer-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+}
+.exp-layer-label {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #E8D4B0;
+}
+.exp-layer-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.08em;
+}
+
+/* 阅读层 · 白底 · Cereal 气质 */
+.exp-layer-read { background: transparent; }
+
+/* 深度层 · 折叠态 · 默认只显示 head */
+.exp-layer-depth {
+  background: transparent;
+  border-top: 1px dashed rgba(201, 184, 150, 0.18);
+  border-bottom: 1px dashed rgba(201, 184, 150, 0.18);
+}
+.exp-layer-head-toggle {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+  border-bottom-color: transparent;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.exp-layer-head-toggle:hover { opacity: 0.85; }
+.exp-layer-caret {
+  font-size: 11px;
+  color: #D4A574;
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.exp-layer-body-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+.exp-layer-depth.expanded .exp-layer-body-collapsed {
+  max-height: 5000px;
+  opacity: 1;
+  padding-top: 12px;
+}
+.exp-layer-depth.expanded .exp-layer-head-toggle {
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+}
+
+/* 行动层 · 微灰底 · LP 手册气质 */
+.exp-layer-action {
+  background: rgba(201, 184, 150, 0.045);
+  border-radius: 4px;
+  margin-top: 32px;
+}
+.exp-layer-action .exp-layer-label { font-size: 18px; }
+.exp-layer-action .lm-tips { font-size: 14px; }
+
+/* —— spot 双图 carousel（§P-09 v5）—— */
+.exp-spot-dual-wrap {
+  position: relative;
+  background: #121510;
+  overflow: hidden;
+}
+.exp-dual-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.exp-dual-track::-webkit-scrollbar { display: none; }
+.exp-dual-frame {
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: start;
+  position: relative;
+}
+.exp-dual-frame .exp-spot-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.exp-dual-caption {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #E8D4B0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.exp-dual-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(232, 212, 176, 0.72);
+  letter-spacing: 0.14em;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.exp-dual-dots {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  gap: 4px;
+}
+.exp-dual-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+.exp-dual-dot.active { background: #D4A574; }

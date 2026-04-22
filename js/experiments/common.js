@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
-   v3.5-exp · 实验共享组件（lightbox / carousel / 3 大区块渲染器）
-   被 alpha.js（纯滚动）+ beta.js（3 tab）共同消费
+   v3.5-exp v5 · 实验共享组件
+   lightbox / 横滑 carousel / 3 大区块渲染器
+   被 beta.js 消费；α 在 v5 已砍掉
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ——— 辅助 ——— */
@@ -11,7 +12,7 @@ function expEscape(s) {
   }[ch]));
 }
 
-/* PRD §P-06 · 现有 tips[] 拆到 3 tab（本期不迁移数据，渲染层按 category 自动分配）
+/* PRD §P-06 · 现有 tips[] 拆到 3 tab
    - 旅行前：ticket / cold / season / dress / timing（默认）
    - 旅行中：photo / walking / route / secret */
 function expSplitTips(tips) {
@@ -25,6 +26,26 @@ function expSplitTips(tips) {
     }
   });
   return { before, onsite };
+}
+
+/* PRD §P-09 v5 · image string → array 兼容
+   输入：spot.image（可以是 string、string[] 或 undefined）
+   输出：[{src, alt, credit}, ...]（统一 shape） */
+function expNormalizeSpotImages(spot) {
+  if (!spot) return [];
+  const imgs = Array.isArray(spot.image) ? spot.image : (spot.image ? [spot.image] : []);
+  const alts = Array.isArray(spot.image_alt) ? spot.image_alt : (spot.image_alt ? [spot.image_alt] : []);
+  const creds = Array.isArray(spot.photo_credit) ? spot.photo_credit : (spot.photo_credit ? [spot.photo_credit] : []);
+  // v5 规定 ≥ 3 张按前 2 张处理
+  const capped = imgs.slice(0, 2);
+  if (imgs.length > 2 && typeof console !== 'undefined') {
+    console.warn('[v5] spot.image length > 2, rendering first 2 only:', spot.title);
+  }
+  return capped.map((src, i) => ({
+    src,
+    alt: alts[i] || alts[0] || spot.title || '',
+    credit: creds[i] || creds[0] || ''
+  }));
 }
 
 /* ——— Lightbox ——— */
@@ -71,9 +92,77 @@ function expLightboxClose() {
   document.body.style.overflow = '';
 }
 
-/* ——— 旅行前 ——— */
-/* whyVisit 四段：前 3 段照常 paragraph；第 4 段 detail 若有 detail_slides → 走横滑切片；否则回落 detail 字符串 */
-function expRenderWhyVisit(l) {
+/* ——— 旅行前 tab v5 三层结构（PRD §P-07-D） ——— */
+/* 层 1 · 阅读层：whyVisit + detail_slides + relatedLiterature（默认展开）
+   层 2 · 深度层：worldEvents + relatedFigure（默认折叠）
+   层 3 · 行动层：ticket + 旅行前 tips + note（默认展开，微灰底）*/
+
+function expRenderBeforeLayer1Reading(l) {
+  return `
+    <section class="exp-layer exp-layer-read" data-layer="read">
+      <header class="exp-layer-head">
+        <span class="exp-layer-label">读一读</span>
+        <span class="exp-layer-sub">沙发态 · 故事</span>
+      </header>
+      <div class="exp-layer-body">
+        ${expRenderWhyVisitReading(l)}
+        ${expRenderRelatedLiterature(l)}
+      </div>
+    </section>
+  `;
+}
+
+function expRenderBeforeLayer2Depth(l) {
+  const worldHtml = expRenderMeanwhile(l);
+  const figHtml = expRenderRelatedFigure(l);
+  if (!worldHtml && !figHtml) return '';  // 整层为空时不渲染
+  return `
+    <section class="exp-layer exp-layer-depth" data-layer="depth">
+      <header class="exp-layer-head exp-layer-head-toggle" onclick="expToggleLayer(this)" role="button" tabindex="0">
+        <span class="exp-layer-caret">▶</span>
+        <span class="exp-layer-label">深一步</span>
+        <span class="exp-layer-sub">历史背景 · 点开读</span>
+      </header>
+      <div class="exp-layer-body exp-layer-body-collapsed">
+        ${worldHtml}
+        ${figHtml}
+      </div>
+    </section>
+  `;
+}
+
+function expRenderBeforeLayer3Action(l) {
+  const ticketHtml = expRenderTicketBlock(l);
+  const tips = expSplitTips(l.tips).before;
+  const tipsHtml = expRenderTipsFlat(tips, '');
+  const noteHtml = expRenderNote(l);
+  if (!ticketHtml && !tipsHtml && !noteHtml) return '';
+  return `
+    <section class="exp-layer exp-layer-action" data-layer="action">
+      <header class="exp-layer-head">
+        <span class="exp-layer-label">出发前</span>
+        <span class="exp-layer-sub">票务 · 实用手册</span>
+      </header>
+      <div class="exp-layer-body">
+        ${ticketHtml}
+        ${tipsHtml}
+        ${noteHtml}
+      </div>
+    </section>
+  `;
+}
+
+function expToggleLayer(headEl) {
+  const section = headEl.closest('.exp-layer');
+  if (!section) return;
+  section.classList.toggle('expanded');
+  const body = section.querySelector('.exp-layer-body');
+  if (body) body.classList.toggle('exp-layer-body-collapsed');
+  const caret = headEl.querySelector('.exp-layer-caret');
+  if (caret) caret.textContent = section.classList.contains('expanded') ? '▼' : '▶';
+}
+
+function expRenderWhyVisitReading(l) {
   const w = (typeof normalizeWhyVisit === 'function') ? normalizeWhyVisit(l.whyVisit) : l.whyVisit;
   if (!w) return '';
   const slides = Array.isArray(w.detail_slides) ? w.detail_slides.filter(Boolean) : [];
@@ -108,6 +197,50 @@ function expRenderWhyVisit(l) {
   return `<div class="lm-why exp-why">${html}${detailHtml}</div>`;
 }
 
+function expRenderRelatedLiterature(l) {
+  const lit = Array.isArray(l.relatedLiterature) ? l.relatedLiterature.filter(Boolean) : [];
+  if (!lit.length) return '';
+  return `
+    <div class="lm-related exp-related">
+      <div class="rich-content-section-title">文学</div>
+      ${lit.map(it => `
+        <div class="lm-related-item">
+          <strong>${expEscape(it.title || '')}</strong>${it.author ? `<span class="lm-related-meta">${expEscape(it.author)}${it.year != null ? ' · ' + expEscape(it.year) : ''}</span>` : ''}
+          ${it.quote ? `<span class="lm-related-quote">「${expEscape(it.quote)}」</span>` : ''}
+          ${it.link ? `<div>${expEscape(it.link)}</div>` : ''}
+        </div>`).join('')}
+    </div>`;
+}
+
+function expRenderRelatedFigure(l) {
+  const fig = Array.isArray(l.relatedFigure) ? l.relatedFigure.filter(Boolean) : [];
+  if (!fig.length) return '';
+  return `
+    <div class="lm-related exp-related">
+      <div class="rich-content-section-title">名人</div>
+      ${fig.map(it => `
+        <div class="lm-related-item">
+          <strong>${expEscape(it.name || '')}</strong>${it.era || it.role ? `<span class="lm-related-meta">${[it.era, it.role].filter(Boolean).map(expEscape).join(' · ')}</span>` : ''}
+          ${it.link ? `<div>${expEscape(it.link)}</div>` : ''}
+        </div>`).join('')}
+    </div>`;
+}
+
+function expRenderMeanwhile(l) {
+  if (!Array.isArray(l.worldEvents) || !l.worldEvents.length) return '';
+  const rows = l.worldEvents.map(we => `
+    <div class="world-event">
+      <div class="world-event-city">${expEscape(we.city || '')}</div>
+      <div class="world-event-text">${expEscape(we.event || '')}</div>
+    </div>`).join('');
+  const title = (typeof formatYear === 'function') ? formatYear(l.yearNum) : (l.yearNum || '');
+  return `
+    <div class="world-events exp-meanwhile">
+      <div class="rich-content-section-title">${expEscape(title)}，世界其他地方</div>
+      ${rows}
+    </div>`;
+}
+
 /* detail_slides 横滑切片 · 全宽 bleed + scroll-snap */
 function expRenderCarousel(slides) {
   const items = slides.map((s, i) => `
@@ -129,27 +262,8 @@ function expRenderCarousel(slides) {
   `;
 }
 
-function expRenderMeanwhile(l) {
-  if (!Array.isArray(l.worldEvents) || !l.worldEvents.length) return '';
-  const rows = l.worldEvents.map(we => `
-    <div class="world-event">
-      <div class="world-event-city">${expEscape(we.city || '')}</div>
-      <div class="world-event-text">${expEscape(we.event || '')}</div>
-    </div>`).join('');
-  return `
-    <div class="world-events exp-meanwhile">
-      <div class="rich-content-section-title">${expEscape((typeof formatYear === 'function' ? formatYear(l.yearNum) : (l.yearNum || '')))}，世界其他地方</div>
-      ${rows}
-    </div>`;
-}
-
 function expRenderTicketBlock(l) {
   if (typeof renderLmTicket === 'function') return renderLmTicket(l);
-  return '';
-}
-
-function expRenderRelatedBlock(l) {
-  if (typeof renderRelatedBlock === 'function') return renderRelatedBlock(l);
   return '';
 }
 
@@ -188,23 +302,19 @@ function expRenderOnsiteMap(l) {
     </figure>`;
 }
 
+/* v5 · spot 卡片（单图 / 双图 自动切）
+   image.length === 1 → 单图 + zoom lightbox
+   image.length === 2 → 横滑 2 图：第 0 张全局 + 第 1 张细节 */
 function expRenderOnsiteSpots(spots) {
   if (!Array.isArray(spots) || !spots.length) return '';
   const cards = spots.map(s => {
+    const imgs = expNormalizeSpotImages(s);
     const vis = s.visibility && s.visibility !== '常开'
       ? `<span class="exp-spot-visibility">⚠ ${expEscape(s.visibility)}</span>` : '';
-    const imgHtml = s.image ? `
-      <div class="exp-spot-img-wrap">
-        <img class="exp-spot-img"
-             src="${expEscape(s.image)}"
-             alt="${expEscape(s.image_alt || s.title || '')}"
-             loading="lazy"
-             onerror="this.classList.add('failed')"
-             onclick="expLightboxOpen('${expEscape(s.image)}', '${expEscape(s.image_alt || '')}', '${expEscape(s.photo_credit || '')}')" />
-        ${s.zoom !== false ? '<div class="exp-spot-zoom">点图放大</div>' : ''}
-      </div>` : '';
+    const dual = imgs.length >= 2;
+    const imgHtml = imgs.length ? (dual ? expRenderSpotDualImage(imgs) : expRenderSpotSingleImage(imgs[0])) : '';
     return `
-      <article class="exp-spot-card" data-n="${expEscape(s.n)}">
+      <article class="exp-spot-card${dual ? ' exp-spot-dual' : ''}" data-n="${expEscape(s.n)}">
         ${imgHtml}
         <div class="exp-spot-body">
           <div class="exp-spot-head">
@@ -218,6 +328,42 @@ function expRenderOnsiteSpots(spots) {
       </article>`;
   }).join('');
   return `<div class="exp-spot-list">${cards}</div>`;
+}
+
+function expRenderSpotSingleImage(img) {
+  return `
+    <div class="exp-spot-img-wrap">
+      <img class="exp-spot-img"
+           src="${expEscape(img.src)}"
+           alt="${expEscape(img.alt)}"
+           loading="lazy"
+           onerror="this.classList.add('failed')"
+           onclick="expLightboxOpen('${expEscape(img.src)}', '${expEscape(img.alt)}', '${expEscape(img.credit)}')" />
+      <div class="exp-spot-zoom">点图放大</div>
+    </div>`;
+}
+
+function expRenderSpotDualImage(imgs) {
+  // 横滑 carousel 嵌在 spot 卡片头部：第 0 张全局（"全貌"标签）+ 第 1 张细节（"细节"标签）
+  const labels = ['全貌', '细节'];
+  const items = imgs.map((img, i) => `
+    <figure class="exp-dual-frame" data-role="${i === 0 ? 'overview' : 'detail'}">
+      <img class="exp-spot-img"
+           src="${expEscape(img.src)}"
+           alt="${expEscape(img.alt)}"
+           loading="lazy"
+           onerror="this.classList.add('failed')"
+           onclick="expLightboxOpen('${expEscape(img.src)}', '${expEscape(img.alt)}', '${expEscape(img.credit)}')" />
+      <figcaption class="exp-dual-caption">${labels[i] || ''} · 点图放大</figcaption>
+    </figure>
+  `).join('');
+  const dots = imgs.map((_, i) => `<span class="exp-dual-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></span>`).join('');
+  return `
+    <div class="exp-spot-dual-wrap">
+      <div class="exp-dual-track">${items}</div>
+      <div class="exp-dual-hint">← 滑到${labels[1] || '细节'} →</div>
+      <div class="exp-dual-dots" aria-hidden="true">${dots}</div>
+    </div>`;
 }
 
 /* picks 渲染为无箭头 pill 组（taste P1：保持"选择权"，不渲染递增编号压制） */
@@ -255,12 +401,12 @@ const EXP_KIND_LABEL = {
   practical: '实操'
 };
 const EXP_SEVERITY_BADGE = {
-  high: { txt: '重要', cls: 'high' },
-  medium: { txt: '注意', cls: 'medium' },
-  low: { txt: '知道即可', cls: 'low' }
+  high:   { txt: '重要',     cls: 'high' },
+  medium: { txt: '注意',     cls: 'medium' },
+  low:    { txt: '知道即可', cls: 'low' }
 };
 
-function expRenderSurvivalCards(list, levelLabel) {
+function expRenderSurvivalCards(list) {
   if (!Array.isArray(list) || !list.length) return '';
   const cards = list.map(t => {
     const kindLabel = EXP_KIND_LABEL[t.kind] || (t.kind || '').toString();
@@ -276,32 +422,29 @@ function expRenderSurvivalCards(list, levelLabel) {
         <p class="exp-surv-body">${expEscape(t.body || '')}</p>
       </article>`;
   }).join('');
-  return `
-    <section class="exp-surv-group">
-      <div class="rich-content-section-title">${expEscape(levelLabel)}</div>
-      <div class="exp-surv-list">${cards}</div>
-    </section>`;
+  return `<div class="exp-surv-list">${cards}</div>`;
 }
 
-function expRenderSurvivalSection(l, c) {
-  const lmHtml = expRenderSurvivalCards(l.survival_tips, '景点级');
-  const cityHtml = expRenderSurvivalCards(c && c.survival_tips, `城市级 · ${(c && c.name) || ''}`);
-  if (!lmHtml && !cityHtml) {
-    return `<div class="lm-section lm-empty">本景点暂无 Survival 条目</div>`;
+/* v5: 景点页 Survival 只显示景点级（城市级已迁到城市页 §P-12）*/
+function expRenderSurvivalSection(l) {
+  if (!Array.isArray(l.survival_tips) || !l.survival_tips.length) {
+    return '';  // 空 → 调用者应直接隐藏 tab（§P-12-G）
   }
-  return `${lmHtml}${cityHtml}`;
+  return expRenderSurvivalCards(l.survival_tips);
 }
 
-/* ——— 3 大区块（共享；alpha/beta 都调这 3 个） ——— */
+function expLandmarkHasSurvival(l) {
+  return Array.isArray(l && l.survival_tips) && l.survival_tips.length > 0;
+}
+
+/* ——— β 3 大 tab 区块（beta.js 消费） ——— */
 function expRenderBeforeSection(l) {
-  const tips = expSplitTips(l.tips).before;
   return `
-    ${expRenderWhyVisit(l)}
-    ${expRenderRelatedBlock(l)}
-    ${expRenderNote(l)}
-    ${expRenderMeanwhile(l)}
-    ${expRenderTicketBlock(l)}
-    ${expRenderTipsFlat(tips, tips.length ? '旅行前 Tips' : '')}
+    <div class="exp-before">
+      ${expRenderBeforeLayer1Reading(l)}
+      ${expRenderBeforeLayer2Depth(l)}
+      ${expRenderBeforeLayer3Action(l)}
+    </div>
   `;
 }
 
@@ -315,8 +458,8 @@ function expRenderOnsiteSection(l) {
   `;
 }
 
-function expRenderSurvivalSectionFull(l, c) {
-  return expRenderSurvivalSection(l, c);
+function expRenderSurvivalSectionFull(l) {
+  return expRenderSurvivalSection(l);
 }
 
 /* ——— 通用：hero + 返回 + header ——— */
