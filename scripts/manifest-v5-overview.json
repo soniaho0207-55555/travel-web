@@ -1,0 +1,88 @@
+[
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/hagia-fossati-nave.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone-overview.jpg",
+    "crop_pct": [5, 0, 95, 70],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "outline_circle_number", "cx_pct": 78, "cy_pct": 52, "radius_px": 44, "number": "1", "sub_label": "许愿柱", "color": "#B53A1F", "stroke_width": 5, "font_size": 34, "sub_font_size": 22},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "① 许愿柱 · 二楼北侧 gallery（画中右侧 = 北 · Fossati 朝西视角）", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 24}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/hagia-nave-modern.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo-overview.jpg",
+    "crop_pct": [2, 10, 98, 95],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "arrow", "from_x_pct": 50, "from_y_pct": 70, "to_x_pct": 50, "to_y_pct": 90, "color": "#B53A1F", "width": 6, "head_size": 22},
+      {"type": "outline_circle_number", "cx_pct": 50, "cy_pct": 65, "radius_px": 44, "number": "2", "sub_label": "脚下", "color": "#B53A1F", "stroke_width": 5, "font_size": 34, "sub_font_size": 22},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "② Dandolo 墓碑 · 镜头后你脚下 · 二楼南廊", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/hagia-panorama-full.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy-overview.jpg",
+    "crop_pct": [20, 12, 80, 65],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "circle", "cx_pct": 9, "cy_pct": 45, "radius_pct": 5, "color": "#B53A1F", "width": 6},
+      {"type": "circle", "cx_pct": 62, "cy_pct": 11, "radius_pct": 5, "color": "#B53A1F", "width": 6},
+      {"type": "circle", "cx_pct": 90, "cy_pct": 44, "radius_pct": 5, "color": "#B53A1F", "width": 6},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "③ 书法圆盘 · 中殿仰拍 · 画中 4/8 块 · 每块 7.5m", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/bluemosque-domes.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles-overview.jpg",
+    "crop_pct": [0, 8, 100, 92],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "circle", "cx_pct": 45, "cy_pct": 22, "radius_pct": 18, "color": "#B53A1F", "width": 6},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "② 蓝瓷砖 · 主殿仰视穹顶 · 21043 块 / 54 种图案", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/bluemosque-ankkumar-06.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich-overview.jpg",
+    "crop_pct": [0, 5, 100, 95],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "circle", "cx_pct": 18, "cy_pct": 22, "radius_pct": 2.5, "color": "#B53A1F", "width": 5},
+      {"type": "circle", "cx_pct": 32, "cy_pct": 22, "radius_pct": 2.5, "color": "#B53A1F", "width": 5},
+      {"type": "outline_circle_number", "cx_pct": 50, "cy_pct": 22, "radius_px": 36, "number": "蛋", "color": "#B53A1F", "stroke_width": 5, "font_size": 26},
+      {"type": "circle", "cx_pct": 68, "cy_pct": 22, "radius_pct": 2.5, "color": "#B53A1F", "width": 5},
+      {"type": "circle", "cx_pct": 82, "cy_pct": 22, "radius_pct": 2.5, "color": "#B53A1F", "width": 5},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "③ 鸵鸟蛋 · 吊灯链节点 · 每盏都藏一个（5 处示意位）", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/maps/map-bazaar-annotated.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten-overview.jpg",
+    "crop_pct": [15, 45, 65, 90],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "① İç Bedesten · 1895 SPRY 平面 · 集市中央 15 顶石屋", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/zincirli-plain.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli-overview.jpg",
+    "crop_pct": [0, 5, 100, 95],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "circle", "cx_pct": 50, "cy_pct": 55, "radius_pct": 20, "color": "#B53A1F", "width": 6},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "② Zincirli Han 庭院 · 大巴扎东北拐角 · 99% 游客错过", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v5/bazaar-sebah.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar-overview.jpg",
+    "crop_pct": [0, 2, 100, 98],
+    "resize": [1600, null],
+    "overlays": [
+      {"type": "arrow", "from_x_pct": 40, "from_y_pct": 45, "to_x_pct": 65, "to_y_pct": 35, "color": "#B53A1F", "width": 6, "head_size": 22},
+      {"type": "text", "x_pct": 2, "y_pct": 93, "text": "③ 金饰主干道 · Sebah 1880s · 今天的 Kalpakcılar", "color": "#FFFFFF", "bg": "#1A1A1AE6", "size": 26}
+    ]
+  }
+]
