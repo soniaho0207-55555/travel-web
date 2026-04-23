@@ -50,6 +50,32 @@
       "blue-mosque_landmark_1_onsite_spot_0_塔": "image: ['assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg']"
     }
   },
+  "hero_v7": [
+    {
+      "asset": "hero/hagia-sophia-dawn.jpg",
+      "consumer": "istanbul 城市级 heroImage (data.js line 466 · v7 本地化) · 圣索菲亚 landmark 首屏 Hero 共用",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Istanbul_asv2020-02_img45_Hagia_Sophia.jpg",
+      "source_file": "Istanbul asv2020-02 img45 Hagia Sophia.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "A.Savin (Wikimedia user)",
+      "date_retrieved": "2026-04-23",
+      "processing": "EXIF 矫正 + resize 1920w · 无 overlay（hero 要干净）",
+      "气质": "黎明蓝调 · 柔和晨曦色调 · 对齐 whyVisit.whyUnique '光洒穹顶' 叙事 · 替换原风暴天色 Hagia_Sophia_Mars_2013",
+      "合规": "零真人 · 无肖像权风险 · 广场空景"
+    },
+    {
+      "asset": "hero/bosphorus-bridge.jpg",
+      "consumer": "istanbul 城市级 wikiImage (data.js line 468 · v7 本地化) · 城市列表卡封面",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Bosphorus_Bridge_(1973)_in_Istanbul.jpg",
+      "source_file": "Bosphorus Bridge (1973) in Istanbul.jpg",
+      "license": "CC BY-SA",
+      "author": "Wikimedia Commons contributor",
+      "date_retrieved": "2026-04-23",
+      "processing": "EXIF 矫正 + resize 1920w · 无 overlay",
+      "气质": "日落玫瑰色 · 城市天际线 + 桥身完整 · 伊斯坦布尔 city 级地标",
+      "合规": "零真人 · 纯建筑 + 自然景观"
+    }
+  ],
   "raw_sources_gitignored": "原图 63MB 已 .gitignore 排除，随时可用 scripts/fetch-wikimedia.sh 重新抓取",
   "build_tools": {
     "fetch": "scripts/fetch-wikimedia.sh",
