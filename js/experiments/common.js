@@ -576,17 +576,46 @@ function expRenderBodyBlocks(blocks, fallbackImage) {
   }).join('');
 }
 
+/* v7-bonus B1 · visitTiming `when` 起手 emoji → SVG line icon（和 chevron 体系一致）
+   不改 data.js · 渲染层扫 emoji 替换 · PM 文字冻结保真 */
+const EXP_WHEN_ICONS = [
+  { emoji: '🌅', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="8 6 12 2 16 6"/></svg>' },  // 日出 · 箭头向上
+  { emoji: '☀️', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>' },  // 太阳
+  { emoji: '🌆', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="16 5 12 9 8 5"/></svg>' },  // 日落 · 箭头向下（蓝调时刻）
+  { emoji: '🚪', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v19"/><path d="M2 22h20"/><circle cx="15" cy="13" r="1" fill="currentColor"/></svg>' },  // 门（闭门）
+  { emoji: '🔅', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="5" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="19"/><line x1="5" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="19" y2="12"/></svg>' },  // 微光
+  { emoji: '🌙', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' },  // 月
+  { emoji: '🛎️', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-2a6 6 0 0 1 12 0v2"/><line x1="4" y1="19" x2="20" y2="19"/><line x1="6" y1="16" x2="18" y2="16"/><line x1="12" y1="6" x2="12" y2="8"/><circle cx="12" cy="5" r="1"/></svg>' },  // 铃（台铃）
+  { emoji: '🔒', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>' },  // 锁（闭门）
+  { emoji: '🌇', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l4-4 3 3 5-6 6 7"/><line x1="1" y1="22" x2="23" y2="22"/><circle cx="15" cy="8" r="2"/></svg>' }   // 山日落
+];
+
+function expExtractWhenIcon(whenText) {
+  if (!whenText) return { svg: '', text: '' };
+  for (const { emoji, svg } of EXP_WHEN_ICONS) {
+    if (whenText.startsWith(emoji)) {
+      const rest = whenText.slice(emoji.length).replace(/^\s+/, '');
+      return { svg, text: rest };
+    }
+  }
+  return { svg: '', text: whenText };
+}
+
 /* v6 · visitTiming 卡片组 + city.bestSeason */
 function expRenderVisitTiming(l, c) {
   const vt = Array.isArray(l && l.visitTiming) ? l.visitTiming : [];
   const bs = c && typeof c.bestSeason === 'string' ? c.bestSeason.trim() : '';
   if (!vt.length && !bs) return '';
-  const cards = vt.map(t => `
+  const cards = vt.map(t => {
+    const { svg, text } = expExtractWhenIcon(t.when || '');
+    const iconHtml = svg ? `<span class="exp-when-icon">${svg}</span>` : '';
+    return `
     <article class="exp-visit-card">
-      <div class="exp-visit-when">${expEscape(t.when || '')}</div>
+      <div class="exp-visit-when">${iconHtml}<span class="exp-when-text">${expEscape(text)}</span></div>
       <p class="exp-visit-body">${expEscape(t.body || '')}</p>
     </article>
-  `).join('');
+  `;
+  }).join('');
   const season = bs ? `
     <div class="exp-best-season">
       <span class="exp-best-season-label">这座城市的季节</span>
