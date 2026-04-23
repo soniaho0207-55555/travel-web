@@ -112,16 +112,19 @@ function expLightboxClose() {
    层 3 · 行动层：ticket + visitTiming 卡片 + city.bestSeason + 旅行前 tips + note · 微灰底 */
 
 function expRenderBeforeLayer1Reading(l) {
+  // v7 §P-14-F ⑥ · 删延伸阅读折叠区（worldContext 已覆盖 · worldEvents+meanwhile 重叠）
+  //   · relatedFigure 保留 · 降级到阅读层尾部非折叠小 section
+  const figHtml = expRenderRelatedFigure(l);
   return `
-    <section class="exp-layer exp-layer-read" data-layer="read">
+    <section class="exp-layer exp-layer-read" data-layer="read" id="sofa-story">
       <header class="exp-layer-head">
-        <span class="exp-layer-label">读一读</span>
-        <span class="exp-layer-sub">沙发态 · 故事</span>
+        <span class="exp-layer-label">故事</span>
+        <span class="exp-layer-sub">沙发态 · 读一读</span>
       </header>
       <div class="exp-layer-body">
         ${expRenderWhyVisitReading(l)}
         ${expRenderRelatedLiterature(l)}
-        ${expRenderExtendedReading(l)}
+        ${figHtml}
       </div>
     </section>
   `;
@@ -130,10 +133,11 @@ function expRenderBeforeLayer1Reading(l) {
 function expRenderBeforeLayer2Depth(l) {
   const ddHtml = expRenderDeepDive(l);
   if (!ddHtml) return '';  // 没 deep_dive → 整层不渲染（§P-07-D 硬规：宁可无也不塞外围信号）
+  // v7 §P-14-F ③ · SVG chevron 替换 Unicode "▶▼" caret（字体家族一致性 · §P-07-K）
   return `
-    <section class="exp-layer exp-layer-depth" data-layer="depth">
+    <section class="exp-layer exp-layer-depth" data-layer="depth" id="sofa-deep">
       <header class="exp-layer-head exp-layer-head-toggle" onclick="expToggleLayer(this)" role="button" tabindex="0">
-        <span class="exp-layer-caret">▶</span>
+        <span class="exp-layer-caret">${expSVGChevron()}</span>
         <span class="exp-layer-label">深一步</span>
         <span class="exp-layer-sub">single-focus 下钻 · 点开读</span>
       </header>
@@ -142,6 +146,11 @@ function expRenderBeforeLayer2Depth(l) {
       </div>
     </section>
   `;
+}
+
+/* v7 §P-14-F ③ · SVG chevron · CSS 旋转 90° 表示展开态（替代 Unicode "▶▼"）*/
+function expSVGChevron() {
+  return '<svg class="exp-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
 }
 
 function expRenderBeforeLayer3Action(l, c) {
@@ -173,26 +182,34 @@ function expToggleLayer(headEl) {
   section.classList.toggle('expanded');
   const body = section.querySelector('.exp-layer-body');
   if (body) body.classList.toggle('exp-layer-body-collapsed');
-  const caret = headEl.querySelector('.exp-layer-caret');
-  if (caret) caret.textContent = section.classList.contains('expanded') ? '▼' : '▶';
+  // v7 · caret 用 SVG · 旋转由 CSS 控制（expanded 时 rotate 90deg）· 不改 textContent
 }
 
 function expRenderWhyVisitReading(l) {
   const w = (typeof normalizeWhyVisit === 'function') ? normalizeWhyVisit(l.whyVisit) : l.whyVisit;
   if (!w) return '';
   const slides = Array.isArray(w.detail_slides) ? w.detail_slides.filter(Boolean) : [];
-  const secs = [
-    { key: 'what',              label: '是什么' },
-    { key: 'whyUnique',         label: '为什么独特' },
-    { key: 'crossCivilization', label: '跨文明' }
-  ];
-  const html = secs.map(({ key, label }) => {
+
+  // v7 §P-07-J · 阅读层走 expEscapeMD 管道（和深度层一致 · 支持 **bold** / *italic* / 《书名》）
+  const stringSection = (key, label) => {
     const v = typeof w[key] === 'string' ? w[key].trim() : '';
     if (!v) return '';
     const paras = v.split(/\n\n+/).filter(p => p.trim())
-      .map(p => `<p>${expEscape(p)}</p>`).join('');
+      .map(p => `<p>${expEscapeMD(p)}</p>`).join('');
     return `<div class="why-section exp-why-section"><div class="rich-content-section-title">${label}</div>${paras}</div>`;
-  }).filter(Boolean).join('');
+  };
+
+  const whatHtml = stringSection('what', '是什么');
+  const whyUniqueHtml = stringSection('whyUnique', '为什么独特');
+
+  // v7 §P-14-B · crossCivilization 支持 object（对照卡）与 string 两种形态
+  let crossHtml = '';
+  const cc = w.crossCivilization;
+  if (cc && typeof cc === 'object' && !Array.isArray(cc)) {
+    crossHtml = expRenderCrossCard(cc);
+  } else if (typeof cc === 'string' && cc.trim()) {
+    crossHtml = stringSection('crossCivilization', '跨文明');
+  }
 
   let detailHtml = '';
   const detailStr = (typeof w.detail === 'string') ? w.detail.trim() : '';
@@ -203,13 +220,41 @@ function expRenderWhyVisitReading(l) {
         ${expRenderCarousel(slides)}
       </div>`;
   } else if (detailStr) {
+    const paras = detailStr.split(/\n\n+/).filter(p => p.trim())
+      .map(p => `<p>${expEscapeMD(p)}</p>`).join('');
     detailHtml = `
       <div class="why-section exp-why-section">
         <div class="rich-content-section-title">现场细节</div>
-        <p>${expEscape(detailStr)}</p>
+        ${paras}
       </div>`;
   }
-  return `<div class="lm-why exp-why">${html}${detailHtml}</div>`;
+  return `<div class="lm-why exp-why">${whatHtml}${whyUniqueHtml}${crossHtml}${detailHtml}</div>`;
+}
+
+/* v7 §P-14-B · crossCivilization 对照卡（string → object 升级）
+   左栏 + 右栏 + 中央 link 句 · 响应式窄屏降级上下堆叠 */
+function expRenderCrossCard(cc) {
+  const renderSide = (side, sideCls) => {
+    if (!side) return '';
+    const bullets = Array.isArray(side.bullets) ? side.bullets.filter(Boolean) : [];
+    const title = side.title || '';
+    const items = bullets.map(b => `<li>${expEscapeMD(b)}</li>`).join('');
+    return `
+      <div class="exp-cross-side ${sideCls}">
+        <div class="exp-cross-side-title">${expEscapeMD(title)}</div>
+        ${items ? `<ul class="exp-cross-side-bullets">${items}</ul>` : ''}
+      </div>`;
+  };
+  const link = cc.link ? `<div class="exp-cross-link">${expEscapeMD(cc.link)}</div>` : '';
+  return `
+    <div class="why-section exp-why-section exp-cross-wrap">
+      <div class="rich-content-section-title">跨文明</div>
+      <div class="exp-cross-card">
+        ${renderSide(cc.aSide, 'exp-cross-a')}
+        ${link}
+        ${renderSide(cc.bSide, 'exp-cross-b')}
+      </div>
+    </div>`;
 }
 
 function expRenderRelatedLiterature(l) {
@@ -328,8 +373,15 @@ function expRenderOnsiteSpots(spots) {
       ? `<span class="exp-spot-visibility">⚠ ${expEscape(s.visibility)}</span>` : '';
     const dual = imgs.length >= 2;
     const imgHtml = imgs.length ? (dual ? expRenderSpotDualImage(imgs) : expRenderSpotSingleImage(imgs[0])) : '';
+    // v7 §P-07-L · spotlight 层级分离（独立渲染 · 高于 body · 粗体金沙色）
+    const spotlightHtml = s.spotlight
+      ? `<div class="exp-spot-spotlight">${expEscapeMD(s.spotlight)}</div>` : '';
+    // v7 §P-02 / §P-14-D · editorPick 徽章（深金 · 非红色 · 稀缺感）
+    const pickBadge = s.editorPick
+      ? `<span class="exp-spot-editor-pick" aria-label="编辑推荐">编辑推荐</span>` : '';
     return `
-      <article class="exp-spot-card${dual ? ' exp-spot-dual' : ''}" data-n="${expEscape(s.n)}">
+      <article class="exp-spot-card${dual ? ' exp-spot-dual' : ''}${s.editorPick ? ' exp-spot-has-pick' : ''}" data-n="${expEscape(s.n)}">
+        ${pickBadge}
         ${imgHtml}
         <div class="exp-spot-body">
           <div class="exp-spot-head">
@@ -338,6 +390,7 @@ function expRenderOnsiteSpots(spots) {
             ${vis}
           </div>
           ${s.anchor ? `<div class="exp-spot-anchor">📍 ${expEscape(s.anchor)}</div>` : ''}
+          ${spotlightHtml}
           <p class="exp-spot-text">${expEscape(s.body || '')}</p>
         </div>
       </article>`;
@@ -500,7 +553,8 @@ function expRenderBodyBlocks(blocks, fallbackImage) {
         </blockquote>`;
     }
     if (b.kind === 'sub_heading') {
-      return `<h4 class="exp-block-sub-heading">${expEscapeMD(b.text || '')}</h4>`;
+      // v7 §P-07-K · h4 合并到 h3（砍一级字号台阶 · 同 deep_dive title · 视觉用 .exp-block-sub-heading 类区分）
+      return `<h3 class="exp-block-sub-heading">${expEscapeMD(b.text || '')}</h3>`;
     }
     if (b.kind === 'image') {
       // v6 §P-13-C · 无专属采图时复用 onsite_spot.image[0] 作 placeholder
@@ -549,38 +603,109 @@ function expRenderVisitTiming(l, c) {
     </div>`;
 }
 
-/* v6 · 延伸阅读折叠（v5 的 worldEvents + relatedFigure · v6 降级到阅读层尾部）
-   默认折起 · 点击展开 · 如果两者都空则不渲染 */
-function expRenderExtendedReading(l) {
-  const worldHtml = expRenderMeanwhile(l);
-  const figHtml = expRenderRelatedFigure(l);
-  if (!worldHtml && !figHtml) return '';
+/* v7 §P-14-F ⑥ · 删"延伸阅读"折叠区
+   理由：worldContext 已覆盖同期世界信息 · worldEvents + meanwhile 重叠度高
+   保留 relatedFigure（人物信息不是"同期世界"）· 由 Layer1 内部直接渲染（非折叠）
+   原 expRenderExtendedReading / expToggleExt 已移除 · 无 dead code 残留 */
+
+/* ——— β 4 tab 区块（v7 · 从 3 tab 升级到 4 tab · beta.js 消费） ———
+   Tab 1 · 沙发时间 = 原 Layer 1（故事） + 原 Layer 2（深一步）· 顶部 sticky 锚条
+   Tab 2 · 出发前   = 原 Layer 3（行动 · 独立 tab）
+   Tab 3 · 旅行中   = onsite section（不变）
+   Tab 4 · Survival = survival section（不变） */
+
+/* v7 §P-01 / §P-14-A · Tab 1 沙发时间（合并阅读 + 深度 · 顶部 sticky 锚条）*/
+function expRenderSofaTab(l) {
+  const hasDepth = Array.isArray(l.deep_dive) && l.deep_dive.length > 0;
   return `
-    <section class="exp-ext-reading" data-ext="extended">
-      <header class="exp-ext-head" onclick="expToggleExt(this)" role="button" tabindex="0">
-        <span class="exp-ext-caret">▶</span>
-        <span class="exp-ext-label">延伸阅读</span>
-        <span class="exp-ext-sub">同期世界 / 相关人物</span>
-      </header>
-      <div class="exp-ext-body exp-ext-body-collapsed">
-        ${worldHtml}
-        ${figHtml}
-      </div>
-    </section>
+    <div class="exp-sofa">
+      ${expRenderSofaAnchors(hasDepth)}
+      ${expRenderBeforeLayer1Reading(l)}
+      ${hasDepth ? expRenderBeforeLayer2Depth(l) : ''}
+    </div>
   `;
 }
 
-function expToggleExt(headEl) {
-  const section = headEl.closest('.exp-ext-reading');
-  if (!section) return;
-  section.classList.toggle('expanded');
-  const body = section.querySelector('.exp-ext-body');
-  if (body) body.classList.toggle('exp-ext-body-collapsed');
-  const caret = headEl.querySelector('.exp-ext-caret');
-  if (caret) caret.textContent = section.classList.contains('expanded') ? '▼' : '▶';
+/* v7 · 顶部 sticky 章节锚条 · 细线 SVG icon 不用 emoji（§P-07-K 字体家族一致性）
+   点击瞬移 + 当前高亮（scrollspy 由 expAttachSofaScrollSpy 绑） */
+function expRenderSofaAnchors(hasDepth) {
+  const bookIcon = '<svg class="exp-anchor-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4z"/><path d="M7 4v13"/></svg>';
+  const searchIcon = '<svg class="exp-anchor-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg>';
+  return `
+    <nav class="exp-sofa-anchors" role="navigation" aria-label="沙发时间章节">
+      <a href="#sofa-story" class="exp-sofa-anchor-link active" data-anchor="sofa-story"
+         onclick="event.preventDefault(); expScrollToSofaAnchor('sofa-story'); return false;">${bookIcon}<span>故事</span></a>
+      ${hasDepth ? `<a href="#sofa-deep" class="exp-sofa-anchor-link" data-anchor="sofa-deep"
+         onclick="event.preventDefault(); expScrollToSofaAnchor('sofa-deep'); return false;">${searchIcon}<span>深一步</span></a>` : ''}
+    </nav>
+  `;
 }
 
-/* ——— β 3 大 tab 区块（beta.js 消费 · v6 行动层需 city 参数） ——— */
+/* v7 · 锚点瞬移（instant 而非 smooth · 避免"卷动到哪儿了"迷失 · brief 要求"瞬移"）*/
+function expScrollToSofaAnchor(anchorId) {
+  const el = document.getElementById(anchorId);
+  if (!el) return;
+  // 锚条 sticky 在 top · 用 scrollIntoView 会遮住 section 头 · 手动计算 offset
+  const nav = document.querySelector('.exp-sofa-anchors');
+  const navH = nav ? nav.getBoundingClientRect().height : 0;
+  const tabBar = document.querySelector('.exp-beta-tabs');
+  const tabH = tabBar ? tabBar.getBoundingClientRect().height : 0;
+  const rect = el.getBoundingClientRect();
+  const top = window.scrollY + rect.top - navH - tabH - 4;
+  window.scrollTo({ top, behavior: 'auto' });
+
+  // 如果点的是深一步，顺手把它自动展开（用户点锚条 = 想看）
+  if (anchorId === 'sofa-deep') {
+    const depthSec = document.getElementById('sofa-deep');
+    if (depthSec && !depthSec.classList.contains('expanded')) {
+      const head = depthSec.querySelector('.exp-layer-head-toggle');
+      if (head) head.click();
+    }
+  }
+
+  // 切当前高亮（scrollspy 兜底）
+  document.querySelectorAll('.exp-sofa-anchor-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('data-anchor') === anchorId);
+  });
+}
+
+/* v7 · scrollspy · 滚动时更新 sticky 锚条高亮 · 用 IntersectionObserver */
+function expAttachSofaScrollSpy() {
+  const sections = document.querySelectorAll('.exp-sofa > .exp-layer[id]');
+  if (!sections.length) return;
+  if (typeof IntersectionObserver !== 'function') return;
+  const links = document.querySelectorAll('.exp-sofa-anchor-link');
+  if (!links.length) return;
+
+  const io = new IntersectionObserver(entries => {
+    // 找当前最靠近顶部且与视口相交的 section
+    const visibleEntries = entries.filter(e => e.isIntersecting);
+    if (!visibleEntries.length) return;
+    // 选 boundingClientRect.top 最接近 0（但不小于 0）的 section
+    visibleEntries.sort((a, b) => {
+      const at = a.boundingClientRect.top;
+      const bt = b.boundingClientRect.top;
+      const aa = at < 0 ? -at + 10000 : at;
+      const bb = bt < 0 ? -bt + 10000 : bt;
+      return aa - bb;
+    });
+    const activeId = visibleEntries[0].target.id;
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('data-anchor') === activeId));
+  }, { rootMargin: '-100px 0px -60% 0px', threshold: [0, 0.2] });
+
+  sections.forEach(s => io.observe(s));
+}
+
+/* v7 §P-01 / §P-14-A · Tab 2 出发前（原 Layer 3 行动层独立 tab） */
+function expRenderPrepTab(l, c) {
+  return `
+    <div class="exp-prep">
+      ${expRenderBeforeLayer3Action(l, c)}
+    </div>
+  `;
+}
+
+/* 保留兼容 · beta.js v7 已不用此函数（分拆为 Sofa + Prep）· 留作后续若需要还原 */
 function expRenderBeforeSection(l, c) {
   return `
     <div class="exp-before">
@@ -589,6 +714,14 @@ function expRenderBeforeSection(l, c) {
       ${expRenderBeforeLayer3Action(l, c)}
     </div>
   `;
+}
+
+/* v7 §P-14-D ① · hookShort 升格：从 era 下方小字 → Hero 图下方大号字 caption
+   字段不变（landmark.hookShort）· 渲染位置升级 */
+function expRenderHookShortCaption(l) {
+  const hs = l && typeof l.hookShort === 'string' ? l.hookShort.trim() : '';
+  if (!hs) return '';
+  return `<div class="lm-hookshort-caption">${expEscapeMD(hs)}</div>`;
 }
 
 function expRenderOnsiteSection(l) {

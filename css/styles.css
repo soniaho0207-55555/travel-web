@@ -2304,6 +2304,7 @@ body::before {
   margin-bottom: 20px;
 }
 .exp-spot-card {
+  position: relative;  /* v7 · editorPick 徽章需要 */
   display: flex;
   flex-direction: column;
   background: rgba(24, 32, 28, 0.6);
@@ -2650,8 +2651,16 @@ body::before {
   display: inline-block;
   width: 14px;
   text-align: center;
-  transition: transform 0.2s;
+  /* v7 · Unicode caret → SVG chevron · 旋转由 expanded 态控制 */
+  line-height: 1;
 }
+.exp-chevron {
+  display: inline-block;
+  vertical-align: middle;
+  color: #D4A574;
+  transition: transform 0.22s ease;
+}
+.exp-layer.expanded .exp-layer-caret .exp-chevron { transform: rotate(90deg); }
 .exp-layer-body-collapsed {
   max-height: 0;
   overflow: hidden;
@@ -2677,7 +2686,7 @@ body::before {
   border-radius: 4px;
   margin-top: 32px;
 }
-.exp-layer-action .exp-layer-label { font-size: 18px; }
+/* v7 §P-07-K · layer label 统一 20px · 删除 v6 的 action 18px override */
 .exp-layer-action .lm-tips { font-size: 14px; }
 
 /* —— spot 双图 carousel（§P-09 v5）—— */
@@ -2771,9 +2780,10 @@ body::before {
   padding-bottom: 10px;
   border-bottom: 1px dashed rgba(201, 184, 150, 0.16);
 }
+/* v7 §P-07-K · eyebrow 药方 · 10px/1.8 letter-spacing → 12px/0.04em（约 0.5px）· 避免 CJK 过度追踪 */
 .exp-deep-type {
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #B53A1F;
   padding: 2px 8px;
@@ -2809,30 +2819,46 @@ body::before {
   margin: 0 0 14px 0;
 }
 .exp-block-paragraph:last-child { margin-bottom: 0; }
-.exp-block-paragraph strong { color: #E8D4B0; font-weight: 600; }
-.exp-block-paragraph em { color: #C9B896; font-style: italic; }
+/* v7 §P-07-J · 金句加粗硬规（字重分层 > 字号跳级）· strong 升 17px + 金沙色 · 扫读抓骨架 */
+.exp-block-paragraph strong,
+.exp-why-section p strong {
+  color: #E8D4B0;
+  font-weight: 600;
+  font-size: 17px;
+}
+.exp-block-paragraph em,
+.exp-why-section p em {
+  color: #C9B896;
+  font-style: italic;
+}
 
+/* v7 §P-07-K · pullquote 字体 4 病药方
+   · border 4px → 3px · text 去 italic · 16 → 18px · source 强制 sans + 间距 ≥ 12px */
 .exp-block-pullquote {
   margin: 18px 0 18px 0;
-  padding: 4px 0 4px 14px;
-  border-left: 4px solid #B53A1F;
+  padding: 6px 0 6px 14px;
+  border-left: 3px solid #B53A1F;
   background: transparent;
 }
 .exp-block-pullquote-text {
-  font-style: italic;
-  font-size: 16px;
+  font-style: normal;  /* v7 · 去 italic（中文 synthetic italic 头号廉价信号）*/
+  font-size: 18px;      /* v7 · 16 → 18 · 和 body 15px 拉开区分度 */
   line-height: 1.6;
   color: #E8D4B0;
-  margin: 0 0 6px 0;
+  margin: 0 0 12px 0;   /* v7 · 6 → 12 · P-07-K 药方 5 */
 }
 .exp-block-pullquote-source {
   display: block;
   font-size: 11px;
   font-style: normal;
+  font-family: inherit;  /* v7 · 强制归 sans · 去浏览器 cite 默认衬线 */
   color: #8a7f6d;
   letter-spacing: 0.04em;
 }
-.exp-block-pullquote-source em { font-style: italic; color: #C9B896; }
+.exp-block-pullquote-source em {
+  font-style: italic;  /* 英文 book title 真斜体 OK（系统字体有真斜体字形）*/
+  color: #C9B896;
+}
 
 .exp-block-sub-heading {
   font-family: 'Playfair Display', 'Noto Serif SC', serif;
@@ -2977,4 +3003,183 @@ body::before {
   max-height: 5000px;
   opacity: 1;
   padding-top: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v7 · 4 tab 架构 + 沙发时间 sticky 锚条 + 对照卡 +
+   spotlight + editorPick + hookShort caption + chevron rotate
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— Hero 下方大号字 hookShort caption（§P-14-D ①）—— */
+.lm-hookshort-caption {
+  padding: 18px 20px 6px;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #E8D4B0;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+/* 和 lm-era 视觉区分：era 保留（v7 前是 hookShort 位置），hookShort 升格 */
+
+/* —— Tab 1 沙发时间 · 顶部 sticky 章节锚条 —— */
+.exp-sofa-anchors {
+  position: sticky;
+  /* 吸附在 .exp-beta-tabs 下方 · tabs 高约 50px */
+  top: 50px;
+  z-index: 4;
+  display: flex;
+  gap: 0;
+  padding: 8px 16px;
+  background: rgba(12, 24, 16, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+  font-size: 13px;
+}
+.exp-sofa-anchor-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px 4px 12px;
+  color: #8a7f6d;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+  letter-spacing: 0.03em;
+}
+.exp-sofa-anchor-link:hover { color: #C9B896; }
+.exp-sofa-anchor-link.active {
+  color: #E8D4B0;
+  background: rgba(201, 184, 150, 0.08);
+}
+.exp-anchor-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* Sofa 容器本身 */
+.exp-sofa { padding-bottom: 40px; }
+
+/* —— 跨文明对照卡（§P-14-B · string → object 升级）—— */
+.exp-cross-wrap { margin-bottom: 18px; }
+.exp-cross-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px 16px;
+  align-items: center;
+  padding: 16px 14px;
+  background: rgba(201, 184, 150, 0.04);
+  border-radius: 4px;
+  border: 1px solid rgba(201, 184, 150, 0.12);
+}
+.exp-cross-side {
+  padding: 2px 0;
+}
+.exp-cross-side-title {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #D4A574;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.exp-cross-side-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #d8cfbf;
+}
+.exp-cross-side-bullets li {
+  padding: 3px 0;
+  position: relative;
+  padding-left: 10px;
+}
+.exp-cross-side-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: #8a7f6d;
+}
+.exp-cross-a .exp-cross-side-title { text-align: right; }
+.exp-cross-a .exp-cross-side-bullets { text-align: right; }
+.exp-cross-a .exp-cross-side-bullets li { padding-left: 0; padding-right: 10px; }
+.exp-cross-a .exp-cross-side-bullets li::before {
+  left: auto;
+  right: 0;
+}
+.exp-cross-b .exp-cross-side-title { text-align: left; }
+
+.exp-cross-link {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 0 4px;
+  position: relative;
+  max-width: 28ch;
+  line-height: 1.4;
+}
+.exp-cross-link::before,
+.exp-cross-link::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: rgba(201, 184, 150, 0.4);
+  margin: 6px auto;
+}
+
+/* 窄屏降级：上下堆叠 */
+@media (max-width: 560px) {
+  .exp-cross-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .exp-cross-a .exp-cross-side-title,
+  .exp-cross-a .exp-cross-side-bullets { text-align: left; }
+  .exp-cross-a .exp-cross-side-bullets li { padding-left: 10px; padding-right: 0; }
+  .exp-cross-a .exp-cross-side-bullets li::before { left: 0; right: auto; }
+  .exp-cross-link::before,
+  .exp-cross-link::after {
+    width: 40%;
+    margin: 4px auto;
+  }
+}
+
+/* —— spot 卡 spotlight（§P-07-L · 层级分离）—— */
+.exp-spot-spotlight {
+  margin: 10px 0 8px 0;
+  padding: 8px 0 10px 10px;
+  border-left: 2px solid #D4A574;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;  /* 非 italic · 非 pullquote 样式 · CJK 禁 synthetic italic */
+  color: #E8D4B0;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+/* —— 编辑推荐徽章（§P-02 · 深金 · 非红色）—— */
+.exp-spot-editor-pick {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 3px 10px;
+  background: rgba(24, 32, 28, 0.82);
+  border: 1px solid #D4A574;
+  color: #D4A574;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.exp-spot-card.exp-spot-has-pick {
+  position: relative;
+  border: 1px solid rgba(212, 165, 116, 0.28);
 }

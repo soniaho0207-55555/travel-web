@@ -1,11 +1,13 @@
 /* ═══════════════════════════════════════════════════════════════════
-   v3.5-exp v5 · β 3 Tab 渲染器
-   顶部 3 tab（copy switchLmTab 模式）：旅行前 / 旅行中 / Survival
-   v5 · 旅行前内部三层分隔（§P-07-D）· Survival 空态隐藏（§P-12-G）
-   默认 URL 无参数 = β 形态（§P-01 v5）；α 已砍
+   v3.5-exp v7 · β 4 Tab 渲染器（CEO 二次拍板 · 按心智模式重组）
+   Tab 1 · 沙发时间（合并阅读 + 深度 · 内部 accordion · 顶部 sticky 锚条）
+   Tab 2 · 出发前（独立 · ticket + visitTiming + bestSeason + tips）
+   Tab 3 · 旅行中（onsite · 不变）
+   Tab 4 · Survival（空态隐藏 · 不变）
+   Hero 图下方大号字 hookShort caption（§P-14-D ①）· α v5 已砍
    ═══════════════════════════════════════════════════════════════════ */
 
-let expBetaTab = 'before';
+let expBetaTab = 'sofa';
 
 function switchExpBetaTab(tab) {
   expBetaTab = tab;
@@ -21,13 +23,15 @@ function switchExpBetaTab(tab) {
 function renderExperimentBeta(city, landmark, cityId, index) {
   const app = document.getElementById('app');
   const l = landmark;
-  const c = city;  // v6 行动层需 city 读取 bestSeason（§P-13-B / §P-03）
+  const c = city;
   const showSurvival = expLandmarkHasSurvival(l);  // §P-12-G 空态 tab 隐藏
-  expBetaTab = 'before';
+  expBetaTab = 'sofa';
 
+  // v7 · 4 tab（3 基础 + Survival 空态隐藏）
   const tabs = [
-    { key: 'before',   label: '旅行前' },
-    { key: 'onsite',   label: '旅行中' }
+    { key: 'sofa',   label: '沙发时间' },
+    { key: 'prep',   label: '出发前' },
+    { key: 'onsite', label: '旅行中' }
   ];
   if (showSurvival) tabs.push({ key: 'survival', label: 'Survival' });
 
@@ -45,13 +49,17 @@ function renderExperimentBeta(city, landmark, cityId, index) {
   app.innerHTML = `
     <div class="landmark-detail-page exp-beta" data-exp="beta">
       ${expRenderHero(l, cityId)}
+      ${expRenderHookShortCaption(l)}
 
       <div class="exp-beta-tabs" role="tablist">
         ${tabButtons}
       </div>
 
-      <div class="exp-beta-panel active" role="tabpanel" data-exppanel="before">
-        ${expRenderBeforeSection(l, c)}
+      <div class="exp-beta-panel active" role="tabpanel" data-exppanel="sofa">
+        ${expRenderSofaTab(l)}
+      </div>
+      <div class="exp-beta-panel" role="tabpanel" data-exppanel="prep">
+        ${expRenderPrepTab(l, c)}
       </div>
       <div class="exp-beta-panel" role="tabpanel" data-exppanel="onsite">
         ${expRenderOnsiteSection(l)}
@@ -59,7 +67,7 @@ function renderExperimentBeta(city, landmark, cityId, index) {
       ${survivalPanel}
 
       <footer class="footer">
-        <p>© 2026 环球史迹 · Global Chronicles · v3.5-exp v5 β</p>
+        <p>© 2026 环球史迹 · Global Chronicles · v3.5-exp v7 β</p>
       </footer>
     </div>
   `;
@@ -67,4 +75,15 @@ function renderExperimentBeta(city, landmark, cityId, index) {
   window.scrollTo(0, 0);
   expHydrateHero(l);
   if (typeof updateNav === 'function') updateNav(null);
+
+  // v7 · sofa 内部 scrollspy · requestAnimationFrame 确保 DOM 就绪再 observe
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(() => {
+      if (typeof expAttachSofaScrollSpy === 'function') expAttachSofaScrollSpy();
+    });
+  } else {
+    setTimeout(() => {
+      if (typeof expAttachSofaScrollSpy === 'function') expAttachSofaScrollSpy();
+    }, 0);
+  }
 }
