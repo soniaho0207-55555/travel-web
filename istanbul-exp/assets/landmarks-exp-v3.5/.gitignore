@@ -1,4 +1,0 @@
-# Wikimedia 原图（~63MB）不入 commit，随时可重新抓取
-# 成品图在同级 onsite-spots/ slides/ maps/ 下，入 commit
-raw/
-raw-v5/
