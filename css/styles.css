@@ -2920,11 +2920,28 @@ body::before {
   border-radius: 2px;
 }
 .exp-visit-when {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   font-size: 14px;
   font-weight: 600;
   color: #D4A574;
   margin-bottom: 4px;
   letter-spacing: 0.02em;
+}
+/* v7-bonus B1 · visitTiming emoji → SVG · 和 chevron 体系一致（stroke-width 2.2）*/
+.exp-when-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  color: #D4A574;
+  flex-shrink: 0;
+}
+.exp-when-icon svg {
+  width: 100%;
+  height: 100%;
 }
 .exp-visit-body {
   font-size: 13.5px;
@@ -3053,6 +3070,8 @@ body::before {
 .exp-sofa-anchor-link.active {
   color: #E8D4B0;
   background: rgba(201, 184, 150, 0.08);
+  /* v7-bonus B4 · active weight 400 → 600 · 应对色弱 / 强光下仅靠颜色区分不足 */
+  font-weight: 600;
 }
 .exp-anchor-icon {
   flex-shrink: 0;
@@ -3174,7 +3193,8 @@ body::before {
   background: rgba(24, 32, 28, 0.82);
   border: 1px solid #D4A574;
   color: #D4A574;
-  font-size: 11px;
+  /* v7-bonus B5 · 11 → 12px · 和 eyebrow 12px 对齐 · 暗色背景小胶囊内更易读 */
+  font-size: 12px;
   letter-spacing: 0.08em;
   border-radius: 2px;
   pointer-events: none;
