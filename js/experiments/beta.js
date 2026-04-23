@@ -29,11 +29,11 @@ function renderExperimentBeta(city, landmark, cityId, index) {
 
   // v7 · 4 tab（3 基础 + Survival 空态隐藏）
   const tabs = [
-    { key: 'sofa',   label: '沙发时间' },
+    { key: 'sofa',   label: '沙发时间 · 读一读' },
     { key: 'prep',   label: '出发前' },
     { key: 'onsite', label: '旅行中' }
   ];
-  if (showSurvival) tabs.push({ key: 'survival', label: 'Survival' });
+  if (showSurvival) tabs.push({ key: 'survival', label: 'Survival · 防坑包' });
 
   const tabButtons = tabs.map((t, i) => `
     <button class="exp-beta-tab${i === 0 ? ' active' : ''}" role="tab" data-exptab="${t.key}" onclick="switchExpBetaTab('${t.key}')">${t.label}</button>
