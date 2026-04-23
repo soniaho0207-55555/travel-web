@@ -462,9 +462,9 @@ const CITIES = [
     themes: ['silk-road', 'maritime', 'imperial'],
     coords: "41°00'N 28°58'E",
     wiki: 'Sultan Ahmed Mosque',
-    // J-01: 圣索菲亚晨光蓝调（v7 本地化 · 气质对齐"光洒穹顶" · CEO 2026-04-22 授权 PM 扩权）
+    // J-01: 圣索菲亚日落剪影（CEO-P0-01 换图）
     heroImage: 'assets/landmarks-exp-v3.5/hero/hagia-sophia-dawn.jpg',
-    // H-02: 列表卡用博斯普鲁斯大桥（v7 本地化日落玫瑰版）
+    // H-02: 列表卡仍用博斯普鲁斯大桥
     wikiImage: 'assets/landmarks-exp-v3.5/hero/bosphorus-bridge.jpg',
     heroGradient: 'linear-gradient(160deg, #1a0a2a 0%, #0d0d1e 60%, #1a2a0a 100%)',
     hook: '横跨两洲，拜占庭与奥斯曼的帝国交替',
@@ -482,10 +482,30 @@ const CITIES = [
     ],
     landmarks: [
       { name: '圣索菲亚大教堂', era: '拜占庭·537年', hookShort: '做过一千年教堂，五百年清真寺，现在在做第三件事。', whyVisit: {
-  what: '伊斯坦布尔老城海角上一座 537 年建成的巨型穹顶建筑。先是东正教主教座堂（916 年）、后是清真寺（482 年）、1934 年改博物馆、2020 年再变清真寺——同一座建筑横跨 1500 年，服务过两种宗教里的"同一个神"。',
-  whyUnique: '主穹顶直径 31 米、离地 55 米——工程师米利都的伊西多尔和特拉勒斯的安特米奥斯用 40 根窗柱托起穹顶，让整座圆顶看起来像"浮在空中"。16 世纪奥斯曼建筑师锡南来这里看了一眼说："我终于明白穹顶该怎么建了"——他回去设计了蓝色清真寺。一座建筑教会了另一个帝国。',
-  crossCivilization: '537 年查士丁尼建这座教堂时，中国处于南北朝北魏末年——河南洛阳龙门石窟宾阳中洞正在开凿，北魏皇室用石头把佛陀凿进山体。两个帝国都在用建筑回答"神该如何被看见"：查士丁尼让光从 40 扇窗洒进穹顶下一片金色马赛克，让神显形在空间里；北魏让佛陀从岩壁浮出，让神显形在物质里。一个让神飘在空中、一个让神埋进岩石——都在对抗同一个时代的普遍困惑：神是否仍在。',
-  detail: '进入大厅抬头看——穹顶四角 9 米直径的金色撒拉弗天使像，1453 年奥斯曼征服后被灰泥覆盖了 450 年，2009 年修复师剥掉西北角一层发现底下保存完好，其他三面至今蒙着。西南柱子上有 13 世纪一个北欧维京雇佣兵用卢恩文刻的名字 "Halfdan"——这里躺过的不只是皇帝的仪仗队。',
+  // v7 §P-14-B · CEO 二次过稿冻结 · whyVisit 4 段压缩到 ~355 字（-51% vs v6 · 支持 **bold** MD 管道）
+  what: '公元 537 年，查士丁尼建成圣索菲亚——当时人类能造的**最大穹顶**，第一眼看它"浮在空中"。做过 916 年东罗马主教堂、482 年奥斯曼清真寺，**两个亚伯拉罕传统都把它当过家**。2020 年再次成为清真寺——第三次身份切换。',
+  whyUnique: '40 扇窗在穹顶底部环绕，光从 40 个方向洒进来——**工程师故意让穹顶"坐在光上"**，远看像悬浮。这个结构 1500 年后还在用：伊斯坦布尔蓝色清真寺、耶路撒冷圆顶清真寺，都在复刻。**16 世纪锡南来看了一眼，回去设计了蓝色清真寺。**',
+  // v7 §P-14-B · crossCivilization 从 string 升级为对照卡 object（aSide + bSide + link）
+  crossCivilization: {
+    aSide: {
+      title: '拜占庭 · 537 年',
+      bullets: [
+        '查士丁尼建成圣索菲亚',
+        "40 扇窗让神'飘在空中'",
+        '石柱+金箔马赛克'
+      ]
+    },
+    bSide: {
+      title: '北魏 · 同一时代',
+      bullets: [
+        '开凿龙门石窟',
+        "让神'埋进岩石'",
+        '石像+石窟庙堂'
+      ]
+    },
+    link: '一个让神飘空中 · 一个让神埋岩石'
+  },
+  detail: "走进去先看 40 扇窗——**穹顶'浮在空中'的第一眼就在这里**。二楼西北角找一根包金属的柱子（许愿柱），1200 年的游客拇指把凹洞磨出了光。中殿抬头 8 块 7.5 米书法圆盘。下午 4 点到 4 点半西光斜射时，**基督脸部马赛克最闪**——这个时刻不在手册里。",
   // v3.5-exp: whyVisit.detail 图文切片（PRD §P-10-A · 5 片 · CEO 过稿定稿）
   detail_slides: [
     { image: 'assets/landmarks-exp-v3.5/slides/hagia-A1-seraphim-all.jpg',
@@ -541,6 +561,10 @@ const CITIES = [
         onsite_spots: [
           { n: 1, title: '许愿柱', anchor: '二楼西北角', visibility: '常开',
             body: '二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。',
+            // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
+            spotlight: '东罗马主教也在这里转过拇指——比敦煌莫高窟晚开 70 年',
+            // v7 §P-14-D · 3 spot 选 1 编辑推荐（许愿柱：动作+时间+认知惊喜三轴齐全）
+            editorPick: true,
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg'
@@ -556,6 +580,8 @@ const CITIES = [
             ] },
           { n: 2, title: 'Dandolo 墓碑', anchor: '二楼南廊地板', visibility: '常开',
             body: '二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。',
+            // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
+            spotlight: '他让圣索菲亚被当马厩用了 3 天——那年南宋理宗登基',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg'
@@ -571,6 +597,8 @@ const CITIES = [
             ] },
           { n: 3, title: '8 块书法圆盘', anchor: '中殿上空', visibility: '常开',
             body: '中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。',
+            // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
+            spotlight: '每块 7.5 米——两个成人站起来还不够挡住',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg'
@@ -621,6 +649,12 @@ const CITIES = [
             ],
             evidence: 'Fossati 1852 excavation notes · Thomas Madden *Enrico Dandolo and the Rise of Venice* (JHU Press, 2003)'
           }
+        ],
+        // v7 §P-14-F ⑤ · deep_dive pool 占位（v3.6+ 轮换库 · body 300-500 字 v3.6 PM 再写 · v7 UI 不 display）
+        deep_dive_pool: [
+          { type: 'controversy', title: 'Zoe 三嫁 · 第 3 次男主面孔是否未改' },
+          { type: 'aftermath',   title: 'Seraphim 450 年揭示 · 2009 仅揭一面' },
+          { type: 'event_echo',  title: 'Omphalion 最后加冕 · Constantine XI 1449' }
         ],
         // v6 §P-13-B 圣索菲亚 · 3 条 visitTiming · CEO 过稿冻结
         visitTiming: [
