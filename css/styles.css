@@ -2331,7 +2331,8 @@ body::before {
   padding: 4px 10px;
   background: rgba(0, 0, 0, 0.55);
   color: #E8D4B0;
-  font-size: 11px;
+  /* v7.2 · F lens spot 卡字号合并：11 → 12（micro 标签档统一 anchor / editor-pick / visibility）*/
+  font-size: 12px;
   letter-spacing: 0.06em;
   border-radius: 999px;
   pointer-events: none;
@@ -2354,7 +2355,8 @@ body::before {
   background: transparent;
   border: 1.5px solid #B53A1F;
   color: #D4A574;
-  font-size: 13px;
+  /* v7.2 · F lens spot 卡字号合并：13 → 12（micro 标签档统一 · 圆圈内数字 12px 仍足清）*/
+  font-size: 12px;
   font-weight: 600;
   font-family: 'Playfair Display', serif;
 }
@@ -2366,7 +2368,8 @@ body::before {
   margin: 0;
 }
 .exp-spot-visibility {
-  font-size: 11px;
+  /* v7.2 · F lens spot 卡字号合并：11 → 12（micro 标签档统一）*/
+  font-size: 12px;
   color: #e0a060;
   background: rgba(224, 160, 96, 0.12);
   padding: 2px 8px;
@@ -2723,7 +2726,8 @@ body::before {
   padding: 4px 10px;
   background: rgba(0, 0, 0, 0.58);
   color: #E8D4B0;
-  font-size: 11px;
+  /* v7.2 · F lens spot 卡字号合并：11 → 12（micro 标签档统一）*/
+  font-size: 12px;
   letter-spacing: 0.08em;
   border-radius: 2px;
   pointer-events: none;
@@ -2734,7 +2738,8 @@ body::before {
   right: 0;
   bottom: 8px;
   text-align: center;
-  font-size: 10px;
+  /* v7.2 · F lens spot 卡字号合并：10 → 12（micro 标签档统一 · 底部提示字不能更大否则抢图）*/
+  font-size: 12px;
   color: rgba(232, 212, 176, 0.72);
   letter-spacing: 0.14em;
   pointer-events: none;
@@ -2793,7 +2798,8 @@ body::before {
 .exp-deep-title {
   flex: 1 1 100%;
   font-family: 'Playfair Display', 'Noto Serif SC', serif;
-  font-size: 18px;
+  /* v7.2 · F lens 深度层字号合并：18 → 17（和 strong / sub_heading 统一重点档 · pullquote 也 17）*/
+  font-size: 17px;
   font-weight: 700;
   color: #E8D4B0;
   margin: 4px 0 0;
@@ -2805,7 +2811,8 @@ body::before {
   margin-top: 14px;
   padding-top: 10px;
   border-top: 1px dotted rgba(201, 184, 150, 0.16);
-  font-size: 11px;
+  /* v7.2 · F lens 深度层字号合并：11 → 12（和 eyebrow type / cite source 统一 label 档）*/
+  font-size: 12px;
   color: #8a7f6d;
   letter-spacing: 0.03em;
   line-height: 1.5;
@@ -2842,14 +2849,17 @@ body::before {
 }
 .exp-block-pullquote-text {
   font-style: normal;  /* v7 · 去 italic（中文 synthetic italic 头号廉价信号）*/
-  font-size: 18px;      /* v7 · 16 → 18 · 和 body 15px 拉开区分度 */
+  /* v7.2 · F lens 深度层字号合并：18 → 17（重点档统一 deep-title / sub_heading / strong）
+     · 与 body 15px 仍 2px 差 + color + border-left 视觉区分充足 */
+  font-size: 17px;
   line-height: 1.6;
   color: #E8D4B0;
   margin: 0 0 12px 0;   /* v7 · 6 → 12 · P-07-K 药方 5 */
 }
 .exp-block-pullquote-source {
   display: block;
-  font-size: 11px;
+  /* v7.2 · F lens 深度层字号合并：11 → 12（label 档统一 eyebrow / evidence / caption）*/
+  font-size: 12px;
   font-style: normal;
   font-family: inherit;  /* v7 · 强制归 sans · 去浏览器 cite 默认衬线 */
   color: #8a7f6d;
@@ -3108,7 +3118,8 @@ body::before {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 13.5px;
+  /* v7.2 · F lens 阅读层字号合并：13.5 → 13（和 rich-content-section-title 统一 label 档）*/
+  font-size: 13px;
   line-height: 1.6;
   color: #d8cfbf;
 }
@@ -3133,7 +3144,8 @@ body::before {
 .exp-cross-b .exp-cross-side-title { text-align: left; }
 
 .exp-cross-link {
-  font-size: 12px;
+  /* v7.2 · F lens 阅读层字号合并：12 → 13（label 档统一）*/
+  font-size: 13px;
   color: #8a7f6d;
   letter-spacing: 0.06em;
   text-align: center;
@@ -3175,7 +3187,8 @@ body::before {
   padding: 8px 0 10px 10px;
   border-left: 2px solid #D4A574;
   font-family: 'Playfair Display', 'Noto Serif SC', serif;
-  font-size: 16px;
+  /* v7.2 · F lens spot 卡字号合并：16 → 17（重点档统一 spot-title 17px）*/
+  font-size: 17px;
   font-weight: 600;
   font-style: normal;  /* 非 italic · 非 pullquote 样式 · CJK 禁 synthetic italic */
   color: #E8D4B0;
@@ -3202,4 +3215,18 @@ body::before {
 .exp-spot-card.exp-spot-has-pick {
   position: relative;
   border: 1px solid rgba(212, 165, 116, 0.28);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v7.2 · CEO 4/24 线上反馈 2 · 图片 EXIF orientation 自动矫正
+   某些图（尤其手机竖拍再转文件）EXIF 记 rotation，老/特定浏览器不默认读
+   CSS 显式声明 from-image 让浏览器按 EXIF 旋转 · Safari 13.4+ / Chrome 81+ / Firefox 77+ 全支持
+   ═══════════════════════════════════════════════════════════════════ */
+.exp-beta img,
+.landmark-detail-page.exp-beta img,
+.exp-slide-img,
+.exp-spot-img,
+.exp-block-image img,
+.exp-onsite-map img {
+  image-orientation: from-image;
 }
