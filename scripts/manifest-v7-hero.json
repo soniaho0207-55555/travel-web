@@ -1,0 +1,14 @@
+[
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v7/hagia-asv2020.jpg",
+    "dst": "assets/landmarks-exp-v3.5/hero/hagia-sophia-dawn.jpg",
+    "resize": [1920, null],
+    "overlays": []
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw-v7/bosphorus-1973.jpg",
+    "dst": "assets/landmarks-exp-v3.5/hero/bosphorus-bridge.jpg",
+    "resize": [1920, null],
+    "overlays": []
+  }
+]
