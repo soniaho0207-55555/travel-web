@@ -1,0 +1,516 @@
+[
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-wishstone-v2.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg",
+    "crop_pct": [
+      12,
+      10,
+      65,
+      85
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 90,
+        "text": "① 许愿柱",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-dandolo.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 92,
+        "text": "② Dandolo 墓碑",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-calligraphy.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 92,
+        "text": "③ 书法圆盘",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-exterior.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bluemosque-1-minarets.jpg",
+    "crop_pct": [
+      0,
+      0,
+      100,
+      85
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 92,
+        "text": "① 6 根宣礼塔",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-tiles.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bluemosque-2-tiles.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 92,
+        "text": "② 蓝瓷砖",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-interior.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bluemosque-3-ostrich.jpg",
+    "crop_pct": [
+      0,
+      0,
+      100,
+      75
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "circle",
+        "cx_pct": 52,
+        "cy_pct": 50,
+        "radius_pct": 8,
+        "color": "#B53A1F",
+        "width": 5
+      },
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 92,
+        "text": "③ 吊灯鸵鸟蛋",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-alt.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-1-bedesten.jpg",
+    "crop_pct": [
+      0,
+      0,
+      100,
+      50
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 88,
+        "text": "① İç Bedesten · 1461",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-zincirli.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-2-zincirli.jpg",
+    "crop_pct": [
+      0,
+      0,
+      100,
+      55
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 88,
+        "text": "② Zincirli Han · 1708",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 24
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-gate.jpg",
+    "dst": "assets/landmarks-exp-v3.5/onsite-spots/bazaar-3-kalpakcilar.jpg",
+    "crop_pct": [
+      0,
+      0,
+      100,
+      55
+    ],
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "text",
+        "x_pct": 3,
+        "y_pct": 88,
+        "text": "③ Nuruosmaniye · 右转 20 步",
+        "color": "#FFFFFF",
+        "bg": "#1A1A1AE6",
+        "size": 22
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-seraphim-all.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/hagia-A1-seraphim-all.jpg",
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-panorama.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/hagia-A2-panorama-crop.jpg",
+    "crop_pct": [
+      20,
+      10,
+      80,
+      60
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-seraphim-face.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/hagia-A3-seraphim-face.jpg",
+    "crop_pct": [
+      10,
+      10,
+      90,
+      70
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-viking.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/hagia-A4-viking.jpg",
+    "crop_pct": [
+      0,
+      0,
+      75,
+      100
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/hagia-panorama.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg",
+    "crop_pct": [
+      50,
+      35,
+      100,
+      100
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-carpet-v2.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bluemosque-B1-carpet.jpg",
+    "crop_pct": [
+      0,
+      0,
+      93,
+      100
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-windows.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bluemosque-B2-windows.jpg",
+    "crop_pct": [
+      20,
+      10,
+      80,
+      60
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-interior.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bluemosque-B3-entrance.jpg",
+    "crop_pct": [
+      0,
+      55,
+      55,
+      95
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bluemosque-interior.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bluemosque-B4-prayer.jpg",
+    "crop_pct": [
+      20,
+      5,
+      95,
+      60
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-boza-cup.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bazaar-C1-boza-cup.jpg",
+    "crop_pct": [
+      0,
+      20,
+      100,
+      70
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-boza-store.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bazaar-C2-boza-store.jpg",
+    "crop_pct": [
+      0,
+      45,
+      70,
+      100
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-carpet-dye.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bazaar-C3-dye-yarn.jpg",
+    "crop_pct": [
+      0,
+      20,
+      100,
+      70
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/bazaar-carpet-dye.jpg",
+    "dst": "assets/landmarks-exp-v3.5/slides/bazaar-C4-aged-fiber.jpg",
+    "crop_pct": [
+      20,
+      50,
+      80,
+      100
+    ],
+    "resize": [
+      1200,
+      null
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/map-hagia-v2.jpg",
+    "dst": "assets/landmarks-exp-v3.5/maps/map-hagia-annotated.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 72,
+        "cy_pct": 20,
+        "number": 1,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5,
+        "sub_label": "2F"
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 40,
+        "cy_pct": 75,
+        "number": 2,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5,
+        "sub_label": "2F"
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 45,
+        "cy_pct": 48,
+        "number": 3,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5,
+        "sub_label": "1F"
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/map-bluemosque.jpg",
+    "dst": "assets/landmarks-exp-v3.5/maps/map-bluemosque-annotated.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 50,
+        "cy_pct": 22,
+        "number": 1,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 75,
+        "cy_pct": 79,
+        "number": 2,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 70,
+        "cy_pct": 73,
+        "number": 3,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      }
+    ]
+  },
+  {
+    "src": "assets/landmarks-exp-v3.5/raw/map-bazaar.jpg",
+    "dst": "assets/landmarks-exp-v3.5/maps/map-bazaar-annotated.jpg",
+    "resize": [
+      1200,
+      null
+    ],
+    "overlays": [
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 35,
+        "cy_pct": 60,
+        "number": 1,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 60,
+        "cy_pct": 35,
+        "number": 2,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      },
+      {
+        "type": "outline_circle_number",
+        "cx_pct": 50,
+        "cy_pct": 72,
+        "number": 3,
+        "color": "#B53A1F",
+        "radius_px": 28,
+        "font_size": 32,
+        "stroke_width": 5
+      }
+    ]
+  }
+]

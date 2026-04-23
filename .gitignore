@@ -11,3 +11,6 @@ node_modules/
 
 # husky 内部运行时 shim（pre-commit 脚本本身要进 git，_/ 目录不进）
 .husky/_/
+
+# scan-faces 调试临时产物
+scripts/face-scan-result.json

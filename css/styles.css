@@ -2122,3 +2122,1064 @@ body::before {
   font-size: 15px;
   line-height: 1.75;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp · 伊斯坦布尔 α/β 实验样式
+   URL 无参数 = 现状不变；?exp=alpha / ?exp=beta 激活
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— 实验版顶部提示条 —— */
+.exp-expbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(12, 24, 16, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 184, 150, 0.2);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.exp-expbar-badge {
+  color: #D4A574;
+  font-weight: 600;
+}
+.exp-expbar-switch { display: flex; gap: 14px; }
+.exp-expbar-switch a {
+  color: #C9B896;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.3);
+  transition: color 0.2s;
+}
+.exp-expbar-switch a:hover { color: #F5E6D3; }
+
+/* —— α/β 共享：section / tab 头 —— */
+.exp-section {
+  padding: 0 16px;
+  margin: 36px 0 44px;
+}
+.exp-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.18);
+}
+.exp-section-tag {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #E8D4B0;
+}
+.exp-section-sub {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.06em;
+}
+
+/* —— β 3 Tab —— */
+.exp-beta-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 16px;
+  margin: 18px 0 8px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.2);
+}
+.exp-beta-tab {
+  flex: 1;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8a7f6d;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.exp-beta-tab.active {
+  color: #E8D4B0;
+  border-bottom-color: #D4A574;
+}
+.exp-beta-panel {
+  display: none;
+  padding: 20px 16px 40px;
+}
+.exp-beta-panel.active { display: block; }
+
+/* —— 旅行前 · whyVisit 外框 —— */
+.exp-why { margin-bottom: 24px; }
+.exp-why-section { margin-bottom: 18px; }
+.exp-why-section .rich-content-section-title {
+  color: #D4A574;
+}
+.exp-why-section p {
+  font-size: 15px;
+  line-height: 1.78;
+  color: #d8cfbf;
+  margin: 8px 0;
+}
+
+/* —— whyVisit.detail_slides 横滑切片（全宽 bleed · scroll-snap）—— */
+.exp-carousel {
+  margin: 14px -16px 4px;   /* 向左右 bleed 出父容器 padding */
+  overflow: hidden;
+}
+.exp-carousel-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 16px 6px;
+  scrollbar-width: none;
+}
+.exp-carousel-track::-webkit-scrollbar { display: none; }
+.exp-slide {
+  flex: 0 0 86%;
+  margin: 0 8px 0 0;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: rgba(24, 32, 28, 0.6);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.exp-slide:last-child { margin-right: 16px; }
+.exp-slide-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #1a1a1a;
+  cursor: zoom-in;
+  display: block;
+}
+.exp-slide-img.failed { opacity: 0.35; filter: grayscale(1); }
+.exp-slide-caption {
+  padding: 10px 12px 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d8cfbf;
+}
+.exp-carousel-hint {
+  text-align: center;
+  font-size: 11px;
+  color: #6a6250;
+  letter-spacing: 0.12em;
+  padding-top: 4px;
+}
+
+/* —— 旅行中 · onsite_map —— */
+.exp-onsite-map {
+  margin: 6px -16px 18px;
+  padding: 0;
+}
+.exp-onsite-map img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  background: #1a1a1a;
+}
+.exp-onsite-map img.failed { opacity: 0.35; }
+.exp-onsite-map-caption {
+  text-align: center;
+  padding: 8px 16px 0;
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.08em;
+}
+
+/* —— 旅行中 · spot 卡片 —— */
+.exp-spot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.exp-spot-card {
+  position: relative;  /* v7 · editorPick 徽章需要 */
+  display: flex;
+  flex-direction: column;
+  background: rgba(24, 32, 28, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 184, 150, 0.12);
+}
+.exp-spot-img-wrap {
+  position: relative;
+  background: #121510;
+}
+.exp-spot-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.exp-spot-img.failed { opacity: 0.35; filter: grayscale(1); }
+.exp-spot-zoom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #E8D4B0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.exp-spot-body { padding: 14px 16px 18px; }
+.exp-spot-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.exp-spot-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid #B53A1F;
+  color: #D4A574;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+}
+.exp-spot-title {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 600;
+  color: #E8D4B0;
+  margin: 0;
+}
+.exp-spot-visibility {
+  font-size: 11px;
+  color: #e0a060;
+  background: rgba(224, 160, 96, 0.12);
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+.exp-spot-anchor {
+  font-size: 12px;
+  color: #8a7f6d;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+.exp-spot-text {
+  font-size: 15px;
+  line-height: 1.78;
+  color: #d8cfbf;
+  margin: 0;
+}
+
+/* —— 旅行中 · route_suggestions（无箭头 pill 组）—— */
+.exp-routes {
+  margin: 18px 0 12px;
+  padding: 14px 16px 16px;
+  background: rgba(201, 184, 150, 0.04);
+  border-left: 2px solid #C9B896;
+  border-radius: 2px;
+}
+.exp-route-row { margin-top: 10px; }
+.exp-route-row:first-of-type { margin-top: 4px; }
+.exp-route-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.exp-route-duration {
+  font-size: 14px;
+  font-weight: 600;
+  color: #D4A574;
+  font-family: 'Playfair Display', serif;
+}
+.exp-route-label {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.05em;
+}
+.exp-route-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+.exp-route-pill {
+  padding: 4px 12px;
+  font-size: 13px;
+  color: #d8cfbf;
+  background: rgba(201, 184, 150, 0.08);
+  border: 1px solid rgba(201, 184, 150, 0.18);
+  border-radius: 999px;
+}
+
+/* —— Survival 卡片 —— */
+.exp-surv-group { margin-bottom: 22px; }
+.exp-surv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+.exp-surv-card {
+  padding: 12px 14px 14px;
+  background: rgba(24, 32, 28, 0.6);
+  border-radius: 4px;
+  border-left: 2px solid rgba(201, 184, 150, 0.25);
+}
+/* kind 差异化：scam 偏警示，logistics/etiquette/practical 偏信息 */
+.exp-surv-kind-scam { border-left-color: #B53A1F; }
+.exp-surv-kind-logistics { border-left-color: #6B8E7F; }
+.exp-surv-kind-etiquette { border-left-color: #C9B896; }
+.exp-surv-kind-practical { border-left-color: #8A7F6D; }
+.exp-surv-head {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.exp-surv-kind {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a7f6d;
+  padding: 2px 6px;
+  background: rgba(201, 184, 150, 0.08);
+  border-radius: 2px;
+}
+.exp-surv-sev {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.exp-surv-sev-high   { color: #E86B4F; background: rgba(232, 107, 79, 0.14); }
+.exp-surv-sev-medium { color: #E0A060; background: rgba(224, 160, 96, 0.14); }
+.exp-surv-sev-low    { color: #8a7f6d; background: rgba(138, 127, 109, 0.14); }
+.exp-surv-title {
+  flex: 1 1 100%;
+  font-size: 15px;
+  font-weight: 600;
+  color: #E8D4B0;
+  margin: 4px 0 0;
+}
+.exp-surv-body {
+  font-size: 14px;
+  line-height: 1.72;
+  color: #c9c0b0;
+  margin: 0;
+}
+
+/* —— 旅行前 + 旅行中 tips 块 —— */
+.exp-tips-block {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(201, 184, 150, 0.1);
+}
+.exp-tips-block .rich-content-section-title { color: #C9B896; }
+
+/* —— α 特有：section 分隔 —— */
+.exp-alpha .exp-section + .exp-section {
+  padding-top: 10px;
+  border-top: 1px dashed rgba(201, 184, 150, 0.15);
+}
+
+/* —— Lightbox —— */
+.exp-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+  gap: 14px;
+}
+.exp-lightbox.open { display: flex; }
+.exp-lightbox-img {
+  max-width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  background: #1a1a1a;
+}
+.exp-lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #E8D4B0;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.exp-lightbox-close:hover { background: rgba(255, 255, 255, 0.2); }
+.exp-lightbox-credit {
+  max-width: 92%;
+  text-align: center;
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v5 · 新增：城市页 3 tab · 旅行前 tab 三层 · spot 双图
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— 城市页顶 3 Tab（§P-12）—— */
+.city-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 16px;
+  margin: 12px 0 4px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg, #0c1810);
+}
+.city-tab {
+  flex: 1;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8a7f6d;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.city-tab.active {
+  color: #E8D4B0;
+  border-bottom-color: #D4A574;
+}
+.city-panel {
+  display: none;
+  padding: 0;
+}
+.city-panel.active { display: block; }
+
+/* 城市级 Survival panel · LP 手册质感 */
+.city-survival {
+  padding: 22px 16px 40px;
+}
+.city-survival-intro {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  color: #E8D4B0;
+  margin-bottom: 18px;
+  letter-spacing: 0.02em;
+}
+
+/* —— 景点页 Survival tab 小引子 —— */
+.exp-surv-intro {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+/* —— 旅行前 tab v5 三层分隔（§P-07-D）—— */
+.exp-before { padding: 8px 0 4px; }
+.exp-layer {
+  padding: 20px 16px 24px;
+  margin-bottom: 16px;
+}
+.exp-layer-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+}
+.exp-layer-label {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #E8D4B0;
+}
+.exp-layer-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.08em;
+}
+
+/* 阅读层 · 白底 · Cereal 气质 */
+.exp-layer-read { background: transparent; }
+
+/* 深度层 · 折叠态 · 默认只显示 head */
+.exp-layer-depth {
+  background: transparent;
+  border-top: 1px dashed rgba(201, 184, 150, 0.18);
+  border-bottom: 1px dashed rgba(201, 184, 150, 0.18);
+}
+.exp-layer-head-toggle {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+  border-bottom-color: transparent;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.exp-layer-head-toggle:hover { opacity: 0.85; }
+.exp-layer-caret {
+  font-size: 11px;
+  color: #D4A574;
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  /* v7 · Unicode caret → SVG chevron · 旋转由 expanded 态控制 */
+  line-height: 1;
+}
+.exp-chevron {
+  display: inline-block;
+  vertical-align: middle;
+  color: #D4A574;
+  transition: transform 0.22s ease;
+}
+.exp-layer.expanded .exp-layer-caret .exp-chevron { transform: rotate(90deg); }
+.exp-layer-body-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+.exp-layer-depth.expanded .exp-layer-body-collapsed {
+  max-height: 5000px;
+  opacity: 1;
+  padding-top: 12px;
+}
+.exp-layer-depth.expanded .exp-layer-head-toggle {
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+}
+
+/* 行动层 · 微灰底 · LP 手册气质 */
+.exp-layer-action {
+  background: rgba(201, 184, 150, 0.045);
+  border-radius: 4px;
+  margin-top: 32px;
+}
+/* v7 §P-07-K · layer label 统一 20px · 删除 v6 的 action 18px override */
+.exp-layer-action .lm-tips { font-size: 14px; }
+
+/* —— spot 双图 carousel（§P-09 v5）—— */
+.exp-spot-dual-wrap {
+  position: relative;
+  background: #121510;
+  overflow: hidden;
+}
+.exp-dual-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.exp-dual-track::-webkit-scrollbar { display: none; }
+.exp-dual-frame {
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: start;
+  position: relative;
+}
+.exp-dual-frame .exp-spot-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.exp-dual-caption {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #E8D4B0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.exp-dual-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(232, 212, 176, 0.72);
+  letter-spacing: 0.14em;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.exp-dual-dots {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  gap: 4px;
+}
+.exp-dual-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+.exp-dual-dot.active { background: #D4A574; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v6 · 深度层返工 · deep_dive / visitTiming / bestSeason / 延伸阅读
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— 深度层 · deep_dive 卡片组 —— */
+.exp-deep-dive {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.exp-deep-card {
+  background: rgba(24, 32, 28, 0.55);
+  border-left: 3px solid #D4A574;
+  border-radius: 2px;
+  padding: 18px 18px 16px;
+}
+.exp-deep-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(201, 184, 150, 0.16);
+}
+/* v7 §P-07-K · eyebrow 药方 · 10px/1.8 letter-spacing → 12px/0.04em（约 0.5px）· 避免 CJK 过度追踪 */
+.exp-deep-type {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #B53A1F;
+  padding: 2px 8px;
+  background: rgba(181, 58, 31, 0.08);
+  border-radius: 2px;
+}
+.exp-deep-title {
+  flex: 1 1 100%;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #E8D4B0;
+  margin: 4px 0 0;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+.exp-deep-body { }
+.exp-deep-evidence {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dotted rgba(201, 184, 150, 0.16);
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* —— body block 样式（paragraph / pullquote / image / sub_heading） —— */
+.exp-block-paragraph {
+  font-size: 15px;
+  line-height: 1.78;
+  color: #d8cfbf;
+  margin: 0 0 14px 0;
+}
+.exp-block-paragraph:last-child { margin-bottom: 0; }
+/* v7 §P-07-J · 金句加粗硬规（字重分层 > 字号跳级）· strong 升 17px + 金沙色 · 扫读抓骨架 */
+.exp-block-paragraph strong,
+.exp-why-section p strong {
+  color: #E8D4B0;
+  font-weight: 600;
+  font-size: 17px;
+}
+.exp-block-paragraph em,
+.exp-why-section p em {
+  color: #C9B896;
+  font-style: italic;
+}
+
+/* v7 §P-07-K · pullquote 字体 4 病药方
+   · border 4px → 3px · text 去 italic · 16 → 18px · source 强制 sans + 间距 ≥ 12px */
+.exp-block-pullquote {
+  margin: 18px 0 18px 0;
+  padding: 6px 0 6px 14px;
+  border-left: 3px solid #B53A1F;
+  background: transparent;
+}
+.exp-block-pullquote-text {
+  font-style: normal;  /* v7 · 去 italic（中文 synthetic italic 头号廉价信号）*/
+  font-size: 18px;      /* v7 · 16 → 18 · 和 body 15px 拉开区分度 */
+  line-height: 1.6;
+  color: #E8D4B0;
+  margin: 0 0 12px 0;   /* v7 · 6 → 12 · P-07-K 药方 5 */
+}
+.exp-block-pullquote-source {
+  display: block;
+  font-size: 11px;
+  font-style: normal;
+  font-family: inherit;  /* v7 · 强制归 sans · 去浏览器 cite 默认衬线 */
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-block-pullquote-source em {
+  font-style: italic;  /* 英文 book title 真斜体 OK（系统字体有真斜体字形）*/
+  color: #C9B896;
+}
+
+.exp-block-sub-heading {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #E8D4B0;
+  margin: 18px 0 10px 0;
+  letter-spacing: 0.01em;
+}
+
+.exp-block-image {
+  margin: 14px -18px;   /* 负 margin 抵消 deep-card padding · 实现左右 bleed 感 */
+  padding: 0;
+}
+.exp-block-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background: #121510;
+  cursor: zoom-in;
+}
+.exp-block-image img.failed { opacity: 0.35; filter: grayscale(1); }
+.exp-block-image-caption {
+  padding: 6px 18px 0;
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* —— 行动层 · visitTiming 卡片组 —— */
+.exp-visit-timing {
+  margin-top: 22px;
+}
+.exp-visit-timing-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.exp-visit-timing-head .rich-content-section-title { color: #D4A574; margin: 0; }
+.exp-visit-timing-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-visit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-visit-card {
+  padding: 10px 14px 12px;
+  background: rgba(201, 184, 150, 0.05);
+  border-left: 2px solid #C9B896;
+  border-radius: 2px;
+}
+.exp-visit-when {
+  font-size: 14px;
+  font-weight: 600;
+  color: #D4A574;
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+.exp-visit-body {
+  font-size: 13.5px;
+  line-height: 1.68;
+  color: #d8cfbf;
+  margin: 0;
+}
+
+/* —— city.bestSeason 叙事段 —— */
+.exp-best-season {
+  margin-top: 18px;
+  padding: 12px 14px 14px;
+  background: rgba(212, 165, 116, 0.06);
+  border-left: 2px solid #D4A574;
+  border-radius: 2px;
+}
+.exp-best-season-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7f6d;
+  margin-bottom: 4px;
+  display: block;
+}
+.exp-best-season-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #d8cfbf;
+  margin: 0;
+}
+
+/* —— 阅读层尾部 · 延伸阅读折叠 section —— */
+.exp-ext-reading {
+  margin-top: 18px;
+  border-top: 1px dashed rgba(201, 184, 150, 0.18);
+  padding-top: 10px;
+}
+.exp-ext-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 0;
+  transition: opacity 0.2s;
+}
+.exp-ext-head:hover { opacity: 0.85; }
+.exp-ext-caret {
+  font-size: 10px;
+  color: #8a7f6d;
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.exp-ext-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #C9B896;
+  letter-spacing: 0.08em;
+}
+.exp-ext-sub {
+  font-size: 11px;
+  color: #8a7f6d;
+  letter-spacing: 0.04em;
+}
+.exp-ext-body {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+.exp-ext-body-collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+.exp-ext-reading.expanded .exp-ext-body-collapsed {
+  max-height: 5000px;
+  opacity: 1;
+  padding-top: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.5-exp v7 · 4 tab 架构 + 沙发时间 sticky 锚条 + 对照卡 +
+   spotlight + editorPick + hookShort caption + chevron rotate
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* —— Hero 下方大号字 hookShort caption（§P-14-D ①）—— */
+.lm-hookshort-caption {
+  padding: 18px 20px 6px;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #E8D4B0;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+/* 和 lm-era 视觉区分：era 保留（v7 前是 hookShort 位置），hookShort 升格 */
+
+/* —— Tab 1 沙发时间 · 顶部 sticky 章节锚条 —— */
+.exp-sofa-anchors {
+  position: sticky;
+  /* 吸附在 .exp-beta-tabs 下方 · tabs 高约 50px */
+  top: 50px;
+  z-index: 4;
+  display: flex;
+  gap: 0;
+  padding: 8px 16px;
+  background: rgba(12, 24, 16, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 184, 150, 0.14);
+  font-size: 13px;
+}
+.exp-sofa-anchor-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px 4px 12px;
+  color: #8a7f6d;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+  letter-spacing: 0.03em;
+}
+.exp-sofa-anchor-link:hover { color: #C9B896; }
+.exp-sofa-anchor-link.active {
+  color: #E8D4B0;
+  background: rgba(201, 184, 150, 0.08);
+}
+.exp-anchor-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* Sofa 容器本身 */
+.exp-sofa { padding-bottom: 40px; }
+
+/* —— 跨文明对照卡（§P-14-B · string → object 升级）—— */
+.exp-cross-wrap { margin-bottom: 18px; }
+.exp-cross-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px 16px;
+  align-items: center;
+  padding: 16px 14px;
+  background: rgba(201, 184, 150, 0.04);
+  border-radius: 4px;
+  border: 1px solid rgba(201, 184, 150, 0.12);
+}
+.exp-cross-side {
+  padding: 2px 0;
+}
+.exp-cross-side-title {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #D4A574;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.exp-cross-side-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #d8cfbf;
+}
+.exp-cross-side-bullets li {
+  padding: 3px 0;
+  position: relative;
+  padding-left: 10px;
+}
+.exp-cross-side-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: #8a7f6d;
+}
+.exp-cross-a .exp-cross-side-title { text-align: right; }
+.exp-cross-a .exp-cross-side-bullets { text-align: right; }
+.exp-cross-a .exp-cross-side-bullets li { padding-left: 0; padding-right: 10px; }
+.exp-cross-a .exp-cross-side-bullets li::before {
+  left: auto;
+  right: 0;
+}
+.exp-cross-b .exp-cross-side-title { text-align: left; }
+
+.exp-cross-link {
+  font-size: 12px;
+  color: #8a7f6d;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 0 4px;
+  position: relative;
+  max-width: 28ch;
+  line-height: 1.4;
+}
+.exp-cross-link::before,
+.exp-cross-link::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: rgba(201, 184, 150, 0.4);
+  margin: 6px auto;
+}
+
+/* 窄屏降级：上下堆叠 */
+@media (max-width: 560px) {
+  .exp-cross-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .exp-cross-a .exp-cross-side-title,
+  .exp-cross-a .exp-cross-side-bullets { text-align: left; }
+  .exp-cross-a .exp-cross-side-bullets li { padding-left: 10px; padding-right: 0; }
+  .exp-cross-a .exp-cross-side-bullets li::before { left: 0; right: auto; }
+  .exp-cross-link::before,
+  .exp-cross-link::after {
+    width: 40%;
+    margin: 4px auto;
+  }
+}
+
+/* —— spot 卡 spotlight（§P-07-L · 层级分离）—— */
+.exp-spot-spotlight {
+  margin: 10px 0 8px 0;
+  padding: 8px 0 10px 10px;
+  border-left: 2px solid #D4A574;
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;  /* 非 italic · 非 pullquote 样式 · CJK 禁 synthetic italic */
+  color: #E8D4B0;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+/* —— 编辑推荐徽章（§P-02 · 深金 · 非红色）—— */
+.exp-spot-editor-pick {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 3px 10px;
+  background: rgba(24, 32, 28, 0.82);
+  border: 1px solid #D4A574;
+  color: #D4A574;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.exp-spot-card.exp-spot-has-pick {
+  position: relative;
+  border: 1px solid rgba(212, 165, 116, 0.28);
+}
