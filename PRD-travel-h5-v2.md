@@ -8401,6 +8401,60 @@ CEO 2026-04-21 追加 P-09 + P-10 后**新增激活**镜头 6 条（细节 zoom 
 
 ---
 
+### v3.5-exp v7.1（2026-04-23 · v7 线上验证 3 方反馈 · 6 处精准修订 · 纯文案/数值级）
+
+**触发**：v7 上线后 3 份验证反馈：
+- `用户反馈-2026-04-23-v7-线上验证.md`（UX 真机手感 · 结构 PASS）
+- `research/demand-v7-线上验证-2026-04-23.md`（8.0 → 8.5 · 结构 +1.5 / 文案硬事实错 -1.0）
+- `research/taste-v7-线上验证-2026-04-23.md`（3 PASS + 1 "我错了" · 独立确认 "70 年" 事实错）
+
+**核心诊断**：v7 **结构层 PASS**（4 tab / MD 管道 / 对照卡 / spotlight 层级 / 字体 4 病 / editorPick 徽章均落地超预期）· **文案层有 2 硬事实错 + 1 算术违和 + 3 nice-to-have 需清**。
+
+**CEO 2026-04-23 拍板**：6 处全改 · PM 收尾授权扩权改 data.js + beta.js。
+
+#### 🚨 Blocker 3 处（data.js 精准 Edit · 纯文字级改动）
+
+| # | 位置 | v7 原文 | v7.1 修订 | 理由 |
+|---|---|---|---|---|
+| 1 | `data.js:565` 许愿柱 spotlight | "...比敦煌莫高窟晚开 **70 年**" | "...比敦煌莫高窟晚开 **171 年**" | 事实校核：圣索菲亚 537 vs 莫高窟 366 = 差 171 年 · "70 年" 无史实依据 · 华人历史爱好者必打脸 |
+| 2 | `data.js:584` Dandolo spotlight | "...那年 **南宋理宗登基**" | "...**距成吉思汗统一蒙古只剩 2 年**" | 事实校核：1204 年是南宋**宁宗**不是理宗（理宗 1224 才即位 · 差 20 年）· Demand 推荐改成吉思汗（华人震撼 > 宁宗）|
+| 3 | `data.js:601` 8 圆盘 spotlight | "...**两个成人站起来还不够挡住**" | "...**4 个成人叠起来才够**" | 算术违和：7.5m vs 两成人 3.4m = 差 1.2 倍（不是 "还不够" 而是 "还差一倍"）· "还不够挡住" 语感误导 |
+
+#### 🔸 nice-to-have 3 处
+
+| # | 位置 | 改动 | 理由 |
+|---|---|---|---|
+| 4 | `data.js:525` + `:557` Halfdan 年代 | detail_slides A4 "13 世纪" + tips.secret "9 世纪" → **两处统一 "9-11 世纪"** | 学术主流 9-11 世纪（Demand 上轮 Bonus 已点名 v7 未修 · 本轮清）|
+| 5 | `beta.js:32` + `:36` Tab label | "沙发时间" → "**沙发时间 · 读一读**" · "Survival" → "**Survival · 防坑包**" | Demand 华人友好建议：诗意词 + 功能性副标 · 小白首眼可懂 |
+| 6 | `data.js:546-548` worldEvents | 中国南北朝条 → **波斯萨珊 Khosrow I**（查士丁尼同代对手 · 532 年签《永久和平》/ 540 年撕约）| 去重：worldEvents 原"中国佛教"与 `crossCivilization` 对照卡"北魏龙门石窟"信号重复 · Demand Bonus 5 点名 |
+
+#### PM 扩权声明（v7 收尾授权扩展）
+
+- 动 `js/data.js` 6 类改动（3 spotlight + 2 Halfdan 年代 + 1 worldEvents）· **CEO 2026-04-23 v7 收尾授权扩展**
+- 动 `js/experiments/beta.js` 2 处 tab label 副标 · 同一授权范围
+- 其他 data.js / beta.js 字段未动
+
+#### 未落地推 v3.6+（保留 Demand Bonus 6）
+
+- `relatedFigure` 仍只 1 人（安特米奥斯）· Dandolo / Halfdan / Zoe 等需等 `deep_dive[]` 扩容 → v3.6+
+
+#### v7 评分（3 方验证）
+
+| 维度 | v6 | v7 | v7.1（本轮修订后预期）|
+|---|---|---|---|
+| Demand | 7.0 | 8.0 | **8.5+**（事实错修完 · 信号去重）|
+| Taste | — | PASS + 1 blocker | **PASS**（blocker 修完）|
+| UX | 5.5 | 未评分 | 预期保持或升 |
+
+**工作量**：PM 总 ~40 分钟（6 处 Edit + PRD 追加 v7.1 段 + 本交付）· Dev/QA 无需动（纯文案数值修订）
+
+**下一步**：
+- PMO 按 CLAUDE.md 提交粒度拆 commit 推 dev（跨 PRD / data.js / beta.js 3 域 = 3 commit）
+- Dev-H5 `experiment/istanbul-tab-3` 分支 `git merge origin/dev` 自动拿到新文案
+- 3 方验证复跑（UX / Taste / Demand）· 看 8.5 → 9.0+ 是否达成
+
+---
+
 ### v3.5-exp v7（2026-04-22 · CEO 4 反馈返工 · 圣索菲亚深度改稿 + 4 tab 架构拆分）
 
 **触发**：

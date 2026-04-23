@@ -522,7 +522,7 @@ const CITIES = [
       photo_credit: 'Wikimedia · Hagia Sophia Seraphim with face in 2016 9122.jpg (CC BY-SA)' },
     { image: 'assets/landmarks-exp-v3.5/slides/hagia-A4-viking.jpg',
       image_alt: '维京涂鸦 Halfdan 卢恩文说明牌与栏杆刻痕',
-      caption: '西南柱子上 13 世纪的卢恩文——说明牌告诉你："Halfdan 来过"。拜占庭的北欧雇佣兵签的到。',
+      caption: '西南柱子上 9-11 世纪的卢恩文——说明牌告诉你："Halfdan 来过"。拜占庭的北欧雇佣兵签的到。',
       photo_credit: 'Wikimedia · Hagia-sofia-viking.jpg (CC BY-SA)' },
     { image: 'assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg',
       image_alt: '圣索菲亚大厅从二层廊台斜视右下拱门视角',
@@ -544,7 +544,7 @@ const CITIES = [
 }
         , note: '进入需脱鞋，女性须遮盖头发。', tags: ['世界遗产', '拜占庭建筑', '穹顶奇迹'],
         worldEvents: [
-          { flag: '🇨🇳', city: '中国', event: '南北朝时期，佛教在中国蓬勃发展，少林寺已建立两年' },
+          { flag: '🇮🇷', city: '波斯', event: '萨珊王朝 Khosrow I（公正王）在位——5 年前刚与查士丁尼签《永久和平》，3 年后两国又将撕约开战' },
           { flag: '🇲🇽', city: '墨西哥', event: '特奥蒂瓦坎城正处鼎盛，太阳金字塔已矗立数百年' }
         ]
       ,
@@ -554,7 +554,7 @@ const CITIES = [
   { category: 'dress',  text: '女性需覆肩盖膝戴头巾，门口可免费借；男性避免短裤，违规被劝退' },
   { category: 'photo',  text: '上层廊台北侧的《圣母与幼儿基督》马赛克最清晰，13:30 后西射阳光角度最佳' },
   { category: 'route',  text: '出圣索菲亚穿 Sultanahmet Square 广场 3 分钟到蓝色清真寺，两馆连看最省时' },
-  { category: 'secret', text: '二楼楼梯口大理石栏杆上刻着 Halvdan 的北欧海盗涂鸦（9 世纪），在西南角人容易错过' }
+  { category: 'secret', text: '二楼楼梯口大理石栏杆上刻着 Halvdan 的北欧海盗涂鸦（9-11 世纪），在西南角人容易错过' }
 ],
         // v3.5-exp: 旅行中 + Survival（PRD §P-02 / §P-04-A / §P-05-A · CEO 过稿定稿）
         onsite_map: 'assets/landmarks-exp-v3.5/maps/map-hagia-annotated.jpg',
@@ -562,7 +562,7 @@ const CITIES = [
           { n: 1, title: '许愿柱', anchor: '二楼西北角', visibility: '常开',
             body: '二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '东罗马主教也在这里转过拇指——比敦煌莫高窟晚开 70 年',
+            spotlight: '东罗马主教也在这里转过拇指——比敦煌莫高窟晚开 171 年',
             // v7 §P-14-D · 3 spot 选 1 编辑推荐（许愿柱：动作+时间+认知惊喜三轴齐全）
             editorPick: true,
             image: [
@@ -581,7 +581,7 @@ const CITIES = [
           { n: 2, title: 'Dandolo 墓碑', anchor: '二楼南廊地板', visibility: '常开',
             body: '二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '他让圣索菲亚被当马厩用了 3 天——那年南宋理宗登基',
+            spotlight: '他让圣索菲亚被当马厩用了 3 天——距成吉思汗统一蒙古只剩 2 年',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg'
@@ -598,7 +598,7 @@ const CITIES = [
           { n: 3, title: '8 块书法圆盘', anchor: '中殿上空', visibility: '常开',
             body: '中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '每块 7.5 米——两个成人站起来还不够挡住',
+            spotlight: '每块 7.5 米——4 个成人叠起来才够',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg'
