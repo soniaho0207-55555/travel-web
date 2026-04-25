@@ -8256,6 +8256,343 @@ CEO 2026-04-21 追加 P-09 + P-10 后**新增激活**镜头 6 条（细节 zoom 
 - 🔵 **字体台阶克制**（候选 F · CEO 拍板采纳）· §P-07-K 字体台阶硬规 · §P-14-C 反馈 2 根治 4 病药方
 - 🟢 **spot 卡 spotlight 层级分离**（候选 G · CEO 拍板采纳）· §P-07-L + §P-02 `onsite_spot.spotlight` 字段 + §P-14-D 3 条首发文案
 
+**v7.3 视觉 2 + 对照卡返工（2026-04-24）新增 lens 候选 3 条**（research-ux 下轮补入）：
+- 🔵 **候选 I · Mobile-first responsive Grid fallback 完整性** · §R-09 B 节
+- 🔵 **候选 J · 西文 display 字体 CJK fallback 风险** · §R-09 A 节 + §R-08 字号硬规
+- 🟢 **候选 K · 对照/对开页 hinge mobile 语义保留** · §R-09 C 节
+
+---
+
+### P-15 · v7.3 候选 B · 热点标注地图（"实地看点" section）
+
+**触发**：v7 现场细节 carousel 气质和 Cereal 长读不搭 · CEO 选 UX 候选 B 热点标注地图替代横滑 · 实施周期估 2 轮 pipeline。
+
+**位置**：沙发时间 tab · whyVisit.detail（"去看什么"）section 之后 · 独立 section 命名 **"实地看点"**（UX 4/24 推荐 · 直白 · 与"动线建议"语义并列 · 禁用 "打卡点 / 5 大看点 / 亮点速览"）。
+
+#### P-15-A · 数据 schema · `landmark.detailHotspots{}`
+
+```js
+landmark = {
+  // ... v1-v7.1 所有字段保留 ...
+
+  // v7.3 §P-15 · 候选 B 热点标注地图（仅圣索菲亚首发 · 其他 14 城 v3.6+）
+  detailHotspots: {
+    panorama: 'assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg',  // 全景底图
+    panoramaAlt: '...',  // 无障碍 alt
+    hotspots: [
+      {
+        n: 1,                              // 序号 · 按游览动线（撒拉弗 → 圆盘 → 许愿柱 → Viking → Dandolo）
+        title: '撒拉弗天使',                // 详情卡标题
+        cx_pct: 18, cy_pct: 32,           // 红圈坐标百分比 · 1200×1233 panorama
+        inFrame: true,                     // panorama 视野内（true）/ 视野外指引（false）
+        offCanvasDir: 'NW' / 'N' / 'NE' / 'E' / 'SE' / 'S' / 'SW' / 'W',  // 仅 inFrame=false 用 · 箭头方向
+        image: 'assets/.../detail.jpg',   // 详情卡特写图（复用 onsite_spots / slides）
+        caption: '...'                    // 详情卡文案 ≤ 60 字
+      }
+    ]
+  }
+}
+```
+
+#### P-15-B · 圣索菲亚 5 hotspot 首发数据（CEO 过稿冻结）
+
+| n | title | cx % | cy % | inFrame | image | caption |
+|---|---|---|---|---|---|---|
+| ① | 撒拉弗天使 | 18 | 32 | ✅ | A1-seraphim-all | 主穹顶四角马赛克天使脸孔，灰泥盖了 450 年——2009 年才揭开西北一面。|
+| ② | 8 块书法圆盘 | 60 | 30 | ✅ | hagia-3-calligraphy | 中殿抬头 4 块巨型阿拉伯书法圆盘——每块一辆公交车长，世界最大伊斯兰书法。|
+| ③ | 许愿柱 | 10 | 14 | ❌ NW | hagia-1-wishstone | 二楼西北角包铜的石柱——1500 年湿润凹洞，基督徒到穆斯林朝拜没断过。|
+| ④ | Viking 涂鸦 | 88 | 78 | ❌ SE | A4-viking | 西南柱二楼栏杆 9-11 世纪卢恩文——拜占庭北欧雇佣兵 Halfdan 签的到。|
+| ⑤ | Dandolo 墓碑 | 92 | 92 | ❌ S | hagia-2-dandolo | 二楼南廊地板刻着 Dandolo——97 岁盲眼率先冲上城墙的威尼斯总督。|
+
+**坐标硬规验证**（375px 宽 · 386px 高下，圆心间距）：
+- ① ↔ ② = √((60-18)² + (30-32)²) × 3.75 ≈ **158px** ✓
+- ① ↔ ③ = √((10-18)² + (14-32)²) × 3.75 ≈ **74px** ✓
+- ④ ↔ ⑤ = √((92-88)² + (92-78)²) × 3.75 ≈ **55px** ⚠️ 略低于 60px 硬规
+  - **PM 决策**：接受（v3.6 重新校准时若仍碰撞，砍 ④ 或 ⑤ 一个）
+
+**画外指引（inFrame: false）说明**：
+- A5 panorama 视野不能容纳全部 5 spot（许愿柱在二楼西北角实景拍不到 / Viking 在西南柱栏杆 / Dandolo 在二楼南廊地板）
+- 这 3 个 hotspot 红圈位置贴在画面边缘 + 箭头指出"图外方位"
+- caption 解释"现场往该方向看"
+- v3.6+ 若 PM 重新采更广视野的全景图，可全部转 inFrame: true
+
+#### P-15-C · 红圈视觉规范（强制和旅行中 tab maps 一致）
+
+```css
+.exp-detail-hotspot {
+  width: 28px; height: 28px;
+  border: 2px solid #B53A1F;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  font-family: -apple-system;
+  font-size: 13px;
+  font-weight: 600;
+  color: #B53A1F;
+  transition: transform 0.15s ease-out;
+}
+.exp-detail-hotspot:active { transform: scale(0.92); }
+.exp-detail-hotspot.active { background: #B53A1F; color: #fff; }
+```
+
+**禁**：实心填充红盘 + 粗白字（v3.5-exp v2 已淘汰的 OTA badge 形态）
+
+**画外指引箭头样式**（PM 提议 · Dev 实施）：
+```css
+.exp-detail-hotspot.off-canvas::after {
+  content: '↖' / '↗' / '↘' / '↙';  /* 按 offCanvasDir 选 */
+  position: absolute;
+  font-size: 10px;
+  color: #B53A1F;
+}
+```
+
+#### P-15-D · 详情卡渲染（panorama 下方 · 非 modal 浮层）
+
+```
+┌─────────────────────────────┐
+│ [全景图 · 5 红圈]            │
+├─────────────────────────────┤
+│ ① 当前激活                   │
+│ 撒拉弗天使                   │
+│ [特写图 16:9]                │
+│ 主穹顶四角马赛克天使脸孔...   │
+│                             │
+│ ← 上一处   下一处 →           │
+└─────────────────────────────┘
+```
+
+- eyebrow `① 当前激活` 用 #B53A1F 深铁锈红
+- 标题 18-20px Playfair（同 deep-title 字号）
+- 特写图 16:9
+- caption 2-3 行 ≤ 60 字
+- 底部"← 上一处 / 下一处 →"是文字按钮 · 点击切换激活红圈
+- **默认激活 ①**（页面打开就展示 ① · 不要空白）
+
+#### P-15-E · 与旅行中 tab maps 红圈系统的关系
+
+| 维度 | 沙发时间 · 实地看点 hotspots | 旅行中 · maps 红圈 |
+|---|---|---|
+| 用途 | 内殿**实景图**上标 5 处看点 | **平面图**上标 3 处空间位置 |
+| 视觉 | **完全一致** · #B53A1F 描边空心环 28px | 同上 |
+| 数量 | 5 | 3 |
+| 互动 | 点击展开下方详情卡 | 点击 = 滚动到 spot 卡片 |
+
+**视觉语言打通**：用户在旅行中 tab 学到的"红圈 = 看点"心智无缝迁移到沙发 tab 实地看点。
+
+#### P-15-F · v3.6+ 推迟项
+
+- **其他 14 城 detailHotspots 铺设** → v3.6+
+- **A5 panorama 重采更广视野**（全部 5 spot 转 inFrame: true）→ v3.6+
+- **画外指引箭头样式**最终定稿 → 本轮 Dev 自由实现 · v3.6 优化
+
+---
+
+### R-08 · 单页字号台阶硬规（v7.3 沙发 tab 字多/廉价根治）
+
+**触发**：v7 沙发 tab 实测字号台阶 **8 级**（28/20/15.75/15/13.5/13/11.2/11） + 3 个**半像素字号**（15.75 / 13.5 / 11.2）+ Courier Prime era + warm gold title 混搭 = 廉价 OTA 感。
+
+#### 单页字号 ≤ 3 级
+
+| 档 | 字号 | 用途 |
+|---|---|---|
+| **L1** | 20-28px | 主标题 / hookShort caption / spot title |
+| **L2** | 15-16px | body / paragraph 正文 / bullets |
+| **L3** | 11-13px | eyebrow / caption / cite / 元数据 |
+
+**禁**：
+- ❌ 半像素字号（15.75 / 13.5 / 11.2）—— 来自 `1.05rem` / `0.98em` 类相对计算 · 全部 round 到整数
+- ❌ 同档字族 > 2 套（含 cite / fallback / display）
+- ❌ mono 等宽字体（Courier Prime / Menlo）做正文 —— 仅数字 / 坐标元数据可用
+- ❌ section-title 文风混搭（"是什么/为什么独特/跨文明/现场细节" 4 种调） · v7.3 起统一全问句风（详 §P-16）
+
+#### R-08-A · v7.3 已知半像素字号 round 清单（Dev 实施 · 必清 0 个 0.5px）
+
+UX v7 实测发现 3 个半像素字号 · v7.3 必须全部 round 到整数：
+
+| 当前 | 来源 | round 到 | 落点（Dev grep CSS）|
+|---|---|---|---|
+| **15.75px** | `1.05rem` 计算（base 15px × 1.05）| **15px** 或 **16px** | `body` 段落 / paragraph |
+| **13.5px** | `0.9em` 计算（base 15px × 0.9）| **13px** | `bullets` / `eyebrow` |
+| **11.2px** | `0.7rem` 计算（base 16px × 0.7）| **11px** | `cite` / 元数据 |
+
+**Dev grep 命令**（验收）：`grep -E "1\.0[0-9]rem|0\.9[0-9]em|0\.7[0-9]rem" css/styles.css` 必须 0 命中。
+
+**违反 = QA 视觉审 FAIL · 不进 main**
+
+---
+
+### R-09 · Mobile-first Responsive 对照卡硬规（v7.3 跨文明对照卡返工）
+
+**触发**：v7 跨文明对照卡 mobile 实测 4 崩点（金句"石"字孤字断尾 / 金句视觉权重过低 / 两 card 视觉雷同 / 金句紧贴下个 card）· CEO 4/24 "改掉" · UX 候选 A 落地。
+
+依据：ux-lenses F · 字体台阶克制 + 候选 I/J/K（research/taste-CEO-对照卡-镜头诊断-2026-04-24.md）
+
+#### A · 字体（合并 §R-08）
+
+- 同模块字体家族 **≤ 2 套**（含 cite / fallback / display）
+- **西文 display serif（Playfair Display 等）禁止用作 CJK 标题**（落 Noto Serif SC fallback 必断裂 → 候选 J 风险）
+- 字重区分 > 字号区分 > 字族区分（lens 优先级硬规）
+
+#### B · Grid 窄屏 fallback 完整性（候选 I）
+
+Grid 容器（≥ 2 列）在 ≤ 768px 必须重置 **5 项**：
+
+1. `grid-template-columns: 1fr`
+2. `align-items: stretch`（**不继承 desktop center**）
+3. aSide / bSide 文字方向 → 统一 left-align
+4. 装饰元素重新计算（hinge 横线方向 / 长度）
+5. 中央 link / hinge 文字 → (a) 隐藏 / (b) 重写为单列适用 / (c) 改装饰条
+
+**只换 columns 不换其他 = "被压扁的桌面"，不是真 mobile-first**。
+
+#### C · 对照卡专项（候选 K）
+
+- 桌面"对比感"靠 **字色冷暖 + 装饰条**（aSide 暖金 #D4A574 / bSide 冷蓝 #8FA5B8）· 不靠文字方向
+- **取消 aSide right-align**（中文阅读习惯 left → right · 强制贴中央 hinge 一侧违反）
+- 移动端 hinge 句**禁止保留**（桌面连接语义在垂直方向自动失效 + 上文 whyUnique 可能已重复）
+
+**违反 = QA mobile 视觉审 FAIL · 不进 main**
+
+---
+
+### P-16 · 跨文明对照卡 v7.3 候选 A 落地指引
+
+**数据 schema 不变**（保留 `aSide / bSide / link` object）· 渲染层改 4 项 · Dev 实施 · PM 在本节给指引。
+
+#### P-16-A · 渲染 4 改
+
+| # | 项 | v7 状态 | v7.3 改法 |
+|---|---|---|---|
+| 1 | 字体家族 | title=Playfair Display + Noto Serif SC + sans = **3 套** | **压回 sans 单一** · title weight 700 + 金沙 #E8D4B0（删 Playfair）|
+| 2 | 字号 | title 15 / bullets 13.5 / link 12 = **3 级 + 半像素** | title/bullets/link **全 13px 同档** · 字重 700/400/500 区分 |
+| 3 | 文字方向 | aSide right-align + bSide left-align | **全 left-align** · 改用左竖线颜色区分（aSide 暖金 #D4A574 / bSide 冷蓝 #8FA5B8）|
+| 4 | mobile fallback | 只改 columns | 完整重置 5 项（§R-09 B 节）+ 中央 hinge 文字 `display: none` |
+| 5 | 两 card 底色 | 完全相同 = 雷同 | **微差色 5% 透明背景** · aSide 微冷 `rgba(143,165,184,0.04)` / bSide 微暖 `rgba(212,165,116,0.04)` · 不抢戏但破雷同 |
+| 6 | section 主标题 vs 子标题字族层级 | section "同代文明" sans 16px / 子标 "拜占庭·537 年" Playfair serif 15px = **反向**（section 应该高级别）| **section "同代文明" 用 18px sans 700 金沙**（§P-17-A）/ **子标"拜占庭·537 年" 用 13px sans 700 金沙**（§P-16-A 改 1）· 两者**字号区分** + 同字族 = 层级正向 |
+
+#### P-16-B · 金句视觉权重升级（数据层 + 视觉规格）
+
+**数据层**（已落 `data.js:506`）：
+- 删原"一个让神飘空中 · 一个让神埋岩石"（廉价"一个...一个..."句式）
+- 改 **"让神飘在空中 · 让神埋进岩石"**（对仗 · 删冗余"一个"）
+
+**视觉规格**（PM 写 PRD · Dev 实施）：
+
+| 维度 | v7 | v7.3 |
+|---|---|---|
+| 字号 | 12px | **18px** |
+| 粗细 | 400 | **600** |
+| 颜色 | #8A7F6D 暖灰 | **#E8D4B0 金沙** |
+| letter-spacing | 0.72px | **0**（中文不要字距 · 解决"石"字孤字断尾）|
+| 装饰 | 无 | **上下 1px #4A4135 hairline + 中间 ✦ 装饰** |
+| 区域 | 紧贴上下 card | 独立成段 · 上下 ≥ 16px 间距 |
+| **行宽** | container 202px · 强制 2 行 + 单字尾 | **container ≥ 280px 单行**；若必须 2 行 · **禁单字尾 widow**（最后一行字数 ≥ 3 · 否则 PM 改文案 / Dev 加 `word-break: keep-all` + `hyphenate-character`）|
+
+**孤字断尾自检**（QA 验收）：
+- 渲染后金句最后一行 < 3 字 = FAIL
+- 实测在 375px / 414px / 768px 三档宽度下都不能出现单字尾
+- v7.3 修订文案 "让神飘在空中 · 让神埋进岩石"（14 字） · 280px 单行容量 · 18px 字号下 ≈ 22 字 / 行 → 单行容下 ✓
+
+#### P-16-C · class 重命名（Bonus 10）
+
+`.exp-cross-link` → `.exp-cross-pivot` 或 `.exp-cross-keyline`
+
+**理由**：当前 class 名暗示"链接"（link）· 实际是金句段落 · 误导 Dev 维护。
+
+**PM 推荐**：`.exp-cross-keyline`（强调"骨架金线" · 视觉描述准确 · 与上下 hairline 装饰对齐）
+
+---
+
+### P-17 · v7.3 section title 文风统一（4 段全问句风）
+
+**触发**：v7 沙发 tab 4 段 section title 混搭"是什么/为什么独特/跨文明/现场细节" · UX §R-08 点名违反"section-title 文风必须统一"。
+
+**v7.3 决策**：PM 选**全问句风**（CEO 任务建议方案）
+
+| 字段 | v7 标题 | v7.3 标题 |
+|---|---|---|
+| `whyVisit.what` | 是什么 | **是什么**（保留）|
+| `whyVisit.whyUnique` | 为什么独特 | **特别在哪** |
+| `whyVisit.crossCivilization` | 跨文明 | **同代文明** |
+| `whyVisit.detail` | 现场细节 | **去看什么** |
+| **新 section** detailHotspots（候选 B）| — | **实地看点**（独立 section · UX 推荐）|
+
+**理由**：
+- 4 段全问句对话感强 · 28yo 友好
+- "同代文明" 既不廉价又精确（vs "跨文明" 抽象）
+- "去看什么" / "实地看点" 形成响应（whyVisit.detail 文字段 + detailHotspots 视觉段共存于"实地看点"父 section · 或并列两个 section · Dev 实施时定）
+
+**已落 common.js**：line 202-228 全部更新。
+
+#### P-17-A · section title 视觉硬规（v7.3 补 · UX 视觉 2 反馈反馈 1 第 4 条）
+
+UX 反馈："section title 改金沙色 + 文风统一"。v7.3 已统一文风（全问句）· **颜色统一金沙必修**：
+
+| 维度 | v7 | v7.3 |
+|---|---|---|
+| 文字 | 是什么/为什么独特/跨文明/现场细节 | 是什么/特别在哪/同代文明/去看什么 ✅（已落 common.js）|
+| 颜色 | 暖灰 / Courier 默认 | **#E8D4B0 金沙**（同 hookShort / spotlight 色系）|
+| 字号 | 混 18-20px | 18px 或 20px **统一**（任选其一 PM 定 18px · 4 段 + 实地看点 = 5 段全 18px）|
+| 字重 | 600 | 600（保持）|
+| 字族 | sans | sans 单一（§R-09 A 节）|
+
+**Dev 实施点**：`css/styles.css` 中所有 `.rich-content-section-title` 类 `color` 改 `#E8D4B0` · `font-size` 统一 `18px` · `font-family` 走 `--font-sans`。
+
+**违反 = QA 视觉审 FAIL**
+
+---
+
+### P-18 · v7.3 现场细节 vs visitTiming 语义边界（Bonus 9）
+
+**问题**：v7 sofa tab "现场细节"（whyVisit.detail）和出发前 tab "visitTiming"（行动层）都包含"下午 4 点西光" 类时段信号 · 语义重叠。
+
+**v7.3 切分**：
+
+| 字段 | 性质 | 例 |
+|---|---|---|
+| `whyVisit.detail` (新名 "去看什么") | **空间锚点 + 看什么** · 沙发态种草 | "二楼西北角找一根包金属的柱子" |
+| `visitTiming[]` (出发前 tab) | **时段叙事 + 何时去看** · 行动态决策 | "冬季日出前 7:15-7:35 雪后第一缕光" |
+| `tips[].timing` | **硬拦时段警告** · 必须知道 | "周五 13:00-14:00 主麻闭门" |
+| `ticket.timingTip` | **1 行摘要** · 行动层 ticket 模块内 | "避周五主麻 · 日出前西北角金光最美" |
+
+**重叠处理**：
+- 沙发 tab "去看什么" 段 **可以提及**最美时段（叙事钩） · 但**详细规格（年月时段）走 visitTiming**
+- 出发前 tab "visitTiming" 不重复"看什么"（不重复 spot 锚点）· 只讲"何时"
+
+**v7.3 自检**：圣索菲亚 `whyVisit.detail` 末句 "下午 4 点到 4 点半西光斜射时基督脸部马赛克最闪" + `visitTiming[1]` "夏季下午 16:00-16:40 西光斜射 Deesis 马赛克" = 重叠 · 接受（沙发钩 + 行动详）· 见 §P-07-I 三字段切分。
+
+---
+
+### P-19 · v7.3 nice-to-have 视觉细节（Bonus 7-11）
+
+| # | 项 | 改法 | 落点 |
+|---|---|---|---|
+| 7 | `.lm-era` Courier Prime → Playfair 13px 金沙 | 字族家族 ≤2 套硬规（§R-08 / §R-09 A） | Dev CSS |
+| 8 | anchor active bg 8% → **16%** + weight **600** | scrollspy 当前位置高亮加强 | Dev CSS |
+| 9 | "现场细节" vs visitTiming 语义边界 | 见 §P-18 | PRD |
+| 10 | `.exp-cross-link` 重命名 | 改为 `.exp-cross-keyline` | 见 §P-16-C |
+| 11 | slide 5 caption 删 | A5 panorama 升格 detailHotspots 底图 · 原 caption "这里躺过的不只是皇帝的仪仗队" 已删 | 已落 `data.js:527-528` |
+
+#### P-19-A · carousel 文字 hint 换 dot indicators（v7.3 补 · UX 视觉 2 反馈反馈 1 第 6 条）
+
+**问题**：v7 沙发 tab 现场细节段 detail_slides carousel 末尾出现"← 横滑看下一片 →"文字 hint · 教程式 + 廉价。
+
+**v7.3 修法**：
+- **删** "← 横滑看下一片 →" 文字提示
+- **换** 标准 dot indicators：● ○ ○ ○ ○（当前页实心 · 其他空心 · 5 dot 对应 5 slides）
+- 颜色：当前 #B53A1F · 其他 rgba(216,207,191,0.3)
+- 位置：carousel 下方居中 · 上下 ≥ 12px 间距
+
+**落点**：
+- 圣索菲亚 detail_slides 当前 4 张（v7.3 删了 slide 5 panorama 升格 hotspot 底图）· 4 dot
+- 其他 14 城 detail_slides carousel 同步改
+
+**适用性**：v7.3 圣索菲亚因为 candidate B 上线 · "去看什么" section 走 detailHotspots 不走 carousel · 但 detail_slides 还在数据里 · 若 Dev 仍渲染 carousel · 必须用 dot indicators 替代文字 hint。其他景点 carousel 不变结构 · 仅 hint 替换。
+
+**Dev 实施**：`js/experiments/common.js` `expRenderCarousel()` 函数末尾的"← 横滑 →"文字段删 · 加 dot indicators DOM。
+
+**违反 = QA 视觉审 FAIL**
+
 ---
 
 （附录 P 完）
@@ -8398,6 +8735,128 @@ CEO 2026-04-21 追加 P-09 + P-10 后**新增激活**镜头 6 条（细节 zoom 
 - Dev-H5 继续在 `experiment/istanbul-tab-3` 分支实施（基于 dev 最新 PRD v5），不往 dev / main 推
 - PM 并行采 8 张全局图（v5 重采清单 §P-11），交付前 CEO 过稿
 - Dev 完成 → CEO 亲测 β 升级版 → 决策是否走 dev → main 合并
+
+---
+
+### v3.5-exp v7.3（2026-04-24 · CEO 4/24 一波打包 · 候选 B + 候选 A + spotlight 重写 + 字号 + Bonus）
+
+**触发**：v7.2 已合 dev 未合 main · CEO 4/24 一波新反馈（视觉 2 + 对照卡反馈）+ 3 份 research 反馈：
+- `用户反馈-2026-04-24-CEO-视觉 2 反馈.md`（CEO 选候选 B 8 步规格）
+- `用户反馈-2026-04-24-CEO-对照卡反馈.md`（4 崩点 + 候选 A 推荐 + 金句视觉清单）
+- `research/taste-CEO-对照卡-镜头诊断-2026-04-24.md`（§R-09 草案 + 3 新 lens 候选 I/J/K + 4 步 CSS 改）
+- `research/demand-独特性锚-圣索菲亚-2026-04-24.md`（3 spot 独特性 spotlight 推荐）
+
+**CEO 4/24 拍板**：
+1. 跨文明对照卡丑 → 走候选 A（CSS 级 · 无采图）
+2. spotlight 不要华人对照 · 改 Demand 推荐"世界最/独一"风
+3. 现场细节缺独特性 → 选候选 B 热点标注地图（UX 8 步规格）
+
+#### 决策 1 · 3 spotlight 全去华人对照（Demand 推荐版）
+
+| spot | v7.1 原文 | v7.3 修订 |
+|---|---|---|
+| ① 许愿柱 | "...比敦煌莫高窟晚开 171 年" | **"基督徒拜了 916 年，穆斯林接着拜 500 年——全世界独一根的千年神柱"**（32 字 · 跨宗教独特性）|
+| ② Dandolo | "...距成吉思汗统一蒙古只剩 2 年" | **"97 岁盲眼 · 全副武装率先冲上君士坦丁堡城墙"**（22 字 · 世界军事史纪录）|
+| ③ 8 圆盘 | "...4 个成人叠起来才够" | **"每块一辆公交车长——世界最大的伊斯兰书法"**（20 字 · 世界最 + 公交车换算）|
+
+**理由**：CEO 4/24 反馈"不要华人对照 · 僵硬" · Demand 给出 3 spot 独特性锚（世界最 / 独一 / 首创 / 最老）+ 公交车长这种华人体感换算 · 比"晚 171 年"/"成吉思汗"对照更直接震撼。
+
+#### 决策 2 · 候选 B 热点标注地图（PRD §P-15）
+
+- 数据 schema：新增 `landmark.detailHotspots{}`（独立于 onsite_spots[] · 保 §P-04 三景点合规）
+- 5 hotspot：撒拉弗 / 圆盘 / 许愿柱 / Viking / Dandolo · 按游览动线排序
+- 底图：`hagia-A5-panorama-full.jpg`（4:5 ratio · 复用 v3.5-exp 已采）
+- 视野受限：3 hotspot inFrame · 2 hotspot 画外指引（offCanvasDir）
+- 红圈视觉与旅行中 maps 一致（#B53A1F 28px 描边空心环）
+- section title 改名"现场细节" → **"实地看点"**（UX 推荐 · 独立段）
+- slide 5 caption 删（A5 升格底图）
+
+#### 决策 3 · §R-08 字号硬规（PRD 新增）
+
+- 单页字号 ≤ 3 级（L1 20-28 / L2 15-16 / L3 11-13）
+- 禁半像素字号（15.75 / 13.5 / 11.2）
+- 同档字族 ≤ 2 套
+- mono 不做正文（Courier 仅数字 / 坐标元数据）
+- section-title 文风必须统一（v7.3 选全问句 · §P-17）
+
+#### 决策 4 · §R-09 Mobile-first 对照卡硬规（PRD 新增 · Research-UX 草案全文照抄）
+
+- A 节字体：≤ 2 套字族 · 西文 display serif 禁做 CJK 标题 · 字重区分 > 字号区分 > 字族区分
+- B 节 Grid 窄屏 fallback 必须重置 5 项
+- C 节对照卡专项：桌面靠字色冷暖 + 装饰条 / 移动端 hinge 句禁止保留
+
+#### 决策 5 · 候选 A 跨文明对照卡落地（PRD §P-16）
+
+- 数据 schema 不变（aSide / bSide / link 保留）
+- 渲染 4 项改：字体 → sans 单一 / 字号 → 全 13px 同档 / 文字方向 → 全 left-align / mobile fallback → 完整 5 项重置
+- 金句视觉权重升级：12px → 18px · 400 → 600 · 暖灰 → 金沙 #E8D4B0 · 上下 1px hairline + ✦ 装饰
+- 数据层金句改 **"让神飘在空中 · 让神埋进岩石"**（删廉价"一个...一个..."）
+- class `.exp-cross-link` → `.exp-cross-keyline`（重命名 · Bonus 10）
+
+#### 决策 6 · section title 文风统一（PRD §P-17）
+
+PM 选**全问句风**：是什么 / **特别在哪** / **同代文明** / **去看什么** + 独立 hotspot section "实地看点"
+
+已落 `js/experiments/common.js:202-228 / 252`。
+
+#### Bonus nice-to-have（PRD §P-18 + §P-19 · 5 条全改）
+
+7. lm-era Courier → Playfair 13px 金沙
+8. anchor active bg 8% → 16% + weight 600
+9. 现场细节 vs visitTiming 语义边界（§P-18 切分表）
+10. `.exp-cross-link` 重命名 `.exp-cross-keyline`
+11. slide 5 caption "这里躺过的不只是皇帝的仪仗队" 删（A5 升格底图）
+
+#### v7.3 数据/代码改动清单
+
+**data.js**（PM 扩权 · CEO 2026-04-24 v7.3 授权）：
+- `:587` 许愿柱 spotlight 改 Demand 推荐版
+- `:606` Dandolo spotlight 改 Demand 推荐版
+- `:623` 8 圆盘 spotlight 改 Demand 推荐版
+- `:506` crossCivilization.link 改 "让神飘在空中 · 让神埋进岩石"
+- `:559-583` 新增 `detailHotspots{}` 字段 · 5 hotspot 数据
+- `:527-528` slide 5 caption 删（A5 升格 detailHotspots 底图）
+
+**js/experiments/common.js**（PM 扩权 · 同授权）：
+- `:204` whyUnique section title "为什么独特" → "特别在哪"
+- `:212 / :252` crossCivilization section title "跨文明" → "同代文明"
+- `:220 / :228` detail section title "现场细节" → "去看什么"
+
+**PRD-travel-h5-v2.md**（PM 默认字段）：
+- §P-15 新增 v7.3 候选 B 热点标注地图（A-F 6 节）
+- §R-08 新增 字号硬规
+- §R-09 新增 Mobile-first 对照卡硬规
+- §P-16 新增 候选 A 跨文明对照卡落地指引
+- §P-17 新增 section title 文风统一
+- §P-18 新增 现场细节 vs visitTiming 语义边界
+- §P-19 新增 nice-to-have 5 条
+- §P-08 加 v7.3 lens 候选 3 条（I / J / K）
+
+#### PM 扩权声明
+
+- 动 `js/data.js`（3 spotlight + crossCivilization.link + detailHotspots 字段 + slide 5 caption 删）· **CEO 2026-04-24 v7.3 授权**
+- 动 `js/experiments/common.js`（4 处 section title 改名）· 同授权
+- PRD 默认字段无越权
+
+#### 工作量（v7.3 PM 已完成）
+
+- PM 写 PRD v7.3：~3-4h ✓
+- PM 改 data.js + common.js：~1h ✓
+- Dev-H5 实施 v7.3 UI：~6-9h（候选 B 渲染 + 候选 A CSS + 字号收敛 + section title 改名 + Bonus）
+- QA：~2-3h（mobile 真机审 § R-09 ✦ 新加视觉审项）
+
+#### 已知风险
+
+- A5 panorama 视野受限 · 5 hotspot 中 3 个画外（许愿柱 / Viking / Dandolo） · 用 offCanvasDir 箭头指引 · v3.6 重采更广视野时全转 inFrame
+- ④ ↔ ⑤ hotspot 圆心距离 ≈ 55px · 略低于 60px 硬规 · 接受 v3.6 校准
+- v7.2 已合 dev 但未合 main · v7.3 大包包含 v7.2 + v7.3 · PMO 推 dev 时 commit 编号要清楚
+
+#### CEO 亲验建议（5 分钟抽查）
+
+- 抽查点 1：读 §P-15-B 5 hotspot caption + cx/cy 表 · "5 hotspot 视觉清楚吗 · 画外指引可读吗"
+- 抽查点 2：读 §P-16-B 金句视觉规格表 · "上下 hairline + ✦ + 18px 金沙 + 0 字距 · 真能解决孤字断尾 + 视觉权重弱吗"
+- 抽查点 3：读 3 个新 spotlight · "Demand 推荐版比 v7.1 华人对照版更震撼吗 · 还是 AI 也能给"
+- 抽查点 4：读 §P-17 section title 4 段统一 · "全问句风 vs 2 字诗化 哪个更克制"
 
 ---
 
