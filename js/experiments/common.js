@@ -199,8 +199,9 @@ function expRenderWhyVisitReading(l) {
     return `<div class="why-section exp-why-section"><div class="rich-content-section-title">${label}</div>${paras}</div>`;
   };
 
+  // v7.3 §P-16 · section title 文风统一 · 全问句风格
   const whatHtml = stringSection('what', '是什么');
-  const whyUniqueHtml = stringSection('whyUnique', '为什么独特');
+  const whyUniqueHtml = stringSection('whyUnique', '特别在哪');
 
   // v7 §P-14-B · crossCivilization 支持 object（对照卡）与 string 两种形态
   let crossHtml = '';
@@ -208,7 +209,7 @@ function expRenderWhyVisitReading(l) {
   if (cc && typeof cc === 'object' && !Array.isArray(cc)) {
     crossHtml = expRenderCrossCard(cc);
   } else if (typeof cc === 'string' && cc.trim()) {
-    crossHtml = stringSection('crossCivilization', '跨文明');
+    crossHtml = stringSection('crossCivilization', '同代文明');
   }
 
   let detailHtml = '';
@@ -216,7 +217,7 @@ function expRenderWhyVisitReading(l) {
   if (slides.length) {
     detailHtml = `
       <div class="why-section exp-why-section">
-        <div class="rich-content-section-title">现场细节</div>
+        <div class="rich-content-section-title">去看什么</div>
         ${expRenderCarousel(slides)}
       </div>`;
   } else if (detailStr) {
@@ -224,7 +225,7 @@ function expRenderWhyVisitReading(l) {
       .map(p => `<p>${expEscapeMD(p)}</p>`).join('');
     detailHtml = `
       <div class="why-section exp-why-section">
-        <div class="rich-content-section-title">现场细节</div>
+        <div class="rich-content-section-title">去看什么</div>
         ${paras}
       </div>`;
   }
@@ -248,7 +249,7 @@ function expRenderCrossCard(cc) {
   const link = cc.link ? `<div class="exp-cross-link">${expEscapeMD(cc.link)}</div>` : '';
   return `
     <div class="why-section exp-why-section exp-cross-wrap">
-      <div class="rich-content-section-title">跨文明</div>
+      <div class="rich-content-section-title">同代文明</div>
       <div class="exp-cross-card">
         ${renderSide(cc.aSide, 'exp-cross-a')}
         ${link}
