@@ -503,7 +503,7 @@ const CITIES = [
         '石像+石窟庙堂'
       ]
     },
-    link: '一个让神飘空中 · 一个让神埋岩石'
+    link: '让神飘在空中 · 让神埋进岩石'
   },
   detail: "走进去先看 40 扇窗——**穹顶'浮在空中'的第一眼就在这里**。二楼西北角找一根包金属的柱子（许愿柱），1200 年的游客拇指把凹洞磨出了光。中殿抬头 8 块 7.5 米书法圆盘。下午 4 点到 4 点半西光斜射时，**基督脸部马赛克最闪**——这个时刻不在手册里。",
   // v3.5-exp: whyVisit.detail 图文切片（PRD §P-10-A · 5 片 · CEO 过稿定稿）
@@ -524,10 +524,8 @@ const CITIES = [
       image_alt: '维京涂鸦 Halfdan 卢恩文说明牌与栏杆刻痕',
       caption: '西南柱子上 9-11 世纪的卢恩文——说明牌告诉你："Halfdan 来过"。拜占庭的北欧雇佣兵签的到。',
       photo_credit: 'Wikimedia · Hagia-sofia-viking.jpg (CC BY-SA)' },
-    { image: 'assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg',
-      image_alt: '圣索菲亚大厅从二层廊台斜视右下拱门视角',
-      caption: '这里躺过的不只是皇帝的仪仗队。',
-      photo_credit: 'Wikimedia · Hagia Sophia Interior Panorama.jpg (CC BY-SA)' }
+    // v7.3 §P-15 · slide 5（A5 panorama）已升格为候选 B detailHotspots 的底图，detail_slides 不再展示
+    // 原 caption "这里躺过的不只是皇帝的仪仗队" 删除（候选 B 落地后视觉重复）
   ]
 }, relatedFigure: [{ name: '安特米奥斯', era: '东罗马', role: '建筑师（不是查士丁尼）', link: '穹顶的几何是他和伊西多尔算出来的，皇帝只是付钱的人' }], yearNum: 537, wiki: 'Hagia Sophia', gradient: 'linear-gradient(135deg, #4A2C0A 0%, #D4841A 45%, #C9963A 100%)', desc: '圣索菲亚是拜占庭建筑的顶峰之作，近千年来一直是世界上最大的教堂。', hours: '礼拜时间外开放 09:00—17:30', ticket: {
   price: '游客上层 €25（2024 年起实施），下层礼拜区对穆斯林免费',
@@ -557,12 +555,36 @@ const CITIES = [
   { category: 'secret', text: '二楼楼梯口大理石栏杆上刻着 Halvdan 的北欧海盗涂鸦（9-11 世纪），在西南角人容易错过' }
 ],
         // v3.5-exp: 旅行中 + Survival（PRD §P-02 / §P-04-A / §P-05-A · CEO 过稿定稿）
+        // v7.3 §P-15 · 候选 B 热点标注地图（沙发 tab "实地看点" section · 复用 panorama 全景图）
+        detailHotspots: {
+          panorama: 'assets/landmarks-exp-v3.5/slides/hagia-A5-panorama-full.jpg',
+          panoramaAlt: '圣索菲亚内殿穹顶+撒拉弗+4 圆盘+二楼拱廊 360 全景',
+          // 5 hotspot · 按游览动线排序（撒拉弗 → 8 圆盘 → 许愿柱 → Viking → Dandolo）
+          // cx_pct/cy_pct 基于 1200×1233 panorama · UX §P-15 规格 28px 描边空心环 · 圆心间距 ≥ 60px
+          hotspots: [
+            { n: 1, title: '撒拉弗天使', cx_pct: 18, cy_pct: 32, inFrame: true,
+              image: 'assets/landmarks-exp-v3.5/slides/hagia-A1-seraphim-all.jpg',
+              caption: '主穹顶四角马赛克天使脸孔，灰泥盖了 450 年——2009 年才揭开西北一面。' },
+            { n: 2, title: '8 块书法圆盘', cx_pct: 60, cy_pct: 30, inFrame: true,
+              image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg',
+              caption: '中殿抬头 4 块巨型阿拉伯书法圆盘——每块一辆公交车长，世界最大伊斯兰书法。' },
+            { n: 3, title: '许愿柱', cx_pct: 10, cy_pct: 14, inFrame: false, offCanvasDir: 'NW',
+              image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-1-wishstone.jpg',
+              caption: '二楼西北角包铜的石柱——1500 年湿润凹洞，基督徒到穆斯林朝拜没断过。' },
+            { n: 4, title: 'Viking 涂鸦', cx_pct: 88, cy_pct: 78, inFrame: false, offCanvasDir: 'SE',
+              image: 'assets/landmarks-exp-v3.5/slides/hagia-A4-viking.jpg',
+              caption: '西南柱二楼栏杆 9-11 世纪卢恩文——拜占庭北欧雇佣兵 Halfdan 签的到。' },
+            { n: 5, title: 'Dandolo 墓碑', cx_pct: 92, cy_pct: 92, inFrame: false, offCanvasDir: 'S',
+              image: 'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg',
+              caption: '二楼南廊地板刻着 Dandolo——97 岁盲眼率先冲上城墙的威尼斯总督。' }
+          ]
+        },
         onsite_map: 'assets/landmarks-exp-v3.5/maps/map-hagia-annotated.jpg',
         onsite_spots: [
           { n: 1, title: '许愿柱', anchor: '二楼西北角', visibility: '常开',
             body: '二楼西北角的石柱一千年都在出汗。把拇指塞进凹洞转一圈——从东罗马主教到你，队伍没断过。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '东罗马主教也在这里转过拇指——比敦煌莫高窟晚开 171 年',
+            spotlight: '基督徒拜了 916 年，穆斯林接着拜 500 年——全世界独一根的千年神柱',
             // v7 §P-14-D · 3 spot 选 1 编辑推荐（许愿柱：动作+时间+认知惊喜三轴齐全）
             editorPick: true,
             image: [
@@ -581,7 +603,7 @@ const CITIES = [
           { n: 2, title: 'Dandolo 墓碑', anchor: '二楼南廊地板', visibility: '常开',
             body: '二楼南廊地板刻着 Dandolo——97 岁的威尼斯总督。1204 年是他带十字军洗劫这里。你正踩在毁它的人之上。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '他让圣索菲亚被当马厩用了 3 天——距成吉思汗统一蒙古只剩 2 年',
+            spotlight: '97 岁盲眼 · 全副武装率先冲上君士坦丁堡城墙',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-2-dandolo.jpg'
@@ -598,7 +620,7 @@ const CITIES = [
           { n: 3, title: '8 块书法圆盘', anchor: '中殿上空', visibility: '常开',
             body: '中殿抬头——8 块书法圆盘挂在头顶，每块 7.5 米比两个成人还高。19 世纪首席大法官 Mustafa İzzet 的手笔。',
             // v7 §P-14-D · spotlight 层级分离 · CEO 过稿冻结
-            spotlight: '每块 7.5 米——4 个成人叠起来才够',
+            spotlight: '每块一辆公交车长——世界最大的伊斯兰书法',
             image: [
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy-overview.jpg',
               'assets/landmarks-exp-v3.5/onsite-spots/hagia-3-calligraphy.jpg'
