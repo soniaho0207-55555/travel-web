@@ -115,6 +115,8 @@ function expRenderBeforeLayer1Reading(l) {
   // v7 §P-14-F ⑥ · 删延伸阅读折叠区（worldContext 已覆盖 · worldEvents+meanwhile 重叠）
   //   · relatedFigure 保留 · 降级到阅读层尾部非折叠小 section
   const figHtml = expRenderRelatedFigure(l);
+  // v7.3 §P-15 候选 B · "实地看点" detailHotspots section（whyVisit.detail "去看什么"段后）
+  const hotspotsHtml = expRenderDetailHotspots(l);
   return `
     <section class="exp-layer exp-layer-read" data-layer="read" id="sofa-story">
       <header class="exp-layer-head">
@@ -123,6 +125,7 @@ function expRenderBeforeLayer1Reading(l) {
       </header>
       <div class="exp-layer-body">
         ${expRenderWhyVisitReading(l)}
+        ${hotspotsHtml}
         ${expRenderRelatedLiterature(l)}
         ${figHtml}
       </div>
@@ -246,7 +249,9 @@ function expRenderCrossCard(cc) {
         ${items ? `<ul class="exp-cross-side-bullets">${items}</ul>` : ''}
       </div>`;
   };
-  const link = cc.link ? `<div class="exp-cross-link">${expEscapeMD(cc.link)}</div>` : '';
+  // v7.3 §P-19-10 · class 重命名 link → keyline（语义准确：骨架金线 · 非超链接）
+  // §P-16-B · 金句视觉权重升级：18px / 600 / 金沙 / 上下 hairline + ✦ 装饰
+  const link = cc.link ? `<div class="exp-cross-keyline"><span class="exp-cross-keyline-mark" aria-hidden="true">✦</span>${expEscapeMD(cc.link)}</div>` : '';
   return `
     <div class="why-section exp-why-section exp-cross-wrap">
       <div class="rich-content-section-title">同代文明</div>
@@ -315,12 +320,38 @@ function expRenderCarousel(slides) {
       <figcaption class="exp-slide-caption">${expEscape(s.caption || '')}</figcaption>
     </figure>
   `).join('');
+  // v7.3 §P-19-A · 删"← 横滑看下一片 →"教程式文字 · 换 dot indicators（● ○ ○ ○ ○）
+  const dots = slides.map((_, i) => `<span class="exp-carousel-dot${i === 0 ? ' active' : ''}" data-dot="${i}"></span>`).join('');
   return `
     <div class="exp-carousel" role="region" aria-label="图文切片">
       <div class="exp-carousel-track">${items}</div>
-      <div class="exp-carousel-hint">← 横滑看下一片 →</div>
+      ${slides.length > 1 ? `<div class="exp-carousel-dots" aria-hidden="true">${dots}</div>` : ''}
     </div>
   `;
+}
+
+/* v7.3 §P-19-A · carousel scroll listener · 滚动时更新 dot active 态
+   非阻塞 · IntersectionObserver 在 carousel-track 内部对 slide 生效 */
+function expAttachCarouselScrollSpy(rootEl) {
+  if (!rootEl) rootEl = document;
+  if (typeof IntersectionObserver !== 'function') return;
+  const carousels = rootEl.querySelectorAll('.exp-carousel');
+  carousels.forEach(carousel => {
+    const slides = carousel.querySelectorAll('.exp-slide');
+    const dots = carousel.querySelectorAll('.exp-carousel-dot');
+    if (!slides.length || !dots.length) return;
+    const track = carousel.querySelector('.exp-carousel-track');
+    if (!track) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio >= 0.6) {
+          const idx = parseInt(e.target.getAttribute('data-idx'), 10);
+          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        }
+      });
+    }, { root: track, threshold: [0.6] });
+    slides.forEach(s => io.observe(s));
+  });
 }
 
 function expRenderTicketBlock(l) {
@@ -795,4 +826,112 @@ function expHydrateHero(l) {
       }
     });
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   v7.3 §P-15 候选 B · 热点标注地图（"实地看点" section · NEW-COMPONENT）
+   全景底图 + 5 红圈 hotspot · 点击切详情卡 · 上一处/下一处导航
+   红圈视觉硬规：和旅行中 tab maps 一致（#B53A1F 描边空心环 28px）
+   inFrame:false 的 hotspot 贴边缘 + 方向箭头（offCanvasDir NW/N/NE/E/SE/S/SW/W）
+   ═══════════════════════════════════════════════════════════════════ */
+
+let expActiveHotspot = 1;  // PRD §P-15-D · 默认激活 ①
+
+function expRenderDetailHotspots(l) {
+  const dh = l && l.detailHotspots;
+  if (!dh || !dh.panorama || !Array.isArray(dh.hotspots) || !dh.hotspots.length) return '';
+  const hotspots = dh.hotspots;
+
+  // 重置状态 · 切景点时回归 ①
+  expActiveHotspot = (hotspots[0] && hotspots[0].n) || 1;
+  // 缓存到 window 供 prev/next 切换函数找数据
+  window.expCurrentHotspots = hotspots;
+
+  const dotsHtml = hotspots.map(h => {
+    const offCanvas = h.inFrame === false;
+    const dirCls = offCanvas && h.offCanvasDir
+      ? ` exp-hotspot-dot-${h.offCanvasDir.toLowerCase()}` : '';
+    const offCls = offCanvas ? ' off-canvas' : '';
+    const activeCls = (h.n === expActiveHotspot) ? ' active' : '';
+    const ariaLabel = `第 ${h.n} 处 · ${expEscape(h.title || '')}`;
+    return `<button class="exp-hotspot-dot${offCls}${dirCls}${activeCls}"
+              type="button"
+              data-hotspot="${h.n}"
+              style="left: ${h.cx_pct}%; top: ${h.cy_pct}%;"
+              aria-label="${ariaLabel}"
+              onclick="expSwitchHotspot(${h.n})">${h.n}</button>`;
+  }).join('');
+
+  const initial = hotspots.find(h => h.n === expActiveHotspot) || hotspots[0];
+
+  return `
+    <section class="why-section exp-why-section exp-hotspot-section" id="sofa-hotspots">
+      <div class="rich-content-section-title">实地看点</div>
+      <div class="exp-hotspot-panorama" data-active="${expActiveHotspot}">
+        <img src="${expEscape(dh.panorama)}"
+             alt="${expEscape(dh.panoramaAlt || (l.name + ' 全景'))}"
+             loading="lazy"
+             onerror="this.classList.add('failed')" />
+        <div class="exp-hotspot-dots">${dotsHtml}</div>
+      </div>
+      <div class="exp-hotspot-detail" id="expHotspotDetail">
+        ${expRenderHotspotCard(initial)}
+      </div>
+      <div class="exp-hotspot-nav">
+        <button class="exp-hotspot-nav-btn" type="button" onclick="expPrevHotspot()" aria-label="上一处">← 上一处</button>
+        <button class="exp-hotspot-nav-btn" type="button" onclick="expNextHotspot()" aria-label="下一处">下一处 →</button>
+      </div>
+    </section>
+  `;
+}
+
+function expRenderHotspotCard(h) {
+  if (!h) return '';
+  const imgHtml = h.image
+    ? `<img class="exp-hotspot-detail-image"
+            src="${expEscape(h.image)}"
+            alt="${expEscape(h.title || '')}"
+            loading="lazy"
+            onerror="this.classList.add('failed')"
+            onclick="expLightboxOpen('${expEscape(h.image)}', '${expEscape(h.title || '')}', '')" />` : '';
+  return `
+    <div class="exp-hotspot-detail-eyebrow">第 ${expEscape(h.n)} 处 · 当前激活</div>
+    <h3 class="exp-hotspot-detail-title">${expEscape(h.title || '')}</h3>
+    ${imgHtml}
+    <p class="exp-hotspot-detail-caption">${expEscape(h.caption || '')}</p>
+  `;
+}
+
+function expSwitchHotspot(n) {
+  expActiveHotspot = n;
+  const list = window.expCurrentHotspots;
+  if (!Array.isArray(list)) return;
+  const h = list.find(x => x.n === n);
+  if (!h) return;
+  // 切红圈 active 态
+  const buttons = document.querySelectorAll('.exp-hotspot-dot');
+  buttons.forEach(b => {
+    b.classList.toggle('active', parseInt(b.getAttribute('data-hotspot'), 10) === n);
+  });
+  // 重渲详情卡
+  const cardEl = document.getElementById('expHotspotDetail');
+  if (cardEl) cardEl.innerHTML = expRenderHotspotCard(h);
+  const panoEl = document.querySelector('.exp-hotspot-panorama');
+  if (panoEl) panoEl.setAttribute('data-active', n);
+}
+
+function expPrevHotspot() {
+  const list = window.expCurrentHotspots;
+  if (!Array.isArray(list) || !list.length) return;
+  const idx = list.findIndex(h => h.n === expActiveHotspot);
+  const target = idx <= 0 ? list[list.length - 1] : list[idx - 1];
+  expSwitchHotspot(target.n);
+}
+
+function expNextHotspot() {
+  const list = window.expCurrentHotspots;
+  if (!Array.isArray(list) || !list.length) return;
+  const idx = list.findIndex(h => h.n === expActiveHotspot);
+  const target = (idx === list.length - 1 || idx < 0) ? list[0] : list[idx + 1];
+  expSwitchHotspot(target.n);
 }
