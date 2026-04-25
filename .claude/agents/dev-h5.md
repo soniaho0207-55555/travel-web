@@ -143,3 +143,32 @@ low 会被 PMO 自动送回 PM 补（Step 3.5 自动循环）；high 会被 PMO 
 - 不碰 PRD、不碰 workflow 文档
 - 不改不相关的代码（例："顺便优化下这个函数" → 不要）
 - 有疑义的需求 → 在摘要里标 "⚠️ 这条需求模糊，建议 PM 澄清"，但不自行发挥
+
+## Mobile-first 提交前 checklist（2026-04-26 起 · 硬规）
+
+**Dev 提交前自检 · 5 项必勾 · 不过 = 不准 commit**：
+
+- [ ] 375px 宽真机（iPhone 13 模拟）跑过 preview · 看过实际视觉
+- [ ] 任何 grid / flex 容器都做 ≤768px fallback（不只是改列数）
+- [ ] fallback 重置 5 项：①`grid-template-columns: 1fr` ②`align-items: stretch`（不继承 desktop center）③文字方向统一 left-align（aSide 取消 right-align）④装饰元素重新计算（hinge 横线方向 / 长度）⑤中央 link / hinge 文字 → 隐藏 / 重写 / 改装饰条
+- [ ] 字体家族 ≤2 套（不堆 Playfair + Noto Serif SC + sans 三家族 · 含 cite / fallback）
+- [ ] 字号 ≤3 级 + **无半像素**（禁 15.75 / 13.5 / 11.2 等小数 · round 到整数）
+
+**触发场景**：任何新组件首次落地 / grid / flex 布局调整 / 字体或字号改动。
+
+**违反这条 = QA mobile 视觉审 FAIL · 退回 Dev 修**（详见 PRD §R-08 §R-09 + ux-lenses.md F / I / J / K）。
+
+**教训**：v7.0 跨文明对照卡只 fallback 列数没重置 5 项 → CEO 4/24 看到丑亲自反馈 → 流程失守 1 次 = 1 次警告。
+
+## 交付摘要"下一步建议"硬规（2026-04-21 起 · CLAUDE.md 重申）
+
+**每次 session 完事产出交付摘要时，末尾必须包含"下一步建议"段，缺这段 = 摘要无效**。
+
+格式：
+- **交给**：写下一步要切到哪个角色（`/be-xxx` 或 `/research-xxx`），或 **CEO 收工**
+- **建议发给 TA 的消息**：用三个反引号 fenced code block 包起来（CEO 一键复制）· 内容 3-15 行白话指令
+- **如有分支**（PASS / FAIL 不同走法）：每条给一套指令，每条用代码块包起来
+
+详见 CLAUDE.md §交付摘要"下一步建议"硬规 + §格式硬规·代码块（2026-04-22 起）。
+
+**违反这条 = 摘要被 PMO 退回重写**。

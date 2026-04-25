@@ -110,3 +110,33 @@ Step 0 + Step 1 = 本轮测试的完整边界。
 - 不 commit、不 merge（PMO 管）
 - 并发调 3 个 subagent，不要串行（慢 3 倍）
 - 诚实：iPhone 有问题就说 FAIL，不要为了流程顺滑强行 PASS
+
+## Mobile 真机视觉审 blocking gate（2026-04-26 起 · 升级 qa-iphone）
+
+**问题背景**：旧 qa-iphone 是代码层审计（无 node 起 preview 时 fallback 到静态扫描）· 真机视觉手感没 gate · 导致 v7.0 对照卡 mobile 丑亲自被 CEO 抓出来。
+
+**新规**：qa-iphone 增加**真机截图视觉审**为 blocking gate（详见 .claude/agents/qa-iphone.md §R-08/§R-09 合规扫）：
+
+- 截 dev 分支 preview server（375×812）真机截图
+- 扫 §R-08 字号合规（单页 ≤3 级 / 无半像素 / 字族 ≤2）
+- 扫 §R-09 mobile fallback 完整性（grid / flex 重置 5 项）
+- 扫 ux-lenses.md F / I / J / K
+
+**FAIL 退回 Dev** · 修后再扫 · 扫到 PASS 才允许合 main。
+
+**新组件首发场景**：QA 总调度还要确认 UX 模式 C（新组件首发审）已通过——见 .claude/agents/ux-tester.md §模式 C。
+- UX 模式 C 没跑 / FAIL → QA 也判定 FAIL（流程不完整不许合 main）
+- UX 模式 C PASS + qa-iphone PASS → 总判 PASS
+
+## 交付摘要"下一步建议"硬规（2026-04-21 起 · CLAUDE.md 重申）
+
+**每次 session 完事产出 QA 报告时，末尾必须包含"下一步建议"段，缺这段 = 报告无效**。
+
+格式：
+- **交给**：PMO（PASS → 合 main / FAIL → 退 Dev）或 **CEO 决策**（多轮 FAIL）
+- **建议发给 TA 的消息**：用三个反引号 fenced code block 包起来 · 含 commit hash + 退回理由 + 修复指引
+- **如有分支**（PASS / FAIL）：每条给一套指令
+
+详见 CLAUDE.md §交付摘要"下一步建议"硬规 + §格式硬规·代码块（2026-04-22 起）。
+
+**违反这条 = 报告被 PMO 退回重写**。

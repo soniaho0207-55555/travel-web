@@ -5,6 +5,26 @@
 
 ---
 
+## 新组件首发标记规则（2026-04-26 起）
+
+PMO 派任务时，如果任务涉及**新建 UI 组件首次落地**（对照卡 / 热点地图 / 双图卡 / 新 layout 等），必须在任务标题或描述里加 `[NEW-COMPONENT]` 标记。
+
+**作用**：
+- UX-tester 见此标记 → 启动模式 C「新组件首发审」（见 `.claude/agents/ux-tester.md`）
+- qa-iphone 见此标记 → 跑 §R-08 §R-09 + lens F/I/J/K 完整合规扫（见 `.claude/agents/qa-iphone.md`）
+- Dev-H5 见此标记 → 提交前执行 Mobile-first checklist（5 项必勾，见 `.claude/agents/dev-h5.md`）
+
+**不需要标的场景**：
+- 复用现有组件改 CSS / 数据
+- 改文案 / data.js 字段
+- 修 bug
+
+**示例**：
+- ✅ `[v3.6-Dev-H5-XX] 实现热点标注地图（红圈+抽屉）[NEW-COMPONENT]`
+- ❌ `[v3.6-Dev-H5-XX] 修圣索菲亚 spotlight 文案`（只是改字符串，不需标）
+
+---
+
 ## Active Sprint — 2026-04-21（v3.5 容器对齐手术）
 
 > **来源**：UX taste 代表战略 plan `~/.claude/plans/plan-taste-sleepy-snowglobe.md`（2026-04-21）
