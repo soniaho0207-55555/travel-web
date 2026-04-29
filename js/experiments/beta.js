@@ -76,14 +76,14 @@ function renderExperimentBeta(city, landmark, cityId, index) {
   expHydrateHero(l);
   if (typeof updateNav === 'function') updateNav(null);
 
-  // v7 · sofa 内部 scrollspy · requestAnimationFrame 确保 DOM 就绪再 observe
+  // v7 · sofa 内部 scrollspy + v7.3 carousel dots scrollspy · rAF 确保 DOM 就绪再 observe
+  const attachSpies = () => {
+    if (typeof expAttachSofaScrollSpy === 'function') expAttachSofaScrollSpy();
+    if (typeof expAttachCarouselScrollSpy === 'function') expAttachCarouselScrollSpy();
+  };
   if (typeof requestAnimationFrame === 'function') {
-    requestAnimationFrame(() => {
-      if (typeof expAttachSofaScrollSpy === 'function') expAttachSofaScrollSpy();
-    });
+    requestAnimationFrame(attachSpies);
   } else {
-    setTimeout(() => {
-      if (typeof expAttachSofaScrollSpy === 'function') expAttachSofaScrollSpy();
-    }, 0);
+    setTimeout(attachSpies, 0);
   }
 }
