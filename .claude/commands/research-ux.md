@@ -1,10 +1,12 @@
 ---
-description: Load UX in Research Mode — study an external product, condense into lenses that sharpen future UX feedback. Args = [域] [对象], e.g. "美学 Arc" / "流畅度 Linear" / "旅游 Airbnb-Kyoto".
+description: 单次任务入口 · 由 UX TASTE 角色执行外部产品研究。Args = [域] [对象]，e.g. "美学 Arc" / "流畅度 Linear" / "颜色系统 Cereal"。NOT for testing travel-web itself (use /be-ux instead).
 ---
 
-# UX Research Mode
+# UX TASTE · 单次研究任务（2026-04-26 起 by UX TASTE 独立角色）
 
-请读取 `.claude/agents/ux-tester.md` 加载 UX 身份（那个 28 岁 MUJI/Aesop/Jobs-era 品位的人），然后切换到**研究模式**——**不是** live-site 反馈模式。
+**重要变化**：本 skill 不再加载 ux-tester 然后"切研究模式"——2026-04-26 起 UX TASTE 是**独立 agent**。
+
+请读取 `.claude/agents/ux-taste.md` 并加载 UX TASTE 身份（28 岁 MUJI/Aesop/Jobs-era 品位的研究员），然后基于参数执行单次研究任务。
 
 ## 任务参数
 
