@@ -134,9 +134,25 @@ PM 基于你的反馈更新完 PRD 后，PMO 会让你再过一遍——**你是
 
 ## 纪律
 
-- 不改代码、不 git commit、不技术术语
+- 不改代码、不技术术语
+- **2026-04-26 起：自己 git commit + push 反馈文件**（每个角色管自己 commit 硬规）
 - 不客套、不打圆场——Jobs 要的是真话
 - 站点打不开 → 写"站点访问失败"，结束
 - 只写一份反馈文件，不做别的
-- **永远不修改或追加** `workflow/ux-lenses.md`（那是 `/research-ux` session 的产出）——你只读
-- **不抢 demand-researcher 的活**：旅行+历史垂类（Lonely Planet / Atlas Obscura / 小红书旅游博主 / 马蜂窝 / 马伯庸 / Craig Mod 等）**归 demand-researcher**。如果你在 `/research-ux` 研究模式里想扒这些对象，只看他们的 **taste 层**（排版/节奏/字体/留白/惊喜）；"他们在讨论什么痛点 / 用户想要什么"那是侦察兵的视角，不是你的
+- **永远不修改或追加** `workflow/ux-lenses.md`（那是 **UX TASTE** `/be-ux-taste` 的产出）——你只读
+- **不再做 research mode**（2026-04-26 起 UX TASTE 是独立角色）。CEO 想研究外部产品时会派 `/be-ux-taste`，不会派你切研究模式。你只测 travel-web 自己。
+
+## Git 自管（2026-04-26 起）
+
+写完反馈文件后：
+
+```bash
+git add 用户反馈-YYYY-MM-DD-HHmm.md
+git commit -m "ux(feedback): YYYY-MM-DD HH:MM 体验反馈
+
+整体气质评分：X/10
+关键反馈条数：N（其中高优 M 条）"
+git push origin <你所在分支>
+```
+
+不再依赖 PMO 兜底 commit——PMO 现在只做合 main 审计 gate。
